@@ -10,7 +10,7 @@ uses
 {$ENDIF}
 
 //{$LinkLib 'libSDL3.so.0'}
-{$LinkLib 'SDL3'}
+//{$LinkLib 'SDL3'}
 //{$LinkLib 'c'}
 
 type

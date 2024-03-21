@@ -14,45 +14,7 @@
       <ResourceType Value="res"/>
     </General>
     <BuildModes>
-      <Item Name="Win64" Default="True"/>
-      <Item Name="Default">
-        <CompilerOptions>
-          <Version Value="11"/>
-          <Target>
-            <Filename Value="Project1"/>
-          </Target>
-          <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
-            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
-          </SearchPaths>
-          <Linking>
-            <Debugging>
-              <DebugInfoType Value="dsDwarf3"/>
-            </Debugging>
-          </Linking>
-        </CompilerOptions>
-      </Item>
-      <Item Name="Linux">
-        <CompilerOptions>
-          <Version Value="11"/>
-          <Target>
-            <Filename Value="Project1"/>
-          </Target>
-          <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
-            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
-          </SearchPaths>
-          <CodeGeneration>
-            <TargetCPU Value="x86_64"/>
-            <TargetOS Value="linux"/>
-          </CodeGeneration>
-          <Linking>
-            <Debugging>
-              <DebugInfoType Value="dsDwarf3"/>
-            </Debugging>
-          </Linking>
-        </CompilerOptions>
-      </Item>
+      <Item Name="Default" Default="True"/>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -61,6 +23,11 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
+    <RequiredPackages>
+      <Item>
+        <PackageName Value="SDL3_package"/>
+      </Item>
+    </RequiredPackages>
     <Units>
       <Unit>
         <Filename Value="Project1.pas"/>
@@ -77,10 +44,6 @@
       <IncludeFiles Value="$(ProjOutDir)"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
-    <CodeGeneration>
-      <TargetCPU Value="x86_64"/>
-      <TargetOS Value="win64"/>
-    </CodeGeneration>
     <Linking>
       <Debugging>
         <DebugInfoType Value="dsDwarf3"/>

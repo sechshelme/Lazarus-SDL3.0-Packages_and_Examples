@@ -14,3 +14,8 @@ sdl_pixels
  include/SDL3/SDL_oldnames.h                                              |  46 ++++--
  include/SDL3/SDL_storage.h 
 
+include/SDL3/SDL_time.h                             | 208 +++++++++++++++++++++++++++++++++++++++
+ include/SDL3/SDL_filesystem.h                       |  85 +++++++++++++++-
+
+
+

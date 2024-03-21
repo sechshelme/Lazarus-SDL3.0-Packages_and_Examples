@@ -1,5 +1,9 @@
 //{%MainUnit sdl3.pas}
 
+//{$LinkLib 'libSDL3.so.0'}
+{$LinkLib 'SDL3'}
+//{$LinkLib 'c'}
+
  {$include SDL3_stdinc.inc}
  {$include SDL3_guid.inc}
  {$include SDL3_scancode.inc}
