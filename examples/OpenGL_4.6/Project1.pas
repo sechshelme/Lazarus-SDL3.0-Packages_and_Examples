@@ -5,12 +5,18 @@ uses
   SDL3,
   SDL3_opengl,
   SDL3_opengl_glext,
-  oglVector,
   oglShader;
 
 const
   Screen_Widht = 320;
   Screen_Height = 240;
+
+type
+  TVector2f = array[0..1] of TGLfloat;
+  PVector2f = ^TVector2f;
+
+  TVector4f = array[0..3] of TGLfloat;
+  PVector4f = ^TVector4f;
 
 var
   // SDL
@@ -23,8 +29,8 @@ var
   // OpenGL
   MyShader: TShader;
 
-  VAO: TGLuint;
-  VBO: TGLuint;
+  VAOs: array [(vaTriangle)] of TGLuint;
+  Mesh_Buffers: array [(mbTriangle)] of TGLuint;
 
 const
   vertices: array of TVector2f = (
@@ -79,8 +85,8 @@ const
 
   procedure CreateScene;
   begin
-    glCreateBuffers(1, @VBO);
-    glNamedBufferStorage(VBO, Length(vertices) * SizeOf(TVector2f), PVector2f(vertices), 0);
+    glCreateBuffers(Length(Mesh_Buffers), Mesh_Buffers);
+    glNamedBufferStorage(Mesh_Buffers[mbTriangle], Length(vertices) * SizeOf(TVector2f), PVector2f(vertices), 0);
 
     MyShader := TShader.Create;
     MyShader.LoadShaderObject(GL_VERTEX_SHADER, vertex_shader_text);
@@ -88,9 +94,9 @@ const
     MyShader.LinkProgram;
     MyShader.UseProgram;
 
-    glGenVertexArrays(1, @VAO);
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glGenVertexArrays(Length(VAOs), VAOs);
+    glBindVertexArray(VAOs[vaTriangle]);
+    glBindBuffer(GL_ARRAY_BUFFER, Mesh_Buffers[mbTriangle]);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nil);
     glEnableVertexAttribArray(0);
   end;
@@ -102,7 +108,7 @@ const
   begin
     glClearBufferfv(GL_COLOR, 0, black);
 
-    glBindVertexArray(VAO);
+    glBindVertexArray(VAOs[vaTriangle]);
     glDrawArrays(GL_TRIANGLES, 0, Length(vertices));
 
     SDL_GL_SwapWindow(gWindow);
@@ -110,8 +116,8 @@ const
 
   procedure Destroy_SDL_and_OpenGL;
   begin
-    glDeleteVertexArrays(1, @VAO);
-    glDeleteBuffers(1, @VBO);
+    glDeleteVertexArrays(Length(VAOs), VAOs);
+    glDeleteBuffers(Length(Mesh_Buffers), Mesh_Buffers);
 
     MyShader.Free;
 

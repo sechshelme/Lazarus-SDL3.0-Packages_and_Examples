@@ -7,12 +7,6 @@ uses
   // https://sdl.elynx.fr/SDL_CreateThread/
 
 var
-  ver: TSDL_Version;
-  window: PSDL_Window;
-  e: TSDL_Event;
-  quit: boolean = False;
-  image, screen: PSDL_Surface;
-  dstrect: TSDL_Rect = (x: 100; y: 100; w: 200; h: 200);
   thread: PSDL_Thread;
   threadReturnValue: longint;
 
