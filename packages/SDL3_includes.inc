@@ -4,6 +4,7 @@
 {$LinkLib 'SDL3'}
 //{$LinkLib 'c'}
 
+ {$include SDL3_log.inc} // ??
  {$include SDL3_stdinc.inc}
  {$include SDL3_guid.inc}
  {$include SDL3_scancode.inc}
@@ -16,7 +17,7 @@
  {$include SDL3_thread.inc}
  {$include SDL3_error.inc}
  {$include SDL3_filesystem.inc}
- {$include SDL3_log.inc}
+// {$include SDL3_log.inc}
  {$include SDL3_platform.inc}
  {$include SDL3_misc.inc}
  {$include SDL3_power.inc}

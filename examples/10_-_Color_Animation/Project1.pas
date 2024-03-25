@@ -28,9 +28,10 @@ var
   begin
     while not quit do begin
       while SDL_PollEvent(@e) <> 0 do begin
+        WriteLn('event: ', e.type_); // neu
         case e.type_ of
-          //        SDL_KEYDOWN: begin
           SDL_EVENT_KEY_DOWN: begin
+            WriteLn('key: ', e.key.keysym.sym); // neu
             case e.key.keysym.sym of
 
               SDLK_ESCAPE: begin
@@ -74,11 +75,11 @@ begin
 
   SDL_GetWindowSize(window, @Width, @Height);
   SDL_GetWindowSizeInPixels(window, @bbwidth, @bbheight);
-  SDL_LogCritical(0,'Window size: %ix%i',bbwidth,bbheight);
-  SDL_LogCritical(0,'blabla');
-//  SDL_Log('Window size: %ix%i',bbwidth,bbheight);
-SDL_Log('log');
-SDL_LogWarn(0,'warn');
+  SDL_LogCritical(0, 'Window size: %ix%i', bbwidth, bbheight);
+  SDL_LogCritical(0, 'blabla');
+  //  SDL_Log('Window size: %ix%i',bbwidth,bbheight);
+  SDL_Log('log');
+  SDL_LogWarn(0, 'warn');
   WriteLn('Window size: ', bbwidth, 'x', bbheight);
 
   if Width <> bbwidth then  begin

@@ -49,13 +49,19 @@ const
   SDL_LOG_PRIORITY_CRITICAL = 6;
   SDL_NUM_LOG_PRIORITIES = 7;
 
+
+
 procedure SDL_LogSetAllPriority(priority: TSDL_LogPriority); cdecl; external;
 procedure SDL_LogSetPriority(category: longint; priority: TSDL_LogPriority); cdecl; external;
 function SDL_LogGetPriority(category: longint): TSDL_LogPriority; cdecl; external;
 procedure SDL_LogResetPriorities; cdecl; external;
 //procedure SDL_Log(fmt: PChar; args: array of const); cdecl; external;
-//procedure SDL_Log(fmt: PChar);varargs; cdecl; external;
 //procedure SDL_Log(fmt: PChar); cdecl; external;
+//procedure SDL_Log(fmt: PAnsiChar);varargs cdecl;  external 'SDL3' ;
+//procedure SDL_Log( fmt: PAnsiChar);varargs cdecl;
+//procedure SDL_Log(fmt: PChar);varargs; cdecl; external 'SDL3';
+//procedure SDL_Log(fmt: PAnsiChar);varargs cdecl;  external 'SDL3' ;
+
 procedure SDL_Log(fmt: PChar);varargs; cdecl; external;
 
 // extern DECLSPEC void SDLCALL SDL_Log(                      SDL_PRINTF_FORMAT_STRING const char *fmt, ...) SDL_PRINTF_VARARG_FUNC(1);

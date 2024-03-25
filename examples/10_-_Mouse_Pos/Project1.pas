@@ -25,8 +25,8 @@ var
     quit: boolean = False;
     time: single;
     red, green, blue: byte;
-    buttons: UInt32;
-    x, y: Single;
+    Buttons: uint32;
+    x, y: single;
   begin
     while not quit do begin
       while SDL_PollEvent(@e) <> 0 do begin
@@ -46,17 +46,12 @@ var
         end;
       end;
 
-      buttons:=SDL_GetMouseState(@x,@y);
+      Buttons := SDL_GetMouseState(@x, @y);
+      if Buttons and SDL_BUTTON_LMASK <> 0 then  begin
+        SDL_Log('Mouse Button 1 (left) is pressed.');
+      end;
 
-
-      //      SDL_Log('Mouse cursor is at %d, %d',Trunc(x),Trunc( y));
-//      SDL_LogInfo(0,'Mouse cursor is at %d, %d',Trunc(x),Trunc( y));
-//      SDL_Log( 'Mouse cursor is at');
-//      SDL_Log( 'Mouse cursor is at %d, %d',Trunc(x),Trunc( y));
-      WriteLn(x:4:2,'   ',y:4:2);
-
-
-
+      SDL_Log('Mouse cursor is at %f, %f', x, y);
 
       time := SDL_GetTicks / 1000;
       red := Trunc((SDL_sinf(time) + 1) / 2.0 * 255);
@@ -87,13 +82,13 @@ begin
 
   SDL_GetWindowSize(window, @Width, @Height);
   SDL_GetWindowSizeInPixels(window, @bbwidth, @bbheight);
-  SDL_LogCritical(0,'Window size: %ix%i',bbwidth,bbheight);
-  SDL_LogCritical(0,'blabla');
-//  SDL_Log('Window size: %ix%i',bbwidth,bbheight);
-SDL_Log('log');
-//SDL_Log('log');
-SDL_LogWarn(0,'warn');
-  WriteLn('Window size: ', bbwidth, 'x', bbheight);
+  SDL_LogCritical(0, 'Window size: %ix%i', bbwidth, bbheight);
+  SDL_LogCritical(0, 'blabla');
+  SDL_Log('Window size: %ix%i', bbwidth, bbheight);
+  SDL_Log('log');
+  //SDL_Log('log');
+  SDL_LogWarn(0, 'warn');
+  //  WriteLn('Window size: ', bbwidth, 'x', bbheight);
 
 
   if Width <> bbwidth then  begin
@@ -107,5 +102,5 @@ SDL_LogWarn(0,'warn');
   SDL_DestroyWindow(window);
 
   SDL_Quit;
-//  SDL_Log('Application quit successfully!');
+  //  SDL_Log('Application quit successfully!');
 end.
