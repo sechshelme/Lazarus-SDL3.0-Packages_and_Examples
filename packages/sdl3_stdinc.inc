@@ -7,6 +7,10 @@
 
 {$IFDEF read_interface}
 
+//{$LinkLib 'libSDL3.so.0'}
+//{$LinkLib 'SDL3'}
+//{$LinkLib 'c'}
+
 type
   Tsize_t=SizeInt;
   Psize_t=^Tsize_t;

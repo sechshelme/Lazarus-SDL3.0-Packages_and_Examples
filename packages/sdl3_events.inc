@@ -155,6 +155,7 @@ type
     reserved: uint32;
     timestamp: uint64;
     windowID: TSDL_WindowID;
+    which: TSDL_KeyboardID;  // neu
     state: uint8;
     _repeat: uint8;
     padding2: uint8;

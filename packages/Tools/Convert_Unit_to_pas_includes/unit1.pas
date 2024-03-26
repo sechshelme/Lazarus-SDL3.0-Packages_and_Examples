@@ -40,7 +40,7 @@ var
   p: SizeInt;
 begin
   Memo1.Clear;
-  slFile := FindAllFiles('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-2/sdl3/packages/Tools/pas_units', '*.pas');
+  slFile := FindAllFiles('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/packages/Tools/pas_units', '*.pas');
 
   for i := 0 to slFile.Count - 1 do begin
     unit_source := TStringList.Create;
@@ -116,7 +116,7 @@ begin
     path := ExtractFileName(slFile[i]);
     path := ChangeFileExt(path, '.inc');
     //    path := '/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-2/sdl3/packages/pas_includes/' + path;
-    path := '/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-2/sdl3/packages/' + path;
+    path := '/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/packages/' + path;
     Memo1.Lines.Add(path);
 
     inc_dest.SaveToFile(path);

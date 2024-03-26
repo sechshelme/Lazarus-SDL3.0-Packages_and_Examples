@@ -9,7 +9,11 @@ uses
   {$LinkLib 'SDL3'}
 
   // Mathe Funktion
-  function SDL_log(x: cdouble): cdouble; cdecl; external;
+function XmTextGetTopPosition(widget:Pointer):Pointer;cdecl;external 'SDL' name 'XmTextGetTopCharacter';
+
+  function SDL_log_m(x: cdouble): cdouble; cdecl; external name 'SDL_log';
+
+
   function SDL_cos(x: cdouble): cdouble; cdecl; external;
 
 
@@ -18,10 +22,10 @@ uses
 
 
 begin
-  WriteLn(SDL_log(12.45));
+  WriteLn(SDL_log_m(12.45));
   SDL_Log('%ix%i', 123, 456);
   SDL_Log('log 1');
-  WriteLn(SDL_log(12.45));
+  WriteLn(SDL_log_m(12.45));
 
   SDL_cos(123);
 //  SDL_cos('abc');

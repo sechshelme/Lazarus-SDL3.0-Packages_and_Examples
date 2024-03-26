@@ -10,6 +10,9 @@ uses
   {$ENDIF}
 
 type
+  TSDL_KeyboardID = uint32;
+  PSDL_KeyboardID = ^TSDL_KeyboardID;
+
   PSDL_Keysym = ^TSDL_Keysym;
 
   TSDL_Keysym = record

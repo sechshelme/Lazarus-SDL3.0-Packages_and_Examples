@@ -26,12 +26,32 @@ var
     time: single;
     red, green, blue: byte;
   begin
+//    WriteLn('Differenz: ',PtrUInt(@event.key.keysym.sym - PtrUInt(@event)));
+//    WriteLn('Differenz: ',PtrUInt(@event.key.keysym - PtrUInt(@event)));
+//    WriteLn('Differenz: ',PtrUInt(@event.key - PtrUInt(@event)));
+//    WriteLn('Differenz: ',PtrUInt(@event.key.keysym - PtrUInt(@event)));
+
+    WriteLn('Differenz: ',PtrUInt(@event.key._type - PtrUInt(@event)));
+    WriteLn('Differenz: ',PtrUInt(@event.key.reserved - PtrUInt(@event)));
+    WriteLn('Differenz: ',PtrUInt(@event.key.timestamp - PtrUInt(@event)));
+    WriteLn('Differenz: ',PtrUInt(@event.key.windowID - PtrUInt(@event)));
+    WriteLn('Differenz: ',PtrUInt(@event.key.state - PtrUInt(@event)));
+    WriteLn('Differenz: ',PtrUInt(@event.key._repeat - PtrUInt(@event)));
+    WriteLn('Differenz: ',PtrUInt(@event.key.padding2 - PtrUInt(@event)));
+    WriteLn('Differenz: ',PtrUInt(@event.key.padding3 - PtrUInt(@event)));
+    WriteLn('Differenz: ',PtrUInt(@event.key.keysym - PtrUInt(@event)));
+
+
+
+
+
     while not quit do begin
       while SDL_PollEvent(@event) <> 0 do begin
-        SDL_Log('event: %i', event.type_); // neu
+
         case event.type_ of
           SDL_EVENT_KEY_DOWN: begin
             SDL_Log('key: %i', event.key.keysym.sym); // neu
+
             case event.key.keysym.sym of
               SDLK_ESCAPE: begin
                 quit := True;
@@ -53,7 +73,6 @@ var
       SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
 
       SDL_RenderClear(renderer);
-      //    SDL_RenderTexture(renderer, bitmapTex, nil, nil);
       SDL_RenderPresent(renderer);
     end;
   end;
@@ -76,7 +95,7 @@ begin
   SDL_GetWindowSizeInPixels(window, @bbwidth, @bbheight);
   SDL_LogCritical(0, 'Window size: %ix%i', bbwidth, bbheight);
   SDL_LogCritical(0, 'blabla');
-  //  SDL_Log('Window size: %ix%i',bbwidth,bbheight);
+    SDL_Log('Window size: %ix%i',bbwidth,bbheight);
   SDL_Log('log');
   SDL_LogWarn(0, 'warn');
   WriteLn('Window size: ', bbwidth, 'x', bbheight);
