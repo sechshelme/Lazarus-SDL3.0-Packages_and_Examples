@@ -2,6 +2,7 @@
 
 //{$LinkLib 'libSDL3.so.0'}
 {$LinkLib 'SDL3'}
+//{$LinkLib 'libSDL3.so.0.0.0'}
 //{$LinkLib 'c'}
 
  {$include SDL3_log.inc} // ??
