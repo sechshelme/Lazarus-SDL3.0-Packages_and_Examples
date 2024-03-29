@@ -3,8 +3,22 @@
 h2pas -p -T -d -c -e xxx.h
 ```
 
-# Muss übewrarbeitet werden:
-sdl_pixels
+# Spezielle Behandlungen:
+## sdl_pixels.h 
+Die *.pp mit folgendem Tool bearbeiten "convert_SDL_pixels.pp", wegen den Makros.
+
+## sdl3_log.pas
+Folgendes ergänzen:
+```pascal
+procedure SDL_Log(fmt: PChar); varargs; cdecl; external name 'SDL_Log';
+```
+
+## sdl3_stdinc.pas
+Folgendes ergänzen:
+```pascal
+function SDL_log(x: cdouble): cdouble; cdecl; external name 'SDL_log';
+```
+
 
 
 # Gröbere Änderungen

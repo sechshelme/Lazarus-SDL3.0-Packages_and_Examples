@@ -3,9 +3,7 @@
 //{$LinkLib 'libSDL3.so.0'}
 {$LinkLib 'SDL3'}
 //{$LinkLib 'libSDL3.so.0.0.0'}
-//{$LinkLib 'c'}
 
- {$include SDL3_log.inc} // ??
  {$include SDL3_stdinc.inc}
  {$include SDL3_guid.inc}
  {$include SDL3_scancode.inc}
@@ -18,7 +16,7 @@
  {$include SDL3_thread.inc}
  {$include SDL3_error.inc}
  {$include SDL3_filesystem.inc}
-// {$include SDL3_log.inc}
+ {$include SDL3_log.inc}
  {$include SDL3_platform.inc}
  {$include SDL3_misc.inc}
  {$include SDL3_power.inc}
