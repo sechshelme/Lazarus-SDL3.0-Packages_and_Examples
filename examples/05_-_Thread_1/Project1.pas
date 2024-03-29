@@ -1,6 +1,9 @@
 program Project1;
 
 uses
+  {$IFDEF linux}
+  //  cthreads,
+  {$ENDIF}
   ctypes,
   SDL3;
 
@@ -15,7 +18,7 @@ var
     i: integer;
   begin
     for i := 0 to 10 do begin
-      WriteLn(i, ' ');
+      SDL_Log('%i', i);
       SDL_Delay(50);
     end;
     Result := i;
@@ -26,9 +29,9 @@ begin
   thread := SDL_CreateThread(@TestThread, 'TestThread', nil);
 
   if thread = nil then  begin
-    WriteLn('SDL_CreateThread failed: ', SDL_GetError);
+    SDL_Log('SDL_CreateThread failed: %i', SDL_GetError);
   end else begin
     SDL_WaitThread(thread, @threadReturnValue);
-    WriteLn('Thread returned value: ', threadReturnValue);
+    SDL_Log('Thread returned value: %i', threadReturnValue);
   end;
 end.
