@@ -29,7 +29,7 @@ var
     red, green, blue: byte;
     s: String = '';
   begin
-
+//       SDL_GL_GetProcAddress();
     SDL_StartTextInput;
     while not quit do begin
       while SDL_PollEvent(@event) <> 0 do begin
@@ -49,10 +49,12 @@ var
           end;
           SDL_EVENT_TEXT_INPUT: begin
             s := s + event.Text.Text;
-            Write(s);
+            WriteLn('SDL_EVENT_TEXT_INPUT');
+            WriteLn(s);
           end;
           SDL_EVENT_TEXT_EDITING: begin
-            Write(event.edit.Text);
+            WriteLn('SDL_EVENT_TEXT_EDITING');
+//            Write(event.edit.Text);
           end;
         end;
       end;

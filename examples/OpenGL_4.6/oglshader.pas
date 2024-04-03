@@ -7,14 +7,9 @@ interface
 uses
   Classes,
   SysUtils,
-  SDL3_opengl,
-  SDL3_opengl_glext;
+  SDL3_opengl,SDL3_opengl_glext;
 
 type
-  GLenum = TGLenum;
-  GLint = TGLint;
-  GLuint = TGLuint;
-
   TShader = class(TObject)
   private
     FProgramObject: TGLint;
@@ -25,21 +20,18 @@ type
     constructor Create(const AShader: array of ansistring);
     constructor Create;
     destructor Destroy; override;
-    procedure LoadShaderObject(shaderType: GLenum; const AShader: ansistring);
+    procedure LoadShaderObject(shaderType: TGLint; const AShader: ansistring);
     procedure LinkProgram;
     procedure UseProgram;
 
-    function UniformLocation(ch: PGLChar): GLint;
-    function UniformBlockIndex(ch: PGLChar): GLuint;
-    function AttribLocation(ch: PGLChar): GLint;
+    function UniformLocation(ch: PGLChar): TGLint;
+    function UniformBlockIndex(ch: PGLChar): TGLuint;
+    function AttribLocation(ch: PGLChar): TGLint;
     function ShaderVersion: string;
   end;
 
 
   // ---- Hilfsfunktionen ----
-
-function ResourceToStr(Resource: string): ansistring;
-
 
 implementation
 
@@ -54,7 +46,7 @@ begin
   rs.Free;
 end;
 
-function ShadercodeToStr(code: GLint): string;
+function ShadercodeToStr(code: TGLint): string;
 begin
   case code of
     GL_VERTEX_SHADER: begin
@@ -107,7 +99,7 @@ end;
 constructor TShader.Create;
 begin
   inherited Create;
-  FProgramObject := glCreateProgram;
+  FProgramObject := glCreateProgram();
 end;
 
 (*
@@ -150,11 +142,11 @@ begin
   LinkProgram;
 end;
 
-procedure TShader.LoadShaderObject(shaderType: GLenum; const AShader: ansistring);
+procedure TShader.LoadShaderObject(shaderType: TGLint; const AShader: ansistring);
 var
   ShaderObject: TGLint;
   pc: array of char = nil;
-  l: GLint;
+  l: TGLint;
 
   ErrorStatus: TGLboolean;
   InfoLogLength: TGLsizei;
@@ -203,7 +195,7 @@ begin
   glDeleteProgram(FProgramObject);
 end;
 
-function TShader.UniformLocation(ch: PGLChar): GLint;
+function TShader.UniformLocation(ch: PGLChar): TGLint;
 begin
   Result := glGetUniformLocation(FProgramObject, ch);
   if Result = -1 then begin
@@ -211,7 +203,7 @@ begin
   end;
 end;
 
-function TShader.UniformBlockIndex(ch: PGLChar): GLuint;
+function TShader.UniformBlockIndex(ch: PGLChar): TGLuint;
 begin
   Result := glGetUniformBlockIndex(FProgramObject, ch);
   if Result = GL_INVALID_INDEX then begin
@@ -219,7 +211,7 @@ begin
   end;
 end;
 
-function TShader.AttribLocation(ch: PGLChar): GLint;
+function TShader.AttribLocation(ch: PGLChar): TGLint;
 begin
   Result := glGetAttribLocation(FProgramObject, ch);
   if Result = -1 then begin
@@ -229,7 +221,7 @@ end;
 
 procedure TShader.UseProgram;
 const
-  ID_alt: GLuint = 0;
+  ID_alt: TGLuint = 0;
 begin
   if FProgramObject <> ID_alt then begin
     ID_alt := FProgramObject;
@@ -239,7 +231,7 @@ end;
 
 function TShader.ShaderVersion: string;
 begin
-  Result := 'Shader Version: ' + PChar(glGetString(GL_SHADING_LANGUAGE_VERSION));
+  Result := 'Shader Version: ' + PChar( glGetString(GL_SHADING_LANGUAGE_VERSION));
 end;
 
 end.

@@ -9,7 +9,13 @@ uses
   {$PACKRECORDS C}
   {$ENDIF}
 
+  {$IFDEF Linux}
   {$LinkLib 'GL'}
+  {$ENDIF}
+
+  {$IFDEF Windows}
+  {$LinkLib 'c:\windows\system32\opengl32.dll'}
+  {$ENDIF}
 
 {
  * Mesa 3-D graphics library

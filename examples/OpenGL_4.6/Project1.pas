@@ -3,6 +3,7 @@ program Project1;
 uses
   ctypes,
   SDL3,
+  // oglglad_gl,
   SDL3_opengl,
   SDL3_opengl_glext,
   oglShader;
@@ -81,6 +82,8 @@ const
     if SDL_GL_SetSwapInterval(1) < 0 then begin
       WriteLn('Warning: Unable to set VSync! SDL Error: ', SDL_GetError);
     end;
+
+    //    Load_GLADE;
   end;
 
   procedure CreateScene;
@@ -133,8 +136,7 @@ const
         case e.type_ of
           SDL_EVENT_KEY_DOWN: begin
             case e.key.keysym.sym of
-//              SDLK_ESCAPE: begin
-                SDL_SCANCODE_ESCAPE: begin
+              SDLK_ESCAPE: begin
                 quit := True;
               end;
             end;
