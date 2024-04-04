@@ -33,7 +33,7 @@ su
 cmake --install build --prefix=/usr/local
 ```
 
-#Libs aktualisieren
+# Libs aktualisieren
 ```bash
 sudo ldconfig
 ```
