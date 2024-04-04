@@ -23,18 +23,19 @@ cmake -S ../SDL/ -B . -DCMAKE_CXX_COMPILER="/usr/bin/x86_64-w64-mingw32-g++" -DC
 make -j16
 ```
 
-
-
-
 # Alternatives
+```bash
 cmake -S . -B build && cmake --build build && cmake --install build
 cmake -S . -B build
 cmake --build build
 
 su
 cmake --install build --prefix=/usr/local
+```
 
 #Libs aktualisieren
+```bash
 sudo ldconfig
+```
 
 
