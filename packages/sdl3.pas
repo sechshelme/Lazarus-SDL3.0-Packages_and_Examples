@@ -7,13 +7,31 @@ interface
 uses
   ctypes;
 
-{$IFDEF FPC}
-{$PACKRECORDS C}
-{$ENDIF}
+const
+  {$IFDEF Linux}
+  sdl3_lib = 'SDL3';
+  {$ENDIF}
 
-{$DEFINE read_interface}
-{$include SDL3_includes.inc}
-{$UNDEF read_interface}
+  {$IFDEF Windows}
+  sdl3_lib = 'SDL3.dll';
+  {$ENDIF}
+
+
+  {$IFDEF Linux}
+  {$LinkLib 'SDL3'}
+  {$ENDIF}
+
+  {$IFDEF Windows}
+  {$LinkLib 'sdl3.dll'}
+  {$ENDIF}
+
+  {$IFDEF FPC}
+  {$PACKRECORDS C}
+  {$ENDIF}
+
+  {$DEFINE read_interface}
+  {$include SDL3_includes.inc}
+  {$UNDEF read_interface}
 
 implementation
 
@@ -22,7 +40,6 @@ implementation
 {$UNDEF read_implementation}
 
 end.
-
 (*
 Ohne Abhängigkeit:
 

@@ -1,18 +1,5 @@
 //{%MainUnit sdl3.pas}
 
-{$IFDEF Linux}
-{$LinkLib 'SDL3'}
-{$ENDIF}
-
-{$IFDEF Windows}
-{$LinkLib 'c:\windows\system32\sdl3.dll'}
-{$ENDIF}
-
-
-//{$LinkLib 'libSDL3.so.0'}
-{$LinkLib 'SDL3'}
-//{$LinkLib 'libSDL3.so.0.0.0'}
-
  {$include SDL3_stdinc.inc}
  {$include SDL3_guid.inc}
  {$include SDL3_scancode.inc}

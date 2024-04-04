@@ -23,14 +23,6 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages>
-      <Item>
-        <PackageName Value="ogl_Package"/>
-      </Item>
-      <Item>
-        <PackageName Value="SDL3_package"/>
-      </Item>
-    </RequiredPackages>
     <Units>
       <Unit>
         <Filename Value="Project1.pas"/>
@@ -47,6 +39,9 @@
       <IncludeFiles Value="$(ProjOutDir)"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <CodeGeneration>
+      <TargetOS Value="win64"/>
+    </CodeGeneration>
     <Linking>
       <Debugging>
         <DebugInfoType Value="dsDwarf3"/>

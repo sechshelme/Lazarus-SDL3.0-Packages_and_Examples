@@ -3,13 +3,21 @@ program Project1;
 uses
   ctypes,
   SDL3,
-  oglglad_gl,
-  oglVector,
+  // oglglad_gl,
+  SDL3_opengl,
+  SDL3_opengl_glext,
   oglShader;
 
 const
   Screen_Widht = 320;
   Screen_Height = 240;
+
+type
+  TVector2f = array[0..1] of TGLfloat;
+  PVector2f = ^TVector2f;
+
+  TVector4f = array[0..3] of TGLfloat;
+  PVector4f = ^TVector4f;
 
 var
   // SDL
@@ -75,7 +83,7 @@ const
       WriteLn('Warning: Unable to set VSync! SDL Error: ', SDL_GetError);
     end;
 
-    Load_GLADE;
+    //    Load_GLADE;
   end;
 
   procedure CreateScene;

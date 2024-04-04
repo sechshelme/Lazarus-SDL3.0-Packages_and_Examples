@@ -25,6 +25,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="ogl_Package"/>
+      </Item>
+      <Item>
         <PackageName Value="SDL3_package"/>
       </Item>
     </RequiredPackages>
