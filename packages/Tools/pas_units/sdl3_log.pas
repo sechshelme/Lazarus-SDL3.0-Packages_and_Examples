@@ -48,36 +48,36 @@ const
   SDL_LOG_PRIORITY_CRITICAL = 6;
   SDL_NUM_LOG_PRIORITIES = 7;
 
-procedure SDL_LogSetAllPriority(priority: TSDL_LogPriority); cdecl; external;
-procedure SDL_LogSetPriority(category: longint; priority: TSDL_LogPriority); cdecl; external;
-function SDL_LogGetPriority(category: longint): TSDL_LogPriority; cdecl; external;
-procedure SDL_LogResetPriorities; cdecl; external;
-procedure SDL_Log(fmt: PChar); varargs; cdecl; external name 'SDL_Log';
-//procedure SDL_Log(fmt: PChar);varargs; cdecl; external;
-//procedure SDL_Log(fmt: PChar; args: array of const); cdecl; external;
-//procedure SDL_Log(fmt: PChar); cdecl; external;
-//procedure SDL_LogVerbose(category: longint; fmt: PChar; args: array of const); cdecl; external;
-procedure SDL_LogVerbose(category: longint; fmt: PChar);varargs; cdecl; external;
-//procedure SDL_LogDebug(category: longint; fmt: PChar; args: array of const); cdecl; external;
-procedure SDL_LogDebug(category: longint; fmt: PChar);varargs; cdecl; external;
-//procedure SDL_LogInfo(category: longint; fmt: PChar; args: array of const); cdecl; external;
-procedure SDL_LogInfo(category: longint; fmt: PChar);varargs; cdecl; external;
-//procedure SDL_LogWarn(category: longint; fmt: PChar; args: array of const); cdecl; external;
-procedure SDL_LogWarn(category: longint; fmt: PChar);varargs; cdecl; external;
-//procedure SDL_LogError(category: longint; fmt: PChar; args: array of const); cdecl; external;
-procedure SDL_LogError(category: longint; fmt: PChar);varargs; cdecl; external;
-//procedure SDL_LogCritical(category: longint; fmt: PChar; args: array of const); cdecl; external;
-procedure SDL_LogCritical(category: longint; fmt: PChar);varargs; cdecl; external;
-//procedure SDL_LogMessage(category: longint; priority: TSDL_LogPriority; fmt: PChar; args: array of const); cdecl; external;
-procedure SDL_LogMessage(category: longint; priority: TSDL_LogPriority; fmt: PChar); cdecl; external;
-procedure SDL_LogMessageV(category: longint; priority: TSDL_LogPriority; fmt: PChar); varargs; cdecl; external;
+procedure SDL_LogSetAllPriority(priority: TSDL_LogPriority); cdecl; external sdl3_lib;
+procedure SDL_LogSetPriority(category: longint; priority: TSDL_LogPriority); cdecl; external sdl3_lib;
+function SDL_LogGetPriority(category: longint): TSDL_LogPriority; cdecl; external sdl3_lib;
+procedure SDL_LogResetPriorities; cdecl; external sdl3_lib;
+procedure SDL_Log(fmt: PChar); varargs; cdecl; external  sdl3_lib  name 'SDL_Log';
+//procedure SDL_Log(fmt: PChar);varargs; cdecl; external sdl3_lib;
+//procedure SDL_Log(fmt: PChar; args: array of const); cdecl; external sdl3_lib;
+//procedure SDL_Log(fmt: PChar); cdecl; external sdl3_lib;
+//procedure SDL_LogVerbose(category: longint; fmt: PChar; args: array of const); cdecl; external sdl3_lib;
+procedure SDL_LogVerbose(category: longint; fmt: PChar);varargs; cdecl; external sdl3_lib;
+//procedure SDL_LogDebug(category: longint; fmt: PChar; args: array of const); cdecl; external sdl3_lib;
+procedure SDL_LogDebug(category: longint; fmt: PChar);varargs; cdecl; external sdl3_lib;
+//procedure SDL_LogInfo(category: longint; fmt: PChar; args: array of const); cdecl; external sdl3_lib;
+procedure SDL_LogInfo(category: longint; fmt: PChar);varargs; cdecl; external sdl3_lib;
+//procedure SDL_LogWarn(category: longint; fmt: PChar; args: array of const); cdecl; external sdl3_lib;
+procedure SDL_LogWarn(category: longint; fmt: PChar);varargs; cdecl; external sdl3_lib;
+//procedure SDL_LogError(category: longint; fmt: PChar; args: array of const); cdecl; external sdl3_lib;
+procedure SDL_LogError(category: longint; fmt: PChar);varargs; cdecl; external sdl3_lib;
+//procedure SDL_LogCritical(category: longint; fmt: PChar; args: array of const); cdecl; external sdl3_lib;
+procedure SDL_LogCritical(category: longint; fmt: PChar);varargs; cdecl; external sdl3_lib;
+//procedure SDL_LogMessage(category: longint; priority: TSDL_LogPriority; fmt: PChar; args: array of const); cdecl; external sdl3_lib;
+procedure SDL_LogMessage(category: longint; priority: TSDL_LogPriority; fmt: PChar); cdecl; external sdl3_lib;
+procedure SDL_LogMessageV(category: longint; priority: TSDL_LogPriority; fmt: PChar); varargs; cdecl; external sdl3_lib;
 
 type
   TSDL_LogOutputFunction = procedure(userdata: pointer; category: longint; priority: TSDL_LogPriority; message: PChar); cdecl;
   PSDL_LogOutputFunction = ^TSDL_LogOutputFunction;
 
-procedure SDL_LogGetOutputFunction(callback: PSDL_LogOutputFunction; userdata: Ppointer); cdecl; external;
-procedure SDL_LogSetOutputFunction(callback: TSDL_LogOutputFunction; userdata: pointer); cdecl; external;
+procedure SDL_LogGetOutputFunction(callback: PSDL_LogOutputFunction; userdata: Ppointer); cdecl; external sdl3_lib;
+procedure SDL_LogSetOutputFunction(callback: TSDL_LogOutputFunction; userdata: pointer); cdecl; external sdl3_lib;
 
 implementation
 

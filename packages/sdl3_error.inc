@@ -7,10 +7,10 @@
 
 {$IFDEF read_interface}
 
-function SDL_SetError(fmt: PChar): longint; varargs; cdecl; external;
-//function SDL_SetError(fmt:Pchar):longint;cdecl;external;
-function SDL_GetError: PChar; cdecl; external;
-procedure SDL_ClearError; cdecl; external;
+function SDL_SetError(fmt: PChar): longint; varargs; cdecl; external sdl3_lib;
+//function SDL_SetError(fmt:Pchar):longint;cdecl;external sdl3_lib;
+function SDL_GetError: PChar; cdecl; external sdl3_lib;
+procedure SDL_ClearError; cdecl; external sdl3_lib;
 
 function SDL_OutOfMemory: longint;
 function SDL_Unsupported: longint;
@@ -28,7 +28,7 @@ const
   SDL_UNSUPPORTED_ = 4;
   SDL_LASTERROR = 5;
 
-function SDL_Error(code: TSDL_errorcode): longint; cdecl; external;
+function SDL_Error(code: TSDL_errorcode): longint; cdecl; external sdl3_lib;
 
 {$ENDIF read_interface}
 

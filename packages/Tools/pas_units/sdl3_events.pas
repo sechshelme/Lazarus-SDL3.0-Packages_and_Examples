@@ -540,7 +540,7 @@ type
       31: (padding: array[0..127] of uint8);
   end;
 
-procedure SDL_PumpEvents; cdecl; external;
+procedure SDL_PumpEvents; cdecl; external sdl3_lib;
 
 type
   PSDL_eventaction = ^TSDL_eventaction;
@@ -551,29 +551,29 @@ const
   SDL_PEEKEVENT = 1;
   SDL_GETEVENT = 2;
 
-function SDL_PeepEvents(events: PSDL_Event; numevents: longint; action: TSDL_eventaction; minType: uint32; maxType: uint32): longint; cdecl; external;
-function SDL_HasEvent(_type: uint32): TSDL_bool; cdecl; external;
-function SDL_HasEvents(minType: Uint32; maxType: Uint32): TSDL_bool; cdecl; external;
-procedure SDL_FlushEvent(_type: Uint32); cdecl; external;
-procedure SDL_FlushEvents(minType: Uint32; maxType: Uint32); cdecl; external;
-function SDL_PollEvent(event: PSDL_Event): TSDL_bool; cdecl; external;
-function SDL_WaitEvent(event: PSDL_Event): TSDL_bool; cdecl; external;
-function SDL_WaitEventTimeout(event: PSDL_Event; timeoutMS: int32): TSDL_bool; cdecl; external;
-function SDL_PushEvent(event: PSDL_Event): longint; cdecl; external;
+function SDL_PeepEvents(events: PSDL_Event; numevents: longint; action: TSDL_eventaction; minType: uint32; maxType: uint32): longint; cdecl; external sdl3_lib;
+function SDL_HasEvent(_type: uint32): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_HasEvents(minType: Uint32; maxType: Uint32): TSDL_bool; cdecl; external sdl3_lib;
+procedure SDL_FlushEvent(_type: Uint32); cdecl; external sdl3_lib;
+procedure SDL_FlushEvents(minType: Uint32; maxType: Uint32); cdecl; external sdl3_lib;
+function SDL_PollEvent(event: PSDL_Event): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_WaitEvent(event: PSDL_Event): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_WaitEventTimeout(event: PSDL_Event; timeoutMS: int32): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_PushEvent(event: PSDL_Event): longint; cdecl; external sdl3_lib;
 
 type
   PSDL_EventFilter = ^TSDL_EventFilter;
   TSDL_EventFilter = function(userdata: pointer; event: PSDL_Event): longint; cdecl;
 
-procedure SDL_SetEventFilter(filter: TSDL_EventFilter; userdata: pointer); cdecl; external;
-function SDL_GetEventFilter(filter: PSDL_EventFilter; userdata: Ppointer): TSDL_bool; cdecl; external;
-function SDL_AddEventWatch(filter: TSDL_EventFilter; userdata: pointer): longint; cdecl; external;
-procedure SDL_DelEventWatch(filter: TSDL_EventFilter; userdata: pointer); cdecl; external;
-procedure SDL_FilterEvents(filter: TSDL_EventFilter; userdata: pointer); cdecl; external;
-procedure SDL_SetEventEnabled(_type: Uint32; Enabled: TSDL_bool); cdecl; external;
-function SDL_EventEnabled(_type: Uint32): TSDL_bool; cdecl; external;
-function SDL_RegisterEvents(numevents: longint): Uint32; cdecl; external;
-function SDL_AllocateEventMemory(size: Tsize_t): pointer; cdecl; external;
+procedure SDL_SetEventFilter(filter: TSDL_EventFilter; userdata: pointer); cdecl; external sdl3_lib;
+function SDL_GetEventFilter(filter: PSDL_EventFilter; userdata: Ppointer): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_AddEventWatch(filter: TSDL_EventFilter; userdata: pointer): longint; cdecl; external sdl3_lib;
+procedure SDL_DelEventWatch(filter: TSDL_EventFilter; userdata: pointer); cdecl; external sdl3_lib;
+procedure SDL_FilterEvents(filter: TSDL_EventFilter; userdata: pointer); cdecl; external sdl3_lib;
+procedure SDL_SetEventEnabled(_type: Uint32; Enabled: TSDL_bool); cdecl; external sdl3_lib;
+function SDL_EventEnabled(_type: Uint32): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_RegisterEvents(numevents: longint): Uint32; cdecl; external sdl3_lib;
+function SDL_AllocateEventMemory(size: Tsize_t): pointer; cdecl; external sdl3_lib;
 
 implementation
 

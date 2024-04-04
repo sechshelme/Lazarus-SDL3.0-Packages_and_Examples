@@ -67,54 +67,54 @@ type
   PSDL_AudioStream = ^TSDL_AudioStream;
   TSDL_AudioStream = Pointer;      {undefined structure}
 
-function SDL_GetNumAudioDrivers:longint;cdecl;external;
-function SDL_GetAudioDriver(index:longint):Pchar;cdecl;external;
-function SDL_GetCurrentAudioDriver:Pchar;cdecl;external;
-function SDL_GetAudioOutputDevices(count:Plongint):PSDL_AudioDeviceID;cdecl;external;
-function SDL_GetAudioCaptureDevices(count:Plongint):PSDL_AudioDeviceID;cdecl;external;
-function SDL_GetAudioDeviceName(devid:TSDL_AudioDeviceID):Pchar;cdecl;external;
-function SDL_GetAudioDeviceFormat(devid:TSDL_AudioDeviceID; spec:PSDL_AudioSpec; sample_frames:Plongint):longint;cdecl;external;
-function SDL_OpenAudioDevice(devid:TSDL_AudioDeviceID; spec:PSDL_AudioSpec):TSDL_AudioDeviceID;cdecl;external;
-function SDL_PauseAudioDevice(dev:TSDL_AudioDeviceID):longint;cdecl;external;
-function SDL_ResumeAudioDevice(dev:TSDL_AudioDeviceID):longint;cdecl;external;
-function SDL_AudioDevicePaused(dev:TSDL_AudioDeviceID):TSDL_bool;cdecl;external;
-procedure SDL_CloseAudioDevice(devid:TSDL_AudioDeviceID);cdecl;external;
-function SDL_BindAudioStreams(devid: TSDL_AudioDeviceID; streams: PPSDL_AudioStream; num_streams: longint): longint; cdecl; external;
-function SDL_BindAudioStream(devid:TSDL_AudioDeviceID; stream:PSDL_AudioStream):longint;cdecl;external;
-procedure SDL_UnbindAudioStreams(streams:PPSDL_AudioStream; num_streams:longint);cdecl;external;
-procedure SDL_UnbindAudioStream(stream:PSDL_AudioStream);cdecl;external;
-function SDL_GetAudioStreamDevice(stream:PSDL_AudioStream):TSDL_AudioDeviceID;cdecl;external;
-function SDL_CreateAudioStream(src_spec:PSDL_AudioSpec; dst_spec:PSDL_AudioSpec):PSDL_AudioStream;cdecl;external;
-function SDL_GetAudioStreamProperties(stream:PSDL_AudioStream):TSDL_PropertiesID;cdecl;external;
-function SDL_GetAudioStreamFormat(stream:PSDL_AudioStream; src_spec:PSDL_AudioSpec; dst_spec:PSDL_AudioSpec):longint;cdecl;external;
-function SDL_SetAudioStreamFormat(stream:PSDL_AudioStream; src_spec:PSDL_AudioSpec; dst_spec:PSDL_AudioSpec):longint;cdecl;external;
-function SDL_GetAudioStreamFrequencyRatio(stream:PSDL_AudioStream):single;cdecl;external;
-function SDL_SetAudioStreamFrequencyRatio(stream:PSDL_AudioStream; ratio:single):longint;cdecl;external;
-function SDL_PutAudioStreamData(stream:PSDL_AudioStream; buf:pointer; len:longint):longint;cdecl;external;
-function SDL_GetAudioStreamData(stream:PSDL_AudioStream; buf:pointer; len:longint):longint;cdecl;external;
-function SDL_GetAudioStreamAvailable(stream:PSDL_AudioStream):longint;cdecl;external;
-function SDL_GetAudioStreamQueued(stream:PSDL_AudioStream):longint;cdecl;external;
-function SDL_FlushAudioStream(stream:PSDL_AudioStream):longint;cdecl;external;
-function SDL_ClearAudioStream(stream:PSDL_AudioStream):longint;cdecl;external;
-function SDL_LockAudioStream(stream:PSDL_AudioStream):longint;cdecl;external;
-function SDL_UnlockAudioStream(stream:PSDL_AudioStream):longint;cdecl;external;
+function SDL_GetNumAudioDrivers:longint;cdecl;external sdl3_lib;
+function SDL_GetAudioDriver(index:longint):Pchar;cdecl;external sdl3_lib;
+function SDL_GetCurrentAudioDriver:Pchar;cdecl;external sdl3_lib;
+function SDL_GetAudioOutputDevices(count:Plongint):PSDL_AudioDeviceID;cdecl;external sdl3_lib;
+function SDL_GetAudioCaptureDevices(count:Plongint):PSDL_AudioDeviceID;cdecl;external sdl3_lib;
+function SDL_GetAudioDeviceName(devid:TSDL_AudioDeviceID):Pchar;cdecl;external sdl3_lib;
+function SDL_GetAudioDeviceFormat(devid:TSDL_AudioDeviceID; spec:PSDL_AudioSpec; sample_frames:Plongint):longint;cdecl;external sdl3_lib;
+function SDL_OpenAudioDevice(devid:TSDL_AudioDeviceID; spec:PSDL_AudioSpec):TSDL_AudioDeviceID;cdecl;external sdl3_lib;
+function SDL_PauseAudioDevice(dev:TSDL_AudioDeviceID):longint;cdecl;external sdl3_lib;
+function SDL_ResumeAudioDevice(dev:TSDL_AudioDeviceID):longint;cdecl;external sdl3_lib;
+function SDL_AudioDevicePaused(dev:TSDL_AudioDeviceID):TSDL_bool;cdecl;external sdl3_lib;
+procedure SDL_CloseAudioDevice(devid:TSDL_AudioDeviceID);cdecl;external sdl3_lib;
+function SDL_BindAudioStreams(devid: TSDL_AudioDeviceID; streams: PPSDL_AudioStream; num_streams: longint): longint; cdecl; external sdl3_lib;
+function SDL_BindAudioStream(devid:TSDL_AudioDeviceID; stream:PSDL_AudioStream):longint;cdecl;external sdl3_lib;
+procedure SDL_UnbindAudioStreams(streams:PPSDL_AudioStream; num_streams:longint);cdecl;external sdl3_lib;
+procedure SDL_UnbindAudioStream(stream:PSDL_AudioStream);cdecl;external sdl3_lib;
+function SDL_GetAudioStreamDevice(stream:PSDL_AudioStream):TSDL_AudioDeviceID;cdecl;external sdl3_lib;
+function SDL_CreateAudioStream(src_spec:PSDL_AudioSpec; dst_spec:PSDL_AudioSpec):PSDL_AudioStream;cdecl;external sdl3_lib;
+function SDL_GetAudioStreamProperties(stream:PSDL_AudioStream):TSDL_PropertiesID;cdecl;external sdl3_lib;
+function SDL_GetAudioStreamFormat(stream:PSDL_AudioStream; src_spec:PSDL_AudioSpec; dst_spec:PSDL_AudioSpec):longint;cdecl;external sdl3_lib;
+function SDL_SetAudioStreamFormat(stream:PSDL_AudioStream; src_spec:PSDL_AudioSpec; dst_spec:PSDL_AudioSpec):longint;cdecl;external sdl3_lib;
+function SDL_GetAudioStreamFrequencyRatio(stream:PSDL_AudioStream):single;cdecl;external sdl3_lib;
+function SDL_SetAudioStreamFrequencyRatio(stream:PSDL_AudioStream; ratio:single):longint;cdecl;external sdl3_lib;
+function SDL_PutAudioStreamData(stream:PSDL_AudioStream; buf:pointer; len:longint):longint;cdecl;external sdl3_lib;
+function SDL_GetAudioStreamData(stream:PSDL_AudioStream; buf:pointer; len:longint):longint;cdecl;external sdl3_lib;
+function SDL_GetAudioStreamAvailable(stream:PSDL_AudioStream):longint;cdecl;external sdl3_lib;
+function SDL_GetAudioStreamQueued(stream:PSDL_AudioStream):longint;cdecl;external sdl3_lib;
+function SDL_FlushAudioStream(stream:PSDL_AudioStream):longint;cdecl;external sdl3_lib;
+function SDL_ClearAudioStream(stream:PSDL_AudioStream):longint;cdecl;external sdl3_lib;
+function SDL_LockAudioStream(stream:PSDL_AudioStream):longint;cdecl;external sdl3_lib;
+function SDL_UnlockAudioStream(stream:PSDL_AudioStream):longint;cdecl;external sdl3_lib;
 type
   TSDL_AudioStreamCallback = procedure (userdata:pointer; stream:PSDL_AudioStream; additional_amount:longint; total_amount:longint);cdecl;
 
-function SDL_SetAudioStreamGetCallback(stream:PSDL_AudioStream; callback:TSDL_AudioStreamCallback; userdata:pointer):longint;cdecl;external;
-function SDL_SetAudioStreamPutCallback(stream:PSDL_AudioStream; callback:TSDL_AudioStreamCallback; userdata:pointer):longint;cdecl;external;
-procedure SDL_DestroyAudioStream(stream:PSDL_AudioStream);cdecl;external;
-function SDL_OpenAudioDeviceStream(devid:TSDL_AudioDeviceID; spec:PSDL_AudioSpec; callback:TSDL_AudioStreamCallback; userdata:pointer):PSDL_AudioStream;cdecl;external;
+function SDL_SetAudioStreamGetCallback(stream:PSDL_AudioStream; callback:TSDL_AudioStreamCallback; userdata:pointer):longint;cdecl;external sdl3_lib;
+function SDL_SetAudioStreamPutCallback(stream:PSDL_AudioStream; callback:TSDL_AudioStreamCallback; userdata:pointer):longint;cdecl;external sdl3_lib;
+procedure SDL_DestroyAudioStream(stream:PSDL_AudioStream);cdecl;external sdl3_lib;
+function SDL_OpenAudioDeviceStream(devid:TSDL_AudioDeviceID; spec:PSDL_AudioSpec; callback:TSDL_AudioStreamCallback; userdata:pointer):PSDL_AudioStream;cdecl;external sdl3_lib;
 type
   TSDL_AudioPostmixCallback = procedure (userdata:pointer; spec:PSDL_AudioSpec; buffer:Psingle; buflen:longint);cdecl;
-function SDL_SetAudioPostmixCallback(devid:TSDL_AudioDeviceID; callback:TSDL_AudioPostmixCallback; userdata:pointer):longint;cdecl;external;
-function SDL_LoadWAV_RW(src:PSDL_RWops; freesrc:TSDL_bool; spec:PSDL_AudioSpec; audio_buf:PPUint8; audio_len:PUint32):longint;cdecl;external;
-function SDL_LoadWAV(path:Pchar; spec:PSDL_AudioSpec; audio_buf:PPUint8; audio_len:PUint32):longint;cdecl;external;
+function SDL_SetAudioPostmixCallback(devid:TSDL_AudioDeviceID; callback:TSDL_AudioPostmixCallback; userdata:pointer):longint;cdecl;external sdl3_lib;
+function SDL_LoadWAV_RW(src:PSDL_RWops; freesrc:TSDL_bool; spec:PSDL_AudioSpec; audio_buf:PPUint8; audio_len:PUint32):longint;cdecl;external sdl3_lib;
+function SDL_LoadWAV(path:Pchar; spec:PSDL_AudioSpec; audio_buf:PPUint8; audio_len:PUint32):longint;cdecl;external sdl3_lib;
 const
   SDL_MIX_MAXVOLUME = 128;  
-function SDL_MixAudioFormat(dst:PUint8; src:PUint8; format:TSDL_AudioFormat; len:Uint32; volume:longint):longint;cdecl;external;
-function SDL_ConvertAudioSamples(src_spec:PSDL_AudioSpec; src_data:PUint8; src_len:longint; dst_spec:PSDL_AudioSpec; dst_data:PPUint8;           dst_len:Plongint):longint;cdecl;external;
-function SDL_GetSilenceValueForFormat(format:TSDL_AudioFormat):longint;cdecl;external;
+function SDL_MixAudioFormat(dst:PUint8; src:PUint8; format:TSDL_AudioFormat; len:Uint32; volume:longint):longint;cdecl;external sdl3_lib;
+function SDL_ConvertAudioSamples(src_spec:PSDL_AudioSpec; src_data:PUint8; src_len:longint; dst_spec:PSDL_AudioSpec; dst_data:PPUint8;           dst_len:Plongint):longint;cdecl;external sdl3_lib;
+function SDL_GetSilenceValueForFormat(format:TSDL_AudioFormat):longint;cdecl;external sdl3_lib;
 
 {$ENDIF read_interface}
 

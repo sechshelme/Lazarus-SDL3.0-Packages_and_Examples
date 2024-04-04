@@ -64,11 +64,11 @@ type
   PSDL_Texture = ^TSDL_Texture;
   TSDL_Texture = Pointer;      {undefined structure}
 
-function SDL_GetNumRenderDrivers: longint; cdecl; external;
-function SDL_GetRenderDriver(index: longint): PChar; cdecl; external;
-function SDL_CreateWindowAndRenderer(Width: longint; Height: longint; window_flags: uint32; window: PPSDL_Window; renderer: PPSDL_Renderer): longint; cdecl; external;
-function SDL_CreateRenderer(window: PSDL_Window; Name: PChar; flags: uint32): PSDL_Renderer; cdecl; external;
-function SDL_CreateRendererWithProperties(props: TSDL_PropertiesID): PSDL_Renderer; cdecl; external;
+function SDL_GetNumRenderDrivers: longint; cdecl; external sdl3_lib;
+function SDL_GetRenderDriver(index: longint): PChar; cdecl; external sdl3_lib;
+function SDL_CreateWindowAndRenderer(Width: longint; Height: longint; window_flags: uint32; window: PPSDL_Window; renderer: PPSDL_Renderer): longint; cdecl; external sdl3_lib;
+function SDL_CreateRenderer(window: PSDL_Window; Name: PChar; flags: uint32): PSDL_Renderer; cdecl; external sdl3_lib;
+function SDL_CreateRendererWithProperties(props: TSDL_PropertiesID): PSDL_Renderer; cdecl; external sdl3_lib;
 
 const
   SDL_PROP_RENDERER_CREATE_NAME_STRING = 'name';
@@ -83,11 +83,11 @@ const
   SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER = 'vulkan.graphics_queue_family_index';
   SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER = 'vulkan.present_queue_family_index';
 
-function SDL_CreateSoftwareRenderer(surface: PSDL_Surface): PSDL_Renderer; cdecl; external;
-function SDL_GetRenderer(window: PSDL_Window): PSDL_Renderer; cdecl; external;
-function SDL_GetRenderWindow(renderer: PSDL_Renderer): PSDL_Window; cdecl; external;
-function SDL_GetRendererInfo(renderer: PSDL_Renderer; info: PSDL_RendererInfo): longint; cdecl; external;
-function SDL_GetRendererProperties(renderer: PSDL_Renderer): TSDL_PropertiesID; cdecl; external;
+function SDL_CreateSoftwareRenderer(surface: PSDL_Surface): PSDL_Renderer; cdecl; external sdl3_lib;
+function SDL_GetRenderer(window: PSDL_Window): PSDL_Renderer; cdecl; external sdl3_lib;
+function SDL_GetRenderWindow(renderer: PSDL_Renderer): PSDL_Window; cdecl; external sdl3_lib;
+function SDL_GetRendererInfo(renderer: PSDL_Renderer; info: PSDL_RendererInfo): longint; cdecl; external sdl3_lib;
+function SDL_GetRendererProperties(renderer: PSDL_Renderer): TSDL_PropertiesID; cdecl; external sdl3_lib;
 
 const
   SDL_PROP_RENDERER_NAME_STRING = 'SDL.renderer.name';
@@ -108,11 +108,11 @@ const
   SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER = 'SDL.renderer.vulkan.graphics_queue_family_index';
   SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER = 'SDL.renderer.vulkan.present_queue_family_index';
 
-function SDL_GetRenderOutputSize(renderer: PSDL_Renderer; w: Plongint; h: Plongint): longint; cdecl; external;
-function SDL_GetCurrentRenderOutputSize(renderer: PSDL_Renderer; w: Plongint; h: Plongint): longint; cdecl; external;
-function SDL_CreateTexture(renderer: PSDL_Renderer; format: uint32; access: longint; w: longint; h: longint): PSDL_Texture; cdecl; external;
-function SDL_CreateTextureFromSurface(renderer: PSDL_Renderer; surface: PSDL_Surface): PSDL_Texture; cdecl; external;
-function SDL_CreateTextureWithProperties(renderer: PSDL_Renderer; props: TSDL_PropertiesID): PSDL_Texture; cdecl; external;
+function SDL_GetRenderOutputSize(renderer: PSDL_Renderer; w: Plongint; h: Plongint): longint; cdecl; external sdl3_lib;
+function SDL_GetCurrentRenderOutputSize(renderer: PSDL_Renderer; w: Plongint; h: Plongint): longint; cdecl; external sdl3_lib;
+function SDL_CreateTexture(renderer: PSDL_Renderer; format: uint32; access: longint; w: longint; h: longint): PSDL_Texture; cdecl; external sdl3_lib;
+function SDL_CreateTextureFromSurface(renderer: PSDL_Renderer; surface: PSDL_Surface): PSDL_Texture; cdecl; external sdl3_lib;
+function SDL_CreateTextureWithProperties(renderer: PSDL_Renderer; props: TSDL_PropertiesID): PSDL_Texture; cdecl; external sdl3_lib;
 
 const
   SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER = 'colorspace';
@@ -141,7 +141,7 @@ const
   SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER = 'vulkan.texture';
 
 
-function SDL_GetTextureProperties(texture: PSDL_Texture): TSDL_PropertiesID; cdecl; external;
+function SDL_GetTextureProperties(texture: PSDL_Texture): TSDL_PropertiesID; cdecl; external sdl3_lib;
 
 const
   SDL_PROP_TEXTURE_COLORSPACE_NUMBER = 'SDL.texture.colorspace';
@@ -170,80 +170,80 @@ const
   SDL_PROP_TEXTURE_VULKAN_TEXTURE_V_POINTER = 'SDL.texture.vulkan.texture_v';
   SDL_PROP_TEXTURE_VULKAN_TEXTURE_UV_POINTER = 'SDL.texture.vulkan.texture_uv';
 
-function SDL_GetRendererFromTexture(texture: PSDL_Texture): PSDL_Renderer; cdecl; external;
-function SDL_QueryTexture(texture: PSDL_Texture; format: PUint32; access: Plongint; w: Plongint; h: Plongint): longint; cdecl; external;
-function SDL_SetTextureColorMod(texture: PSDL_Texture; r: uint8; g: uint8; b: uint8): longint; cdecl; external;
-function SDL_SetTextureColorModFloat(texture: PSDL_Texture; r: single; g: single; b: single): longint; cdecl; external;
-function SDL_GetTextureColorMod(texture: PSDL_Texture; r: PUint8; g: PUint8; b: PUint8): longint; cdecl; external;
-function SDL_GetTextureColorModFloat(texture: PSDL_Texture; r: Psingle; g: Psingle; b: Psingle): longint; cdecl; external;
-function SDL_SetTextureAlphaMod(texture: PSDL_Texture; alpha: uint8): longint; cdecl; external;
-function SDL_SetTextureAlphaModFloat(texture: PSDL_Texture; alpha: single): longint; cdecl; external;
-function SDL_GetTextureAlphaMod(texture: PSDL_Texture; alpha: PUint8): longint; cdecl; external;
-function SDL_GetTextureAlphaModFloat(texture: PSDL_Texture; alpha: Psingle): longint; cdecl; external;
-function SDL_SetTextureBlendMode(texture: PSDL_Texture; blendMode: TSDL_BlendMode): longint; cdecl; external;
-function SDL_GetTextureBlendMode(texture: PSDL_Texture; blendMode: PSDL_BlendMode): longint; cdecl; external;
-function SDL_SetTextureScaleMode(texture: PSDL_Texture; scaleMode: TSDL_ScaleMode): longint; cdecl; external;
-function SDL_GetTextureScaleMode(texture: PSDL_Texture; scaleMode: PSDL_ScaleMode): longint; cdecl; external;
-function SDL_UpdateTexture(texture: PSDL_Texture; rect: PSDL_Rect; pixels: pointer; pitch: longint): longint; cdecl; external;
+function SDL_GetRendererFromTexture(texture: PSDL_Texture): PSDL_Renderer; cdecl; external sdl3_lib;
+function SDL_QueryTexture(texture: PSDL_Texture; format: PUint32; access: Plongint; w: Plongint; h: Plongint): longint; cdecl; external sdl3_lib;
+function SDL_SetTextureColorMod(texture: PSDL_Texture; r: uint8; g: uint8; b: uint8): longint; cdecl; external sdl3_lib;
+function SDL_SetTextureColorModFloat(texture: PSDL_Texture; r: single; g: single; b: single): longint; cdecl; external sdl3_lib;
+function SDL_GetTextureColorMod(texture: PSDL_Texture; r: PUint8; g: PUint8; b: PUint8): longint; cdecl; external sdl3_lib;
+function SDL_GetTextureColorModFloat(texture: PSDL_Texture; r: Psingle; g: Psingle; b: Psingle): longint; cdecl; external sdl3_lib;
+function SDL_SetTextureAlphaMod(texture: PSDL_Texture; alpha: uint8): longint; cdecl; external sdl3_lib;
+function SDL_SetTextureAlphaModFloat(texture: PSDL_Texture; alpha: single): longint; cdecl; external sdl3_lib;
+function SDL_GetTextureAlphaMod(texture: PSDL_Texture; alpha: PUint8): longint; cdecl; external sdl3_lib;
+function SDL_GetTextureAlphaModFloat(texture: PSDL_Texture; alpha: Psingle): longint; cdecl; external sdl3_lib;
+function SDL_SetTextureBlendMode(texture: PSDL_Texture; blendMode: TSDL_BlendMode): longint; cdecl; external sdl3_lib;
+function SDL_GetTextureBlendMode(texture: PSDL_Texture; blendMode: PSDL_BlendMode): longint; cdecl; external sdl3_lib;
+function SDL_SetTextureScaleMode(texture: PSDL_Texture; scaleMode: TSDL_ScaleMode): longint; cdecl; external sdl3_lib;
+function SDL_GetTextureScaleMode(texture: PSDL_Texture; scaleMode: PSDL_ScaleMode): longint; cdecl; external sdl3_lib;
+function SDL_UpdateTexture(texture: PSDL_Texture; rect: PSDL_Rect; pixels: pointer; pitch: longint): longint; cdecl; external sdl3_lib;
 function SDL_UpdateYUVTexture(texture: PSDL_Texture; rect: PSDL_Rect; Yplane: PUint8; Ypitch: longint; Uplane: PUint8;
-  Upitch: longint; Vplane: PUint8; Vpitch: longint): longint; cdecl; external;
+  Upitch: longint; Vplane: PUint8; Vpitch: longint): longint; cdecl; external sdl3_lib;
 function SDL_UpdateNVTexture(texture: PSDL_Texture; rect: PSDL_Rect; Yplane: PUint8; Ypitch: longint; UVplane: PUint8;
-  UVpitch: longint): longint; cdecl; external;
-function SDL_LockTexture(texture: PSDL_Texture; rect: PSDL_Rect; pixels: Ppointer; pitch: Plongint): longint; cdecl; external;
-function SDL_LockTextureToSurface(texture: PSDL_Texture; rect: PSDL_Rect; surface: PPSDL_Surface): longint; cdecl; external;
-procedure SDL_UnlockTexture(texture: PSDL_Texture); cdecl; external;
-function SDL_SetRenderTarget(renderer: PSDL_Renderer; texture: PSDL_Texture): longint; cdecl; external;
-function SDL_GetRenderTarget(renderer: PSDL_Renderer): PSDL_Texture; cdecl; external;
-function SDL_SetRenderLogicalPresentation(renderer: PSDL_Renderer; w: longint; h: longint; mode: TSDL_RendererLogicalPresentation; scale_mode: TSDL_ScaleMode): longint; cdecl; external;
-function SDL_GetRenderLogicalPresentation(renderer: PSDL_Renderer; w: Plongint; h: Plongint; mode: PSDL_RendererLogicalPresentation; scale_mode: PSDL_ScaleMode): longint; cdecl; external;
-function SDL_RenderCoordinatesFromWindow(renderer: PSDL_Renderer; window_x: single; window_y: single; x: Psingle; y: Psingle): longint; cdecl; external;
-function SDL_RenderCoordinatesToWindow(renderer: PSDL_Renderer; x: single; y: single; window_x: Psingle; window_y: Psingle): longint; cdecl; external;
-function SDL_ConvertEventToRenderCoordinates(renderer: PSDL_Renderer; event: PSDL_Event): longint; cdecl; external;
-function SDL_SetRenderViewport(renderer: PSDL_Renderer; rect: PSDL_Rect): longint; cdecl; external;
-function SDL_GetRenderViewport(renderer: PSDL_Renderer; rect: PSDL_Rect): longint; cdecl; external;
-function SDL_RenderViewportSet(renderer: PSDL_Renderer): TSDL_bool; cdecl; external;
-function SDL_SetRenderClipRect(renderer: PSDL_Renderer; rect: PSDL_Rect): longint; cdecl; external;
-function SDL_GetRenderClipRect(renderer: PSDL_Renderer; rect: PSDL_Rect): longint; cdecl; external;
-function SDL_RenderClipEnabled(renderer: PSDL_Renderer): TSDL_bool; cdecl; external;
-function SDL_SetRenderScale(renderer: PSDL_Renderer; scaleX: single; scaleY: single): longint; cdecl; external;
-function SDL_GetRenderScale(renderer: PSDL_Renderer; scaleX: Psingle; scaleY: Psingle): longint; cdecl; external;
-function SDL_SetRenderDrawColor(renderer: PSDL_Renderer; r: uint8; g: uint8; b: uint8; a: uint8): longint; cdecl; external;
-function SDL_SetRenderDrawColorFloat(renderer: PSDL_Renderer; r: single; g: single; b: single; a: single): longint; cdecl; external;
-function SDL_GetRenderDrawColor(renderer: PSDL_Renderer; r: PUint8; g: PUint8; b: PUint8; a: PUint8): longint; cdecl; external;
-function SDL_GetRenderDrawColorFloat(renderer: PSDL_Renderer; r: Psingle; g: Psingle; b: Psingle; a: Psingle): longint; cdecl; external;
-function SDL_SetRenderColorScale(renderer: PSDL_Renderer; scale: single): longint; cdecl; external;
-function SDL_GetRenderColorScale(renderer: PSDL_Renderer; scale: Psingle): longint; cdecl; external;
-function SDL_SetRenderDrawBlendMode(renderer: PSDL_Renderer; blendMode: TSDL_BlendMode): longint; cdecl; external;
-function SDL_GetRenderDrawBlendMode(renderer: PSDL_Renderer; blendMode: PSDL_BlendMode): longint; cdecl; external;
-function SDL_RenderClear(renderer: PSDL_Renderer): longint; cdecl; external;
-function SDL_RenderPoint(renderer: PSDL_Renderer; x: single; y: single): longint; cdecl; external;
-function SDL_RenderPoints(renderer: PSDL_Renderer; points: PSDL_FPoint; Count: longint): longint; cdecl; external;
-function SDL_RenderLine(renderer: PSDL_Renderer; x1: single; y1: single; x2: single; y2: single): longint; cdecl; external;
-function SDL_RenderLines(renderer: PSDL_Renderer; points: PSDL_FPoint; Count: longint): longint; cdecl; external;
-function SDL_RenderRect(renderer: PSDL_Renderer; rect: PSDL_FRect): longint; cdecl; external;
-function SDL_RenderRects(renderer: PSDL_Renderer; rects: PSDL_FRect; Count: longint): longint; cdecl; external;
-function SDL_RenderFillRect(renderer: PSDL_Renderer; rect: PSDL_FRect): longint; cdecl; external;
-function SDL_RenderFillRects(renderer: PSDL_Renderer; rects: PSDL_FRect; Count: longint): longint; cdecl; external;
-function SDL_RenderTexture(renderer: PSDL_Renderer; texture: PSDL_Texture; srcrect: PSDL_FRect; dstrect: PSDL_FRect): longint; cdecl; external;
+  UVpitch: longint): longint; cdecl; external sdl3_lib;
+function SDL_LockTexture(texture: PSDL_Texture; rect: PSDL_Rect; pixels: Ppointer; pitch: Plongint): longint; cdecl; external sdl3_lib;
+function SDL_LockTextureToSurface(texture: PSDL_Texture; rect: PSDL_Rect; surface: PPSDL_Surface): longint; cdecl; external sdl3_lib;
+procedure SDL_UnlockTexture(texture: PSDL_Texture); cdecl; external sdl3_lib;
+function SDL_SetRenderTarget(renderer: PSDL_Renderer; texture: PSDL_Texture): longint; cdecl; external sdl3_lib;
+function SDL_GetRenderTarget(renderer: PSDL_Renderer): PSDL_Texture; cdecl; external sdl3_lib;
+function SDL_SetRenderLogicalPresentation(renderer: PSDL_Renderer; w: longint; h: longint; mode: TSDL_RendererLogicalPresentation; scale_mode: TSDL_ScaleMode): longint; cdecl; external sdl3_lib;
+function SDL_GetRenderLogicalPresentation(renderer: PSDL_Renderer; w: Plongint; h: Plongint; mode: PSDL_RendererLogicalPresentation; scale_mode: PSDL_ScaleMode): longint; cdecl; external sdl3_lib;
+function SDL_RenderCoordinatesFromWindow(renderer: PSDL_Renderer; window_x: single; window_y: single; x: Psingle; y: Psingle): longint; cdecl; external sdl3_lib;
+function SDL_RenderCoordinatesToWindow(renderer: PSDL_Renderer; x: single; y: single; window_x: Psingle; window_y: Psingle): longint; cdecl; external sdl3_lib;
+function SDL_ConvertEventToRenderCoordinates(renderer: PSDL_Renderer; event: PSDL_Event): longint; cdecl; external sdl3_lib;
+function SDL_SetRenderViewport(renderer: PSDL_Renderer; rect: PSDL_Rect): longint; cdecl; external sdl3_lib;
+function SDL_GetRenderViewport(renderer: PSDL_Renderer; rect: PSDL_Rect): longint; cdecl; external sdl3_lib;
+function SDL_RenderViewportSet(renderer: PSDL_Renderer): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_SetRenderClipRect(renderer: PSDL_Renderer; rect: PSDL_Rect): longint; cdecl; external sdl3_lib;
+function SDL_GetRenderClipRect(renderer: PSDL_Renderer; rect: PSDL_Rect): longint; cdecl; external sdl3_lib;
+function SDL_RenderClipEnabled(renderer: PSDL_Renderer): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_SetRenderScale(renderer: PSDL_Renderer; scaleX: single; scaleY: single): longint; cdecl; external sdl3_lib;
+function SDL_GetRenderScale(renderer: PSDL_Renderer; scaleX: Psingle; scaleY: Psingle): longint; cdecl; external sdl3_lib;
+function SDL_SetRenderDrawColor(renderer: PSDL_Renderer; r: uint8; g: uint8; b: uint8; a: uint8): longint; cdecl; external sdl3_lib;
+function SDL_SetRenderDrawColorFloat(renderer: PSDL_Renderer; r: single; g: single; b: single; a: single): longint; cdecl; external sdl3_lib;
+function SDL_GetRenderDrawColor(renderer: PSDL_Renderer; r: PUint8; g: PUint8; b: PUint8; a: PUint8): longint; cdecl; external sdl3_lib;
+function SDL_GetRenderDrawColorFloat(renderer: PSDL_Renderer; r: Psingle; g: Psingle; b: Psingle; a: Psingle): longint; cdecl; external sdl3_lib;
+function SDL_SetRenderColorScale(renderer: PSDL_Renderer; scale: single): longint; cdecl; external sdl3_lib;
+function SDL_GetRenderColorScale(renderer: PSDL_Renderer; scale: Psingle): longint; cdecl; external sdl3_lib;
+function SDL_SetRenderDrawBlendMode(renderer: PSDL_Renderer; blendMode: TSDL_BlendMode): longint; cdecl; external sdl3_lib;
+function SDL_GetRenderDrawBlendMode(renderer: PSDL_Renderer; blendMode: PSDL_BlendMode): longint; cdecl; external sdl3_lib;
+function SDL_RenderClear(renderer: PSDL_Renderer): longint; cdecl; external sdl3_lib;
+function SDL_RenderPoint(renderer: PSDL_Renderer; x: single; y: single): longint; cdecl; external sdl3_lib;
+function SDL_RenderPoints(renderer: PSDL_Renderer; points: PSDL_FPoint; Count: longint): longint; cdecl; external sdl3_lib;
+function SDL_RenderLine(renderer: PSDL_Renderer; x1: single; y1: single; x2: single; y2: single): longint; cdecl; external sdl3_lib;
+function SDL_RenderLines(renderer: PSDL_Renderer; points: PSDL_FPoint; Count: longint): longint; cdecl; external sdl3_lib;
+function SDL_RenderRect(renderer: PSDL_Renderer; rect: PSDL_FRect): longint; cdecl; external sdl3_lib;
+function SDL_RenderRects(renderer: PSDL_Renderer; rects: PSDL_FRect; Count: longint): longint; cdecl; external sdl3_lib;
+function SDL_RenderFillRect(renderer: PSDL_Renderer; rect: PSDL_FRect): longint; cdecl; external sdl3_lib;
+function SDL_RenderFillRects(renderer: PSDL_Renderer; rects: PSDL_FRect; Count: longint): longint; cdecl; external sdl3_lib;
+function SDL_RenderTexture(renderer: PSDL_Renderer; texture: PSDL_Texture; srcrect: PSDL_FRect; dstrect: PSDL_FRect): longint; cdecl; external sdl3_lib;
 function SDL_RenderTextureRotated(renderer: PSDL_Renderer; texture: PSDL_Texture; srcrect: PSDL_FRect; dstrect: PSDL_FRect; angle: cdouble;
-  center: PSDL_FPoint; flip: TSDL_FlipMode): longint; cdecl; external;
+  center: PSDL_FPoint; flip: TSDL_FlipMode): longint; cdecl; external sdl3_lib;
 function SDL_RenderGeometry(renderer: PSDL_Renderer; texture: PSDL_Texture; vertices: PSDL_Vertex; num_vertices: longint; indices: Plongint;
-  num_indices: longint): longint; cdecl; external;
+  num_indices: longint): longint; cdecl; external sdl3_lib;
 function SDL_RenderGeometryRaw(renderer: PSDL_Renderer; texture: PSDL_Texture; xy: Psingle; xy_stride: longint; color: PSDL_Color;
   color_stride: longint; uv: Psingle; uv_stride: longint; num_vertices: longint; indices: pointer;
-  num_indices: longint; size_indices: longint): longint; cdecl; external;
+  num_indices: longint; size_indices: longint): longint; cdecl; external sdl3_lib;
 function SDL_RenderGeometryRawFloat(renderer: PSDL_Renderer; texture: PSDL_Texture; xy: Psingle; xy_stride: longint; color: PSDL_FColor;
   color_stride: longint; uv: Psingle; uv_stride: longint; num_vertices: longint; indices: pointer;
-  num_indices: longint; size_indices: longint): longint; cdecl; external;
-function SDL_RenderReadPixels(renderer: PSDL_Renderer; rect: PSDL_Rect): PSDL_Surface; cdecl; external;
-function SDL_RenderPresent(renderer: PSDL_Renderer): longint; cdecl; external;
-procedure SDL_DestroyTexture(texture: PSDL_Texture); cdecl; external;
-procedure SDL_DestroyRenderer(renderer: PSDL_Renderer); cdecl; external;
-function SDL_FlushRenderer(renderer: PSDL_Renderer): longint; cdecl; external;
-function SDL_GetRenderMetalLayer(renderer: PSDL_Renderer): pointer; cdecl; external;
-function SDL_GetRenderMetalCommandEncoder(renderer: PSDL_Renderer): pointer; cdecl; external;
-function SDL_SetRenderVSync(renderer: PSDL_Renderer; vsync: longint): longint; cdecl; external;
-function SDL_GetRenderVSync(renderer: PSDL_Renderer; vsync: Plongint): longint; cdecl; external;
+  num_indices: longint; size_indices: longint): longint; cdecl; external sdl3_lib;
+function SDL_RenderReadPixels(renderer: PSDL_Renderer; rect: PSDL_Rect): PSDL_Surface; cdecl; external sdl3_lib;
+function SDL_RenderPresent(renderer: PSDL_Renderer): longint; cdecl; external sdl3_lib;
+procedure SDL_DestroyTexture(texture: PSDL_Texture); cdecl; external sdl3_lib;
+procedure SDL_DestroyRenderer(renderer: PSDL_Renderer); cdecl; external sdl3_lib;
+function SDL_FlushRenderer(renderer: PSDL_Renderer): longint; cdecl; external sdl3_lib;
+function SDL_GetRenderMetalLayer(renderer: PSDL_Renderer): pointer; cdecl; external sdl3_lib;
+function SDL_GetRenderMetalCommandEncoder(renderer: PSDL_Renderer): pointer; cdecl; external sdl3_lib;
+function SDL_SetRenderVSync(renderer: PSDL_Renderer; vsync: longint): longint; cdecl; external sdl3_lib;
+function SDL_GetRenderVSync(renderer: PSDL_Renderer; vsync: Plongint): longint; cdecl; external sdl3_lib;
 
 implementation
 

@@ -73,8 +73,8 @@ type
     colorScheme: PSDL_MessageBoxColorScheme;
   end;
 
-function SDL_ShowMessageBox(messageboxdata: PSDL_MessageBoxData; buttonid: Plongint): longint; cdecl; external;
-function SDL_ShowSimpleMessageBox(flags: uint32; title: PChar; message: PChar; window: PSDL_Window): longint; cdecl; external;
+function SDL_ShowMessageBox(messageboxdata: PSDL_MessageBoxData; buttonid: Plongint): longint; cdecl; external sdl3_lib;
+function SDL_ShowSimpleMessageBox(flags: uint32; title: PChar; message: PChar; window: PSDL_Window): longint; cdecl; external sdl3_lib;
 
 {$ENDIF read_interface}
 

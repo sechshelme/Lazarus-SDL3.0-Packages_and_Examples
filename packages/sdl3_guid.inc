@@ -14,8 +14,8 @@ type
     Data: array[0..15] of uint8;
   end;
 
-function SDL_GUIDToString(guid: TSDL_GUID; pszGUID: PChar; cbGUID: longint): longint; cdecl; external;
-function SDL_GUIDFromString(pchGUID: PChar): TSDL_GUID; cdecl; external;
+function SDL_GUIDToString(guid: TSDL_GUID; pszGUID: PChar; cbGUID: longint): longint; cdecl; external sdl3_lib;
+function SDL_GUIDFromString(pchGUID: PChar): TSDL_GUID; cdecl; external sdl3_lib;
 
 {$ENDIF read_interface}
 

@@ -6,8 +6,8 @@ interface
 {$PACKRECORDS C}
 {$ENDIF}
 
-function SDL_GetBasePath: PChar; cdecl; external;
-function SDL_GetPrefPath(org: PChar; app: PChar): PChar; cdecl; external;
+function SDL_GetBasePath: PChar; cdecl; external sdl3_lib;
+function SDL_GetPrefPath(org: PChar; app: PChar): PChar; cdecl; external sdl3_lib;
 
 type
   PSDL_Folder = ^TSDL_Folder;
@@ -26,7 +26,7 @@ const
   SDL_FOLDER_TEMPLATES = 9;
   SDL_FOLDER_VIDEOS = 10;
 
-function SDL_GetUserFolder(folder: TSDL_Folder): PChar; cdecl; external;
+function SDL_GetUserFolder(folder: TSDL_Folder): PChar; cdecl; external sdl3_lib;
 
 implementation
 

@@ -68,12 +68,12 @@ const
   SDL_PEN_TYPE_AIRBRUSH = 5;
   SDL_PEN_TYPE_LAST = SDL_PEN_TYPE_AIRBRUSH;
 
-function SDL_GetPens(Count: Plongint): PSDL_PenID; cdecl; external;
-function SDL_GetPenStatus(instance_id: TSDL_PenID; x: Psingle; y: Psingle; axes: Psingle; num_axes: Tsize_t): Uint32; cdecl; external;
-function SDL_GetPenFromGUID(guid: TSDL_GUID): TSDL_PenID; cdecl; external;
-function SDL_GetPenGUID(instance_id: TSDL_PenID): TSDL_GUID; cdecl; external;
-function SDL_PenConnected(instance_id: TSDL_PenID): TSDL_bool; cdecl; external;
-function SDL_GetPenName(instance_id: TSDL_PenID): PChar; cdecl; external;
+function SDL_GetPens(Count: Plongint): PSDL_PenID; cdecl; external sdl3_lib;
+function SDL_GetPenStatus(instance_id: TSDL_PenID; x: Psingle; y: Psingle; axes: Psingle; num_axes: Tsize_t): Uint32; cdecl; external sdl3_lib;
+function SDL_GetPenFromGUID(guid: TSDL_GUID): TSDL_PenID; cdecl; external sdl3_lib;
+function SDL_GetPenGUID(instance_id: TSDL_PenID): TSDL_GUID; cdecl; external sdl3_lib;
+function SDL_PenConnected(instance_id: TSDL_PenID): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_GetPenName(instance_id: TSDL_PenID): PChar; cdecl; external sdl3_lib;
 
 type
   PSDL_PenCapabilityInfo = ^TSDL_PenCapabilityInfo;
@@ -84,8 +84,8 @@ type
     num_buttons: int8;
   end;
 
-function SDL_GetPenCapabilities(instance_id: TSDL_PenID; capabilities: PSDL_PenCapabilityInfo): int32; cdecl; external;
-function SDL_GetPenType(instance_id: TSDL_PenID): TSDL_PenSubtype; cdecl; external;
+function SDL_GetPenCapabilities(instance_id: TSDL_PenID; capabilities: PSDL_PenCapabilityInfo): int32; cdecl; external sdl3_lib;
+function SDL_GetPenType(instance_id: TSDL_PenID): TSDL_PenSubtype; cdecl; external sdl3_lib;
 
 implementation
 

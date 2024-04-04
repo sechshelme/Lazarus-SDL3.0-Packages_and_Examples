@@ -37,11 +37,11 @@ const
   SDL_TOUCH_MOUSEID = uint32(-1);
   SDL_MOUSE_TOUCHID = uint64(-1);
 
-function SDL_GetTouchDevices(Count: Plongint): PSDL_TouchID; cdecl; external;
-function SDL_GetTouchDeviceName(touchID: TSDL_TouchID): PChar; cdecl; external;
-function SDL_GetTouchDeviceType(touchID: TSDL_TouchID): TSDL_TouchDeviceType; cdecl; external;
-function SDL_GetNumTouchFingers(touchID: TSDL_TouchID): longint; cdecl; external;
-function SDL_GetTouchFinger(touchID: TSDL_TouchID; index: longint): PSDL_Finger; cdecl; external;
+function SDL_GetTouchDevices(Count: Plongint): PSDL_TouchID; cdecl; external sdl3_lib;
+function SDL_GetTouchDeviceName(touchID: TSDL_TouchID): PChar; cdecl; external sdl3_lib;
+function SDL_GetTouchDeviceType(touchID: TSDL_TouchID): TSDL_TouchDeviceType; cdecl; external sdl3_lib;
+function SDL_GetNumTouchFingers(touchID: TSDL_TouchID): longint; cdecl; external sdl3_lib;
+function SDL_GetTouchFinger(touchID: TSDL_TouchID; index: longint): PSDL_Finger; cdecl; external sdl3_lib;
 
 {$ENDIF read_interface}
 

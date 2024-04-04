@@ -210,18 +210,18 @@ const
   SDL_HINT_NORMAL = 1;
   SDL_HINT_OVERRIDE = 2;
 
-function SDL_SetHintWithPriority(Name: PChar; Value: PChar; priority: TSDL_HintPriority): TSDL_bool; cdecl; external;
-function SDL_SetHint(Name: PChar; Value: PChar): TSDL_bool; cdecl; external;
-function SDL_ResetHint(Name: PChar): TSDL_bool; cdecl; external;
-procedure SDL_ResetHints; cdecl; external;
-function SDL_GetHint(Name: PChar): PChar; cdecl; external;
-function SDL_GetHintBoolean(Name: PChar; default_value: TSDL_bool): TSDL_bool; cdecl; external;
+function SDL_SetHintWithPriority(Name: PChar; Value: PChar; priority: TSDL_HintPriority): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_SetHint(Name: PChar; Value: PChar): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_ResetHint(Name: PChar): TSDL_bool; cdecl; external sdl3_lib;
+procedure SDL_ResetHints; cdecl; external sdl3_lib;
+function SDL_GetHint(Name: PChar): PChar; cdecl; external sdl3_lib;
+function SDL_GetHintBoolean(Name: PChar; default_value: TSDL_bool): TSDL_bool; cdecl; external sdl3_lib;
 
 type
   TSDL_HintCallback = procedure(userdata: pointer; Name: PChar; oldValue: PChar; newValue: PChar); cdecl;
 
-function SDL_AddHintCallback(Name: PChar; callback: TSDL_HintCallback; userdata: pointer): longint; cdecl; external;
-procedure SDL_DelHintCallback(Name: PChar; callback: TSDL_HintCallback; userdata: pointer); cdecl; external;
+function SDL_AddHintCallback(Name: PChar; callback: TSDL_HintCallback; userdata: pointer): longint; cdecl; external sdl3_lib;
+procedure SDL_DelHintCallback(Name: PChar; callback: TSDL_HintCallback; userdata: pointer); cdecl; external sdl3_lib;
 
 implementation
 

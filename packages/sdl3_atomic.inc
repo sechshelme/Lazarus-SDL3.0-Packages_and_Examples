@@ -11,13 +11,13 @@ type
   PSDL_SpinLock = ^TSDL_SpinLock;
   TSDL_SpinLock = longint;
 
-function SDL_TryLockSpinlock(lock: PSDL_SpinLock): TSDL_bool; cdecl; external;
-procedure SDL_LockSpinlock(lock: PSDL_SpinLock); cdecl; external;
-procedure SDL_UnlockSpinlock(lock: PSDL_SpinLock); cdecl; external;
-procedure _ReadWriteBarrier; cdecl; external;
-procedure SDL_CompilerBarrier; cdecl; external;
-procedure SDL_MemoryBarrierReleaseFunction; cdecl; external;
-procedure SDL_MemoryBarrierAcquireFunction; cdecl; external;
+function SDL_TryLockSpinlock(lock: PSDL_SpinLock): TSDL_bool; cdecl; external sdl3_lib;
+procedure SDL_LockSpinlock(lock: PSDL_SpinLock); cdecl; external sdl3_lib;
+procedure SDL_UnlockSpinlock(lock: PSDL_SpinLock); cdecl; external sdl3_lib;
+procedure _ReadWriteBarrier; cdecl; external sdl3_lib;
+procedure SDL_CompilerBarrier; cdecl; external sdl3_lib;
+procedure SDL_MemoryBarrierReleaseFunction; cdecl; external sdl3_lib;
+procedure SDL_MemoryBarrierAcquireFunction; cdecl; external sdl3_lib;
 
 type
   TSDL_KernelMemoryBarrierFunc = procedure; cdecl;
@@ -25,7 +25,7 @@ type
 function SDL_MemoryBarrierRelease: TSDL_KernelMemoryBarrierFunc;
 function SDL_MemoryBarrierAcquire: TSDL_KernelMemoryBarrierFunc;
 
-procedure SDL_CPUPauseInstruction; cdecl; external;
+procedure SDL_CPUPauseInstruction; cdecl; external sdl3_lib;
 
 type
   PSDL_AtomicInt = ^TSDL_AtomicInt;
@@ -34,16 +34,16 @@ type
     Value: longint;
   end;
 
-function SDL_AtomicCompareAndSwap(a: PSDL_AtomicInt; oldval: longint; newval: longint): TSDL_bool; cdecl; external;
-function SDL_AtomicSet(a: PSDL_AtomicInt; v: longint): longint; cdecl; external;
-function SDL_AtomicGet(a: PSDL_AtomicInt): longint; cdecl; external;
-function SDL_AtomicAdd(a: PSDL_AtomicInt; v: longint): longint; cdecl; external;
+function SDL_AtomicCompareAndSwap(a: PSDL_AtomicInt; oldval: longint; newval: longint): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_AtomicSet(a: PSDL_AtomicInt; v: longint): longint; cdecl; external sdl3_lib;
+function SDL_AtomicGet(a: PSDL_AtomicInt): longint; cdecl; external sdl3_lib;
+function SDL_AtomicAdd(a: PSDL_AtomicInt; v: longint): longint; cdecl; external sdl3_lib;
 
 function SDL_AtomicIncRef(a: PSDL_AtomicInt): longint;
 function SDL_AtomicDecRef(a: PSDL_AtomicInt): TSDL_bool;
 
-function SDL_AtomicCompareAndSwapPointer(a: Ppointer; oldval: pointer; newval: pointer): TSDL_bool; cdecl; external;
-function SDL_AtomicSetPtr(a: Ppointer; v: pointer): pointer; cdecl; external;
+function SDL_AtomicCompareAndSwapPointer(a: Ppointer; oldval: pointer; newval: pointer): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_AtomicSetPtr(a: Ppointer; v: pointer): pointer; cdecl; external sdl3_lib;
 
 {$ENDIF read_interface}
 

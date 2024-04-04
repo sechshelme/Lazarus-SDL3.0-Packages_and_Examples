@@ -34,16 +34,16 @@ type
     Next: PSDL_AssertData;
   end;
 
-function SDL_ReportAssertion(Data: PSDL_AssertData; func: PChar; file_: PChar; line: longint): TSDL_AssertState; cdecl; external;
+function SDL_ReportAssertion(Data: PSDL_AssertData; func: PChar; file_: PChar; line: longint): TSDL_AssertState; cdecl; external sdl3_lib;
 
 type
   TSDL_AssertionHandler = function(Data: PSDL_AssertData; userdata: pointer): TSDL_AssertState; cdecl;
 
-procedure SDL_SetAssertionHandler(handler: TSDL_AssertionHandler; userdata: pointer); cdecl; external;
-function SDL_GetDefaultAssertionHandler: TSDL_AssertionHandler; cdecl; external;
-function SDL_GetAssertionHandler(puserdata: Ppointer): TSDL_AssertionHandler; cdecl; external;
-function SDL_GetAssertionReport: PSDL_AssertData; cdecl; external;
-procedure SDL_ResetAssertionReport; cdecl; external;
+procedure SDL_SetAssertionHandler(handler: TSDL_AssertionHandler; userdata: pointer); cdecl; external sdl3_lib;
+function SDL_GetDefaultAssertionHandler: TSDL_AssertionHandler; cdecl; external sdl3_lib;
+function SDL_GetAssertionHandler(puserdata: Ppointer): TSDL_AssertionHandler; cdecl; external sdl3_lib;
+function SDL_GetAssertionReport: PSDL_AssertData; cdecl; external sdl3_lib;
+procedure SDL_ResetAssertionReport; cdecl; external sdl3_lib;
 
 {$ENDIF read_interface}
 

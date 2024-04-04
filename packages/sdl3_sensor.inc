@@ -28,20 +28,20 @@ type
 
   SDL_STANDARD_GRAVITY =cfloat( 9.80665);
 
-function SDL_GetSensors(count:Plongint):PSDL_SensorID;cdecl;external;
-function SDL_GetSensorInstanceName(instance_id:TSDL_SensorID):Pchar;cdecl;external;
-function SDL_GetSensorInstanceType(instance_id:TSDL_SensorID):TSDL_SensorType;cdecl;external;
-function SDL_GetSensorInstanceNonPortableType(instance_id:TSDL_SensorID):longint;cdecl;external;
-function SDL_OpenSensor(instance_id:TSDL_SensorID):PSDL_Sensor;cdecl;external;
-function SDL_GetSensorFromInstanceID(instance_id:TSDL_SensorID):PSDL_Sensor;cdecl;external;
-function SDL_GetSensorProperties(sensor:PSDL_Sensor):TSDL_PropertiesID;cdecl;external;
-function SDL_GetSensorName(sensor:PSDL_Sensor):Pchar;cdecl;external;
-function SDL_GetSensorType(sensor:PSDL_Sensor):TSDL_SensorType;cdecl;external;
-function SDL_GetSensorNonPortableType(sensor:PSDL_Sensor):longint;cdecl;external;
-function SDL_GetSensorInstanceID(sensor:PSDL_Sensor):TSDL_SensorID;cdecl;external;
-function SDL_GetSensorData(sensor:PSDL_Sensor; data:Psingle; num_values:longint):longint;cdecl;external;
-procedure SDL_CloseSensor(sensor:PSDL_Sensor);cdecl;external;
-procedure SDL_UpdateSensors;cdecl;external;
+function SDL_GetSensors(count:Plongint):PSDL_SensorID;cdecl;external sdl3_lib;
+function SDL_GetSensorInstanceName(instance_id:TSDL_SensorID):Pchar;cdecl;external sdl3_lib;
+function SDL_GetSensorInstanceType(instance_id:TSDL_SensorID):TSDL_SensorType;cdecl;external sdl3_lib;
+function SDL_GetSensorInstanceNonPortableType(instance_id:TSDL_SensorID):longint;cdecl;external sdl3_lib;
+function SDL_OpenSensor(instance_id:TSDL_SensorID):PSDL_Sensor;cdecl;external sdl3_lib;
+function SDL_GetSensorFromInstanceID(instance_id:TSDL_SensorID):PSDL_Sensor;cdecl;external sdl3_lib;
+function SDL_GetSensorProperties(sensor:PSDL_Sensor):TSDL_PropertiesID;cdecl;external sdl3_lib;
+function SDL_GetSensorName(sensor:PSDL_Sensor):Pchar;cdecl;external sdl3_lib;
+function SDL_GetSensorType(sensor:PSDL_Sensor):TSDL_SensorType;cdecl;external sdl3_lib;
+function SDL_GetSensorNonPortableType(sensor:PSDL_Sensor):longint;cdecl;external sdl3_lib;
+function SDL_GetSensorInstanceID(sensor:PSDL_Sensor):TSDL_SensorID;cdecl;external sdl3_lib;
+function SDL_GetSensorData(sensor:PSDL_Sensor; data:Psingle; num_values:longint):longint;cdecl;external sdl3_lib;
+procedure SDL_CloseSensor(sensor:PSDL_Sensor);cdecl;external sdl3_lib;
+procedure SDL_UpdateSensors;cdecl;external sdl3_lib;
 
 {$ENDIF read_interface}
 

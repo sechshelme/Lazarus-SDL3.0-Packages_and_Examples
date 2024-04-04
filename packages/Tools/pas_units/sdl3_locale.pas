@@ -14,7 +14,7 @@ type
     country: PChar;
   end;
 
-function SDL_GetPreferredLocales: PSDL_Locale; cdecl; external;
+function SDL_GetPreferredLocales: PSDL_Locale; cdecl; external sdl3_lib;
 
 implementation
 

@@ -15,15 +15,15 @@ const
   {$IFDEF Windows}
   sdl3_lib = 'SDL3.dll';
   {$ENDIF}
-
-
-  {$IFDEF Linux}
-  {$LinkLib 'SDL3'}
-  {$ENDIF}
-
-  {$IFDEF Windows}
-  {$LinkLib 'sdl3.dll'}
-  {$ENDIF}
+//
+//
+//  {$IFDEF Linux}
+//  {$LinkLib 'SDL3'}
+//  {$ENDIF}
+//
+//  {$IFDEF Windows}
+//  {$LinkLib 'sdl3.dll'}
+//  {$ENDIF}
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

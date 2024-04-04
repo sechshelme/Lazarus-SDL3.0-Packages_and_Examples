@@ -31,24 +31,24 @@ type
   TpfnSDL_CurrentBeginThread = function(para1: pointer; para2: dword; func: funcfunc; para4: pointer; para5: dword; para6: Pdword): PtrUInt; cdecl;
   TpfnSDL_CurrentEndThread = procedure(code: dword); cdecl;
 
-function SDL_CreateThread(fn: TSDL_ThreadFunction; Name: PChar; Data: pointer; pfnBeginThread: TpfnSDL_CurrentBeginThread; pfnEndThread: TpfnSDL_CurrentEndThread): PSDL_Thread; cdecl; external;
+function SDL_CreateThread(fn: TSDL_ThreadFunction; Name: PChar; Data: pointer; pfnBeginThread: TpfnSDL_CurrentBeginThread; pfnEndThread: TpfnSDL_CurrentEndThread): PSDL_Thread; cdecl; external sdl3_lib;
 function SDL_CreateThreadWithStackSize(fn: TSDL_ThreadFunction; Name: PChar; stacksize: SizeInt; Data: pointer; pfnBeginThread: TpfnSDL_CurrentBeginThread;
-  pfnEndThread: TpfnSDL_CurrentEndThread): PSDL_Thread; cdecl; external;
-function SDL_CreateThread(fn: TSDL_ThreadFunction; Name: PChar; Data: pointer): PSDL_Thread; cdecl; external;
-function SDL_CreateThreadWithStackSize(fn: TSDL_ThreadFunction; Name: PChar; stacksize: SizeInt; Data: pointer): PSDL_Thread; cdecl; external;
-function SDL_GetThreadName(thread: PSDL_Thread): PChar; cdecl; external;
-function SDL_GetCurrentThreadID: TSDL_ThreadID; cdecl; external;
-function SDL_GetThreadID(thread: PSDL_Thread): TSDL_ThreadID; cdecl; external;
-function SDL_SetThreadPriority(priority: TSDL_ThreadPriority): longint; cdecl; external;
-procedure SDL_WaitThread(thread: PSDL_Thread; status: Plongint); cdecl; external;
-procedure SDL_DetachThread(thread: PSDL_Thread); cdecl; external;
-function SDL_CreateTLS: TSDL_TLSID; cdecl; external;
-function SDL_GetTLS(id: TSDL_TLSID): pointer; cdecl; external;
+  pfnEndThread: TpfnSDL_CurrentEndThread): PSDL_Thread; cdecl; external sdl3_lib;
+function SDL_CreateThread(fn: TSDL_ThreadFunction; Name: PChar; Data: pointer): PSDL_Thread; cdecl; external sdl3_lib;
+function SDL_CreateThreadWithStackSize(fn: TSDL_ThreadFunction; Name: PChar; stacksize: SizeInt; Data: pointer): PSDL_Thread; cdecl; external sdl3_lib;
+function SDL_GetThreadName(thread: PSDL_Thread): PChar; cdecl; external sdl3_lib;
+function SDL_GetCurrentThreadID: TSDL_ThreadID; cdecl; external sdl3_lib;
+function SDL_GetThreadID(thread: PSDL_Thread): TSDL_ThreadID; cdecl; external sdl3_lib;
+function SDL_SetThreadPriority(priority: TSDL_ThreadPriority): longint; cdecl; external sdl3_lib;
+procedure SDL_WaitThread(thread: PSDL_Thread; status: Plongint); cdecl; external sdl3_lib;
+procedure SDL_DetachThread(thread: PSDL_Thread); cdecl; external sdl3_lib;
+function SDL_CreateTLS: TSDL_TLSID; cdecl; external sdl3_lib;
+function SDL_GetTLS(id: TSDL_TLSID): pointer; cdecl; external sdl3_lib;
 
 type
   destructor_func = procedure(para1: pointer);
 
-function SDL_SetTLS(id: TSDL_TLSID; Value: pointer; destructor_: destructor_func): longint; cdecl; external;
+function SDL_SetTLS(id: TSDL_TLSID; Value: pointer; destructor_: destructor_func): longint; cdecl; external sdl3_lib;
 
 implementation
 

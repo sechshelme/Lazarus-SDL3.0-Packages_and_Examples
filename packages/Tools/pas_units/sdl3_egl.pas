@@ -182,30 +182,30 @@ const
   EGL_WIDTH = $3057;
   EGL_WINDOW_BIT = $0004;
 
-function eglChooseConfig(dpy: TEGLDisplay; attrib_list: PEGLint; configs: PEGLConfig; config_size: TEGLint; num_config: PEGLint): TEGLBoolean; cdecl; external;
-function eglCopyBuffers(dpy: TEGLDisplay; surface: TEGLSurface; target: TEGLNativePixmapType): TEGLBoolean; cdecl; external;
-function eglCreateContext(dpy: TEGLDisplay; config: TEGLConfig; share_context: TEGLContext; attrib_list: PEGLint): TEGLContext; cdecl; external;
-function eglCreatePbufferSurface(dpy: TEGLDisplay; config: TEGLConfig; attrib_list: PEGLint): TEGLSurface; cdecl; external;
-function eglCreatePixmapSurface(dpy: TEGLDisplay; config: TEGLConfig; pixmap: TEGLNativePixmapType; attrib_list: PEGLint): TEGLSurface; cdecl; external;
-function eglCreateWindowSurface(dpy: TEGLDisplay; config: TEGLConfig; win: TEGLNativeWindowType; attrib_list: PEGLint): TEGLSurface; cdecl; external;
-function eglDestroyContext(dpy: TEGLDisplay; ctx: TEGLContext): TEGLBoolean; cdecl; external;
-function eglDestroySurface(dpy: TEGLDisplay; surface: TEGLSurface): TEGLBoolean; cdecl; external;
-function eglGetConfigAttrib(dpy: TEGLDisplay; config: TEGLConfig; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external;
-function eglGetConfigs(dpy: TEGLDisplay; configs: PEGLConfig; config_size: TEGLint; num_config: PEGLint): TEGLBoolean; cdecl; external;
-function eglGetCurrentDisplay: TEGLDisplay; cdecl; external;
-function eglGetCurrentSurface(readdraw: TEGLint): TEGLSurface; cdecl; external;
-function eglGetDisplay(display_id: TEGLNativeDisplayType): TEGLDisplay; cdecl; external;
-function eglGetError: TEGLint; cdecl; external;
-function eglGetProcAddress(procname: PChar): TeglMustCastToProperFunctionPointerType; cdecl; external;
-function eglInitialize(dpy: TEGLDisplay; major: PEGLint; minor: PEGLint): TEGLBoolean; cdecl; external;
-function eglMakeCurrent(dpy: TEGLDisplay; draw: TEGLSurface; Read: TEGLSurface; ctx: TEGLContext): TEGLBoolean; cdecl; external;
-function eglQueryContext(dpy: TEGLDisplay; ctx: TEGLContext; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external;
-function eglQueryString(dpy: TEGLDisplay; Name: TEGLint): PChar; cdecl; external;
-function eglQuerySurface(dpy: TEGLDisplay; surface: TEGLSurface; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external;
-function eglSwapBuffers(dpy: TEGLDisplay; surface: TEGLSurface): TEGLBoolean; cdecl; external;
-function eglTerminate(dpy: TEGLDisplay): TEGLBoolean; cdecl; external;
-function eglWaitGL: TEGLBoolean; cdecl; external;
-function eglWaitNative(engine: TEGLint): TEGLBoolean; cdecl; external;
+function eglChooseConfig(dpy: TEGLDisplay; attrib_list: PEGLint; configs: PEGLConfig; config_size: TEGLint; num_config: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglCopyBuffers(dpy: TEGLDisplay; surface: TEGLSurface; target: TEGLNativePixmapType): TEGLBoolean; cdecl; external sdl3_lib;
+function eglCreateContext(dpy: TEGLDisplay; config: TEGLConfig; share_context: TEGLContext; attrib_list: PEGLint): TEGLContext; cdecl; external sdl3_lib;
+function eglCreatePbufferSurface(dpy: TEGLDisplay; config: TEGLConfig; attrib_list: PEGLint): TEGLSurface; cdecl; external sdl3_lib;
+function eglCreatePixmapSurface(dpy: TEGLDisplay; config: TEGLConfig; pixmap: TEGLNativePixmapType; attrib_list: PEGLint): TEGLSurface; cdecl; external sdl3_lib;
+function eglCreateWindowSurface(dpy: TEGLDisplay; config: TEGLConfig; win: TEGLNativeWindowType; attrib_list: PEGLint): TEGLSurface; cdecl; external sdl3_lib;
+function eglDestroyContext(dpy: TEGLDisplay; ctx: TEGLContext): TEGLBoolean; cdecl; external sdl3_lib;
+function eglDestroySurface(dpy: TEGLDisplay; surface: TEGLSurface): TEGLBoolean; cdecl; external sdl3_lib;
+function eglGetConfigAttrib(dpy: TEGLDisplay; config: TEGLConfig; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglGetConfigs(dpy: TEGLDisplay; configs: PEGLConfig; config_size: TEGLint; num_config: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglGetCurrentDisplay: TEGLDisplay; cdecl; external sdl3_lib;
+function eglGetCurrentSurface(readdraw: TEGLint): TEGLSurface; cdecl; external sdl3_lib;
+function eglGetDisplay(display_id: TEGLNativeDisplayType): TEGLDisplay; cdecl; external sdl3_lib;
+function eglGetError: TEGLint; cdecl; external sdl3_lib;
+function eglGetProcAddress(procname: PChar): TeglMustCastToProperFunctionPointerType; cdecl; external sdl3_lib;
+function eglInitialize(dpy: TEGLDisplay; major: PEGLint; minor: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglMakeCurrent(dpy: TEGLDisplay; draw: TEGLSurface; Read: TEGLSurface; ctx: TEGLContext): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryContext(dpy: TEGLDisplay; ctx: TEGLContext; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryString(dpy: TEGLDisplay; Name: TEGLint): PChar; cdecl; external sdl3_lib;
+function eglQuerySurface(dpy: TEGLDisplay; surface: TEGLSurface; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglSwapBuffers(dpy: TEGLDisplay; surface: TEGLSurface): TEGLBoolean; cdecl; external sdl3_lib;
+function eglTerminate(dpy: TEGLDisplay): TEGLBoolean; cdecl; external sdl3_lib;
+function eglWaitGL: TEGLBoolean; cdecl; external sdl3_lib;
+function eglWaitNative(engine: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_VERSION_1_1 = 1;
@@ -224,10 +224,10 @@ const
   EGL_TEXTURE_RGBA = $305E;
   EGL_TEXTURE_TARGET = $3081;
 
-function eglBindTexImage(dpy: TEGLDisplay; surface: TEGLSurface; buffer: TEGLint): TEGLBoolean; cdecl; external;
-function eglReleaseTexImage(dpy: TEGLDisplay; surface: TEGLSurface; buffer: TEGLint): TEGLBoolean; cdecl; external;
-function eglSurfaceAttrib(dpy: TEGLDisplay; surface: TEGLSurface; attribute: TEGLint; Value: TEGLint): TEGLBoolean; cdecl; external;
-function eglSwapInterval(dpy: TEGLDisplay; interval: TEGLint): TEGLBoolean; cdecl; external;
+function eglBindTexImage(dpy: TEGLDisplay; surface: TEGLSurface; buffer: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglReleaseTexImage(dpy: TEGLDisplay; surface: TEGLSurface; buffer: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglSurfaceAttrib(dpy: TEGLDisplay; surface: TEGLSurface; attribute: TEGLint; Value: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglSwapInterval(dpy: TEGLDisplay; interval: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 { EGL_VERSION_1_1  }
 
 const
@@ -272,11 +272,11 @@ const
 const
   EGL_VERTICAL_RESOLUTION = $3091;
 
-function eglBindAPI(api: TEGLenum): TEGLBoolean; cdecl; external;
-function eglQueryAPI: TEGLenum; cdecl; external;
-function eglCreatePbufferFromClientBuffer(dpy: TEGLDisplay; buftype: TEGLenum; buffer: TEGLClientBuffer; config: TEGLConfig; attrib_list: PEGLint): TEGLSurface; cdecl; external;
-function eglReleaseThread: TEGLBoolean; cdecl; external;
-function eglWaitClient: TEGLBoolean; cdecl; external;
+function eglBindAPI(api: TEGLenum): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryAPI: TEGLenum; cdecl; external sdl3_lib;
+function eglCreatePbufferFromClientBuffer(dpy: TEGLDisplay; buftype: TEGLenum; buffer: TEGLClientBuffer; config: TEGLConfig; attrib_list: PEGLint): TEGLSurface; cdecl; external sdl3_lib;
+function eglReleaseThread: TEGLBoolean; cdecl; external sdl3_lib;
+function eglWaitClient: TEGLBoolean; cdecl; external sdl3_lib;
 { EGL_VERSION_1_2  }
 
 const
@@ -307,7 +307,7 @@ const
   EGL_OPENGL_BIT = $0008;
   EGL_SWAP_BEHAVIOR_PRESERVED_BIT = $0400;
 
-function eglGetCurrentContext: TEGLContext; cdecl; external;
+function eglGetCurrentContext: TEGLContext; cdecl; external sdl3_lib;
 { EGL_VERSION_1_4  }
 
 const
@@ -371,16 +371,16 @@ const
   EGL_GL_TEXTURE_CUBE_MAP_NEGATIVE_Z = $30B8;
   EGL_IMAGE_PRESERVED = $30D2;
 
-function eglCreateSync(dpy: TEGLDisplay; _type: TEGLenum; attrib_list: PEGLAttrib): TEGLSync; cdecl; external;
-function eglDestroySync(dpy: TEGLDisplay; sync: TEGLSync): TEGLBoolean; cdecl; external;
-function eglClientWaitSync(dpy: TEGLDisplay; sync: TEGLSync; flags: TEGLint; timeout: TEGLTime): TEGLint; cdecl; external;
-function eglGetSyncAttrib(dpy: TEGLDisplay; sync: TEGLSync; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external;
-function eglCreateImage(dpy: TEGLDisplay; ctx: TEGLContext; target: TEGLenum; buffer: TEGLClientBuffer; attrib_list: PEGLAttrib): TEGLImage; cdecl; external;
-function eglDestroyImage(dpy: TEGLDisplay; image: TEGLImage): TEGLBoolean; cdecl; external;
-function eglGetPlatformDisplay(platform: TEGLenum; native_display: pointer; attrib_list: PEGLAttrib): TEGLDisplay; cdecl; external;
-function eglCreatePlatformWindowSurface(dpy: TEGLDisplay; config: TEGLConfig; native_window: pointer; attrib_list: PEGLAttrib): TEGLSurface; cdecl; external;
-function eglCreatePlatformPixmapSurface(dpy: TEGLDisplay; config: TEGLConfig; native_pixmap: pointer; attrib_list: PEGLAttrib): TEGLSurface; cdecl; external;
-function eglWaitSync(dpy: TEGLDisplay; sync: TEGLSync; flags: TEGLint): TEGLBoolean; cdecl; external;
+function eglCreateSync(dpy: TEGLDisplay; _type: TEGLenum; attrib_list: PEGLAttrib): TEGLSync; cdecl; external sdl3_lib;
+function eglDestroySync(dpy: TEGLDisplay; sync: TEGLSync): TEGLBoolean; cdecl; external sdl3_lib;
+function eglClientWaitSync(dpy: TEGLDisplay; sync: TEGLSync; flags: TEGLint; timeout: TEGLTime): TEGLint; cdecl; external sdl3_lib;
+function eglGetSyncAttrib(dpy: TEGLDisplay; sync: TEGLSync; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
+function eglCreateImage(dpy: TEGLDisplay; ctx: TEGLContext; target: TEGLenum; buffer: TEGLClientBuffer; attrib_list: PEGLAttrib): TEGLImage; cdecl; external sdl3_lib;
+function eglDestroyImage(dpy: TEGLDisplay; image: TEGLImage): TEGLBoolean; cdecl; external sdl3_lib;
+function eglGetPlatformDisplay(platform: TEGLenum; native_display: pointer; attrib_list: PEGLAttrib): TEGLDisplay; cdecl; external sdl3_lib;
+function eglCreatePlatformWindowSurface(dpy: TEGLDisplay; config: TEGLConfig; native_window: pointer; attrib_list: PEGLAttrib): TEGLSurface; cdecl; external sdl3_lib;
+function eglCreatePlatformPixmapSurface(dpy: TEGLDisplay; config: TEGLConfig; native_pixmap: pointer; attrib_list: PEGLAttrib): TEGLSurface; cdecl; external sdl3_lib;
+function eglWaitSync(dpy: TEGLDisplay; sync: TEGLSync; flags: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 { EGL_VERSION_1_5  }
 
 const
@@ -403,7 +403,7 @@ type
   PEGLAttribKHR = ^TEGLAttribKHR;
   TEGLAttribKHR = IntPtr;
 
-function eglCreateSync64KHR(dpy: TEGLDisplay; _type: TEGLenum; attrib_list: PEGLAttribKHR): TEGLSyncKHR; cdecl; external;
+function eglCreateSync64KHR(dpy: TEGLDisplay; _type: TEGLenum; attrib_list: PEGLAttribKHR): TEGLSyncKHR; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_client_get_all_proc_addresses = 1;
@@ -467,15 +467,15 @@ const
   EGL_DEBUG_MSG_INFO_KHR = $33BC;
   EGL_DEBUG_CALLBACK_KHR = $33B8;
 
-function eglDebugMessageControlKHR(callback: TEGLDEBUGPROCKHR; attrib_list: PEGLAttrib): TEGLint; cdecl; external;
-function eglQueryDebugKHR(attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external;
-function eglLabelObjectKHR(display: TEGLDisplay; objectType: TEGLenum; object_: TEGLObjectKHR; _label: TEGLLabelKHR): TEGLint; cdecl; external;
+function eglDebugMessageControlKHR(callback: TEGLDEBUGPROCKHR; attrib_list: PEGLAttrib): TEGLint; cdecl; external sdl3_lib;
+function eglQueryDebugKHR(attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
+function eglLabelObjectKHR(display: TEGLDisplay; objectType: TEGLenum; object_: TEGLObjectKHR; _label: TEGLLabelKHR): TEGLint; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_display_reference = 1;
   EGL_TRACK_REFERENCES_KHR = $3352;
 
-function eglQueryDisplayAttribKHR(dpy: TEGLDisplay; Name: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external;
+function eglQueryDisplayAttribKHR(dpy: TEGLDisplay; Name: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_fence_sync = 1;
@@ -489,10 +489,10 @@ const
   EGL_SYNC_CONDITION_KHR = $30F8;
   EGL_SYNC_FENCE_KHR = $30F9;
 
-function eglCreateSyncKHR(dpy: TEGLDisplay; _type: TEGLenum; attrib_list: PEGLint): TEGLSyncKHR; cdecl; external;
-function eglDestroySyncKHR(dpy: TEGLDisplay; sync: TEGLSyncKHR): TEGLBoolean; cdecl; external;
-function eglClientWaitSyncKHR(dpy: TEGLDisplay; sync: TEGLSyncKHR; flags: TEGLint; timeout: TEGLTimeKHR): TEGLint; cdecl; external;
-function eglGetSyncAttribKHR(dpy: TEGLDisplay; sync: TEGLSyncKHR; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external;
+function eglCreateSyncKHR(dpy: TEGLDisplay; _type: TEGLenum; attrib_list: PEGLint): TEGLSyncKHR; cdecl; external sdl3_lib;
+function eglDestroySyncKHR(dpy: TEGLDisplay; sync: TEGLSyncKHR): TEGLBoolean; cdecl; external sdl3_lib;
+function eglClientWaitSyncKHR(dpy: TEGLDisplay; sync: TEGLSyncKHR; flags: TEGLint; timeout: TEGLTimeKHR): TEGLint; cdecl; external sdl3_lib;
+function eglGetSyncAttribKHR(dpy: TEGLDisplay; sync: TEGLSyncKHR; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_get_all_proc_addresses = 1;
@@ -536,8 +536,8 @@ type
 const
   EGL_NATIVE_PIXMAP_KHR = $30B0;
 
-function eglCreateImageKHR(dpy: TEGLDisplay; ctx: TEGLContext; target: TEGLenum; buffer: TEGLClientBuffer; attrib_list: PEGLint): TEGLImageKHR; cdecl; external;
-function eglDestroyImageKHR(dpy: TEGLDisplay; image: TEGLImageKHR): TEGLBoolean; cdecl; external;
+function eglCreateImageKHR(dpy: TEGLDisplay; ctx: TEGLContext; target: TEGLenum; buffer: TEGLClientBuffer; attrib_list: PEGLint): TEGLImageKHR; cdecl; external sdl3_lib;
+function eglDestroyImageKHR(dpy: TEGLDisplay; image: TEGLImageKHR): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_image_base = 1;
@@ -570,8 +570,8 @@ const
   EGL_LOWER_LEFT_KHR = $30CE;
   EGL_UPPER_LEFT_KHR = $30CF;
 
-function eglLockSurfaceKHR(dpy: TEGLDisplay; surface: TEGLSurface; attrib_list: PEGLint): TEGLBoolean; cdecl; external;
-function eglUnlockSurfaceKHR(dpy: TEGLDisplay; surface: TEGLSurface): TEGLBoolean; cdecl; external;
+function eglLockSurfaceKHR(dpy: TEGLDisplay; surface: TEGLSurface; attrib_list: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglUnlockSurfaceKHR(dpy: TEGLDisplay; surface: TEGLSurface): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_lock_surface2 = 1;
@@ -580,7 +580,7 @@ const
 const
   EGL_KHR_lock_surface3 = 1;
 
-function eglQuerySurface64KHR(dpy: TEGLDisplay; surface: TEGLSurface; attribute: TEGLint; Value: PEGLAttribKHR): TEGLBoolean; cdecl; external;
+function eglQuerySurface64KHR(dpy: TEGLDisplay; surface: TEGLSurface; attribute: TEGLint; Value: PEGLAttribKHR): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_mutable_render_buffer = 1;
@@ -593,7 +593,7 @@ const
   EGL_KHR_partial_update = 1;
   EGL_BUFFER_AGE_KHR = $313D;
 
-function eglSetDamageRegionKHR(dpy: TEGLDisplay; surface: TEGLSurface; rects: PEGLint; n_rects: TEGLint): TEGLBoolean; cdecl; external;
+function eglSetDamageRegionKHR(dpy: TEGLDisplay; surface: TEGLSurface; rects: PEGLint; n_rects: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_platform_android = 1;
@@ -624,7 +624,7 @@ const
   EGL_SYNC_FLUSH_COMMANDS_BIT_KHR = $0001;
   EGL_FOREVER_KHR = $FFFFFFFFFFFFFFFF;
 
-function eglSignalSyncKHR(dpy: TEGLDisplay; sync: TEGLSyncKHR; mode: TEGLenum): TEGLBoolean; cdecl; external;
+function eglSignalSyncKHR(dpy: TEGLDisplay; sync: TEGLSyncKHR; mode: TEGLenum): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_stream = 1;
@@ -650,28 +650,28 @@ const
   EGL_BAD_STREAM_KHR = $321B;
   EGL_BAD_STATE_KHR = $321C;
 
-function eglCreateStreamKHR(dpy: TEGLDisplay; attrib_list: PEGLint): TEGLStreamKHR; cdecl; external;
-function eglDestroyStreamKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external;
-function eglStreamAttribKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: TEGLint): TEGLBoolean; cdecl; external;
-function eglQueryStreamKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: PEGLint): TEGLBoolean; cdecl; external;
-function eglQueryStreamu64KHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: PEGLuint64KHR): TEGLBoolean; cdecl; external;
+function eglCreateStreamKHR(dpy: TEGLDisplay; attrib_list: PEGLint): TEGLStreamKHR; cdecl; external sdl3_lib;
+function eglDestroyStreamKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external sdl3_lib;
+function eglStreamAttribKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryStreamKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryStreamu64KHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: PEGLuint64KHR): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_stream_attrib = 1;
 
-function eglCreateStreamAttribKHR(dpy: TEGLDisplay; attrib_list: PEGLAttrib): TEGLStreamKHR; cdecl; external;
-function eglSetStreamAttribKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: TEGLAttrib): TEGLBoolean; cdecl; external;
-function eglQueryStreamAttribKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: PEGLAttrib): TEGLBoolean; cdecl; external;
-function eglStreamConsumerAcquireAttribKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external;
-function eglStreamConsumerReleaseAttribKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external;
+function eglCreateStreamAttribKHR(dpy: TEGLDisplay; attrib_list: PEGLAttrib): TEGLStreamKHR; cdecl; external sdl3_lib;
+function eglSetStreamAttribKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: TEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryStreamAttribKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
+function eglStreamConsumerAcquireAttribKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
+function eglStreamConsumerReleaseAttribKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_stream_consumer_gltexture = 1;
   EGL_CONSUMER_ACQUIRE_TIMEOUT_USEC_KHR = $321E;
 
-function eglStreamConsumerGLTextureExternalKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external;
-function eglStreamConsumerAcquireKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external;
-function eglStreamConsumerReleaseKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external;
+function eglStreamConsumerGLTextureExternalKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external sdl3_lib;
+function eglStreamConsumerAcquireKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external sdl3_lib;
+function eglStreamConsumerReleaseKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_stream_cross_process_fd = 1;
@@ -680,8 +680,8 @@ type
   PEGLNativeFileDescriptorKHR = ^TEGLNativeFileDescriptorKHR;
   TEGLNativeFileDescriptorKHR = longint;
 
-function eglGetStreamFileDescriptorKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLNativeFileDescriptorKHR; cdecl; external;
-function eglCreateStreamFromFileDescriptorKHR(dpy: TEGLDisplay; file_descriptor: TEGLNativeFileDescriptorKHR): TEGLStreamKHR; cdecl; external;
+function eglGetStreamFileDescriptorKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLNativeFileDescriptorKHR; cdecl; external sdl3_lib;
+function eglCreateStreamFromFileDescriptorKHR(dpy: TEGLDisplay; file_descriptor: TEGLNativeFileDescriptorKHR): TEGLStreamKHR; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_stream_fifo = 1;
@@ -690,7 +690,7 @@ const
   EGL_STREAM_TIME_CONSUMER_KHR = $31FE;
   EGL_STREAM_TIME_PRODUCER_KHR = $31FF;
 
-function eglQueryStreamTimeKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: PEGLTimeKHR): TEGLBoolean; cdecl; external;
+function eglQueryStreamTimeKHR(dpy: TEGLDisplay; stream: TEGLStreamKHR; attribute: TEGLenum; Value: PEGLTimeKHR): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_stream_producer_aldatalocator = 1;
@@ -699,7 +699,7 @@ const
   EGL_KHR_stream_producer_eglsurface = 1;
   EGL_STREAM_BIT_KHR = $0800;
 
-function eglCreateStreamProducerSurfaceKHR(dpy: TEGLDisplay; config: TEGLConfig; stream: TEGLStreamKHR; attrib_list: PEGLint): TEGLSurface; cdecl; external;
+function eglCreateStreamProducerSurfaceKHR(dpy: TEGLDisplay; config: TEGLConfig; stream: TEGLStreamKHR; attrib_list: PEGLint): TEGLSurface; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_surfaceless_context = 1;
@@ -707,7 +707,7 @@ const
 const
   EGL_KHR_swap_buffers_with_damage = 1;
 
-function eglSwapBuffersWithDamageKHR(dpy: TEGLDisplay; surface: TEGLSurface; rects: PEGLint; n_rects: TEGLint): TEGLBoolean; cdecl; external;
+function eglSwapBuffersWithDamageKHR(dpy: TEGLDisplay; surface: TEGLSurface; rects: PEGLint; n_rects: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_KHR_vg_parent_image = 1;
@@ -716,7 +716,7 @@ const
 const
   EGL_KHR_wait_sync = 1;
 
-function eglWaitSyncKHR(dpy: TEGLDisplay; sync: TEGLSyncKHR; flags: TEGLint): TEGLint; cdecl; external;
+function eglWaitSyncKHR(dpy: TEGLDisplay; sync: TEGLSyncKHR; flags: TEGLint): TEGLint; cdecl; external sdl3_lib;
 
 const
   EGL_ANDROID_GLES_layers = 1;
@@ -739,7 +739,7 @@ const
   EGL_NATIVE_BUFFER_USAGE_RENDERBUFFER_BIT_ANDROID = $00000002;
   EGL_NATIVE_BUFFER_USAGE_TEXTURE_BIT_ANDROID = $00000004;
 
-function eglCreateNativeClientBufferANDROID(attrib_list: PEGLint): TEGLClientBuffer; cdecl; external;
+function eglCreateNativeClientBufferANDROID(attrib_list: PEGLint): TEGLClientBuffer; cdecl; external sdl3_lib;
 
 const
   EGL_ANDROID_framebuffer_target = 1;
@@ -771,12 +771,12 @@ const
   EGL_DEQUEUE_READY_TIME_ANDROID = $343B;
   EGL_READS_DONE_TIME_ANDROID = $343C;
 
-function eglGetCompositorTimingSupportedANDROID(dpy: TEGLDisplay; surface: TEGLSurface; Name: TEGLint): TEGLBoolean; cdecl; external;
-function eglGetCompositorTimingANDROID(dpy: TEGLDisplay; surface: TEGLSurface; numTimestamps: TEGLint; names: PEGLint; values: PEGLnsecsANDROID): TEGLBoolean; cdecl; external;
-function eglGetNextFrameIdANDROID(dpy: TEGLDisplay; surface: TEGLSurface; frameId: PEGLuint64KHR): TEGLBoolean; cdecl; external;
-function eglGetFrameTimestampSupportedANDROID(dpy: TEGLDisplay; surface: TEGLSurface; timestamp: TEGLint): TEGLBoolean; cdecl; external;
+function eglGetCompositorTimingSupportedANDROID(dpy: TEGLDisplay; surface: TEGLSurface; Name: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglGetCompositorTimingANDROID(dpy: TEGLDisplay; surface: TEGLSurface; numTimestamps: TEGLint; names: PEGLint; values: PEGLnsecsANDROID): TEGLBoolean; cdecl; external sdl3_lib;
+function eglGetNextFrameIdANDROID(dpy: TEGLDisplay; surface: TEGLSurface; frameId: PEGLuint64KHR): TEGLBoolean; cdecl; external sdl3_lib;
+function eglGetFrameTimestampSupportedANDROID(dpy: TEGLDisplay; surface: TEGLSurface; timestamp: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 function eglGetFrameTimestampsANDROID(dpy: TEGLDisplay; surface: TEGLSurface; frameId: TEGLuint64KHR; numTimestamps: TEGLint; timestamps: PEGLint;
-  values: PEGLnsecsANDROID): TEGLBoolean; cdecl; external;
+  values: PEGLnsecsANDROID): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_ANDROID_get_native_client_buffer = 1;
@@ -788,7 +788,7 @@ type
   end;
 
 
-function eglGetNativeClientBufferANDROID(buffer: PAHardwareBuffer): TEGLClientBuffer; cdecl; external;
+function eglGetNativeClientBufferANDROID(buffer: PAHardwareBuffer): TEGLClientBuffer; cdecl; external sdl3_lib;
 
 const
   EGL_ANDROID_image_native_buffer = 1;
@@ -801,12 +801,12 @@ const
   EGL_SYNC_NATIVE_FENCE_SIGNALED_ANDROID = $3146;
   EGL_NO_NATIVE_FENCE_FD_ANDROID = -(1);
 
-function eglDupNativeFenceFDANDROID(dpy: TEGLDisplay; sync: TEGLSyncKHR): TEGLint; cdecl; external;
+function eglDupNativeFenceFDANDROID(dpy: TEGLDisplay; sync: TEGLSyncKHR): TEGLint; cdecl; external sdl3_lib;
 
 const
   EGL_ANDROID_presentation_time = 1;
 
-function eglPresentationTimeANDROID(dpy: TEGLDisplay; surface: TEGLSurface; time: TEGLnsecsANDROID): TEGLBoolean; cdecl; external;
+function eglPresentationTimeANDROID(dpy: TEGLDisplay; surface: TEGLSurface; time: TEGLnsecsANDROID): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_ANDROID_recordable = 1;
@@ -824,7 +824,7 @@ const
 const
   EGL_ANGLE_query_surface_pointer = 1;
 
-function eglQuerySurfacePointerANGLE(dpy: TEGLDisplay; surface: TEGLSurface; attribute: TEGLint; Value: Ppointer): TEGLBoolean; cdecl; external;
+function eglQuerySurfacePointerANGLE(dpy: TEGLDisplay; surface: TEGLSurface; attribute: TEGLint; Value: Ppointer): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_ANGLE_surface_d3d_texture_2d_share_handle = 1;
@@ -832,7 +832,7 @@ const
 const
   EGL_ANGLE_sync_control_rate = 1;
 
-function eglGetMscRateANGLE(dpy: TEGLDisplay; surface: TEGLSurface; numerator: PEGLint; denominator: PEGLint): TEGLBoolean; cdecl; external;
+function eglGetMscRateANGLE(dpy: TEGLDisplay; surface: TEGLSurface; numerator: PEGLint; denominator: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_ANGLE_window_fixed_size = 1;
@@ -867,7 +867,7 @@ const
   EGL_SYNC_CLIENT_EXT = $3364;
   EGL_SYNC_CLIENT_SIGNAL_EXT = $3365;
 
-function eglClientSignalSyncEXT(dpy: TEGLDisplay; sync: TEGLSync; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external;
+function eglClientSignalSyncEXT(dpy: TEGLDisplay; sync: TEGLSync; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_EXT_compositor = 1;
@@ -876,13 +876,13 @@ const
   EGL_COMPOSITOR_DROP_NEWEST_FRAME_EXT = $3462;
   EGL_COMPOSITOR_KEEP_NEWEST_FRAME_EXT = $3463;
 
-function eglCompositorSetContextListEXT(external_ref_ids: PEGLint; num_entries: TEGLint): TEGLBoolean; cdecl; external;
-function eglCompositorSetContextAttributesEXT(external_ref_id: TEGLint; context_attributes: PEGLint; num_entries: TEGLint): TEGLBoolean; cdecl; external;
-function eglCompositorSetWindowListEXT(external_ref_id: TEGLint; external_win_ids: PEGLint; num_entries: TEGLint): TEGLBoolean; cdecl; external;
-function eglCompositorSetWindowAttributesEXT(external_win_id: TEGLint; window_attributes: PEGLint; num_entries: TEGLint): TEGLBoolean; cdecl; external;
-function eglCompositorBindTexWindowEXT(external_win_id: TEGLint): TEGLBoolean; cdecl; external;
-function eglCompositorSetSizeEXT(external_win_id: TEGLint; Width: TEGLint; Height: TEGLint): TEGLBoolean; cdecl; external;
-function eglCompositorSwapPolicyEXT(external_win_id: TEGLint; policy: TEGLint): TEGLBoolean; cdecl; external;
+function eglCompositorSetContextListEXT(external_ref_ids: PEGLint; num_entries: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglCompositorSetContextAttributesEXT(external_ref_id: TEGLint; context_attributes: PEGLint; num_entries: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglCompositorSetWindowListEXT(external_ref_id: TEGLint; external_win_ids: PEGLint; num_entries: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglCompositorSetWindowAttributesEXT(external_win_id: TEGLint; window_attributes: PEGLint; num_entries: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglCompositorBindTexWindowEXT(external_win_id: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglCompositorSetSizeEXT(external_win_id: TEGLint; Width: TEGLint; Height: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglCompositorSwapPolicyEXT(external_win_id: TEGLint; policy: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_EXT_config_select_group = 1;
@@ -906,10 +906,10 @@ const
   EGL_BAD_DEVICE_EXT = $322B;
   EGL_DEVICE_EXT = $322C;
 
-function eglQueryDeviceAttribEXT(device: TEGLDeviceEXT; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external;
-function eglQueryDeviceStringEXT(device: TEGLDeviceEXT; Name: TEGLint): PChar; cdecl; external;
-function eglQueryDevicesEXT(max_devices: TEGLint; devices: PEGLDeviceEXT; num_devices: PEGLint): TEGLBoolean; cdecl; external;
-function eglQueryDisplayAttribEXT(dpy: TEGLDisplay; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external;
+function eglQueryDeviceAttribEXT(device: TEGLDeviceEXT; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryDeviceStringEXT(device: TEGLDeviceEXT; Name: TEGLint): PChar; cdecl; external sdl3_lib;
+function eglQueryDevicesEXT(max_devices: TEGLint; devices: PEGLDeviceEXT; num_devices: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryDisplayAttribEXT(dpy: TEGLDisplay; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_EXT_device_drm = 1;
@@ -934,7 +934,7 @@ const
   EGL_DRIVER_UUID_EXT = $335D;
   EGL_DRIVER_NAME_EXT = $335E;
 
-function eglQueryDeviceBinaryEXT(device: TEGLDeviceEXT; Name: TEGLint; max_size: TEGLint; Value: pointer; size: PEGLint): TEGLBoolean; cdecl; external;
+function eglQueryDeviceBinaryEXT(device: TEGLDeviceEXT; Name: TEGLint; max_size: TEGLint; Value: pointer; size: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_EXT_device_query = 1;
@@ -1013,9 +1013,9 @@ const
   EGL_DMA_BUF_PLANE3_MODIFIER_LO_EXT = $3449;
   EGL_DMA_BUF_PLANE3_MODIFIER_HI_EXT = $344A;
 
-function eglQueryDmaBufFormatsEXT(dpy: TEGLDisplay; max_formats: TEGLint; formats: PEGLint; num_formats: PEGLint): TEGLBoolean; cdecl; external;
+function eglQueryDmaBufFormatsEXT(dpy: TEGLDisplay; max_formats: TEGLint; formats: PEGLint; num_formats: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 function eglQueryDmaBufModifiersEXT(dpy: TEGLDisplay; format: TEGLint; max_modifiers: TEGLint; modifiers: PEGLuint64KHR; external_only: PEGLBoolean;
-  num_modifiers: PEGLint): TEGLBoolean; cdecl; external;
+  num_modifiers: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_EXT_image_gl_colorspace = 1;
@@ -1046,14 +1046,14 @@ const
   EGL_BAD_OUTPUT_PORT_EXT = $322E;
   EGL_SWAP_INTERVAL_EXT = $322F;
 
-function eglGetOutputLayersEXT(dpy: TEGLDisplay; attrib_list: PEGLAttrib; layers: PEGLOutputLayerEXT; max_layers: TEGLint; num_layers: PEGLint): TEGLBoolean; cdecl; external;
-function eglGetOutputPortsEXT(dpy: TEGLDisplay; attrib_list: PEGLAttrib; ports: PEGLOutputPortEXT; max_ports: TEGLint; num_ports: PEGLint): TEGLBoolean; cdecl; external;
-function eglOutputLayerAttribEXT(dpy: TEGLDisplay; layer: TEGLOutputLayerEXT; attribute: TEGLint; Value: TEGLAttrib): TEGLBoolean; cdecl; external;
-function eglQueryOutputLayerAttribEXT(dpy: TEGLDisplay; layer: TEGLOutputLayerEXT; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external;
-function eglQueryOutputLayerStringEXT(dpy: TEGLDisplay; layer: TEGLOutputLayerEXT; Name: TEGLint): PChar; cdecl; external;
-function eglOutputPortAttribEXT(dpy: TEGLDisplay; port: TEGLOutputPortEXT; attribute: TEGLint; Value: TEGLAttrib): TEGLBoolean; cdecl; external;
-function eglQueryOutputPortAttribEXT(dpy: TEGLDisplay; port: TEGLOutputPortEXT; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external;
-function eglQueryOutputPortStringEXT(dpy: TEGLDisplay; port: TEGLOutputPortEXT; Name: TEGLint): PChar; cdecl; external;
+function eglGetOutputLayersEXT(dpy: TEGLDisplay; attrib_list: PEGLAttrib; layers: PEGLOutputLayerEXT; max_layers: TEGLint; num_layers: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglGetOutputPortsEXT(dpy: TEGLDisplay; attrib_list: PEGLAttrib; ports: PEGLOutputPortEXT; max_ports: TEGLint; num_ports: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
+function eglOutputLayerAttribEXT(dpy: TEGLDisplay; layer: TEGLOutputLayerEXT; attribute: TEGLint; Value: TEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryOutputLayerAttribEXT(dpy: TEGLDisplay; layer: TEGLOutputLayerEXT; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryOutputLayerStringEXT(dpy: TEGLDisplay; layer: TEGLOutputLayerEXT; Name: TEGLint): PChar; cdecl; external sdl3_lib;
+function eglOutputPortAttribEXT(dpy: TEGLDisplay; port: TEGLOutputPortEXT; attribute: TEGLint; Value: TEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryOutputPortAttribEXT(dpy: TEGLDisplay; port: TEGLOutputPortEXT; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryOutputPortStringEXT(dpy: TEGLDisplay; port: TEGLOutputPortEXT; Name: TEGLint): PChar; cdecl; external sdl3_lib;
 
 const
   EGL_EXT_output_drm = 1;
@@ -1075,9 +1075,9 @@ const
 const
   EGL_EXT_platform_base = 1;
 
-function eglGetPlatformDisplayEXT(platform: TEGLenum; native_display: pointer; attrib_list: PEGLint): TEGLDisplay; cdecl; external;
-function eglCreatePlatformWindowSurfaceEXT(dpy: TEGLDisplay; config: TEGLConfig; native_window: pointer; attrib_list: PEGLint): TEGLSurface; cdecl; external;
-function eglCreatePlatformPixmapSurfaceEXT(dpy: TEGLDisplay; config: TEGLConfig; native_pixmap: pointer; attrib_list: PEGLint): TEGLSurface; cdecl; external;
+function eglGetPlatformDisplayEXT(platform: TEGLenum; native_display: pointer; attrib_list: PEGLint): TEGLDisplay; cdecl; external sdl3_lib;
+function eglCreatePlatformWindowSurfaceEXT(dpy: TEGLDisplay; config: TEGLConfig; native_window: pointer; attrib_list: PEGLint): TEGLSurface; cdecl; external sdl3_lib;
+function eglCreatePlatformPixmapSurfaceEXT(dpy: TEGLDisplay; config: TEGLConfig; native_pixmap: pointer; attrib_list: PEGLint): TEGLSurface; cdecl; external sdl3_lib;
 
 const
   EGL_EXT_platform_device = 1;
@@ -1111,7 +1111,7 @@ const
 const
   EGL_EXT_stream_consumer_egloutput = 1;
 
-function eglStreamConsumerOutputEXT(dpy: TEGLDisplay; stream: TEGLStreamKHR; layer: TEGLOutputLayerEXT): TEGLBoolean; cdecl; external;
+function eglStreamConsumerOutputEXT(dpy: TEGLDisplay; stream: TEGLStreamKHR; layer: TEGLOutputLayerEXT): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_EXT_surface_CTA861_3_metadata = 1;
@@ -1153,17 +1153,17 @@ const
   EGL_SURFACE_COMPRESSION_FIXED_RATE_12BPC_EXT = $34BF;
 
 function eglQuerySupportedCompressionRatesEXT(dpy: TEGLDisplay; config: TEGLConfig; attrib_list: PEGLAttrib; rates: PEGLint; rate_size: TEGLint;
-  num_rates: PEGLint): TEGLBoolean; cdecl; external;
+  num_rates: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_EXT_swap_buffers_with_damage = 1;
 
-function eglSwapBuffersWithDamageEXT(dpy: TEGLDisplay; surface: TEGLSurface; rects: PEGLint; n_rects: TEGLint): TEGLBoolean; cdecl; external;
+function eglSwapBuffersWithDamageEXT(dpy: TEGLDisplay; surface: TEGLSurface; rects: PEGLint; n_rects: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_EXT_sync_reuse = 1;
 
-function eglUnsignalSyncEXT(dpy: TEGLDisplay; sync: TEGLSync; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external;
+function eglUnsignalSyncEXT(dpy: TEGLDisplay; sync: TEGLSync; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_EXT_yuv_surface = 1;
@@ -1210,7 +1210,7 @@ type
 const
   EGL_CLIENT_PIXMAP_POINTER_HI = $8F74;
 
-function eglCreatePixmapSurfaceHI(dpy: TEGLDisplay; config: TEGLConfig; pixmap: PEGLClientPixmapHI): TEGLSurface; cdecl; external;
+function eglCreatePixmapSurfaceHI(dpy: TEGLDisplay; config: TEGLConfig; pixmap: PEGLClientPixmapHI): TEGLSurface; cdecl; external sdl3_lib;
 
 const
   EGL_HI_colorformats = 1;
@@ -1242,14 +1242,14 @@ const
   EGL_DRM_BUFFER_USE_SHARE_MESA = $00000002;
   EGL_DRM_BUFFER_USE_CURSOR_MESA = $00000004;
 
-function eglCreateDRMImageMESA(dpy: TEGLDisplay; attrib_list: PEGLint): TEGLImageKHR; cdecl; external;
-function eglExportDRMImageMESA(dpy: TEGLDisplay; image: TEGLImageKHR; Name: PEGLint; handle: PEGLint; stride: PEGLint): TEGLBoolean; cdecl; external;
+function eglCreateDRMImageMESA(dpy: TEGLDisplay; attrib_list: PEGLint): TEGLImageKHR; cdecl; external sdl3_lib;
+function eglExportDRMImageMESA(dpy: TEGLDisplay; image: TEGLImageKHR; Name: PEGLint; handle: PEGLint; stride: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_MESA_image_dma_buf_export = 1;
 
-function eglExportDMABUFImageQueryMESA(dpy: TEGLDisplay; image: TEGLImageKHR; fourcc: Plongint; num_planes: Plongint; modifiers: PEGLuint64KHR): TEGLBoolean; cdecl; external;
-function eglExportDMABUFImageMESA(dpy: TEGLDisplay; image: TEGLImageKHR; fds: Plongint; strides: PEGLint; offsets: PEGLint): TEGLBoolean; cdecl; external;
+function eglExportDMABUFImageQueryMESA(dpy: TEGLDisplay; image: TEGLImageKHR; fourcc: Plongint; num_planes: Plongint; modifiers: PEGLuint64KHR): TEGLBoolean; cdecl; external sdl3_lib;
+function eglExportDMABUFImageMESA(dpy: TEGLDisplay; image: TEGLImageKHR; fds: Plongint; strides: PEGLint; offsets: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_MESA_platform_gbm = 1;
@@ -1262,18 +1262,18 @@ const
 const
   EGL_MESA_query_driver = 1;
 
-function eglGetDisplayDriverConfig(dpy: TEGLDisplay): PChar; cdecl; external;
-function eglGetDisplayDriverName(dpy: TEGLDisplay): PChar; cdecl; external;
+function eglGetDisplayDriverConfig(dpy: TEGLDisplay): PChar; cdecl; external sdl3_lib;
+function eglGetDisplayDriverName(dpy: TEGLDisplay): PChar; cdecl; external sdl3_lib;
 
 const
   EGL_NOK_swap_region = 1;
 
-function eglSwapBuffersRegionNOK(dpy: TEGLDisplay; surface: TEGLSurface; numRects: TEGLint; rects: PEGLint): TEGLBoolean; cdecl; external;
+function eglSwapBuffersRegionNOK(dpy: TEGLDisplay; surface: TEGLSurface; numRects: TEGLint; rects: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_NOK_swap_region2 = 1;
 
-function eglSwapBuffersRegion2NOK(dpy: TEGLDisplay; surface: TEGLSurface; numRects: TEGLint; rects: PEGLint): TEGLBoolean; cdecl; external;
+function eglSwapBuffersRegion2NOK(dpy: TEGLDisplay; surface: TEGLSurface; numRects: TEGLint; rects: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_NOK_texture_from_pixmap = 1;
@@ -1317,9 +1317,9 @@ const
 const
   EGL_NV_native_query = 1;
 
-function eglQueryNativeDisplayNV(dpy: TEGLDisplay; display_id: PEGLNativeDisplayType): TEGLBoolean; cdecl; external;
-function eglQueryNativeWindowNV(dpy: TEGLDisplay; surf: TEGLSurface; window: PEGLNativeWindowType): TEGLBoolean; cdecl; external;
-function eglQueryNativePixmapNV(dpy: TEGLDisplay; surf: TEGLSurface; pixmap: PEGLNativePixmapType): TEGLBoolean; cdecl; external;
+function eglQueryNativeDisplayNV(dpy: TEGLDisplay; display_id: PEGLNativeDisplayType): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryNativeWindowNV(dpy: TEGLDisplay; surf: TEGLSurface; window: PEGLNativeWindowType): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryNativePixmapNV(dpy: TEGLDisplay; surf: TEGLSurface; pixmap: PEGLNativePixmapType): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_NV_post_convert_rounding = 1;
@@ -1329,7 +1329,7 @@ const
   EGL_POST_SUB_BUFFER_SUPPORTED_NV = $30BE;
 
 function eglPostSubBufferNV(dpy: TEGLDisplay; surface: TEGLSurface; x: TEGLint; y: TEGLint; Width: TEGLint;
-  Height: TEGLint): TEGLBoolean; cdecl; external;
+  Height: TEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_NV_quadruple_buffer = 1;
@@ -1346,10 +1346,10 @@ const
   EGL_STREAM_IMAGE_REMOVE_NV = $3375;
   EGL_STREAM_IMAGE_AVAILABLE_NV = $3376;
 
-function eglStreamImageConsumerConnectNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; num_modifiers: TEGLint; modifiers: PEGLuint64KHR; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external;
-function eglQueryStreamConsumerEventNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; timeout: TEGLTime; event: PEGLenum; aux: PEGLAttrib): TEGLint; cdecl; external;
-function eglStreamAcquireImageNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; pImage: PEGLImage; sync: TEGLSync): TEGLBoolean; cdecl; external;
-function eglStreamReleaseImageNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; image: TEGLImage; sync: TEGLSync): TEGLBoolean; cdecl; external;
+function eglStreamImageConsumerConnectNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; num_modifiers: TEGLint; modifiers: PEGLuint64KHR; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryStreamConsumerEventNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; timeout: TEGLTime; event: PEGLenum; aux: PEGLAttrib): TEGLint; cdecl; external sdl3_lib;
+function eglStreamAcquireImageNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; pImage: PEGLImage; sync: TEGLSync): TEGLBoolean; cdecl; external sdl3_lib;
+function eglStreamReleaseImageNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; image: TEGLImage; sync: TEGLSync): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_NV_stream_consumer_gltexture_yuv = 1;
@@ -1357,7 +1357,7 @@ const
   EGL_YUV_PLANE1_TEXTURE_UNIT_NV = $332D;
   EGL_YUV_PLANE2_TEXTURE_UNIT_NV = $332E;
 
-function eglStreamConsumerGLTextureExternalAttribsNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external;
+function eglStreamConsumerGLTextureExternalAttribsNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; attrib_list: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_NV_stream_cross_display = 1;
@@ -1396,7 +1396,7 @@ const
 const
   EGL_NV_stream_flush = 1;
 
-function eglStreamFlushNV(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external;
+function eglStreamFlushNV(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_NV_stream_frame_limits = 1;
@@ -1420,11 +1420,11 @@ const
   EGL_METADATA2_TYPE_NV = $325B;
   EGL_METADATA3_TYPE_NV = $325C;
 
-function eglQueryDisplayAttribNV(dpy: TEGLDisplay; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external;
+function eglQueryDisplayAttribNV(dpy: TEGLDisplay; attribute: TEGLint; Value: PEGLAttrib): TEGLBoolean; cdecl; external sdl3_lib;
 function eglSetStreamMetadataNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; n: TEGLint; offset: TEGLint; size: TEGLint;
-  Data: pointer): TEGLBoolean; cdecl; external;
+  Data: pointer): TEGLBoolean; cdecl; external sdl3_lib;
 function eglQueryStreamMetadataNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; Name: TEGLenum; n: TEGLint; offset: TEGLint;
-  size: TEGLint; Data: pointer): TEGLBoolean; cdecl; external;
+  size: TEGLint; Data: pointer): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_NV_stream_origin = 1;
@@ -1456,7 +1456,7 @@ const
   EGL_SUPPORT_RESET_NV = $3334;
   EGL_SUPPORT_REUSE_NV = $3335;
 
-function eglResetStreamNV(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external;
+function eglResetStreamNV(dpy: TEGLDisplay; stream: TEGLStreamKHR): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_NV_stream_socket = 1;
@@ -1476,7 +1476,7 @@ const
   EGL_NV_stream_sync = 1;
   EGL_SYNC_NEW_FRAME_NV = $321F;
 
-function eglCreateStreamSyncNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; _type: TEGLenum; attrib_list: PEGLint): TEGLSyncKHR; cdecl; external;
+function eglCreateStreamSyncNV(dpy: TEGLDisplay; stream: TEGLStreamKHR; _type: TEGLenum; attrib_list: PEGLint): TEGLSyncKHR; cdecl; external sdl3_lib;
 
 const
   EGL_NV_sync = 1;
@@ -1502,12 +1502,12 @@ const
   EGL_SYNC_CONDITION_NV = $30EE;
   EGL_SYNC_FENCE_NV = $30EF;
 
-function eglCreateFenceSyncNV(dpy: TEGLDisplay; condition: TEGLenum; attrib_list: PEGLint): TEGLSyncNV; cdecl; external;
-function eglDestroySyncNV(sync: TEGLSyncNV): TEGLBoolean; cdecl; external;
-function eglFenceNV(sync: TEGLSyncNV): TEGLBoolean; cdecl; external;
-function eglClientWaitSyncNV(sync: TEGLSyncNV; flags: TEGLint; timeout: TEGLTimeNV): TEGLint; cdecl; external;
-function eglSignalSyncNV(sync: TEGLSyncNV; mode: TEGLenum): TEGLBoolean; cdecl; external;
-function eglGetSyncAttribNV(sync: TEGLSyncNV; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external;
+function eglCreateFenceSyncNV(dpy: TEGLDisplay; condition: TEGLenum; attrib_list: PEGLint): TEGLSyncNV; cdecl; external sdl3_lib;
+function eglDestroySyncNV(sync: TEGLSyncNV): TEGLBoolean; cdecl; external sdl3_lib;
+function eglFenceNV(sync: TEGLSyncNV): TEGLBoolean; cdecl; external sdl3_lib;
+function eglClientWaitSyncNV(sync: TEGLSyncNV; flags: TEGLint; timeout: TEGLTimeNV): TEGLint; cdecl; external sdl3_lib;
+function eglSignalSyncNV(sync: TEGLSyncNV; mode: TEGLenum): TEGLBoolean; cdecl; external sdl3_lib;
+function eglGetSyncAttribNV(sync: TEGLSyncNV; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_NV_system_time = 1;
@@ -1516,8 +1516,8 @@ type
   PEGLuint64NV = ^TEGLuint64NV;
   TEGLuint64NV = Tkhronos_utime_nanoseconds_t;
 
-function eglGetSystemTimeFrequencyNV: TEGLuint64NV; cdecl; external;
-function eglGetSystemTimeNV: TEGLuint64NV; cdecl; external;
+function eglGetSystemTimeFrequencyNV: TEGLuint64NV; cdecl; external sdl3_lib;
+function eglGetSystemTimeNV: TEGLuint64NV; cdecl; external sdl3_lib;
 
 const
   EGL_NV_triple_buffer = 1;
@@ -1557,9 +1557,9 @@ const
   EGL_TEXTURE_EXTERNAL_WL = $31DA;
   EGL_WAYLAND_Y_INVERTED_WL = $31DB;
 
-function eglBindWaylandDisplayWL(dpy: TEGLDisplay; display: Pwl_display): TEGLBoolean; cdecl; external;
-function eglUnbindWaylandDisplayWL(dpy: TEGLDisplay; display: Pwl_display): TEGLBoolean; cdecl; external;
-function eglQueryWaylandBufferWL(dpy: TEGLDisplay; buffer: Pwl_resource; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external;
+function eglBindWaylandDisplayWL(dpy: TEGLDisplay; display: Pwl_display): TEGLBoolean; cdecl; external sdl3_lib;
+function eglUnbindWaylandDisplayWL(dpy: TEGLDisplay; display: Pwl_display): TEGLBoolean; cdecl; external sdl3_lib;
+function eglQueryWaylandBufferWL(dpy: TEGLDisplay; buffer: Pwl_resource; attribute: TEGLint; Value: PEGLint): TEGLBoolean; cdecl; external sdl3_lib;
 
 const
   EGL_WL_create_wayland_buffer_from_image = 1;

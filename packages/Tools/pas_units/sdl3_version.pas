@@ -28,8 +28,8 @@ function SDL_VERSIONNUM(X, Y, Z: longint): longint;
 function SDL_COMPILEDVERSION: longint;
 function SDL_VERSION_ATLEAST(X, Y, Z: longint): TSDL_bool;
 
-function SDL_GetVersion(ver: PSDL_Version): longint; cdecl; external;
-function SDL_GetRevision: PChar; cdecl; external;
+function SDL_GetVersion(ver: PSDL_Version): longint; cdecl; external sdl3_lib;
+function SDL_GetRevision: PChar; cdecl; external sdl3_lib;
 
 implementation
 

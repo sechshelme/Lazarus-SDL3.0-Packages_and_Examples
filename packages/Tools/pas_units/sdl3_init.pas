@@ -21,11 +21,11 @@ const
   SDL_INIT_SENSOR = $00008000;
   SDL_INIT_CAMERA = $00010000;
 
-function SDL_Init(flags: uint32): longint; cdecl; external;
-function SDL_InitSubSystem(flags: uint32): longint; cdecl; external;
-procedure SDL_QuitSubSystem(flags: uint32); cdecl; external;
-function SDL_WasInit(flags: uint32): uint32; cdecl; external;
-procedure SDL_Quit; cdecl; external;
+function SDL_Init(flags: uint32): longint; cdecl; external sdl3_lib;
+function SDL_InitSubSystem(flags: uint32): longint; cdecl; external sdl3_lib;
+procedure SDL_QuitSubSystem(flags: uint32); cdecl; external sdl3_lib;
+function SDL_WasInit(flags: uint32): uint32; cdecl; external sdl3_lib;
+procedure SDL_Quit; cdecl; external sdl3_lib;
 
 implementation
 

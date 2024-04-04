@@ -315,19 +315,19 @@ type
       next : PSDL_PixelFormat;
     end;
 
-function SDL_GetPixelFormatName(format:Uint32):Pchar;cdecl;external;
-function SDL_GetMasksForPixelFormatEnum(format:Uint32; bpp:Plongint; Rmask:PUint32; Gmask:PUint32; Bmask:PUint32;           Amask:PUint32):TSDL_bool;cdecl;external;
-function SDL_GetPixelFormatEnumForMasks(bpp:longint; Rmask:Uint32; Gmask:Uint32; Bmask:Uint32; Amask:Uint32):Uint32;cdecl;external;
-function SDL_CreatePixelFormat(pixel_format:Uint32):PSDL_PixelFormat;cdecl;external;
-procedure SDL_DestroyPixelFormat(format:PSDL_PixelFormat);cdecl;external;
-function SDL_CreatePalette(ncolors:longint):PSDL_Palette;cdecl;external;
-function SDL_SetPixelFormatPalette(format:PSDL_PixelFormat; palette:PSDL_Palette):longint;cdecl;external;
-function SDL_SetPaletteColors(palette:PSDL_Palette; colors:PSDL_Color; firstcolor:longint; ncolors:longint):longint;cdecl;external;
-procedure SDL_DestroyPalette(palette:PSDL_Palette);cdecl;external;
-function SDL_MapRGB(format:PSDL_PixelFormat; r:Uint8; g:Uint8; b:Uint8):Uint32;cdecl;external;
-function SDL_MapRGBA(format:PSDL_PixelFormat; r:Uint8; g:Uint8; b:Uint8; a:Uint8):Uint32;cdecl;external;
-procedure SDL_GetRGB(pixel:Uint32; format:PSDL_PixelFormat; r:PUint8; g:PUint8; b:PUint8);cdecl;external;
-procedure SDL_GetRGBA(pixel:Uint32; format:PSDL_PixelFormat; r:PUint8; g:PUint8; b:PUint8;            a:PUint8);cdecl;external;
+function SDL_GetPixelFormatName(format:Uint32):Pchar;cdecl;external sdl3_lib;
+function SDL_GetMasksForPixelFormatEnum(format:Uint32; bpp:Plongint; Rmask:PUint32; Gmask:PUint32; Bmask:PUint32;           Amask:PUint32):TSDL_bool;cdecl;external sdl3_lib;
+function SDL_GetPixelFormatEnumForMasks(bpp:longint; Rmask:Uint32; Gmask:Uint32; Bmask:Uint32; Amask:Uint32):Uint32;cdecl;external sdl3_lib;
+function SDL_CreatePixelFormat(pixel_format:Uint32):PSDL_PixelFormat;cdecl;external sdl3_lib;
+procedure SDL_DestroyPixelFormat(format:PSDL_PixelFormat);cdecl;external sdl3_lib;
+function SDL_CreatePalette(ncolors:longint):PSDL_Palette;cdecl;external sdl3_lib;
+function SDL_SetPixelFormatPalette(format:PSDL_PixelFormat; palette:PSDL_Palette):longint;cdecl;external sdl3_lib;
+function SDL_SetPaletteColors(palette:PSDL_Palette; colors:PSDL_Color; firstcolor:longint; ncolors:longint):longint;cdecl;external sdl3_lib;
+procedure SDL_DestroyPalette(palette:PSDL_Palette);cdecl;external sdl3_lib;
+function SDL_MapRGB(format:PSDL_PixelFormat; r:Uint8; g:Uint8; b:Uint8):Uint32;cdecl;external sdl3_lib;
+function SDL_MapRGBA(format:PSDL_PixelFormat; r:Uint8; g:Uint8; b:Uint8; a:Uint8):Uint32;cdecl;external sdl3_lib;
+procedure SDL_GetRGB(pixel:Uint32; format:PSDL_PixelFormat; r:PUint8; g:PUint8; b:PUint8);cdecl;external sdl3_lib;
+procedure SDL_GetRGBA(pixel:Uint32; format:PSDL_PixelFormat; r:PUint8; g:PUint8; b:PUint8;            a:PUint8);cdecl;external sdl3_lib;
 
 implementation
 

@@ -44,11 +44,11 @@ function SDL_PointInRect(p: PSDL_Point; r: PSDL_Rect): TSDL_bool;
 function SDL_RectEmpty(r: PSDL_Rect): TSDL_bool;
 function SDL_RectsEqual(a: PSDL_Rect; b: PSDL_Rect): TSDL_bool;
 
-function SDL_HasRectIntersection(A: PSDL_Rect; B: PSDL_Rect): TSDL_bool; cdecl; external;
-function SDL_GetRectIntersection(A: PSDL_Rect; B: PSDL_Rect; Result: PSDL_Rect): TSDL_bool; cdecl; external;
-function SDL_GetRectUnion(A: PSDL_Rect; B: PSDL_Rect; Result: PSDL_Rect): longint; cdecl; external;
-function SDL_GetRectEnclosingPoints(points: PSDL_Point; Count: longint; clip: PSDL_Rect; Result: PSDL_Rect): TSDL_bool; cdecl; external;
-function SDL_GetRectAndLineIntersection(rect: PSDL_Rect; X1: Plongint; Y1: Plongint; X2: Plongint; Y2: Plongint): TSDL_bool; cdecl; external;
+function SDL_HasRectIntersection(A: PSDL_Rect; B: PSDL_Rect): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_GetRectIntersection(A: PSDL_Rect; B: PSDL_Rect; Result: PSDL_Rect): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_GetRectUnion(A: PSDL_Rect; B: PSDL_Rect; Result: PSDL_Rect): longint; cdecl; external sdl3_lib;
+function SDL_GetRectEnclosingPoints(points: PSDL_Point; Count: longint; clip: PSDL_Rect; Result: PSDL_Rect): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_GetRectAndLineIntersection(rect: PSDL_Rect; X1: Plongint; Y1: Plongint; X2: Plongint; Y2: Plongint): TSDL_bool; cdecl; external sdl3_lib;
 
 
 { SDL_FRect versions...  }
@@ -57,11 +57,11 @@ function SDL_RectEmptyFloat(r: PSDL_FRect): TSDL_bool;
 function SDL_RectsEqualEpsilon(a: PSDL_FRect; b: PSDL_FRect; epsilon: cfloat): TSDL_bool;
 function SDL_RectsEqualFloat(a:PSDL_FRect; b: PSDL_FRect):TSDL_bool;
 
-function SDL_HasRectIntersectionFloat(A: PSDL_FRect; B: PSDL_FRect): TSDL_bool; cdecl; external;
-function SDL_GetRectIntersectionFloat(A: PSDL_FRect; B: PSDL_FRect; Result: PSDL_FRect): TSDL_bool; cdecl; external;
-function SDL_GetRectUnionFloat(A: PSDL_FRect; B: PSDL_FRect; Result: PSDL_FRect): longint; cdecl; external;
-function SDL_GetRectEnclosingPointsFloat(points: PSDL_FPoint; Count: longint; clip: PSDL_FRect; Result: PSDL_FRect): TSDL_bool; cdecl; external;
-function SDL_GetRectAndLineIntersectionFloat(rect: PSDL_FRect; X1: Psingle; Y1: Psingle; X2: Psingle; Y2: Psingle): TSDL_bool; cdecl; external;
+function SDL_HasRectIntersectionFloat(A: PSDL_FRect; B: PSDL_FRect): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_GetRectIntersectionFloat(A: PSDL_FRect; B: PSDL_FRect; Result: PSDL_FRect): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_GetRectUnionFloat(A: PSDL_FRect; B: PSDL_FRect; Result: PSDL_FRect): longint; cdecl; external sdl3_lib;
+function SDL_GetRectEnclosingPointsFloat(points: PSDL_FPoint; Count: longint; clip: PSDL_FRect; Result: PSDL_FRect): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_GetRectAndLineIntersectionFloat(rect: PSDL_FRect; X1: Psingle; Y1: Psingle; X2: Psingle; Y2: Psingle): TSDL_bool; cdecl; external sdl3_lib;
 
 {$ENDIF read_interface}
 

@@ -49,25 +49,25 @@ const
   SDL_MOUSEWHEEL_NORMAL = 0;
   SDL_MOUSEWHEEL_FLIPPED = 1;
 
-function SDL_GetMouseFocus: PSDL_Window; cdecl; external;
-function SDL_GetMouseState(x: Psingle; y: Psingle): uint32; cdecl; external;
-function SDL_GetGlobalMouseState(x: Psingle; y: Psingle): uint32; cdecl; external;
-function SDL_GetRelativeMouseState(x: Psingle; y: Psingle): uint32; cdecl; external;
-procedure SDL_WarpMouseInWindow(window: PSDL_Window; x: single; y: single); cdecl; external;
-function SDL_WarpMouseGlobal(x: single; y: single): longint; cdecl; external;
-function SDL_SetRelativeMouseMode(Enabled: TSDL_bool): longint; cdecl; external;
-function SDL_CaptureMouse(Enabled: TSDL_bool): longint; cdecl; external;
-function SDL_GetRelativeMouseMode: TSDL_bool; cdecl; external;
-function SDL_CreateCursor(Data: PUint8; mask: PUint8; w: longint; h: longint; hot_x: longint; hot_y: longint): PSDL_Cursor; cdecl; external;
-function SDL_CreateColorCursor(surface: PSDL_Surface; hot_x: longint; hot_y: longint): PSDL_Cursor; cdecl; external;
-function SDL_CreateSystemCursor(id: TSDL_SystemCursor): PSDL_Cursor; cdecl; external;
-function SDL_SetCursor(cursor: PSDL_Cursor): longint; cdecl; external;
-function SDL_GetCursor: PSDL_Cursor; cdecl; external;
-function SDL_GetDefaultCursor: PSDL_Cursor; cdecl; external;
-procedure SDL_DestroyCursor(cursor: PSDL_Cursor); cdecl; external;
-function SDL_ShowCursor: longint; cdecl; external;
-function SDL_HideCursor: longint; cdecl; external;
-function SDL_CursorVisible: TSDL_bool; cdecl; external;
+function SDL_GetMouseFocus: PSDL_Window; cdecl; external sdl3_lib;
+function SDL_GetMouseState(x: Psingle; y: Psingle): uint32; cdecl; external sdl3_lib;
+function SDL_GetGlobalMouseState(x: Psingle; y: Psingle): uint32; cdecl; external sdl3_lib;
+function SDL_GetRelativeMouseState(x: Psingle; y: Psingle): uint32; cdecl; external sdl3_lib;
+procedure SDL_WarpMouseInWindow(window: PSDL_Window; x: single; y: single); cdecl; external sdl3_lib;
+function SDL_WarpMouseGlobal(x: single; y: single): longint; cdecl; external sdl3_lib;
+function SDL_SetRelativeMouseMode(Enabled: TSDL_bool): longint; cdecl; external sdl3_lib;
+function SDL_CaptureMouse(Enabled: TSDL_bool): longint; cdecl; external sdl3_lib;
+function SDL_GetRelativeMouseMode: TSDL_bool; cdecl; external sdl3_lib;
+function SDL_CreateCursor(Data: PUint8; mask: PUint8; w: longint; h: longint; hot_x: longint; hot_y: longint): PSDL_Cursor; cdecl; external sdl3_lib;
+function SDL_CreateColorCursor(surface: PSDL_Surface; hot_x: longint; hot_y: longint): PSDL_Cursor; cdecl; external sdl3_lib;
+function SDL_CreateSystemCursor(id: TSDL_SystemCursor): PSDL_Cursor; cdecl; external sdl3_lib;
+function SDL_SetCursor(cursor: PSDL_Cursor): longint; cdecl; external sdl3_lib;
+function SDL_GetCursor: PSDL_Cursor; cdecl; external sdl3_lib;
+function SDL_GetDefaultCursor: PSDL_Cursor; cdecl; external sdl3_lib;
+procedure SDL_DestroyCursor(cursor: PSDL_Cursor); cdecl; external sdl3_lib;
+function SDL_ShowCursor: longint; cdecl; external sdl3_lib;
+function SDL_HideCursor: longint; cdecl; external sdl3_lib;
+function SDL_CursorVisible: TSDL_bool; cdecl; external sdl3_lib;
 
 function SDL_BUTTON(X: int32): int32;
 

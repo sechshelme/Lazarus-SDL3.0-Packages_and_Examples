@@ -18,7 +18,7 @@ const
   SDL_POWERSTATE_CHARGING = 3;
   SDL_POWERSTATE_CHARGED = 4;
 
-function SDL_GetPowerInfo(seconds: Plongint; percent: Plongint): TSDL_PowerState; cdecl; external;
+function SDL_GetPowerInfo(seconds: Plongint; percent: Plongint): TSDL_PowerState; cdecl; external sdl3_lib;
 
 {$ENDIF read_interface}
 
