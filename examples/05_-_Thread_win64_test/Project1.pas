@@ -11,29 +11,25 @@ uses
   function TestThread(Data: pointer): longint; cdecl;
   var
     i: integer;
-    Index: PtrInt;
   begin
-    Index := PtrInt(Data);
-
     for i := 0 to 10 do begin
-      SDL_Log('Index: %i    Counter: %i', Index, i);
+      SDL_Log('%i', i);
       SDL_Delay(50);
     end;
-    Result := Index;
+    Result := i;
   end;
 
 var
-  thread: array of PSDL_Thread;
+  thread: array [0..7] of PSDL_Thread;
   threadReturnValue: longint;
   i: integer;
 begin
-  SDL_Log('Simple SDL_CreateThread test:');
-  SetLength(thread, 8);
+  WriteLn('Simple SDL_CreateThread test:');
   for i := 0 to Length(thread) - 1 do begin
-    thread[i] := SDL_CreateThread(@TestThread, 'TestThread', pointer(i));
-
+    thread[i] := SDL_CreateThread(@TestThread, 'TestThread', nil);
     if thread[i] = nil then  begin
-      SDL_LogError(0, 'SDL_CreateThread failed: %i', SDL_GetError);
+      SDL_Log('SDL_CreateThread failed: %i', SDL_GetError);
+      halt;
     end;
   end;
 

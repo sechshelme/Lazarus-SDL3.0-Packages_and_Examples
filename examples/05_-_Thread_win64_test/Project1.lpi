@@ -45,7 +45,6 @@
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>
-      <TargetCPU Value="x86_64"/>
       <TargetOS Value="win64"/>
     </CodeGeneration>
     <Linking>

@@ -2,7 +2,7 @@ program Project1;
 
 uses
   {$IFDEF linux}
-  //  cthreads,
+    cthreads,
   {$ENDIF}
   ctypes,
   SDL3;
