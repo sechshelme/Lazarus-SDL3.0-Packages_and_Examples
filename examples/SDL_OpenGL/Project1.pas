@@ -2,6 +2,7 @@ program Project1;
 
 uses
   sdl3,
+  oglDebug,
   oglglad_gl;
 
 var
@@ -14,6 +15,9 @@ var
   glcontext: TSDL_GLContext;
 
 begin
+  SDL_Log(StrGreen+'Hello World');
+  SDL_Log(StrBrightRed+'Hello World');
+
   SDL_init(SDL_INIT_VIDEO);
 
   window := SDL_CreateWindow('SDL3 Window', 320, 200, SDL_WINDOW_OPENGL or SDL_WINDOW_RESIZABLE);

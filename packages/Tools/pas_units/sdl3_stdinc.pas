@@ -9,12 +9,22 @@ uses
 {$PACKRECORDS C}
 {$ENDIF}
 
-//{$LinkLib 'libSDL3.so.0'}
-//{$LinkLib 'SDL3'}
-//{$LinkLib 'c'}
-
 type
-  Tsize_t=SizeInt;
+  TUint8 = uint8;
+  TUint16 = uint16;
+  TUint32 = uint32;
+  TUint64 = uint64;
+
+  Tint8 = uint8;
+  Tint16 = uint16;
+  Tint32 = uint32;
+  Tint64 = uint64;
+
+  Tsize_t = SizeInt;
+//  Tsize_t = SizeUInt;
+  Tuintptr_t = PtrUInt;
+                               
+
   Psize_t=^Tsize_t;
 
   Twchar_t=word;

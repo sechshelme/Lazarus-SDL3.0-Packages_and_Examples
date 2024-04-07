@@ -1,7 +1,7 @@
 #include <SDL3/SDL.h>
 #include <stdio.h>
 
-// gcc main.c -o main -lSDL2
+// gcc main.c -o main -lSDL3
 // x86_64-w64-mingw32-gcc main.c -o main.exe -lSDL3 -I/usr/share/mingw-w64/include -L.
 
 
