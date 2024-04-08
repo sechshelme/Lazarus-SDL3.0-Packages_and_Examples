@@ -7,20 +7,25 @@ uses
   ctypes;
 
 var
-  nDevices: longint;
-  pDeviceLiat: PSDL_CameraDeviceID;
-  i: integer;
+  nDevices, pCount: longint;
+  pDeviceList: PSDL_CameraDeviceID;
+  i, j: integer;
   pName: PChar;
+  pSpec: PSDL_CameraSpec;
 begin
   SDL_Init(SDL_INIT_CAMERA);
 
   SDL_Log('Camera count: %i', SDL_GetNumCameraDrivers);
 
-  pDeviceLiat := SDL_GetCameraDevices(@nDevices);
+  pDeviceList := SDL_GetCameraDevices(@nDevices);
   SDL_Log('Camera count: %i', nDevices);
   for i := 0 to nDevices - 1 do begin
-    pName := SDL_GetCameraDeviceName(pDeviceLiat[i]);
+    pName := SDL_GetCameraDeviceName(pDeviceList[i]);
     WriteLn('  ',pName);
+
+   pSpec:= SDL_GetCameraDeviceSupportedFormats(pDeviceList[i],@pCount);
+   for j:=0 to pCount-1 do
+       WriteLn('    spec w: ',pSpec[j].width, ' h: ',pSpec[j].height,  ' f: ',pSpec[j].format);
   end;
 
 end.
