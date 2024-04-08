@@ -1,6 +1,7 @@
 program Project1;
 
 // https://github.com/PascalGameDevelopment/SDL2-for-Pascal
+// https://www.lazarusforum.de/viewtopic.php?f=10&t=15222&p=138351&hilit=linklib#p138351
 
 // {$UNITPATH ../units/units}
 
