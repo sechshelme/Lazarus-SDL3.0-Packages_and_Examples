@@ -19,14 +19,18 @@ var
   e: TSDL_Event;
   timeStamp: uint64;
 begin
+
   SDL_Init(SDL_INIT_VIDEO or SDL_INIT_CAMERA);
   win := SDL_CreateWindow('Camera', 640, 480, SDL_WINDOW_RESIZABLE);
   if win = nil then begin
     SDL_LogError(0, 'Konnte Fenster nicht erzeugen !');
   end;
-WriteLn('Fensterpos: ',  SDL_SetWindowPosition(win,  SDL_WINDOWPOS_CENTERED,  SDL_WINDOWPOS_CENTERED));
-SDL_SyncWindow(win);
+//WriteLn('Fensterpos: ',  SDL_SetWindowPosition(win,  SDL_WINDOWPOS_CENTERED,  SDL_WINDOWPOS_CENTERED));
+//SDL_SyncWindow(win);
+//  SDL_LogSetAllPriority(SDL_LOG_CATEGORY_APPLICATION or SDL_LOG_PRIORITY_INFO);
+
   winSurface := SDL_GetWindowSurface(win);
+//  SDL_SetcoSurfaceColorMod(winSurface, $88, $FF, $88);
 
   pCameraDriverCount := SDL_GetNumCameraDrivers;
   WriteLn('Camera driver count: ', pCameraDriverCount);
@@ -51,6 +55,7 @@ SDL_SyncWindow(win);
 
   if (pDeviceList <> nil) and (pSpec <> nil) then begin
 
+    pSpec[0].format:=SDL_PIXELFORMAT_YUY2;
     pCamera := SDL_OpenCameraDevice(pDeviceList[0], @pSpec[0]);
     if pCamera = nil then begin
       WriteLn('Open Camera Error');
