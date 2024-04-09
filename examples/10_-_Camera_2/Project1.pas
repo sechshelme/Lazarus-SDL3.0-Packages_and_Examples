@@ -12,6 +12,10 @@ var
   spec: TSDL_CameraSpec;
   front_camera: TSDL_CameraDeviceID = 0;
   back_camera: TSDL_CameraDeviceID = 0;
+  texture: PSDL_Texture;
+  frame_current: PSDL_Surface = nil;
+  texture_updated: TSDL_bool = SDL_FALSE;
+
 
   procedure AppInit;
   var
@@ -113,9 +117,47 @@ var
   end;
 
   function AppIterate: cint;
+  var
+    win_w, win_h,tw,th: cint;
+    d: TSDL_FRect;
+    timestampNS: TUint64;
+    frame_next: PSDL_Surface;
   begin
     SDL_SetRenderDrawColor(renderer, $99, $99, $9, 255);
     SDL_RenderClear(renderer);
+
+    if texture <> nil then  begin
+      if camera <> nil then begin
+        frame_next := SDL_AcquireCameraFrame(camera, @timestampNS);
+      end else begin
+        frame_next := nil;
+      end;
+
+      if frame_next <> nil then begin
+        if frame_current <> nil then begin
+          if SDL_ReleaseCameraFrame(camera, frame_current) < 0 then  begin
+            SDL_Log('err SDL_ReleaseCameraFrame: %s', SDL_GetError());
+          end;
+        end;
+        frame_current := frame_next;
+        texture_updated := SDL_FALSE;
+      end;
+
+      if (frame_current <> nil) and ( texture_updated=SDL_FALSE) then begin
+        SDL_UpdateTexture(texture, nil, frame_current^.pixels, frame_current^.pitch);
+        texture_updated := SDL_TRUE;
+      end;
+
+      SDL_QueryTexture(texture, nil, nil, @tw, @th);
+      SDL_GetRenderOutputSize(renderer, @win_w, @win_h);
+
+      d.x:=(win_w-tw)/2;
+      d.y:=(win_h-th)/2;
+      d.w:=tw;
+      d.h:=th;
+
+      SDL_RenderTexture(renderer,texture,nil,@d);
+    end;
 
     SDL_RenderPresent(renderer);
     Result := 0;
@@ -151,7 +193,6 @@ var
     quit: boolean = False;
     e: TSDL_Event;
     sym: TSDL_KeyCode;
-    texture: PSDL_Texture;
   begin
     while not quit do begin
       while SDL_PollEvent(@e) <> 0 do begin
