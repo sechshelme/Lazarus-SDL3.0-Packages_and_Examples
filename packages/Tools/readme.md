@@ -37,6 +37,8 @@ include/SDL3/SDL_time.h                             | 208 ++++++++++++++++++++++
  include/SDL3/SDL_storage.h            |  43 +++++++++++++++++-
  src/dynapi/SDL_dynapi.sym             |   2 +
 
+SDL_renderer.h
+
 
 
 
