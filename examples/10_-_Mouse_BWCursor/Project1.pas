@@ -1,16 +1,70 @@
 program Project1;
 
-// https://wiki.libsdl.org/SDL3/SDL_CreateColorCursor
+// https://wiki.libsdl.org/SDL3/SDL_CreateCursor
 
 uses
   SDL3,
   ctypes;
 
+  function init_system_cursor: PSDL_Cursor;
+  const
+    arrow: array of PChar = (
+      'X',
+      'XX',
+      'X.X',
+      'X..X',
+      'X...X',
+      'X....X',
+      'X.....X',
+      'X......X',
+      'X.......X',
+      'X........X',
+      'X.....XXXXX',
+      'X..X..X',
+      'X.X X..X',
+      'XX  X..X',
+      'X    X..X',
+      '     X..X',
+      '      X..X',
+      '      X..X',
+      '       XX');
+    size = 32;
+  var
+    Data, mask: packed array [0..(size div 8) * size - 1] of byte;
+    col, row: integer;
+    i: integer = -1;
+  begin
+    WriteLn(SizeOf(Data));
+    FillByte(Data, SizeOf(Data), $00);
+    FillByte(mask, SizeOf(mask), $00);
+    for row := 0 to Length(arrow) - 1 do begin
+      for col := 0 to size - 1 do begin
+        if col mod 8 <> 0 then begin
+          Data[i] := Data[i] shl 1;
+          mask[i] := mask[i] shl 1;
+        end else begin
+          Inc(i);
+        end;
+        if col < Length(arrow[row]) then begin
+          case arrow[row, col] of
+            'X': begin
+              Data[i] := Data[i] or $01;
+              mask[i] := mask[i] or $01;
+            end;
+            '.': begin
+              mask[i] := mask[i] or $01;
+            end;
+          end;
+        end;
+      end;
+    end;
+    Result := SDL_CreateCursor(Data, mask, size, size, 0, 0);
+  end;
+
 var
   win: PSDL_Window;
   renderer: PSDL_Renderer;
-  surface: PSDL_Surface;
-  customColorCursor: PSDL_Cursor;
+  customCursor: PSDL_Cursor;
 
   procedure Init;
   begin
@@ -27,18 +81,12 @@ var
       Halt(-1);
     end;
 
-    surface := SDL_LoadBMP('mauer.bmp');
-    if surface = nil then begin
-      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Kann kein BMP nicht laden !');
-      Halt(-1);
-    end;
-
-    customColorCursor := SDL_CreateColorCursor(surface, 0, 0);
-    if customColorCursor = nil then begin
+    customCursor := init_system_cursor;
+    if customCursor = nil then begin
       SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Kann kein Cursor laden !');
       Halt(-1);
     end;
-    SDL_SetCursor(customColorCursor);
+    SDL_SetCursor(customCursor);
   end;
 
   procedure Render;
@@ -64,7 +112,6 @@ var
               SDL_BUTTON_RIGHT: begin
               end;
             end;
-            WriteLn('dows');
           end;
           SDL_EVENT_KEY_DOWN: begin
             sym := e.key.keysym.sym;
@@ -86,8 +133,7 @@ var
 
   procedure Destroy;
   begin
-    SDL_DestroyCursor(customColorCursor);
-    SDL_DestroySurface(surface);
+    SDL_DestroyCursor(customCursor);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(win);
   end;
