@@ -1,97 +1,184 @@
 program Project1;
 
-// https://github.com/Ravbug/sdl3-sample/blob/main/src/main.cpp
+// https://github.com/libsdl-org/SDL/issues/9496
 
 uses
   SDL3,
   ctypes;
 
 var
-  nDevices, pSpecCount, pCameraDriverCount: longint;
-  pDeviceList: PSDL_CameraDeviceID;
-  i, j: integer;
-  pName: PChar;
-  pSpec: PSDL_CameraSpec;
-  pCamera: PSDL_Camera;
-  win: PSDL_Window;
-  winSurface, camSurface: PSDL_Surface;
-  quit: boolean = False;
-  e: TSDL_Event;
-  timeStamp: uint64;
-begin
+  renderer: PSDL_Renderer;
+  camera: PSDL_Camera;
+  spec: TSDL_CameraSpec;
+  texture: PSDL_Texture;
+  frame_current: PSDL_Surface = nil;
+  texture_updated: TSDL_bool = SDL_FALSE;
 
-  SDL_Init(SDL_INIT_VIDEO or SDL_INIT_CAMERA);
-  win := SDL_CreateWindow('Camera', 640, 480, SDL_WINDOW_RESIZABLE);
-  if win = nil then begin
-    SDL_LogError(0, 'Konnte Fenster nicht erzeugen !');
-  end;
-//WriteLn('Fensterpos: ',  SDL_SetWindowPosition(win,  SDL_WINDOWPOS_CENTERED,  SDL_WINDOWPOS_CENTERED));
-//SDL_SyncWindow(win);
-//  SDL_LogSetAllPriority(SDL_LOG_CATEGORY_APPLICATION or SDL_LOG_PRIORITY_INFO);
+  procedure Init;
+  var
+    devCount: longint;
+    devices: PSDL_CameraDeviceID;
+    i: integer;
+    Name: PChar;
+    win: PSDL_Window;
 
-  winSurface := SDL_GetWindowSurface(win);
-//  SDL_SetcoSurfaceColorMod(winSurface, $88, $FF, $88);
+    devid: TSDL_CameraDeviceID;
 
-  pCameraDriverCount := SDL_GetNumCameraDrivers;
-  WriteLn('Camera driver count: ', pCameraDriverCount);
-  for i := 0 to pCameraDriverCount - 1 do begin
-    WriteLn('  ', i, ':  Drivername: %s', SDL_GetCameraDriver(i));
-
-  end;
-  WriteLn();
+    posstr: PChar = '';
+    position: TSDL_CameraPosition;
+    pspec: TSDL_CameraSpec;
 
 
-  pDeviceList := SDL_GetCameraDevices(@nDevices);
-  WriteLn('Camera count: ', nDevices);
-  for i := 0 to nDevices - 1 do begin
-    pName := SDL_GetCameraDeviceName(pDeviceList[i]);
-    WriteLn('  ', i, ': ', pName);
+  begin
+    SDL_Init(SDL_INIT_VIDEO or SDL_INIT_CAMERA);
+    win := SDL_CreateWindow('Camera', 640, 480, SDL_WINDOW_RESIZABLE);
+    if win = nil then begin
+      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Konnte Fenster nicht erzeugen !');
+      Halt(-1);
+    end;
 
-    pSpec := SDL_GetCameraDeviceSupportedFormats(pDeviceList[i], @pSpecCount);
-    for j := 0 to pSpecCount - 1 do begin
-      WriteLn('    spec w: ', pSpec[j].Width, ' h: ', pSpec[j].Height, ' f: ', pSpec[j].format, ' inum: ', pSpec[j].interval_numerator, ' ideno: ', pSpec[j].interval_denominator);
+    renderer := SDL_CreateRenderer(win, nil, SDL_RENDERER_ACCELERATED);
+    if renderer = nil then begin
+      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Kann kein SDL-Renderer erzeugen !');
+      Halt(-1);
+    end;
+
+    devices := SDL_GetCameraDevices(@devCount);
+    if devices = nil then begin
+      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'SDL_GetCameraDevices failed: %s', SDL_GetError());
+      Halt(-1);
+    end;
+
+    for i := 0 to devCount - 1 do begin
+      devid := devices[i];
+      Name := SDL_GetCameraDeviceName(devid);
+      position := SDL_GetCameraDevicePosition(devid);
+      case position of
+        SDL_CAMERA_POSITION_FRONT_FACING: begin
+          posstr := '[front-facing] ';
+        end;
+        SDL_CAMERA_POSITION_BACK_FACING: begin
+          posstr := '[back-facing] ';
+        end;
+        else begin
+          posstr := '[unknow]';
+        end;
+      end;
+      SDL_Log('  - Camera #%d: %s %s', i, posstr, Name);
+      SDL_free(Name);
+    end;
+
+    devid := devices[0];
+    SDL_free(devices);
+    if devid = 0 then begin
+
+      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'No cameras available ?');
+      Halt(-1);
+    end;
+
+    //spec.format := SDL_PIXELFORMAT_UYVY;
+    //spec.interval_numerator := 1;
+    //spec.interval_denominator := 30;
+    //spec.Width := 640;
+    //spec.Height := 480;
+    //camera := SDL_OpenCameraDevice(devid, @pspec);
+
+    camera := SDL_OpenCameraDevice(devid, nil);
+    SDL_Log('w: %i   h: %i', pspec.Width, pspec.Height);
+
+    if camera = nil then begin
+      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Failed to open camera device: %s', SDL_GetError());
+      Halt(-1);
     end;
   end;
 
-  if (pDeviceList <> nil) and (pSpec <> nil) then begin
+  procedure Render;
+  var
+    win_w, win_h, tw, th: cint;
+    rect: TSDL_FRect;
+    timestampNS: TUint64;
+    frame_next: PSDL_Surface;
+  begin
+    SDL_SetRenderDrawColor(renderer, $99, $99, $9, 255);
+    SDL_RenderClear(renderer);
 
-    pSpec[0].format:=SDL_PIXELFORMAT_YUY2;
-    pCamera := SDL_OpenCameraDevice(pDeviceList[0], @pSpec[0]);
-    if pCamera = nil then begin
-      WriteLn('Open Camera Error');
-    end;
-    //    SDL_ReleaseCameraFrame(pCamera, winSurface);
-    camSurface := SDL_AcquireCameraFrame(pCamera, @timeStamp);
-    if camSurface = nil then begin
-      WriteLn('camSurface Error');
+    if texture <> nil then  begin
+      if camera <> nil then begin
+        frame_next := SDL_AcquireCameraFrame(camera, @timestampNS);
+      end else begin
+        frame_next := nil;
+      end;
+
+      if frame_next <> nil then begin
+        if frame_current <> nil then begin
+          if SDL_ReleaseCameraFrame(camera, frame_current) < 0 then  begin
+            SDL_Log('err SDL_ReleaseCameraFrame: %s', SDL_GetError());
+          end;
+        end;
+        frame_current := frame_next;
+        texture_updated := SDL_FALSE;
+      end;
+
+      if (frame_current <> nil) and (texture_updated = SDL_FALSE) then begin
+        SDL_UpdateTexture(texture, nil, frame_current^.pixels, frame_current^.pitch);
+        texture_updated := SDL_TRUE;
+      end;
+
+      SDL_QueryTexture(texture, nil, nil, @tw, @th);
+      SDL_GetRenderOutputSize(renderer, @win_w, @win_h);
+
+      rect.x := (win_w - tw) / 2;
+      rect.y := (win_h - th) / 2;
+      rect.w := tw;
+      rect.h := th;
+
+      SDL_RenderTexture(renderer, texture, nil, @rect);
     end;
 
-    WriteLn('Open Camera  ', timeStamp);
+    SDL_RenderPresent(renderer);
   end;
 
-  while not quit do begin
-    while SDL_PollEvent(@e) <> 0 do begin
-      case e.type_ of
-        SDL_EVENT_KEY_DOWN: begin
-          case e.key.keysym.sym of
-            SDLK_ESCAPE: begin
-              quit := True;
+  procedure Event;
+  var
+    quit: boolean = False;
+    e: TSDL_Event;
+    sym: TSDL_KeyCode;
+  begin
+    while not quit do begin
+      while SDL_PollEvent(@e) <> 0 do begin
+        case e.type_ of
+          SDL_EVENT_KEY_DOWN: begin
+            sym := e.key.keysym.sym;
+            case sym of
+              SDLK_ESCAPE, SDLK_AC_BACK: begin
+                quit := True;
+              end;
+            end;
+          end;
+          SDL_EVENT_QUIT: begin
+            quit := True;
+          end;
+          SDL_EVENT_CAMERA_DEVICE_APPROVED: begin
+            SDL_Log('Camera approved !');
+            if SDL_GetCameraFormat(camera, @spec) < 0 then  begin
+              SDL_Log('Couldn''t get camera spec: %s', SDL_GetError());
+              Halt(-1);
+            end;
+
+            texture := SDL_CreateTexture(renderer, spec.format, SDL_TEXTUREACCESS_STATIC, spec.Width, spec.Height);
+            if texture = nil then begin
+              SDL_Log('Couldn''t create texture: %s', SDL_GetError());
+              Halt(-1);
             end;
           end;
         end;
-        SDL_EVENT_QUIT: begin
-          quit := True;
-        end;
       end;
 
-      SDL_BlitSurface(camSurface, nil, winSurface, nil);
+      Render;
     end;
   end;
 
-  //  SDL_FreeSurface(winSurface);
-
-//  SDL_DestroyWindow(win);
-//  SDL_Quit;
-
-  WriteLn('ende');
+begin
+  Init;
+  Event;
 end.
