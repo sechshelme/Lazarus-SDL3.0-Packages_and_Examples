@@ -29,14 +29,18 @@ uses
       '      X..X',
       '       XX');
     size = 32;
+  type
+    TByteArray = array [0..(size div 8) * size - 1] of byte;
   var
-    Data, mask: packed array [0..(size div 8) * size - 1] of byte;
+    Data, mask: TByteArray;
     col, row: integer;
     i: integer = -1;
   begin
     WriteLn(SizeOf(Data));
-    FillByte(Data, SizeOf(Data), $00);
-    FillByte(mask, SizeOf(mask), $00);
+    Data := Default(TByteArray);
+    mask := Default(TByteArray);
+    //    FillByte(Data, SizeOf(Data), $00);
+    //    FillByte(mask, SizeOf(mask), $00);
     for row := 0 to Length(arrow) - 1 do begin
       for col := 0 to size - 1 do begin
         if col mod 8 <> 0 then begin

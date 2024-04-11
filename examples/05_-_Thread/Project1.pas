@@ -16,32 +16,29 @@ const
     Result := #27'[9' + char(i mod 8 + byte('0')) + 'm';
   end;
 
-
   function TestThread(Data: pointer): longint; cdecl;
   var
     i: integer;
     Index: PtrInt;
   begin
-    Index := PtrInt(Data);
+    Index := {%H-}PtrInt(Data);
 
     for i := 0 to 10 do begin
       SDL_Log(PChar(GetCol(Index) + 'Index: %i    Counter: %i' + StrNormal), Index, i);
-            SDL_Delay(100);
-      //      SDL_Delay(random(100));
+      SDL_Delay(100);
     end;
     Result := Index;
   end;
 
 var
-  thread: array of PSDL_Thread;
+  thread: array of PSDL_Thread = nil;
   threadReturnValue: longint;
-  i: integer;
+  i: PtrInt;
 begin
-  SDL_SetError('dsfsdfsfsd');
   SDL_Log('Simple SDL_CreateThread test:');
-  SetLength(thread, 8);
+  SetLength(thread, 14);
   for i := 0 to Length(thread) - 1 do begin
-    thread[i] := SDL_CreateThread(@TestThread, 'TestThread', pointer(i));
+    thread[i] := SDL_CreateThread(@TestThread, 'TestThread', {%H-}Pointer(i));
 
     if thread[i] = nil then  begin
       SDL_LogError(0, 'SDL_CreateThread failed: %i', SDL_GetError);

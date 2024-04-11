@@ -14,9 +14,9 @@ var
   renderer: PSDL_Renderer;
 
   vert: array[0..2] of TSDL_Vertex = (
-  (position: (x: 400; y: 150); color: (r: $FF; g: $00; b: $00; a: $FF); tex_coord: (x: 0.5; y: 1.0)),
-  (position: (x: 200; y: 450); color: (r: $00; g: $00; b: $FF; a: $FF); tex_coord: (x: 0.0; y: 0.0)),
-  (position: (x: 600; y: 450); color: (r: $00; g: $FF; b: $00; a: $FF); tex_coord: (x: 1.0; y: 0.0)));
+  (position: (x: 400; y: 150); color: (r: $01; g: $00; b: $00; a: $FF); tex_coord: (x: 0.5; y: 1.0)),
+  (position: (x: 200; y: 450); color: (r: $00; g: $00; b: $01; a: $FF); tex_coord: (x: 0.0; y: 0.0)),
+  (position: (x: 600; y: 450); color: (r: $00; g: $01; b: $00; a: $FF); tex_coord: (x: 1.0; y: 0.0)));
 
   quit: boolean = False;
   e: TSDL_Event;
@@ -31,7 +31,7 @@ begin
     Halt;
   end;
 
-  renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_ACCELERATED);
+  renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_PRESENTVSYNC);
   if renderer = nil then begin
     Halt;
   end;
