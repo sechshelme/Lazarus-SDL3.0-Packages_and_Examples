@@ -14,9 +14,9 @@ var
   renderer: PSDL_Renderer;
 
   vert: array[0..2] of TSDL_Vertex = (
-  (position: (x: 400; y: 150); color: (r: $01; g: $00; b: $00; a: $FF); tex_coord: (x: 0.5; y: 1.0)),
-  (position: (x: 200; y: 450); color: (r: $00; g: $00; b: $01; a: $FF); tex_coord: (x: 0.0; y: 0.0)),
-  (position: (x: 600; y: 450); color: (r: $00; g: $01; b: $00; a: $FF); tex_coord: (x: 1.0; y: 0.0)));
+  (position: (x: 400; y: 150); color: (r: 1.0; g: 0.0; b: 0.0; a: 1.0); tex_coord: (x: 0.5; y: 1.0)),
+  (position: (x: 200; y: 450); color: (r: 0.0; g: 0.0; b: 1.0; a: 1.0); tex_coord: (x: 0.0; y: 0.0)),
+  (position: (x: 600; y: 450); color: (r: 0.0; g: 1.0; b: 0.0; a: 1.0); tex_coord: (x: 1.0; y: 0.0)));
 
   quit: boolean = False;
   e: TSDL_Event;
