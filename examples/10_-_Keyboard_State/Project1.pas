@@ -25,29 +25,21 @@ var
     quit: boolean = False;
     time: single;
     red, green, blue: byte;
+    keyStat: PUInt8;
+    cnt: integer = 0;
   begin
-//    WriteLn('Differenz: ',PtrUInt(@event.key.keysym.sym - PtrUInt(@event)));
-//    WriteLn('Differenz: ',PtrUInt(@event.key.keysym - PtrUInt(@event)));
-//    WriteLn('Differenz: ',PtrUInt(@event.key - PtrUInt(@event)));
-//    WriteLn('Differenz: ',PtrUInt(@event.key.keysym - PtrUInt(@event)));
-
-    WriteLn('Differenz: ',PtrUInt(@event.key._type - PtrUInt(@event)));
-    WriteLn('Differenz: ',PtrUInt(@event.key.reserved - PtrUInt(@event)));
-    WriteLn('Differenz: ',PtrUInt(@event.key.timestamp - PtrUInt(@event)));
-    WriteLn('Differenz: ',PtrUInt(@event.key.windowID - PtrUInt(@event)));
-    WriteLn('Differenz: ',PtrUInt(@event.key.state - PtrUInt(@event)));
-    WriteLn('Differenz: ',PtrUInt(@event.key._repeat - PtrUInt(@event)));
-    WriteLn('Differenz: ',PtrUInt(@event.key.padding2 - PtrUInt(@event)));
-    WriteLn('Differenz: ',PtrUInt(@event.key.padding3 - PtrUInt(@event)));
-    WriteLn('Differenz: ',PtrUInt(@event.key.keysym - PtrUInt(@event)));
-
-
-
-
-
     while not quit do begin
-      while SDL_PollEvent(@event) <> 0 do begin
+      keyStat := SDL_GetKeyboardState(nil);
+      if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
+        SDL_Log('Space is pressed   %i',cnt);
+        inc( cnt);
+      end;
+      if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
+        SDL_Log('Left is pressed   %i',cnt);
+        inc( cnt);
+      end;
 
+      while SDL_PollEvent(@event) <> 0 do begin
         case event.type_ of
           SDL_EVENT_KEY_DOWN: begin
             SDL_Log('key: %i', event.key.keysym.sym); // neu
@@ -85,6 +77,7 @@ begin
     SDLFail('Kann kein SDL-Fenster erzeugen !');
   end;
   renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_ACCELERATED);
+//  renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_PRESENTVSYNC);
   if renderer = nil then begin
     SDLFail('Kann kein SDL-Renderer erzeugen !');
   end;
@@ -95,7 +88,7 @@ begin
   SDL_GetWindowSizeInPixels(window, @bbwidth, @bbheight);
   SDL_LogCritical(0, 'Window size: %ix%i', bbwidth, bbheight);
   SDL_LogCritical(0, 'blabla');
-    SDL_Log('Window size: %ix%i',bbwidth,bbheight);
+  SDL_Log('Window size: %ix%i', bbwidth, bbheight);
   SDL_Log('log');
   SDL_LogWarn(0, 'warn');
   WriteLn('Window size: ', bbwidth, 'x', bbheight);

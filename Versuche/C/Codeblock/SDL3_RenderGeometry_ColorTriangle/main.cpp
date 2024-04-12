@@ -2,6 +2,7 @@
 
 int main(int argc, char *argv[])
 {
+
   SDL_bool quit = SDL_FALSE;
   SDL_Window *window = SDL_CreateWindow("Triangle Example", 800, 600, 0);
 
@@ -34,12 +35,22 @@ int main(int argc, char *argv[])
   vert[2].color.b = 0.0;
   vert[2].color.a = 1.0;
 
-  while (!quit) {
+   SDL_SetEventEnabled(SDL_EVENT_MOUSE_BUTTON_DOWN, !SDL_FALSE);
+   SDL_Log("%i", SDL_FALSE );
+   SDL_Log("%i", SDL_TRUE );
+   SDL_Log("%i", !SDL_FALSE );
+   SDL_Log("%i", !SDL_TRUE );
+   SDL_Log("%i", !0 );
+   SDL_Log("%i", !1 );
+   while (!quit) {
    SDL_Event ev;
-   while (SDL_PollEvent(&ev) != 0) {
+     while (SDL_PollEvent(&ev) != 0) {
       switch(ev.type) {
         case SDL_EVENT_QUIT:
-        quit = SDL_TRUE;
+          quit = SDL_TRUE;
+        break;
+        case SDL_EVENT_MOUSE_BUTTON_DOWN:
+          SDL_Log("down");
         break;
       }
     }

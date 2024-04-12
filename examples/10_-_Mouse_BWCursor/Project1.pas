@@ -32,7 +32,8 @@ uses
   type
     TByteArray = array [0..(size div 8) * size - 1] of byte;
   var
-    Data, mask: TByteArray;
+    mask: TByteArray = default;
+    Data: TByteArray = default;
     col, row: integer;
     i: integer = -1;
   begin
