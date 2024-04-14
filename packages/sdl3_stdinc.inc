@@ -7,10 +7,6 @@
 
 {$IFDEF read_interface}
 
-//{$LinkLib 'libSDL3.so.0'}
-//{$LinkLib 'SDL3'}
-//{$LinkLib 'c'}
-
 type
   TUint8 = uint8;
   TUint16 = uint16;
@@ -23,60 +19,62 @@ type
   Tint64 = uint64;
 
   Tsize_t = SizeInt;
-//  Tsize_t = SizeUInt;
+  //  Tsize_t = SizeUInt;
   Tuintptr_t = PtrUInt;
-                               
 
-  Psize_t=^Tsize_t;
 
-  Twchar_t=word;
-  Pwchar_t=^Twchar_t;
-  PPwchar_t=^Pwchar_t;
+  Psize_t = ^Tsize_t;
 
-  PSDL_iconv_data_t=Pointer;
-  Tintptr_t=Pointer;
+  Twchar_t = word;
+  Pwchar_t = ^Twchar_t;
+  PPwchar_t = ^Pwchar_t;
 
-  PPUint8=^PUint8;
+  PSDL_iconv_data_t = Pointer;
+  Tintptr_t = Pointer;
 
-const SDL_SIZE_MAX = Tsize_t(-1);
-
-// Entspricht Lenght()
-//function SDL_arraysize(array : longint) : longint;
-//function SDL_TABLESIZE(table : longint) : longint;
-
-function SDL_FOURCC(A, B, C, D: Byte):longint;
+  PPUint8 = ^PUint8;
 
 const
-  SDL_FALSE = 0;  
-  SDL_TRUE = 1;  
+  SDL_FALSE = False;
+  SDL_TRUE = True;
+
 type
   PSDL_bool = ^TSDL_bool;
-  TSDL_bool = cint;
+  TSDL_bool = boolean32;
 
-  const
-SDL_MAX_SINT8 = int8(127);
- SDL_MIN_SINT8 = int8(-128);
+const
+  SDL_SIZE_MAX = Tsize_t(-1);
 
- SDL_MAX_UINT8 = Uint8(255);
- SDL_MIN_UINT8 = Uint8(0);
+  // Entspricht Lenght()
+  //function SDL_arraysize(array : longint) : longint;
+  //function SDL_TABLESIZE(table : longint) : longint;
 
- SDL_MAX_SINT16 = int16(32767);
- SDL_MIN_SINT16 = int16(-32768);
+function SDL_FOURCC(A, B, C, D: byte): longint;
 
- SDL_MAX_UINT16 = int16(65535);
- SDL_MIN_UINT16 = int16(0);
+const
+  SDL_MAX_SINT8 = int8(127);
+  SDL_MIN_SINT8 = int8(-128);
 
-SDL_MAX_SINT32 = int32(2147483647);
-SDL_MIN_SINT32 = int32(-2147483648);
+  SDL_MAX_UINT8 = uint8(255);
+  SDL_MIN_UINT8 = uint8(0);
 
- SDL_MAX_UINT32 = int32( 4294967295 );
- SDL_MIN_UINT32 = int32(0);
+  SDL_MAX_SINT16 = int16(32767);
+  SDL_MIN_SINT16 = int16(-32768);
 
- SDL_MAX_SINT64 = int64(9223372036854775807);
- SDL_MIN_SINT64 = int64(-9223372036854775808);
+  SDL_MAX_UINT16 = int16(65535);
+  SDL_MIN_UINT16 = int16(0);
 
- SDL_MAX_UINT64 = int64(18446744073709551615);
- SDL_MIN_UINT64 = int64(0);
+  SDL_MAX_SINT32 = int32(2147483647);
+  SDL_MIN_SINT32 = int32(-2147483648);
+
+  SDL_MAX_UINT32 = int32(4294967295);
+  SDL_MIN_UINT32 = int32(0);
+
+  SDL_MAX_SINT64 = int64(9223372036854775807);
+  SDL_MIN_SINT64 = int64(-9223372036854775808);
+
+  SDL_MAX_UINT64 = int64(18446744073709551615);
+  SDL_MIN_UINT64 = int64(0);
 
   SDL_FLT_EPSILON = 1.1920928955078125e-07;
 
@@ -90,190 +88,200 @@ const
 
 type
   PSDL_DUMMY_ENUM = ^TSDL_DUMMY_ENUM;
-  TSDL_DUMMY_ENUM =  Longint;
-  Const
-    DUMMY_ENUM_VALUE = 0;
+  TSDL_DUMMY_ENUM = longint;
 
-function SDL_malloc(size:Tsize_t):pointer;cdecl;external sdl3_lib;
-function SDL_calloc(nmemb:Tsize_t; size:Tsize_t):pointer;cdecl;external sdl3_lib;
-function SDL_realloc(mem:pointer; size:Tsize_t):pointer;cdecl;external sdl3_lib;
-procedure SDL_free(mem:pointer);cdecl;external sdl3_lib;
+const
+  DUMMY_ENUM_VALUE = 0;
+
+function SDL_malloc(size: Tsize_t): pointer; cdecl; external sdl3_lib;
+function SDL_calloc(nmemb: Tsize_t; size: Tsize_t): pointer; cdecl; external sdl3_lib;
+function SDL_realloc(mem: pointer; size: Tsize_t): pointer; cdecl; external sdl3_lib;
+procedure SDL_free(mem: pointer); cdecl; external sdl3_lib;
+
 type
   PSDL_malloc_func = ^TSDL_malloc_func;
-  TSDL_malloc_func = function (size:Tsize_t):pointer;cdecl;
+  TSDL_malloc_func = function(size: Tsize_t): pointer; cdecl;
 
   PSDL_calloc_func = ^TSDL_calloc_func;
-  TSDL_calloc_func = function (nmemb:Tsize_t; size:Tsize_t):pointer;cdecl;
+  TSDL_calloc_func = function(nmemb: Tsize_t; size: Tsize_t): pointer; cdecl;
 
   PSDL_realloc_func = ^TSDL_realloc_func;
-  TSDL_realloc_func = function (mem:pointer; size:Tsize_t):pointer;cdecl;
+  TSDL_realloc_func = function(mem: pointer; size: Tsize_t): pointer; cdecl;
 
-  TSDL_free_func = procedure (mem:pointer);cdecl;
-  PSDL_free_func=^TSDL_free_func;
-procedure SDL_GetOriginalMemoryFunctions(malloc_func:PSDL_malloc_func; calloc_func:PSDL_calloc_func; realloc_func:PSDL_realloc_func; free_func:PSDL_free_func);cdecl;external sdl3_lib;
-procedure SDL_GetMemoryFunctions(malloc_func:PSDL_malloc_func; calloc_func:PSDL_calloc_func; realloc_func:PSDL_realloc_func; free_func:PSDL_free_func);cdecl;external sdl3_lib;
-function SDL_SetMemoryFunctions(malloc_func:TSDL_malloc_func; calloc_func:TSDL_calloc_func; realloc_func:TSDL_realloc_func; free_func:TSDL_free_func):longint;cdecl;external sdl3_lib;
-function SDL_aligned_alloc(alignment:Tsize_t; size:Tsize_t):pointer;cdecl;external sdl3_lib;
-procedure SDL_aligned_free(mem:pointer);cdecl;external sdl3_lib;
-function SDL_GetNumAllocations:longint;cdecl;external sdl3_lib;
-function SDL_getenv(name:Pchar):Pchar;cdecl;external sdl3_lib;
-function SDL_setenv(name:Pchar; value:Pchar; overwrite:longint):longint;cdecl;external sdl3_lib;
-type TSDL_qsort_func=function (para1:pointer; para2:pointer):LongInt;
-procedure SDL_qsort(base:pointer; nmemb:Tsize_t; size:Tsize_t; compare:TSDL_qsort_func);cdecl;external sdl3_lib;
-type SDL_bsearch_func=function (para1:pointer; para2:pointer):longint;
-function SDL_bsearch(key:pointer; base:pointer; nmemb:Tsize_t; size:Tsize_t; compare:SDL_bsearch_func):pointer;cdecl;external sdl3_lib;
-function SDL_abs(x:longint):longint;cdecl;external sdl3_lib;
+  TSDL_free_func = procedure(mem: pointer); cdecl;
+  PSDL_free_func = ^TSDL_free_func;
 
-function SDL_min(x,y : longint) : longint;
-function SDL_max(x,y : longint) : longint;
-function SDL_clamp(x,a,b : longint) : longint;
+procedure SDL_GetOriginalMemoryFunctions(malloc_func: PSDL_malloc_func; calloc_func: PSDL_calloc_func; realloc_func: PSDL_realloc_func; free_func: PSDL_free_func); cdecl; external sdl3_lib;
+procedure SDL_GetMemoryFunctions(malloc_func: PSDL_malloc_func; calloc_func: PSDL_calloc_func; realloc_func: PSDL_realloc_func; free_func: PSDL_free_func); cdecl; external sdl3_lib;
+function SDL_SetMemoryFunctions(malloc_func: TSDL_malloc_func; calloc_func: TSDL_calloc_func; realloc_func: TSDL_realloc_func; free_func: TSDL_free_func): longint; cdecl; external sdl3_lib;
+function SDL_aligned_alloc(alignment: Tsize_t; size: Tsize_t): pointer; cdecl; external sdl3_lib;
+procedure SDL_aligned_free(mem: pointer); cdecl; external sdl3_lib;
+function SDL_GetNumAllocations: longint; cdecl; external sdl3_lib;
+function SDL_getenv(Name: PChar): PChar; cdecl; external sdl3_lib;
+function SDL_setenv(Name: PChar; Value: PChar; overwrite: longint): longint; cdecl; external sdl3_lib;
 
-function SDL_isalpha(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_isalnum(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_isblank(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_iscntrl(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_isdigit(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_isxdigit(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_ispunct(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_isspace(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_isupper(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_islower(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_isprint(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_isgraph(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_toupper(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_tolower(x:longint):longint;cdecl;external sdl3_lib;
-function SDL_crc16(crc:Uint16; data:pointer; len:Tsize_t):Uint16;cdecl;external sdl3_lib;
-function SDL_crc32(crc:Uint32; data:pointer; len:Tsize_t):Uint32;cdecl;external sdl3_lib;
-function SDL_memcpy(dst:pointer; src:pointer; len:Tsize_t):pointer;cdecl;external sdl3_lib;
-function SDL_memmove(dst:pointer; src:pointer; len:Tsize_t):pointer;cdecl;external sdl3_lib;
-function SDL_memset(dst:pointer; c:longint; len:Tsize_t):pointer;cdecl;external sdl3_lib;
-function SDL_memset4(dst:pointer; val:Uint32; dwords:Tsize_t):pointer;cdecl;external sdl3_lib;
-function SDL_memcmp(s1:pointer; s2:pointer; len:Tsize_t):longint;cdecl;external sdl3_lib;
-function SDL_wcslen(wstr:Pwchar_t):Tsize_t;cdecl;external sdl3_lib;
-function SDL_wcsnlen(wstr:Pwchar_t; maxlen:Tsize_t):Tsize_t;cdecl;external sdl3_lib;
-function SDL_wcslcpy(dst:Pwchar_t; src:Pwchar_t; maxlen:Tsize_t):Tsize_t;cdecl;external sdl3_lib;
-function SDL_wcslcat(dst:Pwchar_t; src:Pwchar_t; maxlen:Tsize_t):Tsize_t;cdecl;external sdl3_lib;
-function SDL_wcsdup(wstr:Pwchar_t):Pwchar_t;cdecl;external sdl3_lib;
-function SDL_wcsstr(haystack:Pwchar_t; needle:Pwchar_t):Pwchar_t;cdecl;external sdl3_lib;
-function SDL_wcsnstr(haystack:Pwchar_t; needle:Pwchar_t; maxlen:Tsize_t):Pwchar_t;cdecl;external sdl3_lib;
-function SDL_wcscmp(str1:Pwchar_t; str2:Pwchar_t):longint;cdecl;external sdl3_lib;
-function SDL_wcsncmp(str1:Pwchar_t; str2:Pwchar_t; maxlen:Tsize_t):longint;cdecl;external sdl3_lib;
-function SDL_wcscasecmp(str1:Pwchar_t; str2:Pwchar_t):longint;cdecl;external sdl3_lib;
-function SDL_wcsncasecmp(str1:Pwchar_t; str2:Pwchar_t; len:Tsize_t):longint;cdecl;external sdl3_lib;
-function SDL_wcstol(str:Pwchar_t; endp:PPwchar_t; base:longint):longint;cdecl;external sdl3_lib;
-function SDL_strlen(str:Pchar):Tsize_t;cdecl;external sdl3_lib;
-function SDL_strnlen(str:Pchar; maxlen:Tsize_t):Tsize_t;cdecl;external sdl3_lib;
-function SDL_strlcpy(dst:Pchar; src:Pchar; maxlen:Tsize_t):Tsize_t;cdecl;external sdl3_lib;
-function SDL_utf8strlcpy(dst:Pchar; src:Pchar; dst_bytes:Tsize_t):Tsize_t;cdecl;external sdl3_lib;
-function SDL_strlcat(dst:Pchar; src:Pchar; maxlen:Tsize_t):Tsize_t;cdecl;external sdl3_lib;
-function SDL_strdup(str:Pchar):Pchar;cdecl;external sdl3_lib;
-function SDL_strndup(str:Pchar; maxlen:Tsize_t):Pchar;cdecl;external sdl3_lib;
-function SDL_strrev(str:Pchar):Pchar;cdecl;external sdl3_lib;
-function SDL_strupr(str:Pchar):Pchar;cdecl;external sdl3_lib;
-function SDL_strlwr(str:Pchar):Pchar;cdecl;external sdl3_lib;
-function SDL_strchr(str:Pchar; c:longint):Pchar;cdecl;external sdl3_lib;
-function SDL_strrchr(str:Pchar; c:longint):Pchar;cdecl;external sdl3_lib;
-function SDL_strstr(haystack:Pchar; needle:Pchar):Pchar;cdecl;external sdl3_lib;
-function SDL_strnstr(haystack:Pchar; needle:Pchar; maxlen:Tsize_t):Pchar;cdecl;external sdl3_lib;
-function SDL_strcasestr(haystack:Pchar; needle:Pchar):Pchar;cdecl;external sdl3_lib;
-function SDL_strtok_r(s1:Pchar; s2:Pchar; saveptr:PPchar):Pchar;cdecl;external sdl3_lib;
-function SDL_utf8strlen(str:Pchar):Tsize_t;cdecl;external sdl3_lib;
-function SDL_utf8strnlen(str:Pchar; bytes:Tsize_t):Tsize_t;cdecl;external sdl3_lib;
-function SDL_itoa(value:longint; str:Pchar; radix:longint):Pchar;cdecl;external sdl3_lib;
-function SDL_uitoa(value:dword; str:Pchar; radix:longint):Pchar;cdecl;external sdl3_lib;
-function SDL_ltoa(value:longint; str:Pchar; radix:longint):Pchar;cdecl;external sdl3_lib;
-function SDL_ultoa(value:dword; str:Pchar; radix:longint):Pchar;cdecl;external sdl3_lib;
-function SDL_lltoa(value:int64; str:Pchar; radix:longint):Pchar;cdecl;external sdl3_lib;
-function SDL_ulltoa(value:Uint64; str:Pchar; radix:longint):Pchar;cdecl;external sdl3_lib;
-function SDL_atoi(str:Pchar):longint;cdecl;external sdl3_lib;
-function SDL_atof(str:Pchar):cdouble;cdecl;external sdl3_lib;
-function SDL_strtol(str:Pchar; endp:PPchar; base:longint):longint;cdecl;external sdl3_lib;
-function SDL_strtoul(str:Pchar; endp:PPchar; base:longint):dword;cdecl;external sdl3_lib;
-function SDL_strtoll(str:Pchar; endp:PPchar; base:longint):int64;cdecl;external sdl3_lib;
-function SDL_strtoull(str:Pchar; endp:PPchar; base:longint):Uint64;cdecl;external sdl3_lib;
-function SDL_strtod(str:Pchar; endp:PPchar):cdouble;cdecl;external sdl3_lib;
-function SDL_strcmp(str1:Pchar; str2:Pchar):longint;cdecl;external sdl3_lib;
-function SDL_strncmp(str1:Pchar; str2:Pchar; maxlen:Tsize_t):longint;cdecl;external sdl3_lib;
-function SDL_strcasecmp(str1:Pchar; str2:Pchar):longint;cdecl;external sdl3_lib;
-function SDL_strncasecmp(str1:Pchar; str2:Pchar; len:Tsize_t):longint;cdecl;external sdl3_lib;
-function SDL_sscanf(text:Pchar; fmt:Pchar; args:array of const):longint;cdecl;external sdl3_lib;
-function SDL_sscanf(text:Pchar; fmt:Pchar):longint;cdecl;external sdl3_lib;
-function SDL_vsscanf(text:Pchar; fmt:Pchar):longint;varargs; cdecl;external sdl3_lib;
-function SDL_snprintf(text:Pchar; maxlen:Tsize_t; fmt:Pchar; args:array of const):longint;cdecl;external sdl3_lib;
-function SDL_snprintf(text:Pchar; maxlen:Tsize_t; fmt:Pchar):longint;cdecl;external sdl3_lib;
-function SDL_swprintf(text:Pwchar_t; maxlen:Tsize_t; fmt:Pwchar_t; args:array of const):longint;cdecl;external sdl3_lib;
-function SDL_swprintf(text:Pwchar_t; maxlen:Tsize_t; fmt:Pwchar_t):longint;cdecl;external sdl3_lib;
-function SDL_vsnprintf(text:Pchar; maxlen:Tsize_t; fmt:Pchar; args:array of const):longint;cdecl;external sdl3_lib;
-function SDL_vsnprintf(text:Pchar; maxlen:Tsize_t; fmt:Pchar):longint;cdecl;external sdl3_lib;
-function SDL_vswprintf(text:Pwchar_t; maxlen:Tsize_t; fmt:Pwchar_t; args:array of const):longint;cdecl;external sdl3_lib;
-function SDL_vswprintf(text:Pwchar_t; maxlen:Tsize_t; fmt:Pwchar_t):longint;cdecl;external sdl3_lib;
-function SDL_asprintf(strp:PPchar; fmt:Pchar; args:array of const):longint;cdecl;external sdl3_lib;
-function SDL_asprintf(strp:PPchar; fmt:Pchar):longint;cdecl;external sdl3_lib;
-function SDL_vasprintf(strp:PPchar; fmt:Pchar; args:array of const):longint;cdecl;external sdl3_lib;
-function SDL_vasprintf(strp:PPchar; fmt:Pchar):longint;cdecl;external sdl3_lib;
+type
+  TSDL_qsort_func = function(para1: pointer; para2: pointer): longint;
+
+procedure SDL_qsort(base: pointer; nmemb: Tsize_t; size: Tsize_t; compare: TSDL_qsort_func); cdecl; external sdl3_lib;
+
+type
+  SDL_bsearch_func = function(para1: pointer; para2: pointer): longint;
+
+function SDL_bsearch(key: pointer; base: pointer; nmemb: Tsize_t; size: Tsize_t; compare: SDL_bsearch_func): pointer; cdecl; external sdl3_lib;
+function SDL_abs(x: longint): longint; cdecl; external sdl3_lib;
+
+function SDL_min(x, y: longint): longint;
+function SDL_max(x, y: longint): longint;
+function SDL_clamp(x, a, b: longint): longint;
+
+function SDL_isalpha(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_isalnum(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_isblank(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_iscntrl(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_isdigit(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_isxdigit(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_ispunct(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_isspace(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_isupper(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_islower(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_isprint(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_isgraph(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_toupper(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_tolower(x: longint): longint; cdecl; external sdl3_lib;
+function SDL_crc16(crc: uint16; Data: pointer; len: Tsize_t): uint16; cdecl; external sdl3_lib;
+function SDL_crc32(crc: uint32; Data: pointer; len: Tsize_t): uint32; cdecl; external sdl3_lib;
+function SDL_memcpy(dst: pointer; src: pointer; len: Tsize_t): pointer; cdecl; external sdl3_lib;
+function SDL_memmove(dst: pointer; src: pointer; len: Tsize_t): pointer; cdecl; external sdl3_lib;
+function SDL_memset(dst: pointer; c: longint; len: Tsize_t): pointer; cdecl; external sdl3_lib;
+function SDL_memset4(dst: pointer; val: uint32; dwords: Tsize_t): pointer; cdecl; external sdl3_lib;
+function SDL_memcmp(s1: pointer; s2: pointer; len: Tsize_t): longint; cdecl; external sdl3_lib;
+function SDL_wcslen(wstr: Pwchar_t): Tsize_t; cdecl; external sdl3_lib;
+function SDL_wcsnlen(wstr: Pwchar_t; maxlen: Tsize_t): Tsize_t; cdecl; external sdl3_lib;
+function SDL_wcslcpy(dst: Pwchar_t; src: Pwchar_t; maxlen: Tsize_t): Tsize_t; cdecl; external sdl3_lib;
+function SDL_wcslcat(dst: Pwchar_t; src: Pwchar_t; maxlen: Tsize_t): Tsize_t; cdecl; external sdl3_lib;
+function SDL_wcsdup(wstr: Pwchar_t): Pwchar_t; cdecl; external sdl3_lib;
+function SDL_wcsstr(haystack: Pwchar_t; needle: Pwchar_t): Pwchar_t; cdecl; external sdl3_lib;
+function SDL_wcsnstr(haystack: Pwchar_t; needle: Pwchar_t; maxlen: Tsize_t): Pwchar_t; cdecl; external sdl3_lib;
+function SDL_wcscmp(str1: Pwchar_t; str2: Pwchar_t): longint; cdecl; external sdl3_lib;
+function SDL_wcsncmp(str1: Pwchar_t; str2: Pwchar_t; maxlen: Tsize_t): longint; cdecl; external sdl3_lib;
+function SDL_wcscasecmp(str1: Pwchar_t; str2: Pwchar_t): longint; cdecl; external sdl3_lib;
+function SDL_wcsncasecmp(str1: Pwchar_t; str2: Pwchar_t; len: Tsize_t): longint; cdecl; external sdl3_lib;
+function SDL_wcstol(str: Pwchar_t; endp: PPwchar_t; base: longint): longint; cdecl; external sdl3_lib;
+function SDL_strlen(str: PChar): Tsize_t; cdecl; external sdl3_lib;
+function SDL_strnlen(str: PChar; maxlen: Tsize_t): Tsize_t; cdecl; external sdl3_lib;
+function SDL_strlcpy(dst: PChar; src: PChar; maxlen: Tsize_t): Tsize_t; cdecl; external sdl3_lib;
+function SDL_utf8strlcpy(dst: PChar; src: PChar; dst_bytes: Tsize_t): Tsize_t; cdecl; external sdl3_lib;
+function SDL_strlcat(dst: PChar; src: PChar; maxlen: Tsize_t): Tsize_t; cdecl; external sdl3_lib;
+function SDL_strdup(str: PChar): PChar; cdecl; external sdl3_lib;
+function SDL_strndup(str: PChar; maxlen: Tsize_t): PChar; cdecl; external sdl3_lib;
+function SDL_strrev(str: PChar): PChar; cdecl; external sdl3_lib;
+function SDL_strupr(str: PChar): PChar; cdecl; external sdl3_lib;
+function SDL_strlwr(str: PChar): PChar; cdecl; external sdl3_lib;
+function SDL_strchr(str: PChar; c: longint): PChar; cdecl; external sdl3_lib;
+function SDL_strrchr(str: PChar; c: longint): PChar; cdecl; external sdl3_lib;
+function SDL_strstr(haystack: PChar; needle: PChar): PChar; cdecl; external sdl3_lib;
+function SDL_strnstr(haystack: PChar; needle: PChar; maxlen: Tsize_t): PChar; cdecl; external sdl3_lib;
+function SDL_strcasestr(haystack: PChar; needle: PChar): PChar; cdecl; external sdl3_lib;
+function SDL_strtok_r(s1: PChar; s2: PChar; saveptr: PPchar): PChar; cdecl; external sdl3_lib;
+function SDL_utf8strlen(str: PChar): Tsize_t; cdecl; external sdl3_lib;
+function SDL_utf8strnlen(str: PChar; bytes: Tsize_t): Tsize_t; cdecl; external sdl3_lib;
+function SDL_itoa(Value: longint; str: PChar; radix: longint): PChar; cdecl; external sdl3_lib;
+function SDL_uitoa(Value: dword; str: PChar; radix: longint): PChar; cdecl; external sdl3_lib;
+function SDL_ltoa(Value: longint; str: PChar; radix: longint): PChar; cdecl; external sdl3_lib;
+function SDL_ultoa(Value: dword; str: PChar; radix: longint): PChar; cdecl; external sdl3_lib;
+function SDL_lltoa(Value: int64; str: PChar; radix: longint): PChar; cdecl; external sdl3_lib;
+function SDL_ulltoa(Value: uint64; str: PChar; radix: longint): PChar; cdecl; external sdl3_lib;
+function SDL_atoi(str: PChar): longint; cdecl; external sdl3_lib;
+function SDL_atof(str: PChar): cdouble; cdecl; external sdl3_lib;
+function SDL_strtol(str: PChar; endp: PPchar; base: longint): longint; cdecl; external sdl3_lib;
+function SDL_strtoul(str: PChar; endp: PPchar; base: longint): dword; cdecl; external sdl3_lib;
+function SDL_strtoll(str: PChar; endp: PPchar; base: longint): int64; cdecl; external sdl3_lib;
+function SDL_strtoull(str: PChar; endp: PPchar; base: longint): uint64; cdecl; external sdl3_lib;
+function SDL_strtod(str: PChar; endp: PPchar): cdouble; cdecl; external sdl3_lib;
+function SDL_strcmp(str1: PChar; str2: PChar): longint; cdecl; external sdl3_lib;
+function SDL_strncmp(str1: PChar; str2: PChar; maxlen: Tsize_t): longint; cdecl; external sdl3_lib;
+function SDL_strcasecmp(str1: PChar; str2: PChar): longint; cdecl; external sdl3_lib;
+function SDL_strncasecmp(str1: PChar; str2: PChar; len: Tsize_t): longint; cdecl; external sdl3_lib;
+function SDL_sscanf(Text: PChar; fmt: PChar; args: array of const): longint; cdecl; external sdl3_lib;
+function SDL_sscanf(Text: PChar; fmt: PChar): longint; cdecl; external sdl3_lib;
+function SDL_vsscanf(Text: PChar; fmt: PChar): longint; varargs; cdecl; external sdl3_lib;
+function SDL_snprintf(Text: PChar; maxlen: Tsize_t; fmt: PChar; args: array of const): longint; cdecl; external sdl3_lib;
+function SDL_snprintf(Text: PChar; maxlen: Tsize_t; fmt: PChar): longint; cdecl; external sdl3_lib;
+function SDL_swprintf(Text: Pwchar_t; maxlen: Tsize_t; fmt: Pwchar_t; args: array of const): longint; cdecl; external sdl3_lib;
+function SDL_swprintf(Text: Pwchar_t; maxlen: Tsize_t; fmt: Pwchar_t): longint; cdecl; external sdl3_lib;
+function SDL_vsnprintf(Text: PChar; maxlen: Tsize_t; fmt: PChar; args: array of const): longint; cdecl; external sdl3_lib;
+function SDL_vsnprintf(Text: PChar; maxlen: Tsize_t; fmt: PChar): longint; cdecl; external sdl3_lib;
+function SDL_vswprintf(Text: Pwchar_t; maxlen: Tsize_t; fmt: Pwchar_t; args: array of const): longint; cdecl; external sdl3_lib;
+function SDL_vswprintf(Text: Pwchar_t; maxlen: Tsize_t; fmt: Pwchar_t): longint; cdecl; external sdl3_lib;
+function SDL_asprintf(strp: PPchar; fmt: PChar; args: array of const): longint; cdecl; external sdl3_lib;
+function SDL_asprintf(strp: PPchar; fmt: PChar): longint; cdecl; external sdl3_lib;
+function SDL_vasprintf(strp: PPchar; fmt: PChar; args: array of const): longint; cdecl; external sdl3_lib;
+function SDL_vasprintf(strp: PPchar; fmt: PChar): longint; cdecl; external sdl3_lib;
+
 const
-  SDL_PI_D = 3.141592653589793238462643383279502884;  
+  SDL_PI_D = 3.141592653589793238462643383279502884;
   SDL_PI_F = 3.141592653589793238462643383279502884;
 
-function SDL_acos(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_acosf(x:single):single;cdecl;external sdl3_lib;
-function SDL_asin(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_asinf(x:single):single;cdecl;external sdl3_lib;
-function SDL_atan(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_atanf(x:single):single;cdecl;external sdl3_lib;
-function SDL_atan2(y:cdouble; x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_atan2f(y:single; x:single):single;cdecl;external sdl3_lib;
-function SDL_ceil(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_ceilf(x:single):single;cdecl;external sdl3_lib;
-function SDL_copysign(x:cdouble; y:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_copysignf(x:single; y:single):single;cdecl;external sdl3_lib;
-function SDL_cos(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_cosf(x:single):single;cdecl;external sdl3_lib;
-function SDL_exp(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_expf(x:single):single;cdecl;external sdl3_lib;
-function SDL_fabs(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_fabsf(x:single):single;cdecl;external sdl3_lib;
-function SDL_floor(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_floorf(x:single):single;cdecl;external sdl3_lib;
-function SDL_trunc(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_truncf(x:single):single;cdecl;external sdl3_lib;
-function SDL_fmod(x:cdouble; y:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_fmodf(x:single; y:single):single;cdecl;external sdl3_lib;
-function SDL_log(x: cdouble): cdouble; cdecl; external name 'SDL_log';
+function SDL_acos(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_acosf(x: single): single; cdecl; external sdl3_lib;
+function SDL_asin(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_asinf(x: single): single; cdecl; external sdl3_lib;
+function SDL_atan(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_atanf(x: single): single; cdecl; external sdl3_lib;
+function SDL_atan2(y: cdouble; x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_atan2f(y: single; x: single): single; cdecl; external sdl3_lib;
+function SDL_ceil(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_ceilf(x: single): single; cdecl; external sdl3_lib;
+function SDL_copysign(x: cdouble; y: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_copysignf(x: single; y: single): single; cdecl; external sdl3_lib;
+function SDL_cos(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_cosf(x: single): single; cdecl; external sdl3_lib;
+function SDL_exp(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_expf(x: single): single; cdecl; external sdl3_lib;
+function SDL_fabs(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_fabsf(x: single): single; cdecl; external sdl3_lib;
+function SDL_floor(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_floorf(x: single): single; cdecl; external sdl3_lib;
+function SDL_trunc(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_truncf(x: single): single; cdecl; external sdl3_lib;
+function SDL_fmod(x: cdouble; y: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_fmodf(x: single; y: single): single; cdecl; external sdl3_lib;
+function SDL_log(x: cdouble): cdouble; cdecl; external Name 'SDL_log';
 //function SDL_log(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_logf(x:single):single;cdecl;external sdl3_lib;
-function SDL_log10(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_log10f(x:single):single;cdecl;external sdl3_lib;
-function SDL_modf(x:cdouble; y:Pdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_modff(x:single; y:Psingle):single;cdecl;external sdl3_lib;
-function SDL_pow(x:cdouble; y:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_powf(x:single; y:single):single;cdecl;external sdl3_lib;
-function SDL_round(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_roundf(x:single):single;cdecl;external sdl3_lib;
-function SDL_lround(x:cdouble):longint;cdecl;external sdl3_lib;
-function SDL_lroundf(x:single):longint;cdecl;external sdl3_lib;
-function SDL_scalbn(x:cdouble; n:longint):cdouble;cdecl;external sdl3_lib;
-function SDL_scalbnf(x:single; n:longint):single;cdecl;external sdl3_lib;
-function SDL_sin(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_sinf(x:single):single;cdecl;external sdl3_lib;
-function SDL_sqrt(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_sqrtf(x:single):single;cdecl;external sdl3_lib;
-function SDL_tan(x:cdouble):cdouble;cdecl;external sdl3_lib;
-function SDL_tanf(x:single):single;cdecl;external sdl3_lib;
+function SDL_logf(x: single): single; cdecl; external sdl3_lib;
+function SDL_log10(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_log10f(x: single): single; cdecl; external sdl3_lib;
+function SDL_modf(x: cdouble; y: Pdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_modff(x: single; y: Psingle): single; cdecl; external sdl3_lib;
+function SDL_pow(x: cdouble; y: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_powf(x: single; y: single): single; cdecl; external sdl3_lib;
+function SDL_round(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_roundf(x: single): single; cdecl; external sdl3_lib;
+function SDL_lround(x: cdouble): longint; cdecl; external sdl3_lib;
+function SDL_lroundf(x: single): longint; cdecl; external sdl3_lib;
+function SDL_scalbn(x: cdouble; n: longint): cdouble; cdecl; external sdl3_lib;
+function SDL_scalbnf(x: single; n: longint): single; cdecl; external sdl3_lib;
+function SDL_sin(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_sinf(x: single): single; cdecl; external sdl3_lib;
+function SDL_sqrt(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_sqrtf(x: single): single; cdecl; external sdl3_lib;
+function SDL_tan(x: cdouble): cdouble; cdecl; external sdl3_lib;
+function SDL_tanf(x: single): single; cdecl; external sdl3_lib;
 
 type
   PSDL_iconv_t = ^TSDL_iconv_t;
   TSDL_iconv_t = PSDL_iconv_data_t;
 
-function SDL_iconv_open(tocode:Pchar; fromcode:Pchar):TSDL_iconv_t;cdecl;external sdl3_lib;
-function SDL_iconv_close(cd:TSDL_iconv_t):longint;cdecl;external sdl3_lib;
-function SDL_iconv(cd:TSDL_iconv_t; inbuf:PPchar; inbytesleft:Psize_t; outbuf:PPchar; outbytesleft:Psize_t):Tsize_t;cdecl;external sdl3_lib;
-function SDL_iconv_string(tocode:Pchar; fromcode:Pchar; inbuf:Pchar; inbytesleft:Tsize_t):Pchar;cdecl;external sdl3_lib;
+function SDL_iconv_open(tocode: PChar; fromcode: PChar): TSDL_iconv_t; cdecl; external sdl3_lib;
+function SDL_iconv_close(cd: TSDL_iconv_t): longint; cdecl; external sdl3_lib;
+function SDL_iconv(cd: TSDL_iconv_t; inbuf: PPchar; inbytesleft: Psize_t; outbuf: PPchar; outbytesleft: Psize_t): Tsize_t; cdecl; external sdl3_lib;
+function SDL_iconv_string(tocode: PChar; fromcode: PChar; inbuf: PChar; inbytesleft: Tsize_t): PChar; cdecl; external sdl3_lib;
 
-function SDL_iconv_utf8_locale(S : PChar) : PChar;
-function SDL_iconv_utf8_ucs2(S : PChar) : PUint16;
-function SDL_iconv_utf8_ucs4(S : PChar) : PUint32;
-function SDL_iconv_wchar_utf8(S : Pwchar_t) : PChar;
+function SDL_iconv_utf8_locale(S: PChar): PChar;
+function SDL_iconv_utf8_ucs2(S: PChar): PUint16;
+function SDL_iconv_utf8_ucs4(S: PChar): PUint32;
+function SDL_iconv_wchar_utf8(S: Pwchar_t): PChar;
 
 {*
  * If a * b would overflow, return -1. Otherwise store a * b via ret
@@ -303,7 +311,7 @@ function SDL_iconv_wchar_utf8(S : Pwchar_t) : PChar;
 { }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
-{ return type might be wrong }   
+{ return type might be wrong }
 
 
 //{$endif}
@@ -334,79 +342,83 @@ function SDL_iconv_wchar_utf8(S : Pwchar_t) : PChar;
 { }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
-{ return type might be wrong }   
+{ return type might be wrong }
 
 
 type
   PSDL_FunctionPointer = ^TSDL_FunctionPointer;
-  TSDL_FunctionPointer = procedure (para1:pointer);cdecl;
+  TSDL_FunctionPointer = procedure(para1: pointer); cdecl;
 
 {$ENDIF read_interface}
 
 
 {$IFDEF read_implementation}
 
-function SDL_FOURCC(A, B, C, D: Byte):longint;
+function SDL_FOURCC(A, B, C, D: byte): longint;
 begin
   Result := A shl 0 + B shl 8 + C shl 16 + D shl 24;
 end;
 
 
-function SDL_min(x,y : longint) : longint;
+function SDL_min(x, y: longint): longint;
 var
-   if_local1 : longint;
+  if_local1: longint;
 begin
-  if x<y then
-    if_local1:=x
-  else
-    if_local1:=y;
-  SDL_min:=if_local1;
+  if x < y then begin
+    if_local1 := x;
+  end else begin
+    if_local1 := y;
+  end;
+  SDL_min := if_local1;
 end;
 
-function SDL_max(x,y : longint) : longint;
+function SDL_max(x, y: longint): longint;
 var
-   if_local1 : longint;
+  if_local1: longint;
 begin
-  if x>y then
-    if_local1:=x
-  else
-    if_local1:=y;
-  SDL_max:=if_local1;
+  if x > y then begin
+    if_local1 := x;
+  end else begin
+    if_local1 := y;
+  end;
+  SDL_max := if_local1;
 end;
 
-function SDL_clamp(x,a,b : longint) : longint;
+function SDL_clamp(x, a, b: longint): longint;
 var
-   if_local1, if_local2 : longint;
+  if_local1, if_local2: longint;
 begin
-  if x>b then
-    if_local1:=b
-  else
-    if_local1:=x;
-  if x<a then
-    if_local2:=a
-  else
-    if_local2:=if_local1;
-  SDL_clamp:=if_local2;
+  if x > b then begin
+    if_local1 := b;
+  end else begin
+    if_local1 := x;
+  end;
+  if x < a then begin
+    if_local2 := a;
+  end else begin
+    if_local2 := if_local1;
+  end;
+  SDL_clamp := if_local2;
 end;
 
-function SDL_iconv_utf8_locale(S : PChar) : PChar;
+function SDL_iconv_utf8_locale(S: PChar): PChar;
 begin
-  SDL_iconv_utf8_locale:=SDL_iconv_string('','UTF-8',S,(SDL_strlen(S))+1);
+  SDL_iconv_utf8_locale := SDL_iconv_string('', 'UTF-8', S, (SDL_strlen(S)) + 1);
 end;
 
-function SDL_iconv_utf8_ucs2(S : PChar) : PUint16;
+function SDL_iconv_utf8_ucs2(S: PChar): PUint16;
 begin
-  SDL_iconv_utf8_ucs2:=PUint16(SDL_iconv_string('UCS-2','UTF-8',S,(SDL_strlen(S))+1));
+  SDL_iconv_utf8_ucs2 := PUint16(SDL_iconv_string('UCS-2', 'UTF-8', S, (SDL_strlen(S)) + 1));
 end;
 
-function SDL_iconv_utf8_ucs4(S : PChar) : PUint32;
+function SDL_iconv_utf8_ucs4(S: PChar): PUint32;
 begin
-  SDL_iconv_utf8_ucs4:=PUint32(SDL_iconv_string('UCS-4','UTF-8',S,(SDL_strlen(S))+1));
+  SDL_iconv_utf8_ucs4 := PUint32(SDL_iconv_string('UCS-4', 'UTF-8', S, (SDL_strlen(S)) + 1));
 end;
 
-function SDL_iconv_wchar_utf8(S : Pwchar_t) : PChar;
+function SDL_iconv_wchar_utf8(S: Pwchar_t): PChar;
 begin
-  SDL_iconv_wchar_utf8:=SDL_iconv_string('UTF-8','WCHAR_T',Pchar(S),((SDL_wcslen(S))+1)*(sizeof(Twchar_t)));
+  SDL_iconv_wchar_utf8 := SDL_iconv_string('UTF-8', 'WCHAR_T', PChar(S), ((SDL_wcslen(S)) + 1) * (sizeof(Twchar_t)));
 end;
 
 {$ENDIF read_implementation}

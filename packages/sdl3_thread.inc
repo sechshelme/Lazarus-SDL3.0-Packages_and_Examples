@@ -43,10 +43,9 @@ const
   SDL_THREAD_PRIORITY_TIME_CRITICAL = 3;
 
 type
-
   TSDL_ThreadFunction = function(Data: pointer): longint; cdecl;
-  {$IFDEF Windows}
-type
+
+{$IFDEF Windows}
   TBeginThreadFunc = function(para1: pointer): dword;
 
   TpfnSDL_CurrentBeginThread = function(para1: pointer; para2: dword; func: TBeginThreadFunc; para4: pointer; para5: dword; para6: Pdword): Tuintptr_t; cdecl;
@@ -76,7 +75,6 @@ type
   TSDL_SetTLSFunction = procedure(para1: pointer); cdecl;
 
 function SDL_SetTLS(id: TSDL_TLSID; Value: pointer; destructor_: TSDL_SetTLSFunction): longint; cdecl; external sdl3_lib;
-
 procedure SDL_CleanupTLS; cdecl; external sdl3_lib;
 
 {$ENDIF read_interface}

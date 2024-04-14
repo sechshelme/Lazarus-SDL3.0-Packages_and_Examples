@@ -8,9 +8,8 @@ uses
 
 var
   window: PSDL_Window;
-  bitmapSurface: PSDL_Surface;
-  dstrect: TSDL_Rect = (x: 100; y: 100; w: 200; h: 200);
-  renderer: PSDL_Renderer;
+  bitmapSurface, surface, winSurface: PSDL_Surface;
+  distrect: TSDL_Rect = (x: 100; y: 100; w: 200; h: 200);
   Width, Height, bbwidth, bbheight: longint;
 
   procedure SDLFail(const err: string);
@@ -18,6 +17,7 @@ var
     SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, PChar('Fehler: ' + err));
     Halt(1);
   end;
+
 
   procedure Run;
   var
@@ -28,6 +28,7 @@ var
     keyStat: PUInt8;
     cnt: integer = 0;
   begin
+
     while not quit do begin
       keyStat := SDL_GetKeyboardState(nil);
       if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
@@ -36,10 +37,6 @@ var
       end;
       if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
         SDL_Log('Left is pressed   %i',cnt);
-        inc( cnt);
-      end;
-      if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
-        SDL_Log('Right is pressed   %i',cnt);
         inc( cnt);
       end;
 
@@ -52,8 +49,14 @@ var
               SDLK_ESCAPE: begin
                 quit := True;
               end;
+              SDLK_m: begin
+//                SwitchMouseButton;
+              end;
+
             end;
           end;
+          SDL_EVENT_MOUSE_BUTTON_DOWN:SDL_Log('Mouse down');
+          SDL_EVENT_MOUSE_BUTTON_UP:SDL_Log('Mouse up');
           SDL_EVENT_QUIT: begin
             quit := True;
           end;
@@ -66,11 +69,22 @@ var
       green := Trunc((SDL_sinf(time / 2) + 1) / 2.0 * 255);
       blue := Trunc((SDL_sinf(time / 3) + 1) / 2.0 * 255);
 
-      SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
+      SDL_BlitSurface(surface,nil,winSurface,nil);
+    SDL_FlipSurface(surface,SDL_FLIP_HORIZONTAL);
 
-      SDL_RenderClear(renderer);
-      SDL_RenderPresent(renderer);
+    SDL_FillSurfaceRect(winSurface,@distrect,$FF);
+
+      SDL_UpdateWindowSurface(window);
+
     end;
+  end;
+
+function CreateSurface:PSDL_Surface;   const size=256;
+var pixels:array[0..size-1,0..size-1]of uint32;
+  i, j: Integer;
+begin
+  for i:=0 to size-1 do for j:=0 to size-1 do pixels[i,j]:=Random($FF);
+  Result:=SDL_CreateSurfaceFrom(@pixels,size,size,0,SDL_PIXELFORMAT_RGBA8888);
   end;
 
 begin
@@ -80,11 +94,14 @@ begin
   if window = nil then begin
     SDLFail('Kann kein SDL-Fenster erzeugen !');
   end;
-  renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_ACCELERATED);
-//  renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_PRESENTVSYNC);
-  if renderer = nil then begin
-    SDLFail('Kann kein SDL-Renderer erzeugen !');
+
+  winSurface:=SDL_GetWindowSurface(window);
+  winsurface :=SDL_CreateSurface(100,100, SDL_PIXELFORMAT_RGBA8888);
+  if winsurface = nil then begin
+    SDLFail('Kann winSurface nicherzeugen !');
   end;
+
+  surface:=CreateSurface;
 
   SDL_ShowWindow(window);
 
@@ -103,7 +120,6 @@ begin
 
   Run;
 
-  SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 
   SDL_Quit;

@@ -16,6 +16,42 @@ procedure SDL_Log(fmt: PChar); varargs; cdecl; external name 'SDL_Log';
 ## sdl3_stdinc.pas
 Folgendes ergänzen:
 ```pascal
+type
+  TUint8  = uint8;
+  TUint16 = uint16;
+  TUint32 = uint32;
+  TUint64 = uint64;
+
+  Tint8  = uint8;
+  Tint16 = uint16;
+  Tint32 = uint32;
+  Tint64 = uint64;
+
+  Tsize_t = SizeInt;
+//  Tsize_t = SizeUInt;
+  Tuintptr_t = PtrUInt;
+                               
+
+  Psize_t=^Tsize_t;
+
+  Twchar_t = word;
+  Pwchar_t = ^Twchar_t;
+  PPwchar_t = ^Pwchar_t;
+
+  PSDL_iconv_data_t = Pointer;
+  Tintptr_t = Pointer;
+
+  PPUint8 = ^PUint8;
+
+const
+  SDL_FALSE = False;  
+  SDL_TRUE = True;  
+type
+  PSDL_bool = ^TSDL_bool;
+  TSDL_bool = boolean32;
+
+
+// modifizieren
 function SDL_log(x: cdouble): cdouble; cdecl; external name 'SDL_log';
 ```
 

@@ -5,7 +5,7 @@ unit Unit1;
 interface
 
 uses
-  gtk2,
+//  SDL3_stdinc,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, FileUtil;
 
 type

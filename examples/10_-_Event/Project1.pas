@@ -4,7 +4,10 @@ program Project1;
 
 uses
   ctypes,
+  gl,
   SDL3;
+var
+  gb:TGLboolean;
 
 var
   window: PSDL_Window;
@@ -15,6 +18,7 @@ var
 
   procedure SDLFail(const err: string);
   begin
+    glDepthMask(gb);
     SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, PChar('Fehler: ' + err));
     Halt(1);
   end;
@@ -40,7 +44,7 @@ begin
   WriteLn(IsEnabled);
 //  IsEnabled :=SDL_IsEventEnabled;
 IsEnabled:=not IsEnabled;
-  IsEnabled:=IsEnabled and 1;
+ // IsEnabled:=IsEnabled and 1;
   WriteLn('IsEnabled: ',IsEnabled);
 
   SDL_SetEventEnabled(SDL_EVENT_MOUSE_BUTTON_DOWN,IsEnabled);
@@ -67,7 +71,7 @@ IsEnabled:=not IsEnabled;
         inc( cnt);
       end;
 
-      while SDL_PollEvent(@event) <> 0 do begin
+      while SDL_PollEvent(@event) do begin
         case event.type_ of
           SDL_EVENT_KEY_DOWN: begin
             SDL_Log('key: %i', event.key.keysym.sym); // neu
