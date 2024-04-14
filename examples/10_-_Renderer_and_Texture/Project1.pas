@@ -28,17 +28,68 @@ var
   end;
 
   procedure SDLMain;
+  const
+    step = 0.01;
   var
     e: TSDL_Event;
     quit: boolean = False;
     rSrc, rDest: TSDL_FRect;
+    keyStat: PUInt8;
   begin
+    rDest.x := 0;
+    rDest.y := 0;
+    rDest.w := 100;
+    rDest.h := 100;
     while not quit do begin
+      keyStat := SDL_GetKeyboardState(nil);
+      if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
+      end;
+
+      if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+          rDest.x -= step;
+          rDest.w += step * 2;
+        end else begin
+          rDest.x += step;
+        end;
+      end;
+      if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+          if rDest.w > 1 then begin
+            rDest.x += step;
+            rDest.w -= step * 2;
+          end;
+        end else begin
+          rDest.x -= step;
+        end;
+      end;
+      if keyStat[SDL_SCANCODE_DOWN] <> 0 then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+          rDest.y -= step;
+          rDest.h += step * 2;
+        end else begin
+          rDest.y += step;
+        end;
+      end;
+      if keyStat[SDL_SCANCODE_UP] <> 0 then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+          if rDest.h > 1 then begin
+            rDest.y += step;
+            rDest.h -= step * 2;
+          end;
+        end else begin
+          rDest.y -= step;
+        end;
+      end;
+
+      if rDest.h < 1 then begin
+        rDest.h := 1;
+      end;
+
+
       while SDL_PollEvent(@e) do begin
-        WriteLn('event: ', e.type_); // neu
         case e.type_ of
           SDL_EVENT_KEY_DOWN: begin
-            WriteLn('key: ', e.key.keysym.sym); // neu
             case e.key.keysym.sym of
 
               SDLK_ESCAPE: begin
@@ -59,10 +110,6 @@ var
       rSrc.w := 400;
       rSrc.h := 400;
 
-      rDest.x := 0;
-      rDest.y := 0;
-      rDest.w := 100;
-      rDest.h := 100;
 
 
       SDL_RenderTexture(renderer, bitmapTex, @rSrc, @rDest);
@@ -73,7 +120,7 @@ var
 begin
   SDL_init(SDL_INIT_VIDEO);
 
-  window := SDL_CreateWindow('SDL3 Window', 320, 200, SDL_WINDOW_RESIZABLE);
+  window := SDL_CreateWindow('SDL3 Window', 800, 600, SDL_WINDOW_RESIZABLE);
   if window = nil then begin
     SDL_Log('Kann kein SDL-Fenster erzeugen !');
   end;
