@@ -29,7 +29,7 @@ var
     x, y: single;
   begin
     while not quit do begin
-      while SDL_PollEvent(@e) <> 0 do begin
+      while SDL_PollEvent(@e) do begin
         case e.type_ of
           //        SDL_KEYDOWN: begin
           SDL_EVENT_KEY_DOWN: begin

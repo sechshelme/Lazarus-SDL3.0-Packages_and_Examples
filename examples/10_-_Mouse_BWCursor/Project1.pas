@@ -32,16 +32,14 @@ uses
   type
     TByteArray = array [0..(size div 8) * size - 1] of byte;
   var
-    mask: TByteArray = default;
-    Data: TByteArray = default;
+    mask: TByteArray;
+    Data: TByteArray;
     col, row: integer;
     i: integer = -1;
   begin
     WriteLn(SizeOf(Data));
     Data := Default(TByteArray);
     mask := Default(TByteArray);
-    //    FillByte(Data, SizeOf(Data), $00);
-    //    FillByte(mask, SizeOf(mask), $00);
     for row := 0 to Length(arrow) - 1 do begin
       for col := 0 to size - 1 do begin
         if col mod 8 <> 0 then begin
@@ -108,7 +106,7 @@ var
     sym: TSDL_KeyCode;
   begin
     while not quit do begin
-      while SDL_PollEvent(@e) <> 0 do begin
+      while SDL_PollEvent(@e) do begin
         case e.type_ of
           SDL_EVENT_MOUSE_BUTTON_DOWN: begin
             case e.button.button of

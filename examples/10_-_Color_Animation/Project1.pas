@@ -28,10 +28,8 @@ var
   begin
     while not quit do begin
       while SDL_PollEvent(@e) do begin
-        WriteLn('event: ', e.type_); // neu
         case e.type_ of
           SDL_EVENT_KEY_DOWN: begin
-            WriteLn('key: ', e.key.keysym.sym); // neu
             case e.key.keysym.sym of
 
               SDLK_ESCAPE: begin

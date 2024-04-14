@@ -5,7 +5,7 @@ program Project1;
 // https://stackoverflow.com/questions/37978149/sdl1-sdl2-resolution-list-building-with-a-custom-screen-mode-class
 
 uses
-  SDL2,
+  SDL3,
   unixtype;
 
 //Widht: 3440 Height: 1440
@@ -41,7 +41,7 @@ begin
   end;
 
   // full set up
-  sdlWindow1 := SDL_CreateWindow('Window1',0,0,500, 500, SDL_WINDOW_RESIZABLE);
+  sdlWindow1 := SDL_CreateWindow('Window1',500, 500, SDL_WINDOW_RESIZABLE);
   if sdlWindow1 = nil then begin
     Halt;
   end;
@@ -65,7 +65,7 @@ begin
 
 
 //  SDL_FillSurfaceRect(sdlsurface, @r, $FFFFFFFF);
-  SDL_FillRect(sdlsurface, @r, $FFFFFFFF);
+  SDL_FillSurfaceRect(sdlsurface, @r, $FFFFFFFF);
   SDL_UpdateWindowSurface(sdlWindow1);
 
 
