@@ -147,10 +147,6 @@
         <Type Value="Include"/>
       </Item>
       <Item>
-        <Filename Value="sdl3_quit.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
         <Filename Value="sdl3_surface.inc"/>
         <Type Value="Include"/>
       </Item>

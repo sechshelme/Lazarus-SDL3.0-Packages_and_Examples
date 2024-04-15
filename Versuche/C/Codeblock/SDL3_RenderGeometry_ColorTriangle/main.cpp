@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
   vert[2].color.b = 0.0;
   vert[2].color.a = 1.0;
 
-   SDL_SetEventEnabled(SDL_EVENT_MOUSE_BUTTON_DOWN, !SDL_FALSE);
+   SDL_SetEventEnabled(SDL_EVENT_MOUSE_BUTTON_DOWN, 324324);
    SDL_Log("%i", SDL_FALSE );
    SDL_Log("%i", SDL_TRUE );
    SDL_Log("%i", !SDL_FALSE );
