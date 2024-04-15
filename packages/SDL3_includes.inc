@@ -43,6 +43,6 @@
  {$include SDL3_gamepad.inc}
  {$include SDL3_haptic.inc}
  {$include SDL3_events.inc}
- {$include SDL3_quit.inc}
+// {$include SDL3_quit.inc}
  {$include SDL3_render.inc}
  {$include SDL3_system.inc}

@@ -110,8 +110,6 @@ var
       rSrc.w := 400;
       rSrc.h := 400;
 
-
-
       SDL_RenderTexture(renderer, bitmapTex, @rSrc, @rDest);
       SDL_RenderPresent(renderer);
     end;
@@ -124,6 +122,7 @@ begin
   if window = nil then begin
     SDL_Log('Kann kein SDL-Fenster erzeugen !');
   end;
+
   renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_ACCELERATED);
   if renderer = nil then begin
     SDL_Log('Kann kein SDL-Renderer erzeugen !');

@@ -12,6 +12,24 @@ var
   surface: PSDL_Surface;
   customColorCursor: PSDL_Cursor;
 
+  function CreateSurface: PSDL_Surface;
+  const
+    size = 256;
+  var
+    r: TSDL_Rect;
+    i: Integer;
+  begin
+    Result := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA8888);
+    for i := 0 to size div 2 do begin
+      r.x := i;
+      r.y := i;
+      r.w := i*2;
+      r.h := i*2;
+
+      SDL_FillSurfaceRect(Result, @r, (i * 223) shl 8 + $FF);
+    end;
+  end;
+
   procedure Init;
   begin
     SDL_Init(SDL_INIT_VIDEO);
@@ -27,11 +45,7 @@ var
       Halt(-1);
     end;
 
-    surface := SDL_LoadBMP('mauer.bmp');
-    if surface = nil then begin
-      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Kann kein BMP nicht laden !');
-      Halt(-1);
-    end;
+    surface := CreateSurface;
 
     customColorCursor := SDL_CreateColorCursor(surface, 0, 0);
     if customColorCursor = nil then begin
