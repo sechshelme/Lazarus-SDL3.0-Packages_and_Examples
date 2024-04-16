@@ -8,7 +8,7 @@ unit SDL3_package;
 interface
 
 uses
-  SDL3, SDL3_opengl, SDL3_opengl_glext, LazarusPackageIntf;
+  SDL3, SDL3_opengl, SDL3_opengl_glext, SDL_image, LazarusPackageIntf;
 
 implementation
 

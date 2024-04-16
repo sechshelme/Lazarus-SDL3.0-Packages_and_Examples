@@ -27,6 +27,26 @@ type
   Tint32 = uint32;
   Tint64 = uint64;
 
+  TSUint8  = uint8;
+  TSUint16 = uint16;
+  TSUint32 = uint32;
+  TSUint64 = uint64;
+
+  TSint8  = uint8;
+  TSint16 = uint16;
+  TSint32 = uint32;
+  TSint64 = uint64;
+
+  PSUint8  = ^uint8;
+  PSUint16 = ^uint16;
+  PSUint32 = ^uint32;
+  PSUint64 = ^uint64;
+
+  PSint8  = ^uint8;
+  PSint16 = ^uint16;
+  PSint32 = ^uint32;
+  PSint64 = ^uint64;
+
   Tsize_t = SizeInt;
 //  Tsize_t = SizeUInt;
   Tuintptr_t = PtrUInt;

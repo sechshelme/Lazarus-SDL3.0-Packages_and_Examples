@@ -78,9 +78,9 @@ function SDL_GetSurfaceColorspace(surface: PSDL_Surface; colorspace: PSDL_Colors
 function SDL_SetSurfacePalette(surface: PSDL_Surface; palette: PSDL_Palette): longint; cdecl; external sdl3_lib;
 function SDL_LockSurface(surface: PSDL_Surface): longint; cdecl; external sdl3_lib;
 procedure SDL_UnlockSurface(surface: PSDL_Surface); cdecl; external sdl3_lib;
-function SDL_LoadBMP_RW(src: PSDL_RWops; freesrc: TSDL_bool): PSDL_Surface; cdecl; external sdl3_lib;
+function SDL_LoadBMP_RW(src: PSDL_IOStream; freesrc: TSDL_bool): PSDL_Surface; cdecl; external sdl3_lib;
 function SDL_LoadBMP(file_: PChar): PSDL_Surface; cdecl; external sdl3_lib;
-function SDL_SaveBMP_RW(surface: PSDL_Surface; dst: PSDL_RWops; freedst: TSDL_bool): longint; cdecl; external sdl3_lib;
+function SDL_SaveBMP_RW(surface: PSDL_Surface; dst: PSDL_IOStream; freedst: TSDL_bool): longint; cdecl; external sdl3_lib;
 function SDL_SaveBMP(surface: PSDL_Surface; file_: PChar): longint; cdecl; external sdl3_lib;
 function SDL_SetSurfaceRLE(surface: PSDL_Surface; flag: longint): longint; cdecl; external sdl3_lib;
 function SDL_SurfaceHasRLE(surface: PSDL_Surface): TSDL_bool; cdecl; external sdl3_lib;

@@ -133,7 +133,7 @@ type
   end;
 
 function SDL_AddGamepadMapping(mapping: PChar): longint; cdecl; external sdl3_lib;
-function SDL_AddGamepadMappingsFromRW(src: PSDL_RWops; freesrc: TSDL_bool): longint; cdecl; external sdl3_lib;
+function SDL_AddGamepadMappingsFromRW(src: PSDL_IOStream; freesrc: TSDL_bool): longint; cdecl; external sdl3_lib;
 function SDL_AddGamepadMappingsFromFile(file_: PChar): longint; cdecl; external sdl3_lib;
 function SDL_ReloadGamepadMappings: longint; cdecl; external sdl3_lib;
 function SDL_GetGamepadMappings(Count: Plongint): PPchar; cdecl; external sdl3_lib;

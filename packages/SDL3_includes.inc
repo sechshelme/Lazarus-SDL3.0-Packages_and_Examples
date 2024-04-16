@@ -20,7 +20,8 @@
  {$include SDL3_pixels.inc}
  {$include SDL3_properties.inc}
  {$include SDL3_rect.inc}
- {$include SDL3_rwops.inc}
+// {$include SDL3_rwops.inc}
+{$include sdl3_iostream.inc}
  {$include SDL3_version.inc}
  {$include SDL3_clipboard.inc}
  {$include SDL3_atomic.inc}
@@ -45,4 +46,5 @@
  {$include SDL3_events.inc}
 // {$include SDL3_quit.inc}
  {$include SDL3_render.inc}
- {$include SDL3_system.inc}
+{$include SDL3_system.inc}
+

@@ -75,10 +75,6 @@
         <Type Value="Include"/>
       </Item>
       <Item>
-        <Filename Value="sdl3_rwops.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
         <Filename Value="sdl3_locale.inc"/>
         <Type Value="Include"/>
       </Item>
@@ -221,6 +217,10 @@
       <Item>
         <Filename Value="sdl3_opengl_glext.pas"/>
         <UnitName Value="SDL3_opengl_glext"/>
+      </Item>
+      <Item>
+        <Filename Value="SDL_image.pp"/>
+        <UnitName Value="SDL_image"/>
       </Item>
     </Files>
     <RequiredPkgs>

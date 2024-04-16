@@ -33,6 +33,7 @@
 		</Compiler>
 		<Linker>
 			<Add library="SDL3" />
+			<Add library="SDL3_image" />
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Extensions />

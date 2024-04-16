@@ -5,7 +5,7 @@ unit Unit1;
 interface
 
 uses
-//  SDL3_stdinc,
+ SDL3_iostream,   SDL_image,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, FileUtil;
 
 type

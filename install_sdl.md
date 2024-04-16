@@ -14,6 +14,13 @@ make -j16
 sudo make install
 ```
 
+### Test-Programme mitkompilieren
+```bash
+cmake -S ../SDL -DSDL_TESTS=ON
+```
+https://github.com/libsdl-org/SDL/blob/main/docs/README-cmake.md
+
+
 ### SDL3.DLL für wine und Windows erstellen.
 ```bash
 git clone https://github.com/libsdl-org/SDL.git
