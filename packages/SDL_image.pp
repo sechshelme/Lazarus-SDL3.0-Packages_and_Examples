@@ -14,8 +14,9 @@ const
 sdl3_image_lib = 'libSDL3_image.so';
 {$ENDIF}
 
-{$IFDEF Windows}
-sdl3_lib = 'SDL3.dll';
+{$IFDEF Windows} //SDL3_image.dll
+sdl3_image_lib =  'SDL3_image.dll';
+//sdl3_lib = 'SDL3.dll';
 {$ENDIF}
 
 const
@@ -66,7 +67,7 @@ function SDL_IMAGE_VERSION_ATLEAST(X,Y,Z : longint) : longint;
  * \returns SDL_image version
   }
 (* Const before type ignored *)
-function IMG_Linked_Version:PSDL_Version;cdecl;external;
+function IMG_Linked_Version:PSDL_Version;cdecl;external sdl3_lib;
 {*
  * Initialization flags
   }
@@ -144,7 +145,7 @@ type
  * \sa IMG_Quit
   }
 
-function IMG_Init(flags:longint):longint;cdecl;external;
+function IMG_Init(flags:longint):longint;cdecl;external sdl3_lib;
 {*
  * Deinitialize SDL_image.
  *
@@ -168,7 +169,7 @@ function IMG_Init(flags:longint):longint;cdecl;external;
  *
  * \sa IMG_Init
   }
-procedure IMG_Quit;cdecl;external;
+procedure IMG_Quit;cdecl;external sdl3_image_lib;
 {*
  * Load an image from an SDL data source into a software surface.
  *
@@ -230,7 +231,7 @@ procedure IMG_Quit;cdecl;external;
  * \sa SDL_DestroySurface
   }
 (* Const before type ignored *)
-function IMG_LoadTyped_IO(src:PSDL_IOStream; closeio:TSDL_bool; _type:Pchar):PSDL_Surface;cdecl;external;
+function IMG_LoadTyped_IO(src:PSDL_IOStream; closeio:TSDL_bool; _type:Pchar):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load an image from a filesystem path into a software surface.
  *
@@ -273,7 +274,7 @@ function IMG_LoadTyped_IO(src:PSDL_IOStream; closeio:TSDL_bool; _type:Pchar):PSD
  * \sa SDL_DestroySurface
   }
 (* Const before type ignored *)
-function IMG_Load(file_:Pchar):PSDL_Surface;cdecl;external;
+function IMG_Load(file_:Pchar):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load an image from an SDL data source into a software surface.
  *
@@ -326,7 +327,7 @@ function IMG_Load(file_:Pchar):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadTyped_IO
  * \sa SDL_DestroySurface
   }
-function IMG_Load_IO(src:PSDL_IOStream; closeio:TSDL_bool):PSDL_Surface;cdecl;external;
+function IMG_Load_IO(src:PSDL_IOStream; closeio:TSDL_bool):PSDL_Surface;cdecl;external sdl3_image_lib;
 //{$if SDL_VERSION_ATLEAST(2,0,0)}
 {*
  * Load an image from a filesystem path into a GPU texture.
@@ -363,7 +364,7 @@ function IMG_Load_IO(src:PSDL_IOStream; closeio:TSDL_bool):PSDL_Surface;cdecl;ex
   }
 (* Const before type ignored *)
 
-function IMG_LoadTexture(renderer:PSDL_Renderer; file_:Pchar):PSDL_Texture;cdecl;external;
+function IMG_LoadTexture(renderer:PSDL_Renderer; file_:Pchar):PSDL_Texture;cdecl;external sdl3_image_lib;
 {*
  * Load an image from an SDL data source into a GPU texture.
  *
@@ -409,7 +410,7 @@ function IMG_LoadTexture(renderer:PSDL_Renderer; file_:Pchar):PSDL_Texture;cdecl
  * \sa IMG_LoadTextureTyped_IO
  * \sa SDL_DestroyTexture
   }
-function IMG_LoadTexture_IO(renderer:PSDL_Renderer; src:PSDL_IOStream; closeio:TSDL_bool):PSDL_Texture;cdecl;external;
+function IMG_LoadTexture_IO(renderer:PSDL_Renderer; src:PSDL_IOStream; closeio:TSDL_bool):PSDL_Texture;cdecl;external sdl3_image_lib;
 {*
  * Load an image from an SDL data source into a GPU texture.
  *
@@ -464,7 +465,7 @@ function IMG_LoadTexture_IO(renderer:PSDL_Renderer; src:PSDL_IOStream; closeio:T
  * \sa SDL_DestroyTexture
   }
 (* Const before type ignored *)
-function IMG_LoadTextureTyped_IO(renderer:PSDL_Renderer; src:PSDL_IOStream; closeio:TSDL_bool; _type:Pchar):PSDL_Texture;cdecl;external;
+function IMG_LoadTextureTyped_IO(renderer:PSDL_Renderer; src:PSDL_IOStream; closeio:TSDL_bool; _type:Pchar):PSDL_Texture;cdecl;external sdl3_image_lib;
 //{$endif}
 { SDL 2.0  }
 {*
@@ -510,7 +511,7 @@ function IMG_LoadTextureTyped_IO(renderer:PSDL_Renderer; src:PSDL_IOStream; clos
  * \sa IMG_isWEBP
   }
 
-function IMG_isAVIF(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isAVIF(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect ICO image data on a readable/seekable SDL_IOStream.
  *
@@ -552,7 +553,7 @@ function IMG_isAVIF(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isICO(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isICO(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect CUR image data on a readable/seekable SDL_IOStream.
  *
@@ -594,7 +595,7 @@ function IMG_isICO(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isCUR(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isCUR(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect BMP image data on a readable/seekable SDL_IOStream.
  *
@@ -636,7 +637,7 @@ function IMG_isCUR(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isBMP(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isBMP(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect GIF image data on a readable/seekable SDL_IOStream.
  *
@@ -678,7 +679,7 @@ function IMG_isBMP(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isGIF(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isGIF(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect JPG image data on a readable/seekable SDL_IOStream.
  *
@@ -720,7 +721,7 @@ function IMG_isGIF(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isJPG(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isJPG(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect JXL image data on a readable/seekable SDL_IOStream.
  *
@@ -762,7 +763,7 @@ function IMG_isJPG(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isJXL(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isJXL(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect LBM image data on a readable/seekable SDL_IOStream.
  *
@@ -804,7 +805,7 @@ function IMG_isJXL(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isLBM(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isLBM(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect PCX image data on a readable/seekable SDL_IOStream.
  *
@@ -846,7 +847,7 @@ function IMG_isLBM(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isPCX(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isPCX(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect PNG image data on a readable/seekable SDL_IOStream.
  *
@@ -888,7 +889,7 @@ function IMG_isPCX(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isPNG(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isPNG(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect PNM image data on a readable/seekable SDL_IOStream.
  *
@@ -930,7 +931,7 @@ function IMG_isPNG(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isPNM(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isPNM(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect SVG image data on a readable/seekable SDL_IOStream.
  *
@@ -972,7 +973,7 @@ function IMG_isPNM(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isSVG(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isSVG(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect QOI image data on a readable/seekable SDL_IOStream.
  *
@@ -1014,7 +1015,7 @@ function IMG_isSVG(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isQOI(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isQOI(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect TIFF image data on a readable/seekable SDL_IOStream.
  *
@@ -1056,7 +1057,7 @@ function IMG_isQOI(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isTIF(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isTIF(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect XCF image data on a readable/seekable SDL_IOStream.
  *
@@ -1098,7 +1099,7 @@ function IMG_isTIF(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isXCF(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isXCF(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect XPM image data on a readable/seekable SDL_IOStream.
  *
@@ -1140,7 +1141,7 @@ function IMG_isXCF(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXV
  * \sa IMG_isWEBP
   }
-function IMG_isXPM(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isXPM(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect XV image data on a readable/seekable SDL_IOStream.
  *
@@ -1182,7 +1183,7 @@ function IMG_isXPM(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXPM
  * \sa IMG_isWEBP
   }
-function IMG_isXV(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isXV(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Detect WEBP image data on a readable/seekable SDL_IOStream.
  *
@@ -1224,7 +1225,7 @@ function IMG_isXV(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_isXPM
  * \sa IMG_isXV
   }
-function IMG_isWEBP(src:PSDL_IOStream):longint;cdecl;external;
+function IMG_isWEBP(src:PSDL_IOStream):longint;cdecl;external sdl3_image_lib;
 {*
  * Load a AVIF image directly.
  *
@@ -1257,7 +1258,7 @@ function IMG_isWEBP(src:PSDL_IOStream):longint;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadAVIF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadAVIF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a ICO image directly.
  *
@@ -1290,7 +1291,7 @@ function IMG_LoadAVIF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadICO_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadICO_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a CUR image directly.
  *
@@ -1323,7 +1324,7 @@ function IMG_LoadICO_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadCUR_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadCUR_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a BMP image directly.
  *
@@ -1356,7 +1357,7 @@ function IMG_LoadCUR_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadBMP_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadBMP_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a GIF image directly.
  *
@@ -1389,7 +1390,7 @@ function IMG_LoadBMP_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadGIF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadGIF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a JPG image directly.
  *
@@ -1422,7 +1423,7 @@ function IMG_LoadGIF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadJPG_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadJPG_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a JXL image directly.
  *
@@ -1455,7 +1456,7 @@ function IMG_LoadJPG_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadJXL_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadJXL_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a LBM image directly.
  *
@@ -1488,7 +1489,7 @@ function IMG_LoadJXL_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadLBM_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadLBM_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a PCX image directly.
  *
@@ -1521,7 +1522,7 @@ function IMG_LoadLBM_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadPCX_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadPCX_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a PNG image directly.
  *
@@ -1554,7 +1555,7 @@ function IMG_LoadPCX_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadPNG_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadPNG_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a PNM image directly.
  *
@@ -1587,7 +1588,7 @@ function IMG_LoadPNG_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadPNM_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadPNM_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a SVG image directly.
  *
@@ -1620,7 +1621,7 @@ function IMG_LoadPNM_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadSVG_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadSVG_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a QOI image directly.
  *
@@ -1653,7 +1654,7 @@ function IMG_LoadSVG_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadQOI_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadQOI_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a TGA image directly.
  *
@@ -1686,7 +1687,7 @@ function IMG_LoadQOI_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadTGA_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadTGA_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a TIFF image directly.
  *
@@ -1719,7 +1720,7 @@ function IMG_LoadTGA_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadTIF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadTIF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a XCF image directly.
  *
@@ -1752,7 +1753,7 @@ function IMG_LoadTIF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadXCF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadXCF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a XPM image directly.
  *
@@ -1785,7 +1786,7 @@ function IMG_LoadXCF_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXV_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadXPM_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadXPM_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a XV image directly.
  *
@@ -1818,7 +1819,7 @@ function IMG_LoadXPM_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXPM_IO
  * \sa IMG_LoadWEBP_IO
   }
-function IMG_LoadXV_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadXV_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load a WEBP image directly.
  *
@@ -1851,7 +1852,7 @@ function IMG_LoadXV_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  * \sa IMG_LoadXPM_IO
  * \sa IMG_LoadXV_IO
   }
-function IMG_LoadWEBP_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
+function IMG_LoadWEBP_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load an SVG image, scaled to a specific size.
  *
@@ -1871,7 +1872,7 @@ function IMG_LoadWEBP_IO(src:PSDL_IOStream):PSDL_Surface;cdecl;external;
  *
  * \since This function is available since SDL_image 3.0.0.
   }
-function IMG_LoadSizedSVG_IO(src:PSDL_IOStream; width:longint; height:longint):PSDL_Surface;cdecl;external;
+function IMG_LoadSizedSVG_IO(src:PSDL_IOStream; width:longint; height:longint):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load an XPM image from a memory array.
  *
@@ -1889,7 +1890,7 @@ function IMG_LoadSizedSVG_IO(src:PSDL_IOStream; width:longint; height:longint):P
  *
  * \sa IMG_ReadXPMFromArrayToRGB888
   }
-function IMG_ReadXPMFromArray(xpm:PPchar):PSDL_Surface;cdecl;external;
+function IMG_ReadXPMFromArray(xpm:PPchar):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Load an XPM image from a memory array.
  *
@@ -1907,7 +1908,7 @@ function IMG_ReadXPMFromArray(xpm:PPchar):PSDL_Surface;cdecl;external;
  *
  * \sa IMG_ReadXPMFromArray
   }
-function IMG_ReadXPMFromArrayToRGB888(xpm:PPchar):PSDL_Surface;cdecl;external;
+function IMG_ReadXPMFromArrayToRGB888(xpm:PPchar):PSDL_Surface;cdecl;external sdl3_image_lib;
 {*
  * Save an SDL_Surface into a AVIF image file.
  *
@@ -1924,7 +1925,7 @@ function IMG_ReadXPMFromArrayToRGB888(xpm:PPchar):PSDL_Surface;cdecl;external;
  * \sa IMG_SaveAVIF_IO
   }
 (* Const before type ignored *)
-function IMG_SaveAVIF(surface:PSDL_Surface; file_:Pchar; quality:longint):longint;cdecl;external;
+function IMG_SaveAVIF(surface:PSDL_Surface; file_:Pchar; quality:longint):longint;cdecl;external sdl3_image_lib;
 {*
  * Save an SDL_Surface into AVIF image data, via an SDL_IOStream.
  *
@@ -1945,7 +1946,7 @@ function IMG_SaveAVIF(surface:PSDL_Surface; file_:Pchar; quality:longint):longin
  *
  * \sa IMG_SaveAVIF
   }
-function IMG_SaveAVIF_IO(surface:PSDL_Surface; dst:PSDL_IOStream; closeio:longint; quality:longint):longint;cdecl;external;
+function IMG_SaveAVIF_IO(surface:PSDL_Surface; dst:PSDL_IOStream; closeio:longint; quality:longint):longint;cdecl;external sdl3_image_lib;
 {*
  * Save an SDL_Surface into a PNG image file.
  *
@@ -1960,7 +1961,7 @@ function IMG_SaveAVIF_IO(surface:PSDL_Surface; dst:PSDL_IOStream; closeio:longin
  * \sa IMG_SavePNG_IO
   }
 (* Const before type ignored *)
-function IMG_SavePNG(surface:PSDL_Surface; file_:Pchar):longint;cdecl;external;
+function IMG_SavePNG(surface:PSDL_Surface; file_:Pchar):longint;cdecl;external sdl3_image_lib;
 {*
  * Save an SDL_Surface into PNG image data, via an SDL_IOStream.
  *
@@ -1979,7 +1980,7 @@ function IMG_SavePNG(surface:PSDL_Surface; file_:Pchar):longint;cdecl;external;
  *
  * \sa IMG_SavePNG
   }
-function IMG_SavePNG_IO(surface:PSDL_Surface; dst:PSDL_IOStream; closeio:longint):longint;cdecl;external;
+function IMG_SavePNG_IO(surface:PSDL_Surface; dst:PSDL_IOStream; closeio:longint):longint;cdecl;external sdl3_image_lib;
 {*
  * Save an SDL_Surface into a JPEG image file.
  *
@@ -1996,7 +1997,7 @@ function IMG_SavePNG_IO(surface:PSDL_Surface; dst:PSDL_IOStream; closeio:longint
  * \sa IMG_SaveJPG_IO
   }
 (* Const before type ignored *)
-function IMG_SaveJPG(surface:PSDL_Surface; file_:Pchar; quality:longint):longint;cdecl;external;
+function IMG_SaveJPG(surface:PSDL_Surface; file_:Pchar; quality:longint):longint;cdecl;external sdl3_image_lib;
 {*
  * Save an SDL_Surface into JPEG image data, via an SDL_IOStream.
  *
@@ -2017,7 +2018,7 @@ function IMG_SaveJPG(surface:PSDL_Surface; file_:Pchar; quality:longint):longint
  *
  * \sa IMG_SaveJPG
   }
-function IMG_SaveJPG_IO(surface:PSDL_Surface; dst:PSDL_IOStream; closeio:longint; quality:longint):longint;cdecl;external;
+function IMG_SaveJPG_IO(surface:PSDL_Surface; dst:PSDL_IOStream; closeio:longint; quality:longint):longint;cdecl;external sdl3_image_lib;
 {*
  * Animated image support Currently only animated GIFs are supported.
   }
@@ -2045,7 +2046,7 @@ type
   }
 (* Const before type ignored *)
 
-function IMG_LoadAnimation(file_:Pchar):PIMG_Animation;cdecl;external;
+function IMG_LoadAnimation(file_:Pchar):PIMG_Animation;cdecl;external sdl3_image_lib;
 {*
  * Load an animation from an SDL_IOStream.
  *
@@ -2065,7 +2066,7 @@ function IMG_LoadAnimation(file_:Pchar):PIMG_Animation;cdecl;external;
  *
  * \sa IMG_FreeAnimation
   }
-function IMG_LoadAnimation_IO(src:PSDL_IOStream; closeio:TSDL_bool):PIMG_Animation;cdecl;external;
+function IMG_LoadAnimation_IO(src:PSDL_IOStream; closeio:TSDL_bool):PIMG_Animation;cdecl;external sdl3_image_lib;
 {*
  * Load an animation from an SDL datasource
  *
@@ -2095,7 +2096,7 @@ function IMG_LoadAnimation_IO(src:PSDL_IOStream; closeio:TSDL_bool):PIMG_Animati
  * \sa IMG_FreeAnimation
   }
 (* Const before type ignored *)
-function IMG_LoadAnimationTyped_IO(src:PSDL_IOStream; closeio:TSDL_bool; _type:Pchar):PIMG_Animation;cdecl;external;
+function IMG_LoadAnimationTyped_IO(src:PSDL_IOStream; closeio:TSDL_bool; _type:Pchar):PIMG_Animation;cdecl;external sdl3_image_lib;
 {*
  * Dispose of an IMG_Animation and free its resources.
  *
@@ -2109,7 +2110,7 @@ function IMG_LoadAnimationTyped_IO(src:PSDL_IOStream; closeio:TSDL_bool; _type:P
  * \sa IMG_LoadAnimation_IO
  * \sa IMG_LoadAnimationTyped_IO
   }
-procedure IMG_FreeAnimation(anim:PIMG_Animation);cdecl;external;
+procedure IMG_FreeAnimation(anim:PIMG_Animation);cdecl;external sdl3_image_lib;
 {*
  * Load a GIF animation directly.
  *
@@ -2128,7 +2129,7 @@ procedure IMG_FreeAnimation(anim:PIMG_Animation);cdecl;external;
  * \sa IMG_LoadAnimationTyped_IO
  * \sa IMG_FreeAnimation
   }
-function IMG_LoadGIFAnimation_IO(src:PSDL_IOStream):PIMG_Animation;cdecl;external;
+function IMG_LoadGIFAnimation_IO(src:PSDL_IOStream):PIMG_Animation;cdecl;external sdl3_image_lib;
 {*
  * Load a WEBP animation directly.
  *
@@ -2147,7 +2148,7 @@ function IMG_LoadGIFAnimation_IO(src:PSDL_IOStream):PIMG_Animation;cdecl;externa
  * \sa IMG_LoadAnimationTyped_IO
  * \sa IMG_FreeAnimation
   }
-function IMG_LoadWEBPAnimation_IO(src:PSDL_IOStream):PIMG_Animation;cdecl;external;
+function IMG_LoadWEBPAnimation_IO(src:PSDL_IOStream):PIMG_Animation;cdecl;external sdl3_image_lib;
 {*
  * Report SDL_image errors
  *
