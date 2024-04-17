@@ -1,10 +1,12 @@
+/*
+  Linux:
+  gcc main.c -o main -lSDL3
+
+  Windows:
+  x86_64-w64-mingw32-gcc main.c -o main.exe -lSDL3 -I/usr/local/include -L/usr/local/bin
+*/
+
 #include <SDL3/SDL.h>
-#include <stdio.h>
-
-// gcc main.c -o main -lSDL3
-// x86_64-w64-mingw32-gcc main.c -o main.exe -lSDL3 -I/usr/share/mingw-w64/include -L.
-
-
 
 int WinMain(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);   

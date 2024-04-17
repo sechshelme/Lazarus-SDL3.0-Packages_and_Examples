@@ -12,6 +12,7 @@ var
   bitmapSurface: PSDL_Surface;
   renderer: PSDL_Renderer;
   bitmapTex: PSDL_Texture;
+  imgFlags: longint=0;
 
   function CreateSurface: PSDL_Surface;
   var
@@ -44,6 +45,7 @@ var
     while not quit do begin
       keyStat := SDL_GetKeyboardState(nil);
       if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
+        SDL_Log('space');
       end;
 
       if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
@@ -55,7 +57,9 @@ var
         end;
       end;
       if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
+        SDL_Log('Left');
         if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+          SDL_Log('Left + Shift');
           if rDest.w > 1 then begin
             rDest.x += step;
             rDest.w -= step * 2;
@@ -63,6 +67,7 @@ var
         end else begin
           rDest.x -= step;
         end;
+        SDL_Log('X: %f   w:%f',rDest.x,rDest.w);
       end;
       if keyStat[SDL_SCANCODE_DOWN] <> 0 then begin
         if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
@@ -86,7 +91,6 @@ var
       if rDest.h < 1 then begin
         rDest.h := 1;
       end;
-
 
       while SDL_PollEvent(@e) do begin
         case e.type_ of
@@ -118,6 +122,10 @@ var
 
 begin
   SDL_init(SDL_INIT_VIDEO);
+  WriteLn('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+  IMG_Init(IMG_INIT_JPG);
+  WriteLn('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
+  WriteLn(imgFlags);
 
   window := SDL_CreateWindow('SDL3 Window', 800, 600, SDL_WINDOW_RESIZABLE);
   if window = nil then begin

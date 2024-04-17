@@ -1,12 +1,13 @@
-#include <SDL2/SDL.h>
+/*
+  Linux:
+  gcc main.c -o main -lSDL3
+
+  Windows:
+  x86_64-w64-mingw32-gcc main.c -o main.exe -lSDL3 -I/usr/local/include -L/usr/local/bin
+*/
+
+#include <SDL3/SDL.h>
 #include <stdio.h>
-
-// Linux:
-// gcc main.c -o main -lSDL2
-//
-// Windows:
-// x86_64-w64-mingw32-gcc main.c -o main.exe -lSDL2 -I/usr/local/include -L/usr/local/bin
-
 
 int TestThread(void * Data)
 {
@@ -19,6 +20,7 @@ int TestThread(void * Data)
 }
 
 #define len 8
+
 
 
 //int WinMain(int argc, char* argv[]) {
@@ -45,8 +47,4 @@ int main(int argc, char* argv[]) {
   SDL_Log("Ende");
   SDL_Quit();
   return 0;
-}
-
-int WinMain(int argc, char* argv[]) {
-  main(argc, argv);
 }

@@ -1,10 +1,13 @@
+/*
+  Linux:
+  gcc main.c -o main -lSDL2
+
+  Windows:
+  x86_64-w64-mingw32-gcc main.c -o main.exe -lSDL2 -I/usr/local/include -L/usr/local/bin
+*/
+
 #include <SDL2/SDL.h>
 #include <stdio.h>
-
-// gcc main.c -o main -lSDL2
-// x86_64-w64-mingw32-gcc main.c -o main.exe -lSDL2 -I/usr/share/mingw-w64/include -L.
-
-
 
 int WinMain(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);   
