@@ -219,8 +219,20 @@
         <UnitName Value="SDL3_opengl_glext"/>
       </Item>
       <Item>
-        <Filename Value="SDL_image.pp"/>
+        <Filename Value="sdl_image.pas"/>
         <UnitName Value="SDL_image"/>
+      </Item>
+      <Item>
+        <Filename Value="copyright.md"/>
+        <Type Value="Text"/>
+      </Item>
+      <Item>
+        <Filename Value="SDL_rtf.pp"/>
+        <UnitName Value="SDL_rtf"/>
+      </Item>
+      <Item>
+        <Filename Value="SDL_ttf.pp"/>
+        <UnitName Value="SDL_ttf"/>
       </Item>
     </Files>
     <RequiredPkgs>
