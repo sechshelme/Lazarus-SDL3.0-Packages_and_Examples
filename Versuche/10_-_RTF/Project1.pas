@@ -10,27 +10,9 @@ uses
 
 var
   window: PSDL_Window;
-  bitmapSurface: PSDL_Surface;
   renderer: PSDL_Renderer;
-  bitmapTex: PSDL_Texture;
   ctx: PRTF_Context;
   fontEngine: TRTF_FontEngine;
-
-  function CreateSurface: PSDL_Surface;
-  var
-    r: TSDL_Rect;
-  begin
-
-    Result := SDL_LoadBMP('mauer.bmp');
-    if Result = nil then begin
-      SDL_Log('Kann keine textur erzeugen !');
-    end;
-    r.x := 1;
-    r.y := 1;
-    r.w := 2;
-    r.h := 2;
-    SDL_FillSurfaceRect(Result, @r, $FFFF);
-  end;
 
   procedure SDLMain;
   const
@@ -108,58 +90,96 @@ var
         end;
       end;
 
-      SDL_RenderClear(renderer);
-      //   SDL_RenderTexture(renderer, bitmapTex, nil, @distrect);
       rSrc.x := 0;
       rSrc.y := 0;
       rSrc.w := 400;
       rSrc.h := 400;
 
-      SDL_RenderTexture(renderer, bitmapTex, @rSrc, @rDest);
+      SDL_SetRenderDrawColor(renderer, $FF, $88, $FF, $FF);
+      SDL_RenderClear(renderer);
+      // WriteLn('main1');
+      RTF_Render(ctx, nil, -10);
+      //      WriteLn('main2');
+
       SDL_RenderPresent(renderer);
     end;
   end;
 
-function CreateFont(name: Pchar; family: TRTF_FontFamily; charset: longint;  size: longint; style: longint): pointer; cdecl;
-var
-  font: PTTF_Font;
-begin
-  font:=TTF_OpenFont('lazy.ttf',size);
-  if font = nil then begin
-    SDL_Log('Kann kein Font laden !    %s', TTF_GetError);
+  function CreateFont(Name: PChar; family: TRTF_FontFamily; charset: longint; size: longint; style: longint): pointer; cdecl;
+  var
+    font: PTTF_Font;
+  begin
+    font := TTF_OpenFont('lazy.ttf', size);
+    if font = nil then begin
+      SDL_Log('Kann kein Font laden !    %s', TTF_GetError);
+    end;
+
+    WriteLn('CreateFont io.');
+    Result := font;
   end;
 
-  WriteLn('CreateFont');
+  function GetLineSpacing(font: pointer): longint; cdecl;
+  var
+    font2: PTTF_Font;
+  begin
+    font2 := PTTF_Font(font);
+    Result := TTF_FontLineSkip(font2);
+    WriteLn('GetLineSpacing io.');
+  end;
 
-  Result:=font;
-end;
+  function GetCharacterOffsets(font: pointer; Text: PChar; byteOffsets: Plongint; pixelOffsets: Plongint; maxOffsets: longint): longint; cdecl;
+  var
+    i: cint = 0;
+  begin
+    while (Text^ <> #0) and (i < maxOffsets) do begin
+      byteOffsets[i] := i;
+      pixelOffsets[i] := i;
+      Inc(i);
 
-function GetLineSpacing(font: pointer): longint; cdecl;
-var
-  font2: PTTF_Font;
-begin
-    font2:=PTTF_Font(font);
-    Result:=TTF_FontLineSkip(font2);
-    WriteLn('GetLineSpacing');
-end;
+      Inc(Text, 1);
+    end;
 
-function GetCharacterOffsets(font: pointer; text: Pchar; byteOffsets: Plongint;  pixelOffsets: Plongint; maxOffsets: longint): longint; cdecl;
-begin
-   Result:=10;
-   WriteLn('Offset');
-end;
+    if i < maxOffsets then begin
+      byteOffsets[i] := i;
+      pixelOffsets[i] := i;
+    end;
 
-function RenderText(font: pointer; renderer: PSDL_Renderer; text: Pchar;  fg: TSDL_Color): PSDL_Texture; cdecl;
-begin
-     Result:=nil;
-     WriteLn('Rendertext');
-end;
+    SDL_Log('offset: %i',i );
+    SDL_Log('max offset: %i', maxOffsets);
+    Result := i;
+  end;
 
-procedure FreeFont(font: pointer); cdecl;
-begin
-  WriteLn('CloseFont');
-     TTF_CloseFont(font);
-end;
+  function RenderText(font: pointer; renderer: PSDL_Renderer; Text: PChar; fg: TSDL_Color): PSDL_Texture; cdecl;
+  var
+    font2: PTTF_Font;
+    surface: PSDL_Surface;
+  begin
+    font2 := PTTF_Font(font);
+
+    WriteLn('font2: ', PtrUInt(Text));
+    WriteLn('font2: ', PtrUInt(renderer));
+
+    WriteLn(Text);
+//    Text := 'sdfgffdsgsfd';
+    WriteLn(Text);
+
+    Result := nil;
+    surface := TTF_RenderUTF8_Blended(font2, Text, fg);
+    if surface = nil then begin
+      SDL_Log('Suface Fehler');
+    end else begin
+      Result := SDL_CreateTextureFromSurface(renderer, surface);
+      SDL_DestroySurface(surface);
+    end;
+
+    WriteLn('Rendertext io.');
+  end;
+
+  procedure FreeFont(font: pointer); cdecl;
+  begin
+    WriteLn('CloseFont');
+    TTF_CloseFont(font);
+  end;
 
 begin
   SDL_init(SDL_INIT_VIDEO);
@@ -176,11 +196,11 @@ begin
   end;
 
   fontEngine.version := RTF_FONT_ENGINE_VERSION;
-  fontEngine.CreateFont:=@CreateFont;
-  fontEngine.GetLineSpacing:=@GetLineSpacing;
-  fontEngine.GetCharacterOffsets:=@GetCharacterOffsets;
-  fontEngine.RenderText:=@RenderText;
-  fontEngine.FreeFont:=@FreeFont;
+  fontEngine.CreateFont := @CreateFont;
+  fontEngine.GetLineSpacing := @GetLineSpacing;
+  fontEngine.GetCharacterOffsets := @GetCharacterOffsets;
+  fontEngine.RenderText := @RenderText;
+  fontEngine.FreeFont := @FreeFont;
 
   ctx := RTF_CreateContext(renderer, @fontEngine);
   if ctx = nil then begin
@@ -194,18 +214,9 @@ begin
   end;
   SDL_Log('io');
 
-  bitmapSurface := CreateSurface;
-
-  bitmapTex := SDL_CreateTextureFromSurface(renderer, bitmapSurface);
-  if bitmapSurface = nil then begin
-    SDL_Log('Kann bmp nicht laden !');
-  end;
-
-  SDL_DestroySurface(bitmapSurface);
-
   SDLMain;
 
-  SDL_DestroyTexture(bitmapTex);
+  RTF_FreeContext(ctx);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 
