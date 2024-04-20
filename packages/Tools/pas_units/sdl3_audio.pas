@@ -110,8 +110,9 @@ function SDL_OpenAudioDeviceStream(devid:TSDL_AudioDeviceID; spec:PSDL_AudioSpec
 type
   TSDL_AudioPostmixCallback = procedure (userdata:pointer; spec:PSDL_AudioSpec; buffer:Psingle; buflen:longint);cdecl;
 function SDL_SetAudioPostmixCallback(devid:TSDL_AudioDeviceID; callback:TSDL_AudioPostmixCallback; userdata:pointer):longint;cdecl;external sdl3_lib;
-function SDL_LoadWAV_RW(src:PSDL_RWops; freesrc:TSDL_bool; spec:PSDL_AudioSpec; audio_buf:PPUint8; audio_len:PUint32):longint;cdecl;external sdl3_lib;
-function SDL_LoadWAV_RW(src:PSDL_IOStream; freesrc:TSDL_bool; spec:PSDL_AudioSpec; audio_buf:PPUint8; audio_len:PUint32):longint;cdecl;external sdl3_lib;
+//function SDL_LoadWAV_RW(src:PSDL_RWops; freesrc:TSDL_bool; spec:PSDL_AudioSpec; audio_buf:PPUint8; audio_len:PUint32):longint;cdecl;external sdl3_lib;
+//function SDL_LoadWAV_RW(src:PSDL_IOStream; freesrc:TSDL_bool; spec:PSDL_AudioSpec; audio_buf:PPUint8; audio_len:PUint32):longint;cdecl;external sdl3_lib;
+function SDL_LoadWAV_IO(src:PSDL_IOStream; closeio:TSDL_bool; spec:PSDL_AudioSpec; audio_buf:PPUint8; audio_len:PUint32):longint;cdecl;external sdl3_lib;
 function SDL_LoadWAV(path:Pchar; spec:PSDL_AudioSpec; audio_buf:PPUint8; audio_len:PUint32):longint;cdecl;external sdl3_lib;
 const
   SDL_MIX_MAXVOLUME = 128;  
