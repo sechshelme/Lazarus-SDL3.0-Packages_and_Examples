@@ -37,6 +37,11 @@
         <Filename Value="text.rtf"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="rtf_tools.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="RTF_Tools"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
