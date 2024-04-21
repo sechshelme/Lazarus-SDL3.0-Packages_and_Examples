@@ -34,11 +34,22 @@ uses
               end;
             end;
           end;
+          SDL_EVENT_DROP_BEGIN: begin
+            SDL_Log('SDL_EVENT_DROP_BEGIN');
+          end;
+          SDL_EVENT_DROP_COMPLETE: begin
+            SDL_Log('SDL_EVENT_DROP_COMPLETE');
+          end;
+          SDL_EVENT_DROP_POSITION: begin
+            SDL_Log('SDL_EVENT_DROP_POSITION');
+          end;
           SDL_EVENT_DROP_FILE: begin
-            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, 'Datei', e.drop.Data, nil);
+            SDL_Log('Datei');
+            SDL_Log( e.drop.Data);
           end;
           SDL_EVENT_DROP_TEXT: begin
-            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, 'Text', e.drop.Data, nil);
+            SDL_Log('Text');
+            SDL_Log( e.drop.Data);
           end;
           SDL_EVENT_QUIT: begin
             quit := True;

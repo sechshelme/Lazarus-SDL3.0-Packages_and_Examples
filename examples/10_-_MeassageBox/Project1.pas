@@ -43,10 +43,10 @@ uses
         end;
       end;
 
-      //SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
-      //SDL_RenderClear(renderer);
-      //
-      //SDL_RenderPresent(renderer);
+      SDL_SetRenderDrawColor(renderer, 20, 120, 20, 255);
+      SDL_RenderClear(renderer);
+
+      SDL_RenderPresent(renderer);
     end;
 
 

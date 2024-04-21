@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
         cleanup();
         return(5);
     }
-    LoadRTF(ctx, "text.rtf");
+    LoadRTF(ctx, "text2.rtf");
     SDL_SetWindowTitle(window, RTF_GetTitle(ctx));
 
     /* Render the document to the screen */

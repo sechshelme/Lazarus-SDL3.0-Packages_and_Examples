@@ -49,7 +49,7 @@ cmake -S . -B build
 cmake --build build
 
 su
-cmake --install build --prefix=/usr/local
+cmake --install build --install-prefix /usr/local
 ```
 
 # Libs aktualisieren
