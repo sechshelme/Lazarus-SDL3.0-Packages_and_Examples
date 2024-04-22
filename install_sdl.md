@@ -20,6 +20,16 @@ cmake -S ../SDL -DSDL_TESTS=ON
 ```
 https://github.com/libsdl-org/SDL/blob/main/docs/README-cmake.md
 
+## Windows Cross-Compiler
+
+### Installieren
+```bash
+sudo apt-get install gcc-mingw-w64
+sudo apt-get install mingw-w64-x86-64-dev 
+```
+
+
+
 
 ### SDL3.DLL für wine und Windows erstellen.
 ```bash
