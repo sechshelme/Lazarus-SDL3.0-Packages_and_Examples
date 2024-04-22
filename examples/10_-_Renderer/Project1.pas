@@ -4,31 +4,50 @@ program Project1;
 
 uses
   ctypes,
-  SDL3,
-  SDL_ttf,
-  SDL_rtf,
-  RTF_Tools;
+  SDL3;
+
+const
+  Width = 800;
+  heigt = 600;
 
 var
   window: PSDL_Window;
+  bitmapSurface: PSDL_Surface;
   renderer: PSDL_Renderer;
-  ctx: PRTF_Context;
+  bitmapTex: PSDL_Texture;
+
+  function CreateSurface: PSDL_Surface;
+  const
+    size = 64;
+  var
+    r: TSDL_Rect;
+  begin
+    Result := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA32);
+    if Result = nil then begin
+      SDL_Log('Kann kein Surface erzeugen !');
+    end;
+    r.x := 0;
+    r.y := 0;
+    r.w := size;
+    r.h := size;
+    SDL_FillSurfaceRect(Result, @r, $8888FFFF);
+  end;
 
   procedure SDLMain;
   const
-    step = 0.00001;
+    step = 0.01;
   var
     e: TSDL_Event;
     quit: boolean = False;
-    rSrc, rDest: TSDL_FRect;
+    rDest: TSDL_FRect;
     keyStat: PUInt8;
     time: extended;
-    red, green, blue: int64;
+    red, green, blue: Single;
   begin
-    rDest.x := 0;
-    rDest.y := 0;
     rDest.w := 100;
     rDest.h := 100;
+    rDest.x := (Width - rDest.w) / 2;
+    rDest.y := (heigt - rDest.h) / 2;
     while not quit do begin
       keyStat := SDL_GetKeyboardState(nil);
       if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
@@ -75,6 +94,7 @@ var
         rDest.h := 1;
       end;
 
+
       while SDL_PollEvent(@e) do begin
         case e.type_ of
           SDL_EVENT_KEY_DOWN: begin
@@ -91,30 +111,23 @@ var
         end;
       end;
 
-      rSrc.x := 0;
-      rSrc.y := 0;
-      rSrc.w := 400;
-      rSrc.h := 400;
-
       time := SDL_GetTicks / 1000;
-      red := Trunc((SDL_sinf(time) + 1) / 2.0 * 255);
-      green := Trunc((SDL_sinf(time / 2) + 1) / 2.0 * 255);
-      blue := Trunc((SDL_sinf(time / 3) + 1) / 2.0 * 255);
+      red := (SDL_sinf(time) + 1) / 2.0;
+      green := (SDL_sinf(time / 2) + 1) / 2.0;
+      blue := (SDL_sinf(time / 3) + 1) / 2.0;
 
-      SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
+      SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
       SDL_RenderClear(renderer);
 
-      RTF_Render(ctx, nil, 0);
-
+      SDL_RenderTexture(renderer, bitmapTex, nil, @rDest);
       SDL_RenderPresent(renderer);
     end;
   end;
 
 begin
   SDL_init(SDL_INIT_VIDEO);
-  TTF_Init;
 
-  window := SDL_CreateWindow('SDL3 Window', 800, 600, SDL_WINDOW_RESIZABLE);
+  window := SDL_CreateWindow('SDL3 Window', Width, heigt, SDL_WINDOW_RESIZABLE);
   if window = nil then begin
     SDL_Log('Kann kein SDL-Fenster erzeugen !');
   end;
@@ -124,17 +137,18 @@ begin
     SDL_Log('Kann kein SDL-Renderer erzeugen !');
   end;
 
-  ctx := GetRTF_ctx(renderer);
+  bitmapSurface := CreateSurface;
 
-  SDL_Log('io');
-  if RTF_Load(ctx, 'text.rtf') <> 0 then  begin
-    SDL_Log('Kann kein RTF-Datei nicht laden !    %s', RTF_GetError);
+  bitmapTex := SDL_CreateTextureFromSurface(renderer, bitmapSurface);
+  if bitmapSurface = nil then begin
+    SDL_Log('Kann bmp nicht laden !');
   end;
-  SDL_Log('io');
+
+  SDL_DestroySurface(bitmapSurface);
 
   SDLMain;
 
-  RTF_FreeContext(ctx);
+  SDL_DestroyTexture(bitmapTex);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 

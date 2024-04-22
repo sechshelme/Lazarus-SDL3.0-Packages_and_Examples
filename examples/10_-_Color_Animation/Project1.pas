@@ -8,8 +8,6 @@ uses
 
 var
   window: PSDL_Window;
-  bitmapSurface: PSDL_Surface;
-  dstrect: TSDL_Rect = (x: 100; y: 100; w: 200; h: 200);
   renderer: PSDL_Renderer;
   Width, Height, bbwidth, bbheight: longint;
 
@@ -50,9 +48,8 @@ var
       blue := Trunc((SDL_sinf(time / 3) + 1) / 2.0 * 255);
 
       SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
-
       SDL_RenderClear(renderer);
-      //    SDL_RenderTexture(renderer, bitmapTex, nil, nil);
+
       SDL_RenderPresent(renderer);
     end;
   end;
