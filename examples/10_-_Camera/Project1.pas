@@ -181,4 +181,5 @@ var
 begin
   Init;
   Event;
+  SDL_Quit;
 end.

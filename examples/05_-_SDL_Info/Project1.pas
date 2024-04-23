@@ -55,4 +55,5 @@ begin
   ShowVideo;
   ShowAudio;
 
+  SDL_Quit;
 end.

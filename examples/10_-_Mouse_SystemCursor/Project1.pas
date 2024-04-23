@@ -84,7 +84,6 @@ customColorCursor:=    SDL_CreateColorCursor(nil,0,0);
                 SDL_SetCursor(customBWCursor);
               end;
             end;
-            WriteLn('dows');
           end;
           SDL_EVENT_KEY_DOWN: begin
             sym := e.key.keysym.sym;
@@ -113,11 +112,11 @@ customColorCursor:=    SDL_CreateColorCursor(nil,0,0);
     end;
     SDL_DestroyCursor(customBWCursor);
     SDL_DestroyCursor(customColorCursor);
+    SDL_Quit;
   end;
 
 begin
   Init;
   Event;
   Destroy;
-  SDL_Log('Ende');
 end.

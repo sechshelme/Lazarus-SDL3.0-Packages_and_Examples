@@ -27,4 +27,5 @@ begin
   SDL_RemoveTimer(timer_id2);
   SDL_Delay(3000);
   SDL_Log('Ende');
+  SDL_Quit;
 end.

@@ -8,8 +8,6 @@ uses
 
 var
   window: PSDL_Window;
-  bitmapSurface: PSDL_Surface;
-  dstrect: TSDL_Rect = (x: 100; y: 100; w: 200; h: 200);
   renderer: PSDL_Renderer;
   Width, Height, bbwidth, bbheight: longint;
 
@@ -31,7 +29,6 @@ var
     while not quit do begin
       while SDL_PollEvent(@e) do begin
         case e.type_ of
-          //        SDL_KEYDOWN: begin
           SDL_EVENT_KEY_DOWN: begin
             case e.key.keysym.sym of
 
@@ -82,19 +79,11 @@ begin
 
   SDL_GetWindowSize(window, @Width, @Height);
   SDL_GetWindowSizeInPixels(window, @bbwidth, @bbheight);
-  SDL_LogCritical(0, 'Window size: %ix%i', bbwidth, bbheight);
-  SDL_LogCritical(0, 'blabla');
   SDL_Log('Window size: %ix%i', bbwidth, bbheight);
-  SDL_Log('log');
-  //SDL_Log('log');
-  SDL_LogWarn(0, 'warn');
-  //  WriteLn('Window size: ', bbwidth, 'x', bbheight);
-
 
   if Width <> bbwidth then  begin
     SDL_Log('This is a highdpi environment.');
   end;
-
 
   SDLMain;
 
@@ -102,5 +91,4 @@ begin
   SDL_DestroyWindow(window);
 
   SDL_Quit;
-  //  SDL_Log('Application quit successfully!');
 end.

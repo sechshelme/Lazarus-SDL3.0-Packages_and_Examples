@@ -139,11 +139,11 @@ var
     SDL_DestroyCursor(customCursor);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(win);
+    SDL_Quit;
   end;
 
 begin
   Init;
   Event;
   Destroy;
-  SDL_Log('Ende');
 end.

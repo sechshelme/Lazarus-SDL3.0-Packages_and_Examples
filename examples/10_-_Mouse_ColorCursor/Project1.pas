@@ -78,7 +78,6 @@ var
               SDL_BUTTON_RIGHT: begin
               end;
             end;
-            WriteLn('dows');
           end;
           SDL_EVENT_KEY_DOWN: begin
             sym := e.key.keysym.sym;
@@ -104,11 +103,11 @@ var
     SDL_DestroySurface(surface);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(win);
+    SDL_Quit;
   end;
 
 begin
   Init;
   Event;
   Destroy;
-  SDL_Log('Ende');
 end.
