@@ -9,91 +9,64 @@ uses
 const
   Width = 800;
   heigt = 600;
+  TimerCount = 800;
+
+type
+  TPointrect = record
+    index: integer;
+    stepx, stepy: single;
+    rect: TSDL_FRect;
+  end;
+  PPointrect = ^TPointrect;
 
 var
   window: PSDL_Window;
-  bitmapSurface: PSDL_Surface;
   renderer: PSDL_Renderer;
   bitmapTex: PSDL_Texture;
 
-  function CreateSurface: PSDL_Surface;
+  function CreateTexture: PSDL_Texture;
   const
     size = 64;
   var
     r: TSDL_Rect;
+    surface: PSDL_Surface;
   begin
-    Result := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA32);
-    if Result = nil then begin
+    surface := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA32);
+    if surface = nil then begin
       SDL_Log('Kann kein Surface erzeugen !');
     end;
     r.x := 0;
     r.y := 0;
     r.w := size;
     r.h := size;
-    SDL_FillSurfaceRect(Result, @r, $8888FFFF);
+    SDL_FillSurfaceRect(surface, @r, $8888FFFF);
+
+    Result := SDL_CreateTextureFromSurface(renderer, surface);
+    if Result = nil then begin
+      SDL_Log('Kann keine Texture erzeugen !');
+    end;
+
+    SDL_DestroySurface(surface);
   end;
 
-  procedure SDLMain;
+  procedure Run;
   const
     step = 0.01;
   var
     e: TSDL_Event;
     quit: boolean = False;
-    rDest: TSDL_FRect;
+    rDest: array[0..TimerCount - 1] of TSDL_FRect;
     keyStat: PUInt8;
     red, green, blue: int64;
     time: extended;
+    pr: TPointrect;
+    i: integer;
+    r: TSDL_FRect;
   begin
-    rDest.w := 100;
-    rDest.h := 100;
-    rDest.x := (Width - rDest.w) / 2;
-    rDest.y := (heigt - rDest.h) / 2;
     while not quit do begin
       keyStat := SDL_GetKeyboardState(nil);
       if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
       end;
-
-      if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
-          rDest.x -= step;
-          rDest.w += step * 2;
-        end else begin
-          rDest.x += step;
-        end;
-      end;
-      if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
-          if rDest.w > 1 then begin
-            rDest.x += step;
-            rDest.w -= step * 2;
-          end;
-        end else begin
-          rDest.x -= step;
-        end;
-      end;
-      if keyStat[SDL_SCANCODE_DOWN] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
-          rDest.y -= step;
-          rDest.h += step * 2;
-        end else begin
-          rDest.y += step;
-        end;
-      end;
-      if keyStat[SDL_SCANCODE_UP] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
-          if rDest.h > 1 then begin
-            rDest.y += step;
-            rDest.h -= step * 2;
-          end;
-        end else begin
-          rDest.y -= step;
-        end;
-      end;
-
-      if rDest.h < 1 then begin
-        rDest.h := 1;
-      end;
-
 
       while SDL_PollEvent(@e) do begin
         case e.type_ of
@@ -109,9 +82,8 @@ var
             quit := True;
           end;
           SDL_EVENT_USER: begin
-            SDL_Log('user');
-            rDest := PSDL_FRect(e.user.data1)^;
-
+            pr := PPointrect(e.user.data1)^;
+            rDest[pr.index] := pr.rect;
           end;
         end;
       end;
@@ -124,7 +96,18 @@ var
       SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
       SDL_RenderClear(renderer);
 
-      SDL_RenderTexture(renderer, bitmapTex, nil, @rDest);
+      for i := 0 to TimerCount - 1 do begin
+        SDL_RenderTexture(renderer, bitmapTex, nil, @rDest[i]);
+      end;
+
+      r.x:=150;
+      r.y:=150;
+      r.w:=50;
+      r.h:=50;
+
+      SDL_SetRenderDrawColorFloat(renderer, 0.5, 1.0, 0.0, SDL_ALPHA_OPAQUE);
+      SDL_RenderFillRect(renderer, @r);
+
       SDL_RenderPresent(renderer);
     end;
   end;
@@ -133,10 +116,17 @@ var
   var
     event: TSDL_Event;
     userevent: TSDL_UserEvent;
-    rect: PSDL_FRect absolute param;
+    rect: PPointrect absolute param;
   begin
-    rect^.x += 0.1;
-    SDL_Log('Timer');
+    rect^.rect.x += rect^.stepx;
+    if rect^.rect.x > Width then begin
+      rect^.rect.x := 0;
+    end;
+
+    rect^.rect.y += rect^.stepy;
+    if rect^.rect.y > heigt then begin
+      rect^.rect.y := 0;
+    end;
 
     userevent._type := SDL_EVENT_USER;
     userevent.code := 0;
@@ -152,17 +142,24 @@ var
 
   procedure main;
   var
-    Pointrect: TSDL_FRect;
-
+    Pointrect: array [0..TimerCount - 1] of TPointrect;
+    i: integer;
+    //    Pointrect: TPointrect;
   begin
-    Pointrect.x := 100;
-    Pointrect.y := 100;
-    Pointrect.w := 100;
-    Pointrect.h := 100;
+    SDL_init(SDL_INIT_VIDEO or SDL_INIT_TIMER);
 
-    SDL_init(SDL_INIT_VIDEO);
+    for i := 0 to TimerCount - 1 do begin
 
-    SDL_AddTimer(10, @PointMoveProc, @Pointrect);
+      Pointrect[i].rect.x := Random(50) + 50;
+      Pointrect[i].rect.y := Random(50) + 50;
+      Pointrect[i].rect.w := Random(50) + 50;
+      Pointrect[i].rect.h := Random(50) + 50;
+      Pointrect[i].index := i;
+      Pointrect[i].stepx := Random();
+      Pointrect[i].stepy := Random();
+
+      SDL_AddTimer(10, @PointMoveProc, @Pointrect[i]);
+    end;
 
     window := SDL_CreateWindow('SDL3 Window', Width, heigt, SDL_WINDOW_RESIZABLE);
     if window = nil then begin
@@ -174,21 +171,13 @@ var
       SDL_Log('Kann kein SDL-Renderer erzeugen !');
     end;
 
-    bitmapSurface := CreateSurface;
+    bitmapTex := CreateTexture;
 
-    bitmapTex := SDL_CreateTextureFromSurface(renderer, bitmapSurface);
-    if bitmapSurface = nil then begin
-      SDL_Log('Kann bmp nicht laden !');
-    end;
-
-    SDL_DestroySurface(bitmapSurface);
-
-    SDLMain;
+    Run;
 
     SDL_DestroyTexture(bitmapTex);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-
     SDL_Quit;
   end;
 
