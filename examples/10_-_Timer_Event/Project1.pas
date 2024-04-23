@@ -10,6 +10,7 @@ const
   Width = 800;
   heigt = 600;
   TimerCount = 800;
+  RectSize = 20;
 
 type
   TPointrect = record
@@ -22,52 +23,18 @@ type
 var
   window: PSDL_Window;
   renderer: PSDL_Renderer;
-  bitmapTex: PSDL_Texture;
-
-  function CreateTexture: PSDL_Texture;
-  const
-    size = 64;
-  var
-    r: TSDL_Rect;
-    surface: PSDL_Surface;
-  begin
-    surface := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA32);
-    if surface = nil then begin
-      SDL_Log('Kann kein Surface erzeugen !');
-    end;
-    r.x := 0;
-    r.y := 0;
-    r.w := size;
-    r.h := size;
-    SDL_FillSurfaceRect(surface, @r, $8888FFFF);
-
-    Result := SDL_CreateTextureFromSurface(renderer, surface);
-    if Result = nil then begin
-      SDL_Log('Kann keine Texture erzeugen !');
-    end;
-
-    SDL_DestroySurface(surface);
-  end;
 
   procedure Run;
-  const
-    step = 0.01;
   var
     e: TSDL_Event;
     quit: boolean = False;
     rDest: array[0..TimerCount - 1] of TSDL_FRect;
-    keyStat: PUInt8;
-    red, green, blue: int64;
     time: extended;
     pr: TPointrect;
     i: integer;
-    r: TSDL_FRect;
+    red, green, blue: single;
   begin
     while not quit do begin
-      keyStat := SDL_GetKeyboardState(nil);
-      if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
-      end;
-
       while SDL_PollEvent(@e) do begin
         case e.type_ of
           SDL_EVENT_KEY_DOWN: begin
@@ -85,28 +52,24 @@ var
             pr := PPointrect(e.user.data1)^;
             rDest[pr.index] := pr.rect;
           end;
+          SDL_EVENT_WINDOW_RESIZED: begin
+            SDL_Log('X: %i   Y: %i', e.window.data1, e.window.data2);
+          end;
         end;
       end;
 
       time := SDL_GetTicks / 1000;
-      red := Trunc((SDL_sinf(time) + 1) / 2.0 * 255);
-      green := Trunc((SDL_sinf(time / 2) + 1) / 2.0 * 255);
-      blue := Trunc((SDL_sinf(time / 3) + 1) / 2.0 * 255);
+      red := (SDL_sinf(time) + 1) / 2.0;
+      green := (SDL_sinf(time / 2) + 1) / 2.0;
+      blue := (SDL_sinf(time / 3) + 1) / 2.0;
 
-      SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
+      SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
       SDL_RenderClear(renderer);
 
+      SDL_SetRenderDrawColorFloat(renderer, 1 - red, 1 - green, 1 - blue, SDL_ALPHA_OPAQUE);
       for i := 0 to TimerCount - 1 do begin
-        SDL_RenderTexture(renderer, bitmapTex, nil, @rDest[i]);
+        SDL_RenderFillRect(renderer, @rDest[i]);
       end;
-
-      r.x:=150;
-      r.y:=150;
-      r.w:=50;
-      r.h:=50;
-
-      SDL_SetRenderDrawColorFloat(renderer, 0.5, 1.0, 0.0, SDL_ALPHA_OPAQUE);
-      SDL_RenderFillRect(renderer, @r);
 
       SDL_RenderPresent(renderer);
     end;
@@ -120,12 +83,18 @@ var
   begin
     rect^.rect.x += rect^.stepx;
     if rect^.rect.x > Width then begin
-      rect^.rect.x := 0;
+      rect^.rect.x := -RectSize;
+    end;
+    if rect^.rect.x < -RectSize then begin
+      rect^.rect.x := Width;
     end;
 
     rect^.rect.y += rect^.stepy;
     if rect^.rect.y > heigt then begin
-      rect^.rect.y := 0;
+      rect^.rect.y := -RectSize;
+    end;
+    if rect^.rect.y < -RectSize then begin
+      rect^.rect.y := heigt;
     end;
 
     userevent._type := SDL_EVENT_USER;
@@ -150,13 +119,13 @@ var
 
     for i := 0 to TimerCount - 1 do begin
 
-      Pointrect[i].rect.x := Random(50) + 50;
-      Pointrect[i].rect.y := Random(50) + 50;
-      Pointrect[i].rect.w := Random(50) + 50;
-      Pointrect[i].rect.h := Random(50) + 50;
+      Pointrect[i].rect.x := Random(RectSize) + RectSize;
+      Pointrect[i].rect.y := Random(RectSize) + RectSize;
+      Pointrect[i].rect.w := Random(RectSize) + RectSize;
+      Pointrect[i].rect.h := Random(RectSize) + RectSize;
       Pointrect[i].index := i;
-      Pointrect[i].stepx := Random();
-      Pointrect[i].stepy := Random();
+      Pointrect[i].stepx := (Random - 0.5) * 2;
+      Pointrect[i].stepy := (Random - 0.5) * 2;
 
       SDL_AddTimer(10, @PointMoveProc, @Pointrect[i]);
     end;
@@ -171,11 +140,8 @@ var
       SDL_Log('Kann kein SDL-Renderer erzeugen !');
     end;
 
-    bitmapTex := CreateTexture;
-
     Run;
 
-    SDL_DestroyTexture(bitmapTex);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit;
