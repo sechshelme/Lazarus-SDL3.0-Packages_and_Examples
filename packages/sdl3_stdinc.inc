@@ -18,22 +18,22 @@ type
   Tint32 = uint32;
   Tint64 = uint64;
 
-  TSUint8  = uint8;
+  TSUint8 = uint8;
   TSUint16 = uint16;
   TSUint32 = uint32;
   TSUint64 = uint64;
 
-  TSint8  = uint8;
+  TSint8 = uint8;
   TSint16 = uint16;
   TSint32 = uint32;
   TSint64 = uint64;
 
-  PSUint8  = ^uint8;
+  PSUint8 = ^uint8;
   PSUint16 = ^uint16;
   PSUint32 = ^uint32;
   PSUint64 = ^uint64;
 
-  PSint8  = ^uint8;
+  PSint8 = ^uint8;
   PSint16 = ^uint16;
   PSint32 = ^uint32;
   PSint64 = ^uint64;
@@ -223,21 +223,18 @@ function SDL_strcmp(str1: PChar; str2: PChar): longint; cdecl; external sdl3_lib
 function SDL_strncmp(str1: PChar; str2: PChar; maxlen: Tsize_t): longint; cdecl; external sdl3_lib;
 function SDL_strcasecmp(str1: PChar; str2: PChar): longint; cdecl; external sdl3_lib;
 function SDL_strncasecmp(str1: PChar; str2: PChar; len: Tsize_t): longint; cdecl; external sdl3_lib;
-function SDL_sscanf(Text: PChar; fmt: PChar; args: array of const): longint; cdecl; external sdl3_lib;
-function SDL_sscanf(Text: PChar; fmt: PChar): longint; cdecl; external sdl3_lib;
-function SDL_vsscanf(Text: PChar; fmt: PChar): longint; varargs; cdecl; external sdl3_lib;
-function SDL_snprintf(Text: PChar; maxlen: Tsize_t; fmt: PChar; args: array of const): longint; cdecl; external sdl3_lib;
-function SDL_snprintf(Text: PChar; maxlen: Tsize_t; fmt: PChar): longint; cdecl; external sdl3_lib;
-function SDL_swprintf(Text: Pwchar_t; maxlen: Tsize_t; fmt: Pwchar_t; args: array of const): longint; cdecl; external sdl3_lib;
-function SDL_swprintf(Text: Pwchar_t; maxlen: Tsize_t; fmt: Pwchar_t): longint; cdecl; external sdl3_lib;
-function SDL_vsnprintf(Text: PChar; maxlen: Tsize_t; fmt: PChar; args: array of const): longint; cdecl; external sdl3_lib;
-function SDL_vsnprintf(Text: PChar; maxlen: Tsize_t; fmt: PChar): longint; cdecl; external sdl3_lib;
-function SDL_vswprintf(Text: Pwchar_t; maxlen: Tsize_t; fmt: Pwchar_t; args: array of const): longint; cdecl; external sdl3_lib;
-function SDL_vswprintf(Text: Pwchar_t; maxlen: Tsize_t; fmt: Pwchar_t): longint; cdecl; external sdl3_lib;
-function SDL_asprintf(strp: PPchar; fmt: PChar; args: array of const): longint; cdecl; external sdl3_lib;
-function SDL_asprintf(strp: PPchar; fmt: PChar): longint; cdecl; external sdl3_lib;
-function SDL_vasprintf(strp: PPchar; fmt: PChar; args: array of const): longint; cdecl; external sdl3_lib;
-function SDL_vasprintf(strp: PPchar; fmt: PChar): longint; cdecl; external sdl3_lib;
+
+// ????????????
+function SDL_sscanf(Text: PChar; fmt: PChar): longint; varargs; cdecl; external sdl3_lib;
+//function SDL_vsscanf(Text: PChar; fmt: PChar): longint; varargs; cdecl; external sdl3_lib;
+function SDL_snprintf(Text: PChar; maxlen: Tsize_t; fmt: PChar): longint; varargs; cdecl; external sdl3_lib;
+function SDL_swprintf(Text: Pwchar_t; maxlen: Tsize_t; fmt: Pwchar_t): longint; varargs; cdecl; external sdl3_lib;
+//function SDL_vsnprintf(Text: PChar; maxlen: Tsize_t; fmt: PChar): longint; varargs; cdecl; external sdl3_lib;
+//function SDL_vswprintf(Text: Pwchar_t; maxlen: Tsize_t; fmt: Pwchar_t): longint; varargs; cdecl; external sdl3_lib;
+function SDL_asprintf(strp: PPchar; fmt: PChar): longint; varargs; cdecl; external sdl3_lib;
+
+function SDL_vasprintf(strp: PPchar; fmt: PChar; va:array of const): longint; cdecl; external sdl3_lib;
+// ????????????
 
 const
   SDL_PI_D = 3.141592653589793238462643383279502884;

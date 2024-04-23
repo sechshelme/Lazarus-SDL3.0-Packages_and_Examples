@@ -37,7 +37,7 @@ var
           end;
           SDL_EVENT_WINDOW_RESIZED: begin
             SDL_Log('X: %i   Y: %i', e.window.data1, e.window.data2);
-            SDL_asprintf(@pc, 'X: %i   Y: %i', [e.window.data1, e.window.data2]);
+            SDL_asprintf(@pc, 'X: %i   Y: %i', e.window.data1, e.window.data2);
             SDL_SetWindowTitle(window, pc);
             SDL_free(pc);
           end;
@@ -55,6 +55,7 @@ var
       SDL_RenderPresent(renderer);
     end;
   end;
+
 
   procedure main;
   begin
@@ -75,6 +76,8 @@ var
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit;
+
+    SDL_Log('fdsfsf');
   end;
 
 begin
