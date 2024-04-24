@@ -1,7 +1,6 @@
 program Project1;
 
 uses
-  ctypes,
   SDL3,
   oglglad_gl,
   oglVector,
@@ -124,7 +123,7 @@ const
   procedure RunScene;
   begin
     while not quit do begin
-      while SDL_PollEvent(@e) <> 0 do begin
+      while SDL_PollEvent(@e) do begin
         case e.type_ of
           SDL_EVENT_KEY_DOWN: begin
             case e.key.keysym.sym of
