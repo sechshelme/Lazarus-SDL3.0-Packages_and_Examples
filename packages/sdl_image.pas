@@ -23,6 +23,8 @@ const
   SDL_IMAGE_MINOR_VERSION = 0;
   SDL_IMAGE_PATCHLEVEL = 0;
 
+procedure SDL_IMAGE_VERSION(X: PSDL_Version);
+
 function SDL_IMAGE_COMPILEDVERSION: longint; { return type might be wrong }
 function SDL_IMAGE_VERSION_ATLEAST(X, Y, Z: longint): TSDL_bool;
 
@@ -119,6 +121,13 @@ function IMG_SetError(fmt: PChar): longint; varargs; cdecl; external sdl3_lib Na
 function IMG_GetError: PChar; cdecl; external sdl3_lib Name 'SDL_GetError';
 
 implementation
+
+procedure SDL_IMAGE_VERSION(X: PSDL_Version);
+begin
+  X^.major := SDL_IMAGE_MAJOR_VERSION;
+  X^.minor := SDL_IMAGE_MINOR_VERSION;
+  X^.patch := SDL_IMAGE_PATCHLEVEL;
+end;
 
 function SDL_IMAGE_COMPILEDVERSION: longint;
 begin

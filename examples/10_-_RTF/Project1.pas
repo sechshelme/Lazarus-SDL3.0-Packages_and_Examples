@@ -20,7 +20,7 @@ var
   var
     e: TSDL_Event;
     quit: boolean = False;
-    rSrc, rDest: TSDL_FRect;
+    rDest: TSDL_FRect;
     keyStat: PUInt8;
     time: extended;
     red, green, blue: int64;
@@ -90,11 +90,6 @@ var
           end;
         end;
       end;
-
-      rSrc.x := 0;
-      rSrc.y := 0;
-      rSrc.w := 400;
-      rSrc.h := 400;
 
       time := SDL_GetTicks / 1000;
       red := Trunc((SDL_sinf(time) + 1) / 2.0 * 255);
