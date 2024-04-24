@@ -78,6 +78,7 @@ const
       WriteLn('Warning: Unable to set VSync! SDL Error: ', SDL_GetError);
     end;
 
+    WriteLn('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', Int64(glCreateBuffers));
     Load_GLADE;
   end;
 
