@@ -80,6 +80,7 @@ var
   var
     windowFlags, initFlags: Integer;
     shapeSurface: PSDL_Surface;
+    r: TSDL_Rect;
   begin
     initFlags := SDL_INIT_VIDEO or SDL_INIT_AUDIO or SDL_INIT_EVENTS;
     SDL_init(initFlags);
@@ -89,6 +90,16 @@ var
     if shapeSurface = nil then begin
       SDLFail('Kann Sahbe nicht laden !');
     end;
+
+    shapeSurface:=SDL_CreateSurface(800,600,SDL_PIXELFORMAT_RGBA8888);
+    r.x:=0;
+    r.y:=0;
+    r.w:=400;
+    r.h:=300;
+    SDL_FillSurfaceRect(shapeSurface, @r, $FFFFFFFF);
+    r.x:=400;
+    r.y:=300;
+    SDL_FillSurfaceRect(shapeSurface, @r, $FFFFFFFF);
 
     windowFlags:=SDL_WINDOW_HIDDEN or SDL_WINDOW_TRANSPARENT or SDL_WINDOW_BORDERLESS;
     window := SDL_CreateWindow('SDL3 Window', shapeSurface^.w, shapeSurface^.h, windowFlags);
