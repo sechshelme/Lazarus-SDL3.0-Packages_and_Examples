@@ -2,6 +2,9 @@ unit SDL3_error;
 
 interface
 
+uses
+  SDL3_stdinc;
+
 {$IFDEF FPC}
 {$PACKRECORDS C}
 {$ENDIF}
@@ -13,7 +16,7 @@ procedure SDL_ClearError; cdecl; external sdl3_lib;
 
 function SDL_OutOfMemory: longint;
 function SDL_Unsupported: longint;
-function SDL_InvalidParamError(param: longint): longint;
+function SDL_InvalidParamError(param: PChar): longint;
 
 type
   PSDL_errorcode = ^TSDL_errorcode;
@@ -41,7 +44,7 @@ begin
   SDL_Unsupported := SDL_Error(SDL_UNSUPPORTED_);
 end;
 
-function SDL_InvalidParamError(param: longint): longint;
+function SDL_InvalidParamError(param: PChar): longint;
 begin
   SDL_InvalidParamError := SDL_SetError('Parameter ''%s'' is invalid', param);
 end;

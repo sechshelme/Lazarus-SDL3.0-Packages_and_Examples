@@ -10,6 +10,12 @@ uses
     win: PSDL_Window;
   begin
     SDL_init(SDL_INIT_VIDEO);
+
+//    WriteLn(SDL_Error(2));
+
+SDL_LogSetAllPriority(SDL_LOG_PRIORITY_ERROR);
+    SDL_InvalidParamError('test');
+
     win := SDL_CreateWindow('SDL3 Window', 640, 480, SDL_WINDOW_RESIZABLE);
 
     if win = nil then begin

@@ -59,8 +59,8 @@ function SDL_CreateThreadWithStackSize(fn: TSDL_ThreadFunction; Name: PChar; sta
 {$endif}
 
 {$IFDEF Linux}
-function SDL_CreateThread(fn: TSDL_ThreadFunction; Name: PChar; Data: pointer): PSDL_Thread; cdecl; external;
-function SDL_CreateThreadWithStackSize(fn: TSDL_ThreadFunction; Name: PChar; stacksize: Tsize_t; Data: pointer): PSDL_Thread; cdecl; external;
+function SDL_CreateThread(fn: TSDL_ThreadFunction; Name: PChar; Data: pointer): PSDL_Thread; cdecl; external sdl3_lib;
+function SDL_CreateThreadWithStackSize(fn: TSDL_ThreadFunction; Name: PChar; stacksize: Tsize_t; Data: pointer): PSDL_Thread; cdecl; external sdl3_lib;
 {$endif}
 function SDL_GetThreadName(thread: PSDL_Thread): PChar; cdecl; external sdl3_lib;
 function SDL_GetCurrentThreadID: TSDL_ThreadID; cdecl; external sdl3_lib;

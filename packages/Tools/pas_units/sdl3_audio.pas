@@ -3,7 +3,7 @@ unit SDL3_audio;
 interface
 
 uses
-  SDL3_stdinc, SDL3_rwops;
+  SDL3_stdinc, iostream;
 
 {$IFDEF FPC}
 {$PACKRECORDS C}
