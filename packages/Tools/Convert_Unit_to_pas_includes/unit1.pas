@@ -7,6 +7,7 @@ interface
 uses
 //  SDL3_error,
 // SDL3_iostream, SDL3_audio,  SDL_image,
+  SDL_dialog,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, FileUtil;
 
 type

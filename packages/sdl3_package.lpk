@@ -234,6 +234,10 @@
         <Filename Value="SDL_ttf.pp"/>
         <UnitName Value="SDL_ttf"/>
       </Item>
+      <Item>
+        <Filename Value="sdl3_dialog.inc"/>
+        <Type Value="Include"/>
+      </Item>
     </Files>
     <RequiredPkgs>
       <Item>

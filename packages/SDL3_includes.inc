@@ -36,6 +36,7 @@
  {$include SDL3_video.inc}
  {$include SDL3_camera.inc}
  {$include SDL3_messagebox.inc}
+   {$include SDL3_dialog.inc}
  {$include SDL3_metal.inc}
  {$include SDL3_keycode.inc}
  {$include SDL3_keyboard.inc}
