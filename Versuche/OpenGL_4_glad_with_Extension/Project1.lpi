@@ -25,9 +25,6 @@
     </RunParams>
     <RequiredPackages>
       <Item>
-        <PackageName Value="ogl_Package"/>
-      </Item>
-      <Item>
         <PackageName Value="SDL3_package"/>
       </Item>
     </RequiredPackages>
@@ -47,6 +44,11 @@
       <IncludeFiles Value="$(ProjOutDir)"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
+    <CodeGeneration>
+      <Optimizations>
+        <OptimizationLevel Value="4"/>
+      </Optimizations>
+    </CodeGeneration>
     <Linking>
       <Debugging>
         <DebugInfoType Value="dsDwarf3"/>

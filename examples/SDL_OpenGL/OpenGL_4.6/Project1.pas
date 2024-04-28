@@ -42,11 +42,13 @@ const
   fragment_shader_text =
     '#version 450 core' + #10 +
     '' + #10 +
+    'uniform vec3 col;' + #10 +
+    '' + #10 +
     'layout (location = 0) out vec4 fColor;' + #10 +
     '' + #10 +
     'void main()' + #10 +
     '{' + #10 +
-    '  fColor = vec4(0.5, 0.4, 0.8, 1.0);' + #10 +
+    '  fColor = vec4(col, 1.0);' + #10 +
     '}';
 
 
@@ -99,8 +101,14 @@ const
   procedure DrawScene;
   const
     black: TVector4f = (0.3, 0.0, 0.2, 1.0);
+  var
+    col_id: TGLint;
+    col:TVector3f=(0.5, 0.4, 0.8);
   begin
     glClearBufferfv(GL_COLOR, 0, black);
+
+    col_id:=MyShader.UniformLocation('col');
+    glUniform3fv(col_id,1,@col);
 
     glBindVertexArray(VAOs[vaTriangle]);
     glDrawArrays(GL_TRIANGLES, 0, Length(vertices));

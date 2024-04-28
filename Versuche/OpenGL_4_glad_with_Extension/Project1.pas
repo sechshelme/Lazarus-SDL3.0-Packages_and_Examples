@@ -1,16 +1,22 @@
 program Project1;
 
 uses
-  ctypes,
   SDL3,
+//  oglGlad_GL_with_Extensions,
   oglglad_gl,
-  oglglad_glExt,
-  oglVector,
   oglShader;
 
 const
   Screen_Widht = 320;
   Screen_Height = 240;
+
+  type
+      TVector2f = array[0..1] of GLfloat;
+  PVector2f = ^TVector2f;
+
+  TVector3f = array[0..2] of GLfloat;
+  TVector4f = array[0..3] of GLfloat;
+
 
 var
   // SDL
@@ -21,7 +27,7 @@ var
   e: TSDL_Event;
 
   // OpenGL
-  Shader: TShader;
+  MyShader: TShader;
 
   VAOs: array [(vaTriangle)] of TGLuint;
   Mesh_Buffers: array [(mbTriangle)] of TGLuint;
@@ -50,6 +56,7 @@ const
     '' + #10 +
     'void main()' + #10 +
     '{' + #10 +
+//    '  fColor = vec4(0.5, 0.4, 0.8, 1.0);' + #10 +
     '  fColor = vec4(col, 1.0);' + #10 +
     '}';
 
@@ -78,7 +85,6 @@ const
       WriteLn('Warning: Unable to set VSync! SDL Error: ', SDL_GetError);
     end;
 
-    WriteLn('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', Int64(glCreateBuffers));
     Load_GLADE;
   end;
 
@@ -87,11 +93,11 @@ const
     glCreateBuffers(Length(Mesh_Buffers), Mesh_Buffers);
     glNamedBufferStorage(Mesh_Buffers[mbTriangle], Length(vertices) * SizeOf(TVector2f), PVector2f(vertices), 0);
 
-    Shader := TShader.Create;
-    Shader.LoadShaderObject(GL_VERTEX_SHADER, vertex_shader_text);
-    Shader.LoadShaderObject(GL_FRAGMENT_SHADER, fragment_shader_text);
-    Shader.LinkProgram;
-    Shader.UseProgram;
+    MyShader := TShader.Create;
+    MyShader.LoadShaderObject(GL_VERTEX_SHADER, vertex_shader_text);
+    MyShader.LoadShaderObject(GL_FRAGMENT_SHADER, fragment_shader_text);
+    MyShader.LinkProgram;
+    MyShader.UseProgram;
 
     glGenVertexArrays(Length(VAOs), VAOs);
     glBindVertexArray(VAOs[vaTriangle]);
@@ -105,17 +111,16 @@ const
   const
     black: TVector4f = (0.3, 0.0, 0.2, 1.0);
   var
-    col_ID: TGLint;
-    col:TVector3f;
+    col_id: GLint;
+    col:TVector3f=(1,0,0);
   begin
     glClearBufferfv(GL_COLOR, 0, black);
 
+    col_id:=MyShader.UniformLocation('col');
+    glUniform3fv(col_id,1,@col);
+
     glBindVertexArray(VAOs[vaTriangle]);
     glDrawArrays(GL_TRIANGLES, 0, Length(vertices));
-
-    col_ID:=Shader.UniformLocation('col');
-    col:=[1,0,0];
-    glUniform3fv(col_ID,1,col);
 
     SDL_GL_SwapWindow(gWindow);
   end;
@@ -125,7 +130,7 @@ const
     glDeleteVertexArrays(Length(VAOs), VAOs);
     glDeleteBuffers(Length(Mesh_Buffers), Mesh_Buffers);
 
-    Shader.Free;
+    MyShader.Free;
 
     SDL_GL_DeleteContext(glcontext);
     SDL_DestroyWindow(gWindow);
