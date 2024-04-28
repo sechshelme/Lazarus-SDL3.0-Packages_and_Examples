@@ -30,4 +30,5 @@ endian = 'little'
 ## Mehr Infos
 https://mesonbuild.com/Cross-compilation.html
 https://stackoverflow.com/questions/57436089/meson-can-not-find-windows-resource-compiler-on-linux
+https://sourceforge.net/p/meson/wiki/Cross%20compilation/
 
