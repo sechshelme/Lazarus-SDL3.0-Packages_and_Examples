@@ -149,6 +149,8 @@ int main(int argc, char *argv[]) {
         //SDLTest_DrawString(r, save_file_rect.x+5, save_file_rect.y+save_file_rect.h/2, "Save File...");
         //SDLTest_DrawString(r, open_folder_rect.x+5, open_folder_rect.y+open_folder_rect.h/2, "Open Folder...");
 
+
+
         SDL_RenderPresent(r);
     }
 
