@@ -40,7 +40,10 @@ var
 
   procedure AdioStreamCallback(userdata: pointer; stream: PSDL_AudioStream; additional_amount: longint; total_amount: longint); cdecl;
   begin
-    exit;
+    if additional_amount = total_amount then begin
+//      IsEnd := SDL_TRUE;
+    end;
+    //    exit;
     WriteLn('Callback');
     WriteLn('additional_amount: ', additional_amount);
     WriteLn('total_amount: ', total_amount);
@@ -48,8 +51,9 @@ var
 
   function LoadWave: TSound;
   const
-//        SoundFile='/home/tux/Schreibtisch/sound/test.wav';
-    SoundFile = 'tataa.wav';
+    SoundFile = 'Boing_3.wav';
+    //        SoundFile='/home/tux/Schreibtisch/sound/test.wav';
+    //    SoundFile = 'tataa.wav';
     //    SoundFile='/home/tux/Schreibtisch/sound/test2.wav';
   var
     i: integer;
@@ -166,7 +170,8 @@ var
         end;
       end;
 
-      SDL_Log('size: %i', SDL_GetAudioStreamQueued(sound.stream));
+
+            SDL_Log('size: %i', SDL_GetAudioStreamQueued(sound.stream));
 
       SDL_SetRenderDrawColorFloat(renderer, Random, Random, Random, SDL_ALPHA_OPAQUE);
       SDL_RenderClear(renderer);
