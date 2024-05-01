@@ -1,0 +1,1 @@
+g++ $(pkg-config sdl2 --cflags --libs)
