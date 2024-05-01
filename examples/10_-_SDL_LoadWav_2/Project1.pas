@@ -1,6 +1,7 @@
 program Project1;
 
 uses
+  heaptrc,
   ctypes,
   SDL3;
 
@@ -27,20 +28,36 @@ var
   renderer: PSDL_Renderer;
   sound: TSound;
 
-  function LoadWave: TSound;
-  var
-    //    wave: TWave;
-    i, minimum: integer;
-    device: TSDL_AudioDeviceID;
+  WindowSize: TSDL_Point = (x: 320; y: 200);
+
+  function Rect(x, y, w, h: single): TSDL_FRect; inline;
   begin
-    //    if SDL_LoadWAV('/home/tux/Schreibtisch/sound/test2.wav', @wave.spec, @wave.sound, @wave.soundlen) <> 0 then begin
-    //    if SDL_LoadWAV('tataa.wav', @Result.wave.spec, @Result.wave.sound, @Result.wave.soundlen) <> 0 then begin
-    if SDL_LoadWAV('/home/tux/Schreibtisch/sound/test.wav', @Result.wave.spec, @Result.wave.sound, @Result.wave.soundlen) <> 0 then begin
+    Result.x := x;
+    Result.y := y;
+    Result.w := w;
+    Result.h := h;
+  end;
+
+  procedure AdioStreamCallback(userdata: pointer; stream: PSDL_AudioStream; additional_amount: longint; total_amount: longint); cdecl;
+  begin
+    exit;
+    WriteLn('Callback');
+    WriteLn('additional_amount: ', additional_amount);
+    WriteLn('total_amount: ', total_amount);
+  end;
+
+  function LoadWave: TSound;
+  const
+//        SoundFile='/home/tux/Schreibtisch/sound/test.wav';
+    SoundFile = 'tataa.wav';
+    //    SoundFile='/home/tux/Schreibtisch/sound/test2.wav';
+  var
+    i: integer;
+  begin
+    if SDL_LoadWAV(SoundFile, @Result.wave.spec, @Result.wave.sound, @Result.wave.soundlen) <> 0 then begin
       SDL_LogError(0, 'Konnte WAV nicht öffnen !   %s', SDL_GetError);
       Exit;
     end;
-
-    SDL_Log('Available audio drivers:');
 
     for i := 0 to SDL_GetNumAudioDrivers - 1 do begin
       SDL_Log('%i: %s', i, SDL_GetAudioDriver(i));
@@ -48,29 +65,14 @@ var
 
     SDL_Log('Using audio driver: %s', SDL_GetCurrentAudioDriver());
 
-    Result.stream := SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_OUTPUT, @Result.wave.spec, nil, nil);
+    Result.stream := SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_OUTPUT, @Result.wave.spec, @AdioStreamCallback, nil);
     if Result.stream = nil then  begin
       SDL_LogError(0, 'Konnte Stream nicht öffnen !   %s', SDL_GetError);
     end;
 
     Result.stream_ID := SDL_GetAudioStreamDevice(Result.stream);
 
-    //    SDL_PutAudioStreamData(Result.stream, Result.wave.sound, Result.wave.soundlen);
-    //device := SDL_GetAudioStreamDevice(Result);
-    //SDL_ResumeAudioDevice(device);
-    //
-    //SDL_Delay(200);
-    //device := SDL_GetAudioStreamDevice(Result);
-    //SDL_PauseAudioDevice(device);
-    //
-    //SDL_Delay(200);
-    //device := SDL_GetAudioStreamDevice(Result);
-    //SDL_ResumeAudioDevice(device);
-
-    //    WriteLn('time: ', wave.soundlen div (wave.spec.freq * wave.spec.channels * SDL_AUDIO_BITSIZE(wave.spec.format)));
-    //    WriteLn('time: ', wave.soundlen div (wave.spec.freq * wave.spec.channels * SDL_AUDIO_BITSIZE(wave.spec.format)));
-
-    //    WriteLn('device: ', device);
+    WriteLn('Time: ', (Result.wave.soundlen div Result.wave.spec.freq div Result.wave.spec.channels div SDL_AUDIO_BYTESIZE(Result.wave.spec.format)) / 60: 4: 2);
     WriteLn('len: ', Result.wave.soundlen);
     WriteLn('spec.freq: ', Result.wave.spec.freq);
     WriteLn('spec.channels: ', Result.wave.spec.channels);
@@ -82,33 +84,78 @@ var
   var
     event: TSDL_Event;
     quit: boolean = False;
+    RectStart, RectPause, RectStop: TSDL_FRect;
+    mp: TSDL_FPoint;
+
+    procedure SetRect(x, y: Tint32);
+    var
+      w: single;
+    begin
+      w := x / 3;
+      RectStart := Rect(w / 10, y / 10, w * 8 / 10, y * 8 / 10);
+      RectPause := Rect(w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
+      RectStop := Rect(2 * w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
+    end;
+
+    procedure Start;
+    begin
+      SDL_ClearAudioStream(sound.stream);
+      SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
+      SDL_ResumeAudioDevice(sound.stream_ID);
+    end;
+
+    procedure Pause;
+    begin
+      if SDL_AudioDevicePaused(sound.stream_ID) then begin
+        SDL_ResumeAudioDevice(sound.stream_ID);
+      end else begin
+        SDL_PauseAudioDevice(sound.stream_ID);
+      end;
+    end;
+
+    procedure Stop;
+    begin
+      SDL_ClearAudioStream(sound.stream);
+    end;
+
   begin
+    SetRect(WindowSize.x, WindowSize.y);
 
     while not quit do begin
 
       while SDL_PollEvent(@event) do begin
         case event.type_ of
+          SDL_EVENT_WINDOW_RESIZED: begin
+            SetRect(event.window.data1, event.window.data2);
+          end;
           SDL_EVENT_KEY_DOWN: begin
             case event.key.keysym.sym of
               SDLK_ESCAPE: begin
                 quit := True;
               end;
+              SDLK_h: begin
+                Stop;
+              end;
               SDLK_s: begin
-                SDL_ClearAudioStream(sound.stream);
-                SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
-                SDL_ResumeAudioDevice(sound.stream_ID);
+                Start;
               end;
               SDLK_p: begin
-                if SDL_AudioDevicePaused(sound.stream_ID) then begin
-                  SDL_ResumeAudioDevice(sound.stream_ID);
-                end else begin
-                  SDL_PauseAudioDevice(sound.stream_ID);
-                end;
+                Pause;
               end;
             end;
           end;
           SDL_EVENT_MOUSE_BUTTON_DOWN: begin
-            SDL_Log('Mouse down');
+            mp.x := event.button.x;
+            mp.y := event.button.y;
+            if SDL_PointInRectFloat(@mp, @RectStart) then  begin
+              Start;
+            end;
+            if SDL_PointInRectFloat(@mp, @RectPause) then  begin
+              Pause;
+            end;
+            if SDL_PointInRectFloat(@mp, @RectStop) then  begin
+              Stop;
+            end;
           end;
           SDL_EVENT_MOUSE_BUTTON_UP: begin
             SDL_Log('Mouse up');
@@ -119,9 +166,20 @@ var
         end;
       end;
 
-      SDL_SetRenderDrawColorFloat(renderer, Random, Random, Random, SDL_ALPHA_OPAQUE);
+      SDL_Log('size: %i', SDL_GetAudioStreamQueued(sound.stream));
 
+      SDL_SetRenderDrawColorFloat(renderer, Random, Random, Random, SDL_ALPHA_OPAQUE);
       SDL_RenderClear(renderer);
+
+      SDL_SetRenderDrawColorFloat(renderer, 0.0, 1.0, 0.0, SDL_ALPHA_OPAQUE);
+      SDL_RenderFillRect(renderer, @RectStart);
+
+      SDL_SetRenderDrawColorFloat(renderer, 1.0, 1.0, 0.0, SDL_ALPHA_OPAQUE);
+      SDL_RenderFillRect(renderer, @RectPause);
+
+      SDL_SetRenderDrawColorFloat(renderer, 1.0, 0.0, 0.0, SDL_ALPHA_OPAQUE);
+      SDL_RenderFillRect(renderer, @RectStop);
+
       SDL_RenderPresent(renderer);
     end;
   end;
@@ -132,7 +190,7 @@ var
       SDL_Log('Kann kein SDL-Fenster erzeugen !   %s', SDL_GetError);
     end;
 
-    window := SDL_CreateWindow('SDL3 Window', 320, 200, SDL_WINDOW_RESIZABLE);
+    window := SDL_CreateWindow('SDL3 Window', WindowSize.x, WindowSize.y, SDL_WINDOW_RESIZABLE);
     if window = nil then begin
       SDL_Log('Kann kein Window erzeugen !   %s', SDL_GetError);
     end;
@@ -143,7 +201,6 @@ var
     end;
 
     sound := LoadWave;
-
     Run;
 
     SDL_DestroyAudioStream(sound.stream);
