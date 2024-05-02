@@ -41,7 +41,9 @@ var
   procedure AdioStreamCallback(userdata: pointer; stream: PSDL_AudioStream; additional_amount: longint; total_amount: longint); cdecl;
   begin
     if additional_amount = total_amount then begin
-//      IsEnd := SDL_TRUE;
+      SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
+
+      //      IsEnd := SDL_TRUE;
     end;
     //    exit;
     WriteLn('Callback');
@@ -51,7 +53,7 @@ var
 
   function LoadWave: TSound;
   const
-    SoundFile = 'Boing_3.wav';
+    SoundFile = 'Boing_1.wav';
     //        SoundFile='/home/tux/Schreibtisch/sound/test.wav';
     //    SoundFile = 'tataa.wav';
     //    SoundFile='/home/tux/Schreibtisch/sound/test2.wav';
@@ -88,22 +90,29 @@ var
   var
     event: TSDL_Event;
     quit: boolean = False;
-    RectStart, RectPause, RectStop: TSDL_FRect;
+    RectStart, RectStack, RectPause, RectStop: TSDL_FRect;
     mp: TSDL_FPoint;
 
     procedure SetRect(x, y: Tint32);
     var
       w: single;
     begin
-      w := x / 3;
-      RectStart := Rect(w / 10, y / 10, w * 8 / 10, y * 8 / 10);
-      RectPause := Rect(w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
-      RectStop := Rect(2 * w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
+      w := x / 4;
+      RectStart := Rect(0 * w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
+      RectStack := Rect(1 * w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
+      RectPause := Rect(2 * w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
+      RectStop := Rect(3 * w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
     end;
 
     procedure Start;
     begin
       SDL_ClearAudioStream(sound.stream);
+      SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
+      SDL_ResumeAudioDevice(sound.stream_ID);
+    end;
+
+    procedure Stack;
+    begin
       SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
       SDL_ResumeAudioDevice(sound.stream_ID);
     end;
@@ -119,6 +128,7 @@ var
 
     procedure Stop;
     begin
+      SDL_PauseAudioDevice(sound.stream_ID);
       SDL_ClearAudioStream(sound.stream);
     end;
 
@@ -146,6 +156,9 @@ var
               SDLK_p: begin
                 Pause;
               end;
+              SDLK_m: begin
+                SDL_ShowSimpleMessageBox(0,'box','box',window);
+              end;
             end;
           end;
           SDL_EVENT_MOUSE_BUTTON_DOWN: begin
@@ -153,6 +166,9 @@ var
             mp.y := event.button.y;
             if SDL_PointInRectFloat(@mp, @RectStart) then  begin
               Start;
+            end;
+            if SDL_PointInRectFloat(@mp, @RectStack) then  begin
+              Stack;
             end;
             if SDL_PointInRectFloat(@mp, @RectPause) then  begin
               Pause;
@@ -170,14 +186,16 @@ var
         end;
       end;
 
-
-            SDL_Log('size: %i', SDL_GetAudioStreamQueued(sound.stream));
+      SDL_Log('size: %i', SDL_GetAudioStreamQueued(sound.stream));
 
       SDL_SetRenderDrawColorFloat(renderer, Random, Random, Random, SDL_ALPHA_OPAQUE);
       SDL_RenderClear(renderer);
 
       SDL_SetRenderDrawColorFloat(renderer, 0.0, 1.0, 0.0, SDL_ALPHA_OPAQUE);
       SDL_RenderFillRect(renderer, @RectStart);
+
+      SDL_SetRenderDrawColorFloat(renderer, 0.0, 0.0, 1.0, SDL_ALPHA_OPAQUE);
+      SDL_RenderFillRect(renderer, @RectStack);
 
       SDL_SetRenderDrawColorFloat(renderer, 1.0, 1.0, 0.0, SDL_ALPHA_OPAQUE);
       SDL_RenderFillRect(renderer, @RectPause);
