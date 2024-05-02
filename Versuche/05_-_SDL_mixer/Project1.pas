@@ -28,9 +28,9 @@ begin
   WriteLn(spec.channels);
   WriteLn(SDL_AUDIO_BITSIZE(spec.format));
 
-  Mix_VolumeMusic(MIX_MAX_VOLUME);
+//  Mix_VolumeMusic(MIX_MAX_VOLUME);
 
-  Mix_SetMusicCMD(SDL_getenv('MUSIC_CMD'));
+//  Mix_SetMusicCMD(SDL_getenv('MUSIC_CMD'));
 
   music := Mix_LoadMUS('/home/tux/Schreibtisch/sound/test.wav');
 //  music := Mix_LoadMUS('/home/tux/Schreibtisch/sound/dia.wav');
@@ -42,9 +42,11 @@ begin
 
   WriteLn(Mix_MusicDuration(music):4:2);
 
-  Mix_FadeInMusic(music, 0, 2000);
+//  Mix_FadeInMusic(music, 0, 2000);
 
   Mix_PlayMusic(music, 0);
+
+  SDL_Delay(10000);
 
   //  Mix_PlayChannel(-1,music,0);
 
