@@ -1,4 +1,4 @@
-unit SDL_image;
+unit SDL3_image;
 
 interface
 

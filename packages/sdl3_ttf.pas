@@ -1,4 +1,4 @@
-unit SDL_ttf;
+unit SDL3_ttf;
 
 interface
 

@@ -219,24 +219,32 @@
         <UnitName Value="SDL3_opengl_glext"/>
       </Item>
       <Item>
-        <Filename Value="sdl_image.pas"/>
-        <UnitName Value="SDL_image"/>
+        <Filename Value="sdl3_image.pas"/>
+        <UnitName Value="sdl3_image"/>
       </Item>
       <Item>
         <Filename Value="copyright.md"/>
         <Type Value="Text"/>
       </Item>
       <Item>
-        <Filename Value="SDL_rtf.pp"/>
-        <UnitName Value="SDL_rtf"/>
+        <Filename Value="sdl3_rtf.pas"/>
+        <UnitName Value="sdl3_rtf"/>
       </Item>
       <Item>
-        <Filename Value="SDL_ttf.pp"/>
-        <UnitName Value="SDL_ttf"/>
+        <Filename Value="sdl3_ttf.pas"/>
+        <UnitName Value="sdl3_ttf"/>
       </Item>
       <Item>
         <Filename Value="sdl3_dialog.inc"/>
         <Type Value="Include"/>
+      </Item>
+      <Item>
+        <Filename Value="sdl3_mixer.pas"/>
+        <UnitName Value="sdl3_mixer"/>
+      </Item>
+      <Item>
+        <Filename Value="sdl3_net.pas"/>
+        <UnitName Value="sdl3_net"/>
       </Item>
     </Files>
     <RequiredPkgs>

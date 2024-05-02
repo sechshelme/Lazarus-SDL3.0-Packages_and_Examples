@@ -1,4 +1,4 @@
-unit SDL_rtf;
+unit SDL3_rtf;
 
 interface
 

@@ -5,8 +5,8 @@ interface
 uses
   ctypes,
   SDL3,
-  SDL_ttf,
-  SDL_rtf;
+  SDL3_ttf,
+  SDL3_rtf;
 
 function GetRTF_ctx(renderer: PSDL_Renderer): PRTF_Context;
 

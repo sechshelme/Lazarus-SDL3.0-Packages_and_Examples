@@ -5,8 +5,8 @@ program Project1;
 uses
   ctypes,
   SDL3,
-  SDL_ttf,
-  SDL_rtf,
+  SDL3_ttf,
+  SDL3_rtf,
   RTF_Tools;
 
 var
