@@ -67,7 +67,6 @@ const
 
   // Entspricht Lenght()
   //function SDL_arraysize(array : longint) : longint;
-  //function SDL_TABLESIZE(table : longint) : longint;
 
 function SDL_FOURCC(A, B, C, D: byte): longint;
 

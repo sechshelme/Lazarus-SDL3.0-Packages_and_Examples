@@ -65,7 +65,7 @@ function SDL_AUDIO_FRAMESIZE(x : TSDL_AudioSpec) : longint;
 type
   PPSDL_AudioStream = ^PSDL_AudioStream;
   PSDL_AudioStream = ^TSDL_AudioStream;
-  TSDL_AudioStream = record end;      {undefined structure}
+  TSDL_AudioStream = Pointer;      {undefined structure}
 
 function SDL_GetNumAudioDrivers:longint;cdecl;external sdl3_lib;
 function SDL_GetAudioDriver(index:longint):Pchar;cdecl;external sdl3_lib;

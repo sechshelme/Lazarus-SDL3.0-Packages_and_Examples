@@ -32,7 +32,7 @@ begin
 
 //  Mix_SetMusicCMD(SDL_getenv('MUSIC_CMD'));
 
-  music := Mix_LoadMUS('/home/tux/Schreibtisch/sound/test.wav');
+  music := Mix_LoadMUS('/n4800/Multimedia/Music/Musik zum testen/HIRES neu/Donald Fagen - Kamakiriad (96)/01 - Trans-Island Skyway.flac');
 //  music := Mix_LoadMUS('/home/tux/Schreibtisch/sound/dia.wav');
   if music = nil then begin
     WriteLn('WAV nicht gefunden !  ', Mix_GetError);
