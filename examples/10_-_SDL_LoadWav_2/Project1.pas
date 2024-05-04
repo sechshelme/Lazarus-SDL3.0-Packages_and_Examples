@@ -38,12 +38,10 @@ var
     Result.h := h;
   end;
 
-  procedure AdioStreamCallback(userdata: pointer; stream: PSDL_AudioStream; additional_amount: longint; total_amount: longint); cdecl;
+  procedure AudioStreamCallback(userdata: pointer; stream: PSDL_AudioStream; additional_amount: longint; total_amount: longint); cdecl;
   begin
     if additional_amount = total_amount then begin
       SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
-
-      //      IsEnd := SDL_TRUE;
     end;
     //    exit;
     WriteLn('Callback');
@@ -71,7 +69,7 @@ var
 
     SDL_Log('Using audio driver: %s', SDL_GetCurrentAudioDriver());
 
-    Result.stream := SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_OUTPUT, @Result.wave.spec, @AdioStreamCallback, nil);
+    Result.stream := SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_OUTPUT, @Result.wave.spec, @AudioStreamCallback, nil);
     if Result.stream = nil then  begin
       SDL_LogError(0, 'Konnte Stream nicht öffnen !   %s', SDL_GetError);
     end;
