@@ -46,15 +46,15 @@ var
   sound: TSound;
 
 
-procedure AudioStreamCallback(userdata: pointer; stream: PSDL_AudioStream; additional_amount: longint; total_amount: longint); cdecl;
-begin
-  if additional_amount = total_amount then begin
-    SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
+  procedure AudioStreamCallback({%H-}userdata: pointer; {%H-}stream: PSDL_AudioStream; additional_amount: longint; total_amount: longint); cdecl;
+  begin
+    if additional_amount = total_amount then begin
+      SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
+    end;
+    //    WriteLn('Callback');
+    //    WriteLn('additional_amount: ', additional_amount);
+    //    WriteLn('total_amount: ', total_amount);
   end;
-  //    WriteLn('Callback');
-  //    WriteLn('additional_amount: ', additional_amount);
-  //    WriteLn('total_amount: ', total_amount);
-end;
 
   procedure TMyApp.SartClick(Sender: TObject);
   begin
@@ -129,8 +129,8 @@ end;
 
   constructor TMyApp.Create;
   begin
-    WindowSize.x:= 320;
-    WindowSize.y:= 200;
+    WindowSize.x := 320;
+    WindowSize.y := 200;
 
     if SDL_init(SDL_INIT_VIDEO or SDL_INIT_AUDIO or SDL_INIT_EVENTS) <> 0 then  begin
       SDL_Log('Kann kein SDL-Fenster erzeugen !   %s', SDL_GetError);
@@ -149,83 +149,77 @@ end;
     ButtonStart := TButton.Create(renderer);
     ButtonStart.Caption := 'Start';
     ButtonStart.OnClick := @SartClick;
-    ButtonStart.Color := [0.0, 1.0, 0.0, SDL_ALPHA_OPAQUE];
+    ButtonStart.Color := $00FF00FF;
 
     ButtonStack := TButton.Create(renderer);
     ButtonStart.Caption := 'Stack';
     ButtonStack.OnClick := @StackClick;
-    ButtonStack.Color := [0.0, 0.0, 1.0, SDL_ALPHA_OPAQUE];
+    ButtonStack.Color := $0000FFFF;
 
     ButtonPause := TButton.Create(renderer);
     ButtonPause.Caption := 'Pause';
     ButtonPause.OnClick := @PauseClick;
-    ButtonPause.Color := [1.0, 1.0, 0.0, SDL_ALPHA_OPAQUE];
+    ButtonPause.Color := $FFFF00FF;
 
     ButtonStop := TButton.Create(renderer);
     ButtonStop.Caption := 'Stop';
     ButtonStop.OnClick := @StopClick;
-    ButtonStop.Color := [1.0, 0.0, 0.0, SDL_ALPHA_OPAQUE];
+    ButtonStop.Color := $FF0000FF;
 
     sound := LoadWave;
   end;
 
   destructor TMyApp.Destroy;
-begin
-  ButtonStart.Free;
-  ButtonStack.Free;
-  ButtonPause.Free;
-  ButtonStop.Free;
+  begin
+    ButtonStart.Free;
+    ButtonStack.Free;
+    ButtonPause.Free;
+    ButtonStop.Free;
 
-  SDL_DestroyAudioStream(sound.stream);
-  SDL_free(sound.wave.sound);
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
+    SDL_DestroyAudioStream(sound.stream);
+    SDL_free(sound.wave.sound);
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
 
-  SDL_Quit;
-  SDL_Log('Application quit successfully!');
+    SDL_Quit;
+    SDL_Log('Application quit successfully!');
 
-  inherited Destroy;
-end;
+    inherited Destroy;
+  end;
 
   procedure TMyApp.Run;
   var
     event: TSDL_Event;
     quit: boolean = False;
+    time: extended;
+    red, green, blue: single;
 
     procedure SetRect(x, y: Tint32);
     var
-      w: single;
+      w, h: integer;
     begin
-      w := x / 4;
-      ButtonStart.Rect := Rect(0 * w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
-      ButtonStack.Rect := Rect(1 * w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
-      ButtonPause.Rect := Rect(2 * w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
-      ButtonStop.Rect := Rect(3 * w + w / 10, y / 10, w * 8 / 10, y * 8 / 10);
+      w := x div 2;
+      h := y div 2;
+      ButtonStart.CanvasRect := Rect(0 * w + w div 10, 0 * h + h div 10, w * 8 div 10, h * 8 div 10);
+      ButtonStack.CanvasRect := Rect(1 * w + w div 10, 0 * h + h div 10, w * 8 div 10, h * 8 div 10);
+      ButtonPause.CanvasRect := Rect(0 * w + w div 10, 1 * h + h div 10, w * 8 div 10, h * 8 div 10);
+      ButtonStop.CanvasRect := Rect(1 * w + w div 10, 1 * h + h div 10, w * 8 div 10, h * 8 div 10);
     end;
 
   begin
     SetRect(WindowSize.x, WindowSize.y);
-
     while not quit do begin
-
       while SDL_PollEvent(@event) do begin
         case event.type_ of
           SDL_EVENT_WINDOW_RESIZED: begin
-            SetRect(event.window.data1, event.window.data2);
+            WindowSize.x := event.window.data1;
+            WindowSize.y := event.window.data2;
+            SetRect(WindowSize.x, WindowSize.y);
           end;
           SDL_EVENT_KEY_DOWN: begin
             case event.key.keysym.sym of
               SDLK_ESCAPE: begin
                 quit := True;
-              end;
-              SDLK_h: begin
-                //                Stop(nil);
-              end;
-              SDLK_s: begin
-                //                Start(nil);
-              end;
-              SDLK_p: begin
-                //                Pause(nil);
               end;
               SDLK_m: begin
                 SDL_ShowSimpleMessageBox(0, 'box', 'box', window);
@@ -245,7 +239,12 @@ end;
 
       //      SDL_Log('size: %i', SDL_GetAudioStreamQueued(sound.stream));
 
-      SDL_SetRenderDrawColorFloat(renderer, Random, Random, Random, SDL_ALPHA_OPAQUE);
+      time := SDL_GetTicks / 1000;
+      red := (SDL_sinf(time) + 1) / 2.0;
+      green := (SDL_sinf(time / 2) + 1) / 2.0;
+      blue := (SDL_sinf(time / 3) + 1) / 2.0;
+      SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
+
       SDL_RenderClear(renderer);
 
       ButtonStart.Paint;
