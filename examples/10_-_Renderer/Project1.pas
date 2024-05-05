@@ -12,37 +12,45 @@ const
 
 var
   window: PSDL_Window;
-  bitmapSurface: PSDL_Surface;
   renderer: PSDL_Renderer;
   bitmapTex: PSDL_Texture;
 
-  function CreateSurface: PSDL_Surface;
+  function CreateSurface: PSDL_Texture;
   const
     size = 64;
   var
     r: TSDL_Rect;
+    surface: PSDL_Surface;
   begin
-    Result := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA32);
-    if Result = nil then begin
+    surface := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA32);
+    if surface = nil then begin
       SDL_Log('Kann kein Surface erzeugen !');
     end;
     r.x := 0;
     r.y := 0;
     r.w := size;
     r.h := size;
-    SDL_FillSurfaceRect(Result, @r, $8888FFFF);
+    SDL_FillSurfaceRect(surface, @r, $8888FFFF);
+
+
+    Result := SDL_CreateTextureFromSurface(renderer, surface);
+    if Result = nil then begin
+      SDL_Log('Kann bmp nicht laden !');
+    end;
+
+    SDL_DestroySurface(surface);
   end;
 
   procedure SDLMain;
-  const
-    step = 0.01;
   var
+    step: single;
     e: TSDL_Event;
     quit: boolean = False;
     rDest: TSDL_FRect;
     keyStat: PUInt8;
     time: extended;
-    red, green, blue: Single;
+    red, green, blue: single;
+    IsCtrl: TSDL_bool;
   begin
     rDest.w := 100;
     rDest.h := 100;
@@ -50,11 +58,16 @@ var
     rDest.y := (heigt - rDest.h) / 2;
     while not quit do begin
       keyStat := SDL_GetKeyboardState(nil);
-      if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
+      if (keyStat[SDL_SCANCODE_LSHIFT] <> 0) or (keyStat[SDL_SCANCODE_RSHIFT] <> 0) then begin
+        step := 0.1;
+      end else begin
+        step := 0.01;
       end;
 
+      IsCtrl := (keyStat[SDL_SCANCODE_LCTRL] <> 0) or (keyStat[SDL_SCANCODE_RCTRL] <> 0);
+
       if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+        if IsCtrl then begin
           rDest.x -= step;
           rDest.w += step * 2;
         end else begin
@@ -62,7 +75,7 @@ var
         end;
       end;
       if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+        if IsCtrl then begin
           if rDest.w > 1 then begin
             rDest.x += step;
             rDest.w -= step * 2;
@@ -72,7 +85,7 @@ var
         end;
       end;
       if keyStat[SDL_SCANCODE_DOWN] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+        if IsCtrl then begin
           rDest.y -= step;
           rDest.h += step * 2;
         end else begin
@@ -80,7 +93,7 @@ var
         end;
       end;
       if keyStat[SDL_SCANCODE_UP] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+        if IsCtrl then begin
           if rDest.h > 1 then begin
             rDest.y += step;
             rDest.h -= step * 2;
@@ -93,7 +106,6 @@ var
       if rDest.h < 1 then begin
         rDest.h := 1;
       end;
-
 
       while SDL_PollEvent(@e) do begin
         case e.type_ of
@@ -137,14 +149,7 @@ begin
     SDL_Log('Kann kein SDL-Renderer erzeugen !');
   end;
 
-  bitmapSurface := CreateSurface;
-
-  bitmapTex := SDL_CreateTextureFromSurface(renderer, bitmapSurface);
-  if bitmapSurface = nil then begin
-    SDL_Log('Kann bmp nicht laden !');
-  end;
-
-  SDL_DestroySurface(bitmapSurface);
+  bitmapTex := CreateSurface;
 
   SDLMain;
 

@@ -3,7 +3,6 @@ program Project1;
 // https://github.com/Ravbug/sdl3-sample/blob/main/src/main.cpp
 
 uses
-  ctypes,
   SDL3;
 
 var
@@ -28,13 +27,13 @@ var
   end;
 
   procedure SDLMain;
-  const
-    step = 0.01;
   var
+    step: single;
     e: TSDL_Event;
     quit: boolean = False;
     rSrc, rDest: TSDL_FRect;
     keyStat: PUInt8;
+    IsCtrl: TSDL_bool;
   begin
     rDest.x := 0;
     rDest.y := 0;
@@ -42,11 +41,16 @@ var
     rDest.h := 100;
     while not quit do begin
       keyStat := SDL_GetKeyboardState(nil);
-      if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
+      if (keyStat[SDL_SCANCODE_LSHIFT] <> 0) or (keyStat[SDL_SCANCODE_RSHIFT] <> 0) then begin
+        step := 0.1;
+      end else begin
+        step := 0.01;
       end;
 
+      IsCtrl := (keyStat[SDL_SCANCODE_LCTRL] <> 0) or (keyStat[SDL_SCANCODE_RCTRL] <> 0);
+
       if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+        if IsCtrl then begin
           rDest.x -= step;
           rDest.w += step * 2;
         end else begin
@@ -54,7 +58,7 @@ var
         end;
       end;
       if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+        if IsCtrl then begin
           if rDest.w > 1 then begin
             rDest.x += step;
             rDest.w -= step * 2;
@@ -64,7 +68,7 @@ var
         end;
       end;
       if keyStat[SDL_SCANCODE_DOWN] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+        if IsCtrl then begin
           rDest.y -= step;
           rDest.h += step * 2;
         end else begin
@@ -72,7 +76,7 @@ var
         end;
       end;
       if keyStat[SDL_SCANCODE_UP] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+        if IsCtrl then begin
           if rDest.h > 1 then begin
             rDest.y += step;
             rDest.h -= step * 2;
