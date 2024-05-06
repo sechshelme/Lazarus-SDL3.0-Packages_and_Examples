@@ -22,6 +22,8 @@ type
     procedure SetCaption(AValue: string);
     procedure SetColor(AValue: TUint32);
     procedure SetCanvasRect(AValue: TSDL_Rect);
+    function CreateDownTexture(w, h: Integer): PSDL_Texture;
+    function CreateUpTexture(w, h: Integer): PSDL_Texture;
   public
     property CanvasRect: TSDL_Rect read FRect write SetCanvasRect;
     property Caption: string read FCaption write SetCaption;
@@ -67,24 +69,16 @@ begin
   inherited Destroy;
 end;
 
-procedure TButton.Paint;
+function TButton.CreateDownTexture(w, h: Integer):PSDL_Texture;
+const
+      col1 = $000000FF;
+    col2 = $FFFFFFFF;
 var
-  tex: PSDL_Texture;
   sur: PSDL_Surface;
-  dstrect: TSDL_FRect;
   r: TSDL_Rect;
-  col1, col2: TUint32;
 begin
-  if IsButtonDown then begin
-    col1 := $000000FF;
-    col2 := $FFFFFFFF;
-  end else begin
-    col1 := $FFFFFFFF;
-    col2 := $000000FF;
-  end;
-
-  sur := SDL_CreateSurface(FRect.w, FRect.h, SDL_PIXELFORMAT_RGBA8888);
-  r := Rect(0, 0, FRect.w, FRect.h);
+  sur := SDL_CreateSurface(w, h, SDL_PIXELFORMAT_RGBA8888);
+    r := Rect(0, 0, FRect.w, FRect.h);
   SDL_FillSurfaceRect(sur, @r, $000000FF);
 
   r := Rect(1, 1, FRect.w - 2, FRect.h - 2);
@@ -96,17 +90,61 @@ begin
   r := Rect(3, 3, FRect.w - 6, FRect.h - 6);
   SDL_FillSurfaceRect(sur, @r, FColor);
 
-  tex := SDL_CreateTextureFromSurface(FRenderer, sur);
+  Result := SDL_CreateTextureFromSurface(FRenderer, sur);
+  SDL_DestroySurface(sur);
+end;
 
+function TButton.CreateUpTexture(w, h: Integer): PSDL_Texture;
+const
+    col1 = $FFFFFFFF;
+      col2 = $000000FF;
+var
+  sur: PSDL_Surface;
+  r: TSDL_Rect;
+begin
+  sur := SDL_CreateSurface(w, h, SDL_PIXELFORMAT_RGBA8888);
+    r := Rect(0, 0, FRect.w, FRect.h);
+  SDL_FillSurfaceRect(sur, @r, $000000FF);
+
+  r := Rect(1, 1, FRect.w - 2, FRect.h - 2);
+  SDL_FillSurfaceRect(sur, @r, col1);
+
+  r := Rect(3, 3, FRect.w - 4, FRect.h - 4);
+  SDL_FillSurfaceRect(sur, @r, col2);
+
+  r := Rect(3, 3, FRect.w - 6, FRect.h - 6);
+  SDL_FillSurfaceRect(sur, @r, FColor);
+
+  Result := SDL_CreateTextureFromSurface(FRenderer, sur);
+  SDL_DestroySurface(sur);
+end;
+
+procedure TButton.Paint;
+var
+  texUp, texDown: PSDL_Texture;
+  dstrect, srcrect: TSDL_FRect;
+begin
   dstrect.x := FRect.x;
   dstrect.y := FRect.y;
   dstrect.w := FRect.w;
   dstrect.h := FRect.h;
 
-  SDL_RenderTexture(FRenderer, tex, nil, @dstrect);
+  srcrect.x := 0;
+  srcrect.y := 0;
+  srcrect.w := FRect.w;
+  srcrect.h := FRect.h;
 
-  SDL_DestroyTexture(tex);
-  SDL_DestroySurface(sur);
+  texUp:=CreateUpTexture(FRect.w, FRect.h);
+  texDown:=CreateDownTexture(FRect.w, FRect.h);
+
+  if IsButtonDown then begin
+    SDL_RenderTexture(FRenderer, texDown, @srcrect, @dstrect);
+  end else begin
+    SDL_RenderTexture(FRenderer, texUp, @srcrect, @dstrect);
+  end;
+
+  SDL_DestroyTexture(texUp);
+  SDL_DestroyTexture(texDown);
 end;
 
 procedure TButton.SetCaption(AValue: string);
@@ -144,7 +182,7 @@ begin
         IsMouseDown := False;
         IsButtonDown := False;
       end;
-      Paint;
+//      Paint;
     end;
     SDL_EVENT_MOUSE_MOTION: begin
       mp.x := Trunc(event.motion.x);
@@ -156,7 +194,7 @@ begin
         end else begin
           IsButtonDown := False;
         end;
-        Paint;
+//        Paint;
       end;
     end;
     SDL_EVENT_MOUSE_BUTTON_UP: begin
@@ -170,7 +208,7 @@ begin
       end;
       IsMouseDown := False;
       IsButtonDown := False;
-      Paint;
+//      Paint;
     end;
   end;
 end;

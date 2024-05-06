@@ -27,7 +27,6 @@ var
     TimeStart: UInt64;
 
   begin
-
     while not quit do begin
       TimeStart:=SDL_GetTicks;
       keyStat := SDL_GetKeyboardState(nil);

@@ -1,8 +1,8 @@
-## ======= Windows 64bit DLL ========
+echo =========================== Linux Liob ========
 mkdir SDL
 cd SDL
 
-## === SDL3 Basic
+echo ======================= SDL3 Basic ==============================
 mkdir SDL3
 cd SDL3
 git clone https://github.com/libsdl-org/SDL.git
@@ -15,7 +15,7 @@ make -j16
 sudo make install
 cd ../..
 
-## ===  SDL3_mixer
+echo =======================  SDL3_mixer ==============================
 mkdir SDL3_mixer
 cd SDL3_mixer
 git clone https://github.com/libsdl-org/SDL_mixer.git
@@ -26,8 +26,9 @@ cd build
 cmake ../SDL_mixer
 make -j16
 sudo make install
+cd ../..
 
-## ===  SDL3_net
+echo =======================  SDL3_net ==============================
 mkdir SDL3_net
 cd SDL3_net
 git clone https://github.com/libsdl-org/SDL_net.git
@@ -40,7 +41,7 @@ make -j16
 sudo make install
 cd ../..
 
-## ===  SDL3_image
+echo =======================  SDL3_image ==============================
 mkdir SDL3_image
 cd SDL3_image
 git clone https://github.com/libsdl-org/SDL_image.git
@@ -53,7 +54,7 @@ make -j16
 sudo make install
 cd ../..
 
-## ===  SDL3_ttf
+echo =======================  SDL3_ttf ==============================
 mkdir SDL3_ttf
 cd SDL3_ttf
 git clone https://github.com/libsdl-org/SDL_ttf.git
@@ -66,8 +67,7 @@ make -j16
 sudo make install
 cd ../..
 
-
-## ===  SDL3_rtf
+echo =======================  SDL3_rtf ==============================
 mkdir SDL3_rtf
 cd SDL3_rtf
 git clone https://github.com/libsdl-org/SDL_rtf.git

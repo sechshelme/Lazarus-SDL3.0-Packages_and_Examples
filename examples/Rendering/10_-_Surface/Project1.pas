@@ -7,7 +7,7 @@ uses
 
 var
   window: PSDL_Window;
-  screen, image: PSDL_Surface;
+  surface, image: PSDL_Surface;
 begin
   if SDL_init(SDL_INIT_VIDEO) < 0 then begin
     SDL_Log('Konnte SDL-VIDEO nicht laden!:  %s', SDL_GetError);
@@ -18,8 +18,8 @@ begin
     SDL_Log('Konnte kein Windows erzeugen!:  %s', SDL_GetError);
   end;
 
-  screen := SDL_GetWindowSurface(window);
-  if screen = nil then begin
+  surface := SDL_GetWindowSurface(window);
+  if surface = nil then begin
     SDL_Log('Konnte kein Surface erzeugen!:  %s', SDL_GetError);
   end;
 
@@ -28,7 +28,7 @@ begin
     SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
   end;
 
-  SDL_BlitSurface(image, nil, screen, nil);
+  SDL_BlitSurface(image, nil, surface, nil);
   SDL_UpdateWindowSurface(window);
 
   SDL_Delay(5000);
