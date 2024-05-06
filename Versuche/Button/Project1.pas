@@ -4,25 +4,11 @@ uses
   heaptrc,
   ctypes,
   SDL3,
-  Button;
+  Button,
+  AudioBar;
 
   // https://gist.github.com/chrplr/cd76ec6d3c0140a1786a5b083620ea3d
-
-  // /home/tux/Schreibtisch/von_Git/SDL/SDL3/SDL/test/loopwave.c
   // https://stackoverflow.com/questions/62105714/sdl-loadwav-not-loading-file
-
-type
-  TWave = record
-    spec: TSDL_AudioSpec;
-    sound: PUint8;
-    soundlen: DWord;
-  end;
-
-  TSound = record
-    wave: TWave;
-    stream: PSDL_AudioStream;
-    stream_ID: TSDL_AudioDeviceID;
-  end;
 
 type
   TMyApp = class(TObject)
@@ -30,104 +16,19 @@ type
     destructor Destroy; override;
     procedure Run;
   private
-    ButtonStart, ButtonStack, ButtonPause, ButtonStop: TButton;
+    window: PSDL_Window;
+    renderer: PSDL_Renderer;
+
+    SoundBar: array[0..5] of TSoundBar;
     WindowSize: TSDL_Point;
-    function LoadWave: TSound;
-
-    procedure PauseClick(Sender: TObject);
-    procedure SartClick(Sender: TObject);
-    procedure StackClick(Sender: TObject);
-    procedure StopClick(Sender: TObject);
   end;
-
-var
-  window: PSDL_Window;
-  renderer: PSDL_Renderer;
-  sound: TSound;
-
-
-  procedure AudioStreamCallback({%H-}userdata: pointer; {%H-}stream: PSDL_AudioStream; additional_amount: longint; total_amount: longint); cdecl;
-  begin
-    if additional_amount = total_amount then begin
-      SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
-    end;
-    //    WriteLn('Callback');
-    //    WriteLn('additional_amount: ', additional_amount);
-    //    WriteLn('total_amount: ', total_amount);
-  end;
-
-  procedure TMyApp.SartClick(Sender: TObject);
-  begin
-    WriteLn('Start');
-    SDL_ClearAudioStream(sound.stream);
-    SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
-    SDL_ResumeAudioDevice(sound.stream_ID);
-  end;
-
-  procedure TMyApp.StackClick(Sender: TObject);
-  begin
-    WriteLn('Stack');
-    SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
-    SDL_ResumeAudioDevice(sound.stream_ID);
-  end;
-
-  procedure TMyApp.PauseClick(Sender: TObject);
-  begin
-    WriteLn('Pause');
-    if SDL_AudioDevicePaused(sound.stream_ID) then begin
-      SDL_ResumeAudioDevice(sound.stream_ID);
-    end else begin
-      SDL_PauseAudioDevice(sound.stream_ID);
-    end;
-  end;
-
-  procedure TMyApp.StopClick(Sender: TObject);
-  begin
-    WriteLn('Stop');
-    SDL_PauseAudioDevice(sound.stream_ID);
-    SDL_ClearAudioStream(sound.stream);
-  end;
-
-
-
-  function TMyApp.LoadWave: TSound;
-  const
-    SoundFile = 'Boing_1.wav';
-    //        SoundFile='/home/tux/Schreibtisch/sound/test.wav';
-    //    SoundFile = 'tataa.wav';
-    //    SoundFile='/home/tux/Schreibtisch/sound/test2.wav';
-  var
-    i: integer;
-  begin
-    if SDL_LoadWAV(SoundFile, @Result.wave.spec, @Result.wave.sound, @Result.wave.soundlen) <> 0 then begin
-      SDL_LogError(0, 'Konnte WAV nicht öffnen !   %s', SDL_GetError);
-      Exit;
-    end;
-
-    for i := 0 to SDL_GetNumAudioDrivers - 1 do begin
-      SDL_Log('%i: %s', i, SDL_GetAudioDriver(i));
-    end;
-
-    SDL_Log('Using audio driver: %s', SDL_GetCurrentAudioDriver());
-
-    Result.stream := SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_OUTPUT, @Result.wave.spec, @AudioStreamCallback, nil);
-    if Result.stream = nil then  begin
-      SDL_LogError(0, 'Konnte Stream nicht öffnen !   %s', SDL_GetError);
-    end;
-
-    Result.stream_ID := SDL_GetAudioStreamDevice(Result.stream);
-
-    WriteLn('Time: ', (Result.wave.soundlen div Result.wave.spec.freq div Result.wave.spec.channels div SDL_AUDIO_BYTESIZE(Result.wave.spec.format)) / 60: 4: 2);
-    WriteLn('len: ', Result.wave.soundlen);
-    WriteLn('spec.freq: ', Result.wave.spec.freq);
-    WriteLn('spec.channels: ', Result.wave.spec.channels);
-    WriteLn('spec.format: ', Result.wave.spec.format);
-  end;
-
 
   { TMyApp }
 
   constructor TMyApp.Create;
+  var
+    i: integer;
+    s: string;
   begin
     WindowSize.x := 320;
     WindowSize.y := 200;
@@ -146,38 +47,20 @@ var
       SDL_Log('Kann kein SDL-Renderer erzeugen !   %s', SDL_GetError);
     end;
 
-    ButtonStart := TButton.Create(renderer);
-    ButtonStart.Caption := 'Start';
-    ButtonStart.OnClick := @SartClick;
-    ButtonStart.Color := $00FF00FF;
-
-    ButtonStack := TButton.Create(renderer);
-    ButtonStart.Caption := 'Stack';
-    ButtonStack.OnClick := @StackClick;
-    ButtonStack.Color := $0000FFFF;
-
-    ButtonPause := TButton.Create(renderer);
-    ButtonPause.Caption := 'Pause';
-    ButtonPause.OnClick := @PauseClick;
-    ButtonPause.Color := $FFFF00FF;
-
-    ButtonStop := TButton.Create(renderer);
-    ButtonStop.Caption := 'Stop';
-    ButtonStop.OnClick := @StopClick;
-    ButtonStop.Color := $FF0000FF;
-
-    sound := LoadWave;
+    for i := 0 to Length(SoundBar) - 1 do begin
+      WriteStr(s, 'Boing_', i + 1, '.wav');
+      SoundBar[i] := TSoundBar.Create(renderer, s, 0, i);
+    end;
   end;
 
   destructor TMyApp.Destroy;
+  var
+    i: integer;
   begin
-    ButtonStart.Free;
-    ButtonStack.Free;
-    ButtonPause.Free;
-    ButtonStop.Free;
+    for i := 0 to Length(SoundBar) - 1 do begin
+      SoundBar[i].Free;
+    end;
 
-    SDL_DestroyAudioStream(sound.stream);
-    SDL_free(sound.wave.sound);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 
@@ -193,28 +76,22 @@ var
     quit: boolean = False;
     time: extended;
     red, green, blue: single;
-
-    procedure SetRect(x, y: Tint32);
-    var
-      w, h: integer;
-    begin
-      w := x div 2;
-      h := y div 2;
-      ButtonStart.CanvasRect := Rect(0 * w + w div 10, 0 * h + h div 10, w * 8 div 10, h * 8 div 10);
-      ButtonStack.CanvasRect := Rect(1 * w + w div 10, 0 * h + h div 10, w * 8 div 10, h * 8 div 10);
-      ButtonPause.CanvasRect := Rect(0 * w + w div 10, 1 * h + h div 10, w * 8 div 10, h * 8 div 10);
-      ButtonStop.CanvasRect := Rect(1 * w + w div 10, 1 * h + h div 10, w * 8 div 10, h * 8 div 10);
-    end;
+    i: integer;
 
   begin
-    SetRect(WindowSize.x, WindowSize.y);
+    for i := 0 to Length(SoundBar) - 1 do begin
+      SoundBar[i].Resize(WindowSize);
+    end;
+
     while not quit do begin
       while SDL_PollEvent(@event) do begin
         case event.type_ of
           SDL_EVENT_WINDOW_RESIZED: begin
             WindowSize.x := event.window.data1;
             WindowSize.y := event.window.data2;
-            SetRect(WindowSize.x, WindowSize.y);
+            for i := 0 to Length(SoundBar) - 1 do begin
+              SoundBar[i].Resize(WindowSize);
+            end;
           end;
           SDL_EVENT_KEY_DOWN: begin
             case event.key.keysym.sym of
@@ -231,10 +108,9 @@ var
           end;
         end;
 
-        ButtonStart.EventHandle(event);
-        ButtonStack.EventHandle(event);
-        ButtonPause.EventHandle(event);
-        ButtonStop.EventHandle(event);
+        for i := 0 to Length(SoundBar) - 1 do begin
+          SoundBar[i].EventHandle(event);
+        end;
       end;
 
       //      SDL_Log('size: %i', SDL_GetAudioStreamQueued(sound.stream));
@@ -246,12 +122,9 @@ var
       SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
 
       SDL_RenderClear(renderer);
-
-      ButtonStart.Paint;
-      ButtonStack.Paint;
-      ButtonPause.Paint;
-      ButtonStop.Paint;
-
+      for i := 0 to Length(SoundBar) - 1 do begin
+        SoundBar[i].Paint;
+      end;
       SDL_RenderPresent(renderer);
     end;
   end;
