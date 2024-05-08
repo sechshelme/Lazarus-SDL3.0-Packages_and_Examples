@@ -3,7 +3,7 @@ unit ftobjs;
 interface
 
 uses
-  integer_types,ftmemory, fttypes, ftimage;
+  integer_types,psaux,ftmodapi, ftserv, ftlcdfil, ftincrem, ftsystem, ftmemory, fttypes, ftimage;
 
 {$IFDEF FPC}
 {$PACKRECORDS C}
@@ -210,19 +210,20 @@ function ft_isalnum(x : longint) : longint;
 {*********************************************************************** }
 { handle to internal charmap object  }
 type
+  TPFT_CMapRec_=Pointer;
   PFT_CMap = ^TFT_CMap;
   TFT_CMap = ^TPFT_CMapRec_;
 { handle to charmap class structure  }
 (* Const before type ignored *)
 
-  PFT_CMap_Class = ^TFT_CMap_Class;
-//  TFT_CMap_Class = PFT_CMap_ClassRec_;
 { internal charmap object structure  }
 
   PFT_CMapRec_ = ^TFT_CMapRec_;
   TFT_CMapRec_ = record
-      charmap : TFT_CharMapRec;
-      clazz : TFT_CMap_Class;
+      charmap : Pointer;
+      //      charmap : TFT_CharMapRec;
+      //      clazz : TFT_CMap_Class;
+      clazz : Pointer;
     end;
   TFT_CMapRec = TFT_CMapRec_;
   PFT_CMapRec = ^TFT_CMapRec;
@@ -276,8 +277,10 @@ type
 
   PFT_CMap_VariantCharListFunc = ^TFT_CMap_VariantCharListFunc;
   TFT_CMap_VariantCharListFunc = function (cmap:TFT_CMap; mem:TFT_Memory; variant_selector:TFT_UInt32):PFT_UInt32;cdecl;
-{ Subsequent entries are special ones for format 14 -- the variant  }
-{ selector subtable which behaves like no other                     }
+
+PFT_CMap_Class = ^TFT_CMap_Class;
+  TFT_CMap_Class = ^TFT_CMap_ClassRec_;
+
 
   PFT_CMap_ClassRec_ = ^TFT_CMap_ClassRec_;
   TFT_CMap_ClassRec_ = record
@@ -326,19 +329,19 @@ type
  }
 { create a new charmap and add it to charmap->face  }
 
-function FT_CMap_New(clazz:TFT_CMap_Class; init_data:TFT_Pointer; charmap:TFT_CharMap; acmap:PFT_CMap):TFT_Error;cdecl;external;
+//function FT_CMap_New(clazz:TFT_CMap_Class; init_data:TFT_Pointer; charmap:TFT_CharMap; acmap:PFT_CMap):TFT_Error;cdecl;external;
+function FT_CMap_New(clazz:Pointer; init_data:TFT_Pointer; charmap:Pointer; acmap:PFT_CMap):TFT_Error;cdecl;external;
 { destroy a charmap and remove it from face's list  }
 procedure FT_CMap_Done(cmap:TFT_CMap);cdecl;external;
 { add LCD padding to CBox  }
-procedure ft_lcd_padding(cbox:PFT_BBox; slot:TFT_GlyphSlot; mode:TFT_Render_Mode);cdecl;external;
-{$ifdef FT_CONFIG_OPTION_SUBPIXEL_RENDERING}
+procedure ft_lcd_padding(cbox:PFT_BBox; slot:Pointer; mode:LongInt);cdecl;external;
+//procedure ft_lcd_padding(cbox:PFT_BBox; slot:TFT_GlyphSlot; mode:TFT_Render_Mode);cdecl;external;
 type
 
   TFT_Bitmap_LcdFilterFunc = procedure (bitmap:PFT_Bitmap; weights:PFT_Byte);cdecl;
 { This is the default LCD filter, an in-place, 5-tap FIR filter.  }
 
 procedure ft_lcd_filter_fir(bitmap:PFT_Bitmap; weights:TFT_LcdFiveTapFilter);cdecl;external;
-{$endif}
 { FT_CONFIG_OPTION_SUBPIXEL_RENDERING  }
 {*************************************************************************
    *
@@ -473,7 +476,8 @@ const
 type
   PFT_Slot_InternalRec_ = ^TFT_Slot_InternalRec_;
   TFT_Slot_InternalRec_ = record
-      loader : TFT_GlyphLoader;
+//      loader : TFT_GlyphLoader;
+      loader : Pointer;
       flags : TFT_UInt;
       glyph_transformed : TFT_Bool;
       glyph_matrix : TFT_Matrix;
@@ -506,8 +510,10 @@ type
   PFT_Size_InternalRec_ = ^TFT_Size_InternalRec_;
   TFT_Size_InternalRec_ = record
       module_data : pointer;
-      autohint_mode : TFT_Render_Mode;
-      autohint_metrics : TFT_Size_Metrics;
+      //      autohint_mode : TFT_Render_Mode;
+      //      autohint_metrics : TFT_Size_Metrics;
+      autohint_mode : LongInt;
+      autohint_metrics : Pointer;
     end;
   TFT_Size_InternalRec = TFT_Size_InternalRec_;
   PFT_Size_InternalRec = ^TFT_Size_InternalRec;
@@ -544,7 +550,8 @@ type
   PFT_ModuleRec_ = ^TFT_ModuleRec_;
   TFT_ModuleRec_ = record
       clazz : PFT_Module_Class;
-      library : TFT_Library;
+//      library_ : TFT_Library;
+      library_ : Pointer;
       memory : TFT_Memory;
     end;
   TFT_ModuleRec = TFT_ModuleRec_;
@@ -633,11 +640,10 @@ function FT_DRIVER_HINTS_LIGHTLY(x : longint) : longint;
    *   You should better be familiar with FreeType internals to know which
    *   module to look for, and what its interface is :-)
     }
-(* Const before type ignored *)
-(* Const before type ignored *)
-function FT_Get_Module_Interface(library:TFT_Library; mod_name:Pchar):pointer;cdecl;external;
-(* Const before type ignored *)
-function ft_module_get_service(module:TFT_Module; service_id:Pchar; global:TFT_Bool):TFT_Pointer;cdecl;external;
+//function FT_Get_Module_Interface(library:TFT_Library; mod_name:Pchar):pointer;cdecl;external;
+function FT_Get_Module_Interface(library_:Pointer; mod_name:Pchar):pointer;cdecl;external;
+//function ft_module_get_service(module:TFT_Module; service_id:Pchar; global:TFT_Bool):TFT_Pointer;cdecl;external;
+function ft_module_get_service(module:Pointer; service_id:Pchar; global:TFT_Bool):TFT_Pointer;cdecl;external;
 {$ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES}
 (* Const before type ignored *)
 (* Const before type ignored *)
@@ -659,55 +665,55 @@ function ft_property_string_set(library:TFT_Library; module_name:PFT_String; pro
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 
-function FT_FACE(x : longint) : TFT_Face;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-function FT_SIZE(x : longint) : TFT_Size;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-function FT_SLOT(x : longint) : TFT_GlyphSlot;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-{ return type might be wrong }   
-function FT_FACE_DRIVER(x : longint) : longint;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-{ return type might be wrong }   
-function FT_FACE_LIBRARY(x : longint) : longint;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-{ return type might be wrong }   
-function FT_FACE_MEMORY(x : longint) : longint;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-{ return type might be wrong }   
-function FT_FACE_STREAM(x : longint) : longint;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-{ return type might be wrong }   
-function FT_SIZE_FACE(x : longint) : longint;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-{ return type might be wrong }   
-function FT_SLOT_FACE(x : longint) : longint;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-{ return type might be wrong }   
-function FT_FACE_SLOT(x : longint) : longint;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-{ return type might be wrong }   
-function FT_FACE_SIZE(x : longint) : longint;
+//function FT_FACE(x : longint) : TFT_Face;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//function FT_SIZE(x : longint) : TFT_Size;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//function FT_SLOT(x : longint) : TFT_GlyphSlot;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//{ return type might be wrong }   
+//function FT_FACE_DRIVER(x : longint) : longint;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//{ return type might be wrong }   
+//function FT_FACE_LIBRARY(x : longint) : longint;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//{ return type might be wrong }   
+//function FT_FACE_MEMORY(x : longint) : longint;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//{ return type might be wrong }   
+//function FT_FACE_STREAM(x : longint) : longint;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//{ return type might be wrong }   
+//function FT_SIZE_FACE(x : longint) : longint;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//{ return type might be wrong }   
+//function FT_SLOT_FACE(x : longint) : longint;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//{ return type might be wrong }   
+//function FT_FACE_SLOT(x : longint) : longint;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//{ return type might be wrong }   
+//function FT_FACE_SIZE(x : longint) : longint;
 
 {*************************************************************************
    *
@@ -730,7 +736,8 @@ function FT_FACE_SIZE(x : longint) : longint;
    * @return:
    *   FreeType error code.  0 means success.
     }
-function FT_New_GlyphSlot(face:TFT_Face; aslot:PFT_GlyphSlot):TFT_Error;cdecl;external;
+//    function FT_New_GlyphSlot(face:TFT_Face; aslot:PFT_GlyphSlot):TFT_Error;cdecl;external;
+    function FT_New_GlyphSlot(face:Pointer; aslot:PFT_GlyphSlot):TFT_Error;cdecl;external;
 {*************************************************************************
    *
    * @function:
@@ -758,7 +765,8 @@ function FT_REQUEST_WIDTH(req : longint) : longint;
 function FT_REQUEST_HEIGHT(req : longint) : longint;
 
 { Set the metrics according to a bitmap strike.  }
-procedure FT_Select_Metrics(face:TFT_Face; strike_index:TFT_ULong);cdecl;external;
+//procedure FT_Select_Metrics(face:TFT_Face; strike_index:TFT_ULong);cdecl;external;
+procedure FT_Select_Metrics(face:Pointer; strike_index:TFT_ULong);cdecl;external;
 { Set the metrics according to a size request.  }
 function FT_Request_Metrics(face:TFT_Face; req:TFT_Size_Request):TFT_Error;cdecl;external;
 { Match a size request against `available_sizes'.  }

@@ -3,8 +3,8 @@ unit freetype;
 interface
 
 uses
-//ftobjs,
-integer_types, ftsystem,  fttypes, ftimage;
+ftobjs,
+integer_types,ttnameid, ftsystem,  fttypes, ftimage;
 
 {$IFDEF FPC}
 {$PACKRECORDS C}
@@ -52,6 +52,9 @@ type
   PFT_Renderer = ^TFT_Renderer;
   TFT_Renderer = PFT_RendererRec_;
 
+
+  TFT_Encoding=LongInt;
+  PFT_Encoding=^TFT_Encoding;
 {$ifndef FT_ENC_TAG}
 {#define FT_ENC_TAG( value, a, b, c, d )                             \ }
 {          value = ( ( FT_STATIC_BYTE_CAST( FT_UInt32, a ) << 24 ) | \ }
@@ -90,7 +93,7 @@ type
 type
   PFT_CharMapRec_ = ^TFT_CharMapRec_;
   TFT_CharMapRec_ = record
-      face : TFT_Face;
+      face : ^TFT_FaceRec;
       encoding : TFT_Encoding;
       platform_id : TFT_UShort;
       encoding_id : TFT_UShort;
@@ -105,7 +108,7 @@ type
   PFT_Face_Internal = ^TFT_Face_Internal;
   TFT_Face_Internal = PFT_Face_InternalRec_;
 
-  PFT_FaceRec_ = ^TFT_FaceRec_;
+//  PFT_FaceRec_ = ^TFT_FaceRec_;
   TFT_FaceRec_ = record
       num_faces : TFT_Long;
       face_index : TFT_Long;

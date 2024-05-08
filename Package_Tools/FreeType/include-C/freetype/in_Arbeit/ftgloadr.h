@@ -102,7 +102,7 @@
                               FT_UInt         n_points,
                               FT_UInt         n_contours );
 
-
+/*
 #define FT_GLYPHLOADER_CHECK_P( _loader, _count )       \
   ( (_count) == 0                                    || \
     ( (FT_UInt)(_loader)->base.outline.n_points    +    \
@@ -114,7 +114,7 @@
     ( (FT_UInt)(_loader)->base.outline.n_contours    +    \
       (FT_UInt)(_loader)->current.outline.n_contours +    \
       (FT_UInt)(_count) ) <= (_loader)->max_contours   )
-
+*/
 #define FT_GLYPHLOADER_CHECK_POINTS( _loader, _points, _contours ) \
   ( ( FT_GLYPHLOADER_CHECK_P( _loader, _points )   &&              \
       FT_GLYPHLOADER_CHECK_C( _loader, _contours ) )               \

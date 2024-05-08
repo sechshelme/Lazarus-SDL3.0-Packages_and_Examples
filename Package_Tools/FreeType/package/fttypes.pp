@@ -141,6 +141,7 @@ type
    *   A simple typedef for the _unsigned_ char type.
     }
 
+  PPFT_Byte = ^PFT_Byte;
   PFT_Byte = ^TFT_Byte;
   TFT_Byte = byte;
 {*************************************************************************

@@ -271,7 +271,7 @@
 #define T1_FIELD_DICT_PRIVATE  ( 1 << 1 )
 
 
-
+/*
 #define T1_NEW_SIMPLE_FIELD( _ident, _type, _fname, _dict ) \
           {                                                 \
             sizeof ( _ident ) - 1,                          \
@@ -316,7 +316,7 @@
             _dict                                                 \
           },
 
-
+*/
 #define T1_FIELD_BOOL( _ident, _fname, _dict )                             \
           T1_NEW_SIMPLE_FIELD( _ident, T1_FIELD_TYPE_BOOL, _fname, _dict )
 
@@ -359,7 +359,7 @@
 #define T1_FIELD_CALLBACK( _ident, _name, _dict )       \
           T1_NEW_CALLBACK_FIELD( _ident, _name, _dict )
 
-#define T1_FIELD_ZERO  { 0, NULL, 0, 0, NULL, 0, 0, 0, 0, 0 }
+//#define T1_FIELD_ZERO  { 0, NULL, 0, 0, NULL, 0, 0, 0, 0, 0 }
 
 
   /*************************************************************************/
@@ -1390,7 +1390,7 @@
   /*****                                                               *****/
   /*************************************************************************/
   /*************************************************************************/
-
+/*
 #define IS_PS_NEWLINE( ch ) \
   ( (ch) == '\r' ||         \
     (ch) == '\n' )
@@ -1432,7 +1432,7 @@
         IS_PS_DELIM( (cur)[sizeof ( (token) ) - 1] ) ) )             && \
     ft_strncmp( (char*)(cur), (token), sizeof ( (token) ) - 1 ) == 0 )
 
-
+*/
 
 
 #endif /* PSAUX_H_ */

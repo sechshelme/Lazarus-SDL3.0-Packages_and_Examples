@@ -677,7 +677,7 @@
 
   typedef PSHinter_Interface*  PSHinter_Service;
 
-
+/*
 #define FT_DEFINE_PSHINTER_INTERFACE(        \
           class_,                            \
           get_globals_funcs_,                \
@@ -689,7 +689,7 @@
     get_t1_funcs_,                           \
     get_t2_funcs_                            \
   };
-
+*/
 
 
 
