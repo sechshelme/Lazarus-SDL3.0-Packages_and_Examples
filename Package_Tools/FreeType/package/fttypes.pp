@@ -508,38 +508,26 @@ function FT_MAKE_TAG(_x1,_x2,_x3,_x4 : Byte) : longint;
    *    handle to a single list element.
     }
 type
-  PFT_ListNode = ^TFT_ListNode;
-//  TFT_ListNode = PFT_ListNodeRec;
-
-//  PFT_ListNodeRec = ^TFT_ListNodeRec;
-  TFT_ListNode = record
-      prev : PFT_ListNode;
-      next : PFT_ListNode;
+  PFT_ListNodeRec = ^TFT_ListNodeRec;
+  TFT_ListNodeRec = record
+      prev : ^TFT_ListNode;
+      next : ^TFT_ListNode;
       data : pointer;
     end;
-//  TFT_ListNodeRec = TFT_ListNodeRec_;
-//  PFT_ListNodeRec = ^TFT_ListNodeRec;
 
-{*************************************************************************
-   *
-   * @type:
-   *   FT_List
-   *
-   * @description:
-   *   A handle to a list record (see @FT_ListRec).
-    }
+  PFT_ListNode=^TFT_ListNode;
+  TFT_ListNode=^TFT_ListNodeRec;
 
-  PFT_List = ^TFT_List;
-//  TFT_List = PFT_ListRec_;
 
-//  PFT_ListRec_ = ^TFT_ListRec_;
-  TFT_List = record
+  PFT_ListRec = ^TFT_ListRec;
+  TFT_ListRec = record
       head : TFT_ListNode;
       tail : TFT_ListNode;
     end;
-//  TFT_ListRec = TFT_ListRec_;
-//  PFT_ListRec = ^TFT_ListRec;
-{  }
+
+  PFT_List=^TFT_List;
+  TFT_List=^TFT_ListRec;
+
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   

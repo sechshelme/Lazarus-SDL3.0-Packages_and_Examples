@@ -3,7 +3,7 @@ unit ftobjs;
 interface
 
 uses
-  integer_types,psaux,ftmodapi, ftserv, ftlcdfil, ftincrem, ftsystem, ftmemory, fttypes, ftimage;
+  integer_types,psaux,ftdrv,ftoption, ftmodapi,ftrender,ftglyph,ftgloadr, ftserv, ftlcdfil, ftincrem, ftsystem, ftmemory, fttypes, ftimage;
 
 {$IFDEF FPC}
 {$PACKRECORDS C}
@@ -474,8 +474,8 @@ const
   FT_GLYPH_OWN_BITMAP = $1;  
   FT_GLYPH_OWN_GZIP_SVG = $2;  
 type
-  PFT_Slot_InternalRec_ = ^TFT_Slot_InternalRec_;
-  TFT_Slot_InternalRec_ = record
+  PFT_Slot_InternalRec = ^TFT_Slot_InternalRec;
+  TFT_Slot_InternalRec = record
 //      loader : TFT_GlyphLoader;
       loader : Pointer;
       flags : TFT_UInt;
@@ -485,7 +485,7 @@ type
       glyph_hints : pointer;
       load_flags : TFT_Int32;
     end;
-  TFT_GlyphSlot_InternalRec = TFT_Slot_InternalRec_;
+  TFT_GlyphSlot_InternalRec = TFT_Slot_InternalRec;
   PFT_GlyphSlot_InternalRec = ^TFT_GlyphSlot_InternalRec;
 {*************************************************************************
    *
@@ -560,7 +560,7 @@ type
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 
-function FT_MODULE(x : longint) : TFT_Module;
+//function FT_MODULE(x : longint) : TFT_Module;
 
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
@@ -737,7 +737,7 @@ function ft_property_string_set(library:TFT_Library; module_name:PFT_String; pro
    *   FreeType error code.  0 means success.
     }
 //    function FT_New_GlyphSlot(face:TFT_Face; aslot:PFT_GlyphSlot):TFT_Error;cdecl;external;
-    function FT_New_GlyphSlot(face:Pointer; aslot:PFT_GlyphSlot):TFT_Error;cdecl;external;
+    function FT_New_GlyphSlot(face:Pointer; aslot:Pointer):TFT_Error;cdecl;external;
 {*************************************************************************
    *
    * @function:
@@ -752,7 +752,8 @@ function ft_property_string_set(library:TFT_Library; module_name:PFT_String; pro
    *   slot ::
    *     A handle to a target glyph slot.
     }
-procedure FT_Done_GlyphSlot(slot:TFT_GlyphSlot);cdecl;external;
+//procedure FT_Done_GlyphSlot(slot:TFT_GlyphSlot);cdecl;external;
+procedure FT_Done_GlyphSlot(slot:Pointer);cdecl;external;
 {  }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
@@ -768,24 +769,32 @@ function FT_REQUEST_HEIGHT(req : longint) : longint;
 //procedure FT_Select_Metrics(face:TFT_Face; strike_index:TFT_ULong);cdecl;external;
 procedure FT_Select_Metrics(face:Pointer; strike_index:TFT_ULong);cdecl;external;
 { Set the metrics according to a size request.  }
-function FT_Request_Metrics(face:TFT_Face; req:TFT_Size_Request):TFT_Error;cdecl;external;
+//function FT_Request_Metrics(face:TFT_Face; req:TFT_Size_Request):TFT_Error;cdecl;external;
+function FT_Request_Metrics(face:Pointer; req:Pointer):TFT_Error;cdecl;external;
 { Match a size request against `available_sizes'.  }
-function FT_Match_Size(face:TFT_Face; req:TFT_Size_Request; ignore_width:TFT_Bool; size_index:PFT_ULong):TFT_Error;cdecl;external;
+//function FT_Match_Size(face:TFT_Face; req:TFT_Size_Request; ignore_width:TFT_Bool; size_index:PFT_ULong):TFT_Error;cdecl;external;
+//function FT_Match_Size(face:Pointer; req:TFT_Size_Request; ignore_width:TFT_Bool; size_index:PFT_ULong):TFT_Error;cdecl;external;
+function FT_Match_Size(face:Pointer; req:Pointer; ignore_width:TFT_Bool; size_index:PFT_ULong):TFT_Error;cdecl;external;
 { Use the horizontal metrics to synthesize the vertical metrics.  }
 { If `advance' is zero, it is also synthesized.                   }
-procedure ft_synthesize_vertical_metrics(metrics:PFT_Glyph_Metrics; advance:TFT_Pos);cdecl;external;
+//procedure ft_synthesize_vertical_metrics(metrics:PFT_Glyph_Metrics; advance:TFT_Pos);cdecl;external;
+procedure ft_synthesize_vertical_metrics(metrics:Pointer; advance:TFT_Pos);cdecl;external;
 { Free the bitmap of a given glyphslot when needed (i.e., only when it  }
 { was allocated with ft_glyphslot_alloc_bitmap).                        }
-procedure ft_glyphslot_free_bitmap(slot:TFT_GlyphSlot);cdecl;external;
+//procedure ft_glyphslot_free_bitmap(slot:TFT_GlyphSlot);cdecl;external;
+procedure ft_glyphslot_free_bitmap(slot:Pointer);cdecl;external;
 { Preset bitmap metrics of an outline glyphslot prior to rendering  }
 { and check whether the truncated bbox is too large for rendering.  }
 (* Const before type ignored *)
-function ft_glyphslot_preset_bitmap(slot:TFT_GlyphSlot; mode:TFT_Render_Mode; origin:PFT_Vector):TFT_Bool;cdecl;external;
+//function ft_glyphslot_preset_bitmap(slot:TFT_GlyphSlot; mode:TFT_Render_Mode; origin:PFT_Vector):TFT_Bool;cdecl;external;
+function ft_glyphslot_preset_bitmap(slot:Pointer; mode:Pointer; origin:PFT_Vector):TFT_Bool;cdecl;external;
 { Allocate a new bitmap buffer in a glyph slot.  }
-function ft_glyphslot_alloc_bitmap(slot:TFT_GlyphSlot; size:TFT_ULong):TFT_Error;cdecl;external;
+//function ft_glyphslot_alloc_bitmap(slot:TFT_GlyphSlot; size:TFT_ULong):TFT_Error;cdecl;external;
+function ft_glyphslot_alloc_bitmap(slot:Pointer; size:TFT_ULong):TFT_Error;cdecl;external;
 { Set the bitmap buffer in a glyph slot to a given pointer.  The buffer  }
 { will not be freed by a later call to ft_glyphslot_free_bitmap.         }
-procedure ft_glyphslot_set_bitmap(slot:TFT_GlyphSlot; buffer:PFT_Byte);cdecl;external;
+//procedure ft_glyphslot_set_bitmap(slot:TFT_GlyphSlot; buffer:PFT_Byte);cdecl;external;
+procedure ft_glyphslot_set_bitmap(slot:Pointer; buffer:PFT_Byte);cdecl;external;
 {*********************************************************************** }
 {*********************************************************************** }
 {*********************************************************************** }
@@ -799,20 +808,20 @@ procedure ft_glyphslot_set_bitmap(slot:TFT_GlyphSlot; buffer:PFT_Byte);cdecl;ext
 {*********************************************************************** }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
-function FT_RENDERER(x : longint) : TFT_Renderer;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-function FT_GLYPH(x : longint) : TFT_Glyph;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-function FT_BITMAP_GLYPH(x : longint) : TFT_BitmapGlyph;
-
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
-function FT_OUTLINE_GLYPH(x : longint) : TFT_OutlineGlyph;
-
+//function FT_RENDERER(x : longint) : TFT_Renderer;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//function FT_GLYPH(x : longint) : TFT_Glyph;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//function FT_BITMAP_GLYPH(x : longint) : TFT_BitmapGlyph;
+//
+//{ was #define dname(params) para_def_expr }
+//{ argument types are unknown }
+//function FT_OUTLINE_GLYPH(x : longint) : TFT_OutlineGlyph;
+//
 type
   PFT_RendererRec_ = ^TFT_RendererRec_;
   TFT_RendererRec_ = record
@@ -841,7 +850,7 @@ type
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 
-function FT_DRIVER(x : longint) : TFT_Driver;
+//function FT_DRIVER(x : longint) : TFT_Driver;
 
 { typecast a module as a driver, and get its driver class  }
 { was #define dname(params) para_def_expr }
@@ -983,10 +992,13 @@ type
       version_minor : TFT_Int;
       version_patch : TFT_Int;
       num_modules : TFT_UInt;
-      modules : array[0..(FT_MAX_MODULES)-1] of TFT_Module;
+//      modules : array[0..(FT_MAX_MODULES)-1] of TFT_Module;
+      modules : array[0..(FT_MAX_MODULES)-1] of Pointer;
       renderers : TFT_ListRec;
-      cur_renderer : TFT_Renderer;
-      auto_hinter : TFT_Module;
+//      cur_renderer : TFT_Renderer;
+//      auto_hinter : TFT_Module;
+      cur_renderer : Pointer;
+      auto_hinter : Pointer;
       debug_hooks : array[0..3] of TFT_DebugHook_Func;
       lcd_weights : TFT_LcdFiveTapFilter;
       lcd_filter_func : TFT_Bitmap_LcdFilterFunc;
@@ -996,17 +1008,20 @@ type
   TFT_LibraryRec = TFT_LibraryRec_;
   PFT_LibraryRec = ^TFT_LibraryRec;
 
-function FT_Lookup_Renderer(library:TFT_Library; format:TFT_Glyph_Format; node:PFT_ListNode):TFT_Renderer;cdecl;external;
-function FT_Render_Glyph_Internal(library:TFT_Library; slot:TFT_GlyphSlot; render_mode:TFT_Render_Mode):TFT_Error;cdecl;external;
+//  function FT_Lookup_Renderer(library_:TFT_Library; format:TFT_Glyph_Format; node:PFT_ListNode):TFT_Renderer;cdecl;external;
+//  function FT_Render_Glyph_Internal(library_:TFT_Library; slot:TFT_GlyphSlot; render_mode:TFT_Render_Mode):TFT_Error;cdecl;external;
+  function FT_Lookup_Renderer(library_:Pointer; format:TFT_Glyph_Format; node:PFT_ListNode):Pointer;cdecl;external;
+  function FT_Render_Glyph_Internal(library_:Pointer; slot:Pointer; render_mode:Pointer):TFT_Error;cdecl;external;
 (* Const before type ignored *)
 type
   PFT_Face_GetPostscriptNameFunc = ^TFT_Face_GetPostscriptNameFunc;
-  TFT_Face_GetPostscriptNameFunc = function (face:TFT_Face):Pchar;cdecl;
+//  TFT_Face_GetPostscriptNameFunc = function (face:TFT_Face):Pchar;cdecl;
+  TFT_Face_GetPostscriptNameFunc = function (face:Pointer):Pchar;cdecl;
 
-  TFT_Face_GetGlyphNameFunc = function (face:TFT_Face; glyph_index:TFT_UInt; buffer:TFT_Pointer; buffer_max:TFT_UInt):TFT_Error;cdecl;
-(* Const before type ignored *)
-
-  TFT_Face_GetGlyphNameIndexFunc = function (face:TFT_Face; glyph_name:PFT_String):TFT_UInt;cdecl;
+//  TFT_Face_GetGlyphNameFunc = function (face:TFT_Face; glyph_index:TFT_UInt; buffer:TFT_Pointer; buffer_max:TFT_UInt):TFT_Error;cdecl;
+//  TFT_Face_GetGlyphNameIndexFunc = function (face:TFT_Face; glyph_name:PFT_String):TFT_UInt;cdecl;
+  TFT_Face_GetGlyphNameFunc = function (face:Pointer; glyph_index:TFT_UInt; buffer:TFT_Pointer; buffer_max:TFT_UInt):TFT_Error;cdecl;
+  TFT_Face_GetGlyphNameIndexFunc = function (face:Pointer; glyph_name:PFT_String):TFT_UInt;cdecl;
 {$ifndef FT_CONFIG_OPTION_NO_DEFAULT_SYSTEM}
 {*************************************************************************
    *
@@ -1275,9 +1290,6 @@ procedure FT_Done_Memory(memory:TFT_Memory);cdecl;external;
     done_,                        \
     get_interface_,               \
   ; }
-{$endif}
-{ FTOBJS_H_  }
-{ END  }
 
 implementation
 
@@ -1295,11 +1307,11 @@ var
    if_local1 : longint;
 (* result types are not known *)
 begin
-  if b then
-    if_local1:=a
-  else
-    if_local1:=b;
-  FT_MIN:=a<(if_local1);
+  //if b then
+  //  if_local1:=a
+  //else
+  //  if_local1:=b;
+  //FT_MIN:=a<(if_local1);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1310,11 +1322,11 @@ var
    if_local1 : longint;
 (* result types are not known *)
 begin
-  if b then
-    if_local1:=a
-  else
-    if_local1:=b;
-  FT_MAX:=a>(if_local1);
+  //if b then
+  //  if_local1:=a
+  //else
+  //  if_local1:=b;
+  //FT_MAX:=a>(if_local1);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1325,11 +1337,12 @@ var
    if_local1 : longint;
 (* result types are not known *)
 begin
-  if 0 then
-    if_local1:=-(a)
-  else
-    if_local1:=a;
-  FT_ABS:=a<(if_local1);
+  Result:=Abs(a);
+  //if 0 then
+  //  if_local1:=-(a)
+  //else
+  //  if_local1:=a;
+  //FT_ABS:=a<(if_local1);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1337,7 +1350,7 @@ end;
 { return type might be wrong }   
 function FT_PAD_ROUND(x,n : longint) : longint;
 begin
-  FT_PAD_ROUND:=FT_PAD_FLOOR((Tx(+(n)))/2,n);
+//  FT_PAD_ROUND:=FT_PAD_FLOOR((Tx(+(n)))/2,n);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1345,7 +1358,7 @@ end;
 { return type might be wrong }   
 function FT_PAD_CEIL(x,n : longint) : longint;
 begin
-  FT_PAD_CEIL:=FT_PAD_FLOOR(Tx(+(Tn(-(1)))),n);
+//  FT_PAD_CEIL:=FT_PAD_FLOOR(Tx(+(Tn(-(1)))),n);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1353,7 +1366,7 @@ end;
 { return type might be wrong }   
 function FT_PIX_ROUND(x : longint) : longint;
 begin
-  FT_PIX_ROUND:=FT_PIX_FLOOR(Tx(+(32)));
+//  FT_PIX_ROUND:=FT_PIX_FLOOR(Tx(+(32)));
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1361,7 +1374,7 @@ end;
 { return type might be wrong }   
 function FT_PIX_CEIL(x : longint) : longint;
 begin
-  FT_PIX_CEIL:=FT_PIX_FLOOR(Tx(+(63)));
+//  FT_PIX_CEIL:=FT_PIX_FLOOR(Tx(+(63)));
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1369,7 +1382,7 @@ end;
 { return type might be wrong }   
 function FT_PAD_ROUND_LONG(x,n : longint) : longint;
 begin
-  FT_PAD_ROUND_LONG:=FT_PAD_FLOOR(ADD_LONG(x,n/2),n);
+//  FT_PAD_ROUND_LONG:=FT_PAD_FLOOR(ADD_LONG(x,n/2),n);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1377,7 +1390,7 @@ end;
 { return type might be wrong }   
 function FT_PAD_CEIL_LONG(x,n : longint) : longint;
 begin
-  FT_PAD_CEIL_LONG:=FT_PAD_FLOOR(ADD_LONG(x,Tn(-(1))),n);
+//  FT_PAD_CEIL_LONG:=FT_PAD_FLOOR(ADD_LONG(x,Tn(-(1))),n);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1385,7 +1398,7 @@ end;
 { return type might be wrong }   
 function FT_PIX_ROUND_LONG(x : longint) : longint;
 begin
-  FT_PIX_ROUND_LONG:=FT_PIX_FLOOR(ADD_LONG(x,32));
+//  FT_PIX_ROUND_LONG:=FT_PIX_FLOOR(ADD_LONG(x,32));
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1393,7 +1406,7 @@ end;
 { return type might be wrong }   
 function FT_PIX_CEIL_LONG(x : longint) : longint;
 begin
-  FT_PIX_CEIL_LONG:=FT_PIX_FLOOR(ADD_LONG(x,63));
+//  FT_PIX_CEIL_LONG:=FT_PIX_FLOOR(ADD_LONG(x,63));
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1401,7 +1414,7 @@ end;
 { return type might be wrong }   
 function FT_PAD_ROUND_INT32(x,n : longint) : longint;
 begin
-  FT_PAD_ROUND_INT32:=FT_PAD_FLOOR(ADD_INT32(x,n/2),n);
+//  FT_PAD_ROUND_INT32:=FT_PAD_FLOOR(ADD_INT32(x,n/2),n);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1409,7 +1422,7 @@ end;
 { return type might be wrong }   
 function FT_PAD_CEIL_INT32(x,n : longint) : longint;
 begin
-  FT_PAD_CEIL_INT32:=FT_PAD_FLOOR(ADD_INT32(x,Tn(-(1))),n);
+  //FT_PAD_CEIL_INT32:=FT_PAD_FLOOR(ADD_INT32(x,Tn(-(1))),n);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1417,7 +1430,7 @@ end;
 { return type might be wrong }   
 function FT_PIX_ROUND_INT32(x : longint) : longint;
 begin
-  FT_PIX_ROUND_INT32:=FT_PIX_FLOOR(ADD_INT32(x,32));
+//  FT_PIX_ROUND_INT32:=FT_PIX_FLOOR(ADD_INT32(x,32));
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1425,7 +1438,7 @@ end;
 { return type might be wrong }   
 function FT_PIX_CEIL_INT32(x : longint) : longint;
 begin
-  FT_PIX_CEIL_INT32:=FT_PIX_FLOOR(ADD_INT32(x,63));
+//  FT_PIX_CEIL_INT32:=FT_PIX_FLOOR(ADD_INT32(x,63));
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1433,7 +1446,7 @@ end;
 { return type might be wrong }   
 function ft_isdigit(x : longint) : longint;
 begin
-  ft_isdigit:=(dword(Tx(-('0'))))<10;
+//  ft_isdigit:=(dword(Tx(-('0'))))<10;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1441,7 +1454,7 @@ end;
 { return type might be wrong }   
 function ft_isxdigit(x : longint) : longint;
 begin
-  ft_isxdigit:=(((dword(Tx(-('0'))))<(10 or (dword(Tx(-('a'))))))<(6 or (dword(Tx(-('A'))))))<6;
+//  ft_isxdigit:=(((dword(Tx(-('0'))))<(10 or (dword(Tx(-('a'))))))<(6 or (dword(Tx(-('A'))))))<6;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1449,7 +1462,7 @@ end;
 { return type might be wrong }   
 function ft_isupper(x : longint) : longint;
 begin
-  ft_isupper:=(dword(Tx(-('A'))))<26;
+//  ft_isupper:=(dword(Tx(-('A'))))<26;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1457,7 +1470,7 @@ end;
 { return type might be wrong }   
 function ft_islower(x : longint) : longint;
 begin
-  ft_islower:=(dword(Tx(-('a'))))<26;
+//  ft_islower:=(dword(Tx(-('a'))))<26;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1488,7 +1501,7 @@ end;
 { return type might be wrong }   
 function FT_CMAP_PLATFORM_ID(x : longint) : longint;
 begin
-  FT_CMAP_PLATFORM_ID:=(FT_CMAP(x))^.(charmap.platform_id);
+//  FT_CMAP_PLATFORM_ID:=(FT_CMAP(x))^.(charmap.platform_id);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1496,7 +1509,7 @@ end;
 { return type might be wrong }   
 function FT_CMAP_ENCODING_ID(x : longint) : longint;
 begin
-  FT_CMAP_ENCODING_ID:=(FT_CMAP(x))^.(charmap.encoding_id);
+//  FT_CMAP_ENCODING_ID:=(FT_CMAP(x))^.(charmap.encoding_id);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1504,7 +1517,7 @@ end;
 { return type might be wrong }   
 function FT_CMAP_ENCODING(x : longint) : longint;
 begin
-  FT_CMAP_ENCODING:=(FT_CMAP(x))^.(charmap.encoding);
+//  FT_CMAP_ENCODING:=(FT_CMAP(x))^.(charmap.encoding);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1512,14 +1525,15 @@ end;
 { return type might be wrong }   
 function FT_CMAP_FACE(x : longint) : longint;
 begin
-  FT_CMAP_FACE:=(FT_CMAP(x))^.(charmap.face);
+//  FT_CMAP_FACE:=(FT_CMAP(x))^.(charmap.face);
 end;
 
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
-function FT_MODULE(x : longint) : TFT_Module;
+//nction FT_MODULE(x : longint) : TFT_Module;
+function FT_MODULE(x : longint) : Pointer;
 begin
-  FT_MODULE:=TFT_Module(x);
+//  FT_MODULE:=TFT_Module(x);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1527,7 +1541,7 @@ end;
 { return type might be wrong }   
 function FT_MODULE_CLASS(x : longint) : longint;
 begin
-  FT_MODULE_CLASS:=(FT_MODULE(x))^.clazz;
+//  FT_MODULE_CLASS:=(FT_MODULE(x))^.clazz;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1535,7 +1549,7 @@ end;
 { return type might be wrong }   
 function FT_MODULE_LIBRARY(x : longint) : longint;
 begin
-  FT_MODULE_LIBRARY:=(FT_MODULE(x))^.library;
+//  FT_MODULE_LIBRARY:=(FT_MODULE(x))^.library;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1543,7 +1557,7 @@ end;
 { return type might be wrong }   
 function FT_MODULE_MEMORY(x : longint) : longint;
 begin
-  FT_MODULE_MEMORY:=(FT_MODULE(x))^.memory;
+//  FT_MODULE_MEMORY:=(FT_MODULE(x))^.memory;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1551,7 +1565,7 @@ end;
 { return type might be wrong }   
 function FT_MODULE_IS_DRIVER(x : longint) : longint;
 begin
-  FT_MODULE_IS_DRIVER:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_FONT_DRIVER;
+//  FT_MODULE_IS_DRIVER:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_FONT_DRIVER;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1559,7 +1573,7 @@ end;
 { return type might be wrong }   
 function FT_MODULE_IS_RENDERER(x : longint) : longint;
 begin
-  FT_MODULE_IS_RENDERER:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_RENDERER;
+//  FT_MODULE_IS_RENDERER:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_RENDERER;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1567,7 +1581,7 @@ end;
 { return type might be wrong }   
 function FT_MODULE_IS_HINTER(x : longint) : longint;
 begin
-  FT_MODULE_IS_HINTER:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_HINTER;
+//  FT_MODULE_IS_HINTER:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_HINTER;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1575,7 +1589,7 @@ end;
 { return type might be wrong }   
 function FT_MODULE_IS_STYLER(x : longint) : longint;
 begin
-  FT_MODULE_IS_STYLER:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_STYLER;
+//  FT_MODULE_IS_STYLER:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_STYLER;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1583,7 +1597,7 @@ end;
 { return type might be wrong }   
 function FT_DRIVER_IS_SCALABLE(x : longint) : longint;
 begin
-  FT_DRIVER_IS_SCALABLE:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_DRIVER_SCALABLE;
+//  FT_DRIVER_IS_SCALABLE:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_DRIVER_SCALABLE;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1591,7 +1605,7 @@ end;
 { return type might be wrong }   
 function FT_DRIVER_USES_OUTLINES(x : longint) : longint;
 begin
-  FT_DRIVER_USES_OUTLINES:= not (((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_DRIVER_NO_OUTLINES);
+//  FT_DRIVER_USES_OUTLINES:= not (((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_DRIVER_NO_OUTLINES);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1599,7 +1613,7 @@ end;
 { return type might be wrong }   
 function FT_DRIVER_HAS_HINTER(x : longint) : longint;
 begin
-  FT_DRIVER_HAS_HINTER:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_DRIVER_HAS_HINTER;
+//  FT_DRIVER_HAS_HINTER:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_DRIVER_HAS_HINTER;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1607,28 +1621,28 @@ end;
 { return type might be wrong }   
 function FT_DRIVER_HINTS_LIGHTLY(x : longint) : longint;
 begin
-  FT_DRIVER_HINTS_LIGHTLY:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_DRIVER_HINTS_LIGHTLY;
+//  FT_DRIVER_HINTS_LIGHTLY:=((FT_MODULE_CLASS(x))^.module_flags) and FT_MODULE_DRIVER_HINTS_LIGHTLY;
 end;
 
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
-function FT_FACE(x : longint) : TFT_Face;
+function FT_FACE(x : longint) : Pointer;
 begin
-  FT_FACE:=TFT_Face(x);
+//  FT_FACE:=TFT_Face(x);
 end;
 
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
-function FT_SIZE(x : longint) : TFT_Size;
+function FT_SIZE(x : longint) : Pointer;
 begin
-  FT_SIZE:=TFT_Size(x);
+//  FT_SIZE:=TFT_Size(x);
 end;
 
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
-function FT_SLOT(x : longint) : TFT_GlyphSlot;
+function FT_SLOT(x : longint) : Pointer;
 begin
-  FT_SLOT:=TFT_GlyphSlot(x);
+//  FT_SLOT:=TFT_GlyphSlot(x);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1636,7 +1650,7 @@ end;
 { return type might be wrong }   
 function FT_FACE_DRIVER(x : longint) : longint;
 begin
-  FT_FACE_DRIVER:=(FT_FACE(x))^.driver;
+//  FT_FACE_DRIVER:=(FT_FACE(x))^.driver;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1644,7 +1658,7 @@ end;
 { return type might be wrong }   
 function FT_FACE_LIBRARY(x : longint) : longint;
 begin
-  FT_FACE_LIBRARY:=(FT_FACE_DRIVER(x))^.(root.library);
+//  FT_FACE_LIBRARY:=(FT_FACE_DRIVER(x))^.(root.library);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1652,7 +1666,7 @@ end;
 { return type might be wrong }   
 function FT_FACE_MEMORY(x : longint) : longint;
 begin
-  FT_FACE_MEMORY:=(FT_FACE(x))^.memory;
+///  FT_FACE_MEMORY:=(FT_FACE(x))^.memory;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1660,7 +1674,7 @@ end;
 { return type might be wrong }   
 function FT_FACE_STREAM(x : longint) : longint;
 begin
-  FT_FACE_STREAM:=(FT_FACE(x))^.stream;
+//  FT_FACE_STREAM:=(FT_FACE(x))^.stream;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1668,7 +1682,7 @@ end;
 { return type might be wrong }   
 function FT_SIZE_FACE(x : longint) : longint;
 begin
-  FT_SIZE_FACE:=(FT_SIZE(x))^.face;
+//  FT_SIZE_FACE:=(FT_SIZE(x))^.face;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1676,7 +1690,7 @@ end;
 { return type might be wrong }   
 function FT_SLOT_FACE(x : longint) : longint;
 begin
-  FT_SLOT_FACE:=(FT_SLOT(x))^.face;
+//  FT_SLOT_FACE:=(FT_SLOT(x))^.face;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1684,7 +1698,7 @@ end;
 { return type might be wrong }   
 function FT_FACE_SLOT(x : longint) : longint;
 begin
-  FT_FACE_SLOT:=(FT_FACE(x))^.glyph;
+//  FT_FACE_SLOT:=(FT_FACE(x))^.glyph;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1692,7 +1706,7 @@ end;
 { return type might be wrong }   
 function FT_FACE_SIZE(x : longint) : longint;
 begin
-  FT_FACE_SIZE:=(FT_FACE(x))^.size;
+//  FT_FACE_SIZE:=(FT_FACE(x))^.size;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1703,11 +1717,11 @@ var
    if_local1 : longint;
 (* result types are not known *)
 begin
-  if req^.horiResolution then
-    if_local1:=(((req^.width)*(TFT_Pos(req^.horiResolution)))+36)/72
-  else
-    if_local1:=req^.width;
-  FT_REQUEST_WIDTH:=if_local1;
+  //if req^.horiResolution then
+  //  if_local1:=(((req^.width)*(TFT_Pos(req^.horiResolution)))+36)/72
+  //else
+  //  if_local1:=req^.width;
+  //FT_REQUEST_WIDTH:=if_local1;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1718,18 +1732,18 @@ var
    if_local1 : longint;
 (* result types are not known *)
 begin
-  if req^.vertResolution then
-    if_local1:=(((req^.height)*(TFT_Pos(req^.vertResolution)))+36)/72
-  else
-    if_local1:=req^.height;
-  FT_REQUEST_HEIGHT:=if_local1;
+  //if req^.vertResolution then
+  //  if_local1:=(((req^.height)*(TFT_Pos(req^.vertResolution)))+36)/72
+  //else
+  //  if_local1:=req^.height;
+  //FT_REQUEST_HEIGHT:=if_local1;
 end;
 
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
-function FT_RENDERER(x : longint) : TFT_Renderer;
+function FT_RENDERER(x : longint) : Pointer;
 begin
-  FT_RENDERER:=TFT_Renderer(x);
+//  FT_RENDERER:=TFT_Renderer(x);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1755,9 +1769,9 @@ end;
 
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
-function FT_DRIVER(x : longint) : TFT_Driver;
+function FT_DRIVER(x : longint) : Pointer;
 begin
-  FT_DRIVER:=TFT_Driver(x);
+//  FT_DRIVER:=TFT_Driver(x);
 end;
 
 { was #define dname(params) para_def_expr }
@@ -1765,7 +1779,7 @@ end;
 { return type might be wrong }   
 function FT_DRIVER_CLASS(x : longint) : longint;
 begin
-  FT_DRIVER_CLASS:=(FT_DRIVER(x))^.clazz;
+//  FT_DRIVER_CLASS:=(FT_DRIVER(x))^.clazz;
 end;
 
 

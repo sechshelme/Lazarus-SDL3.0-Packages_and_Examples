@@ -997,6 +997,7 @@
    * Check CFF darkening parameters.  The checks are the same as in function
    * `cff_property_set` in file `cffdrivr.c`.
    */
+/*
 #if CFF_CONFIG_OPTION_DARKENING_PARAMETER_X1 < 0   || \
     CFF_CONFIG_OPTION_DARKENING_PARAMETER_X2 < 0   || \
     CFF_CONFIG_OPTION_DARKENING_PARAMETER_X3 < 0   || \
@@ -1019,6 +1020,7 @@
     CFF_CONFIG_OPTION_DARKENING_PARAMETER_Y3 > 500 || \
     CFF_CONFIG_OPTION_DARKENING_PARAMETER_Y4 > 500
 #error "Invalid CFF darkening parameters!"
+*/
 #endif
 
 

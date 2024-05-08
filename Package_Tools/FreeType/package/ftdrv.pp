@@ -1,93 +1,40 @@
-/****************************************************************************
- *
- * ftdrv.h
- *
- *   FreeType internal font driver interface (specification).
- *
- * Copyright (C) 1996-2024 by
- * David Turner, Robert Wilhelm, and Werner Lemberg.
- *
- * This file is part of the FreeType project, and may only be used,
- * modified, and distributed under the terms of the FreeType project
- * license, LICENSE.TXT.  By continuing to use, modify, or distribute
- * this file you indicate that you have read the license and
- * understand and accept it fully.
- *
- */
+unit ftdrv;
 
+interface
 
-#ifndef FTDRV_H_
-#define FTDRV_H_
+uses
+ integer_types, fttypes, ftsystem, ftimage;
 
+{$IFDEF FPC}
+{$PACKRECORDS C}
+{$ENDIF}
 
-#include <freetype/ftmodapi.h>
+type
 
-#include "compiler-macros.h"
-
-
-
-
-  typedef FT_Error
-  (*FT_Face_InitFunc)( FT_Stream      stream,
-                       FT_Face        face,
-                       FT_Int         typeface_index,
-                       FT_Int         num_params,
-                       FT_Parameter*  parameters );
-
-  typedef void
-  (*FT_Face_DoneFunc)( FT_Face  face );
-
-
-  typedef FT_Error
-  (*FT_Size_InitFunc)( FT_Size  size );
-
-  typedef void
-  (*FT_Size_DoneFunc)( FT_Size  size );
-
-
-  typedef FT_Error
-  (*FT_Slot_InitFunc)( FT_GlyphSlot  slot );
-
-  typedef void
-  (*FT_Slot_DoneFunc)( FT_GlyphSlot  slot );
-
-
-  typedef FT_Error
-  (*FT_Size_RequestFunc)( FT_Size          size,
-                          FT_Size_Request  req );
-
-  typedef FT_Error
-  (*FT_Size_SelectFunc)( FT_Size   size,
-                         FT_ULong  size_index );
-
-  typedef FT_Error
-  (*FT_Slot_LoadFunc)( FT_GlyphSlot  slot,
-                       FT_Size       size,
-                       FT_UInt       glyph_index,
-                       FT_Int32      load_flags );
-
-
-  typedef FT_Error
-  (*FT_Face_GetKerningFunc)( FT_Face     face,
-                             FT_UInt     left_glyph,
-                             FT_UInt     right_glyph,
-                             FT_Vector*  kerning );
-
-
-  typedef FT_Error
-  (*FT_Face_AttachFunc)( FT_Face    face,
-                         FT_Stream  stream );
-
-
-  typedef FT_Error
-  (*FT_Face_GetAdvancesFunc)( FT_Face    face,
-                              FT_UInt    first,
-                              FT_UInt    count,
-                              FT_Int32   flags,
-                              FT_Fixed*  advances );
-
-
-  /**************************************************************************
+//  TFT_Face_InitFunc = function (stream:TFT_Stream; face:TFT_Face; typeface_index:TFT_Int; num_params:TFT_Int; parameters:PFT_Parameter):TFT_Error;cdecl;
+  //TFT_Face_DoneFunc = procedure (face:TFT_Face);cdecl;
+  //TFT_Size_InitFunc = function (size:TFT_Size):TFT_Error;cdecl;
+  //TFT_Size_DoneFunc = procedure (size:TFT_Size);cdecl;
+  //TFT_Slot_InitFunc = function (slot:TFT_GlyphSlot):TFT_Error;cdecl;
+  //TFT_Slot_DoneFunc = procedure (slot:TFT_GlyphSlot);cdecl;
+  //TFT_Size_RequestFunc = function (size:TFT_Size; req:TFT_Size_Request):TFT_Error;cdecl;
+  //TFT_Size_SelectFunc = function (size:TFT_Size; size_index:TFT_ULong):TFT_Error;cdecl;
+  //TFT_Slot_LoadFunc = function (slot:TFT_GlyphSlot; size:TFT_Size; glyph_index:TFT_UInt; load_flags:TFT_Int32):TFT_Error;cdecl;
+  //TFT_Face_GetKerningFunc = function (face:TFT_Face; left_glyph:TFT_UInt; right_glyph:TFT_UInt; kerning:PFT_Vector):TFT_Error;cdecl;
+  //TFT_Face_AttachFunc = function (face:TFT_Face; stream:TFT_Stream):TFT_Error;cdecl;
+  TFT_Face_InitFunc = function (stream:TFT_Stream; face:Pointer; typeface_index:TFT_Int; num_params:TFT_Int; parameters:Pointer):TFT_Error;cdecl;
+  TFT_Face_DoneFunc = procedure (face:Pointer);cdecl;
+  TFT_Size_InitFunc = function (size:Pointer):TFT_Error;cdecl;
+  TFT_Size_DoneFunc = procedure (size:Pointer);cdecl;
+  TFT_Slot_InitFunc = function (slot:Pointer):TFT_Error;cdecl;
+  TFT_Slot_DoneFunc = procedure (slot:Pointer);cdecl;
+  TFT_Size_RequestFunc = function (size:Pointer; req:Pointer):TFT_Error;cdecl;
+  TFT_Size_SelectFunc = function (size:Pointer; size_index:TFT_ULong):TFT_Error;cdecl;
+  TFT_Slot_LoadFunc = function (slot:Pointer; size:Pointer; glyph_index:TFT_UInt; load_flags:TFT_Int32):TFT_Error;cdecl;
+  TFT_Face_GetKerningFunc = function (face:Pointer; left_glyph:TFT_UInt; right_glyph:TFT_UInt; kerning:PFT_Vector):TFT_Error;cdecl;
+  TFT_Face_AttachFunc = function (face:Pointer; stream:TFT_Stream):TFT_Error;cdecl;
+  TFT_Face_GetAdvancesFunc = function (face:Pointer; first:TFT_UInt; count:TFT_UInt; flags:TFT_Int32; advances:PFT_Fixed):TFT_Error;cdecl;
+{*************************************************************************
    *
    * @struct:
    *   FT_Driver_ClassRec
@@ -161,38 +108,34 @@
    * @note:
    *   Most function pointers, with the exception of `load_glyph`, can be set
    *   to 0 to indicate a default behaviour.
-   */
-  typedef struct  FT_Driver_ClassRec_
-  {
-    FT_Module_Class          root;
+    }
+{ since version 2.2  }
 
-    FT_Long                  face_object_size;
-    FT_Long                  size_object_size;
-    FT_Long                  slot_object_size;
-
-    FT_Face_InitFunc         init_face;
-    FT_Face_DoneFunc         done_face;
-
-    FT_Size_InitFunc         init_size;
-    FT_Size_DoneFunc         done_size;
-
-    FT_Slot_InitFunc         init_slot;
-    FT_Slot_DoneFunc         done_slot;
-
-    FT_Slot_LoadFunc         load_glyph;
-
-    FT_Face_GetKerningFunc   get_kerning;
-    FT_Face_AttachFunc       attach_file;
-    FT_Face_GetAdvancesFunc  get_advances;
-
-    /* since version 2.2 */
-    FT_Size_RequestFunc      request_size;
-    FT_Size_SelectFunc       select_size;
-
-  } FT_Driver_ClassRec, *FT_Driver_Class;
-
-
-  /**************************************************************************
+  PFT_Driver_ClassRec_ = ^TFT_Driver_ClassRec_;
+  TFT_Driver_ClassRec_ = record
+      root : Pointer;
+//      root : TFT_Module_Class;
+      face_object_size : TFT_Long;
+      size_object_size : TFT_Long;
+      slot_object_size : TFT_Long;
+      init_face : TFT_Face_InitFunc;
+      done_face : TFT_Face_DoneFunc;
+      init_size : TFT_Size_InitFunc;
+      done_size : TFT_Size_DoneFunc;
+      init_slot : TFT_Slot_InitFunc;
+      done_slot : TFT_Slot_DoneFunc;
+      load_glyph : TFT_Slot_LoadFunc;
+      get_kerning : TFT_Face_GetKerningFunc;
+      attach_file : TFT_Face_AttachFunc;
+      get_advances : TFT_Face_GetAdvancesFunc;
+      request_size : TFT_Size_RequestFunc;
+      select_size : TFT_Size_SelectFunc;
+    end;
+  TFT_Driver_ClassRec = TFT_Driver_ClassRec_;
+  PFT_Driver_ClassRec = ^TFT_Driver_ClassRec;
+  TFT_Driver_Class = PFT_Driver_ClassRec_;
+  PFT_Driver_Class = ^TFT_Driver_Class;
+{*************************************************************************
    *
    * @macro:
    *   FT_DECLARE_DRIVER
@@ -213,11 +156,11 @@
    *
    *   The struct will be allocated in the global scope (or the scope where
    *   the macro is used).
-   */
-#define FT_DECLARE_DRIVER( class_ )  \
-  FT_CALLBACK_TABLE                  \
-  const FT_Driver_ClassRec  class_;
-
+    }
+{#define FT_DECLARE_DRIVER( class_ )  \ }
+{//  FT_CALLBACK_TABLE                  \ }
+{const FT_Driver_ClassRec  class_; }
+{
 #define FT_DEFINE_DRIVER(                    \
           class_,                            \
           flags_,                            \
@@ -246,7 +189,7 @@
           select_size_ )                     \
   FT_CALLBACK_TABLE_DEF                      \
   const FT_Driver_ClassRec  class_ =         \
-  {                                          \
+                                            \
     FT_DEFINE_ROOT_MODULE( flags_,           \
                            size_,            \
                            name_,            \
@@ -278,12 +221,10 @@
                                              \
     request_size_,                           \
     select_size_                             \
-  };
+  ;
 
+ }
 
+implementation
 
-
-#endif /* FTDRV_H_ */
-
-
-/* END */
+end.

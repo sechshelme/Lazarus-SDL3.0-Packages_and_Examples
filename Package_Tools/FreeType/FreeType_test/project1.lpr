@@ -7,14 +7,11 @@ uses
   freetype,
   fttypes;
 
-  {$linklib freetype}
-
 
 var
   library_: TFT_Library;
   error: TFT_Error;
   face: TFT_Face;
-//face:array[0..10000] of byte;
 begin
   error := FT_Init_FreeType(@library_);
   if error <> 0 then begin

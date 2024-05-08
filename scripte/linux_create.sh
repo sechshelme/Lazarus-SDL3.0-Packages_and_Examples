@@ -1,4 +1,4 @@
-echo =========================== Linux Liob ========
+echo =========================== Windows 64bit DLL ========
 mkdir SDL
 cd SDL
 
