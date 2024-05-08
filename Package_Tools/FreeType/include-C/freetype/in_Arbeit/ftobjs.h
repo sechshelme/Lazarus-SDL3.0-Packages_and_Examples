@@ -77,18 +77,18 @@
    * We use alpha = 1, beta = 3/8, giving us results with a largest error
    * less than 7% compared to the exact value.
    */
-#define FT_HYPOT( x, y )                 \
-          ( x = FT_ABS( x ),             \
-            y = FT_ABS( y ),             \
-            x > y ? x + ( 3 * y >> 3 )   \
-                  : y + ( 3 * x >> 3 ) )
+//#define FT_HYPOT( x, y )                 \
+//          ( x = FT_ABS( x ),             \
+//            y = FT_ABS( y ),             \
+//            x > y ? x + ( 3 * y >> 3 )   \
+//                  : y + ( 3 * x >> 3 ) )
 
   /* we use FT_TYPEOF to suppress signedness compilation warnings */
-#define FT_PAD_FLOOR( x, n )  ( (x) & ~FT_TYPEOF( x )( (n) - 1 ) )
+//#define FT_PAD_FLOOR( x, n )  ( (x) & ~FT_TYPEOF( x )( (n) - 1 ) )
 #define FT_PAD_ROUND( x, n )  FT_PAD_FLOOR( (x) + (n) / 2, n )
 #define FT_PAD_CEIL( x, n )   FT_PAD_FLOOR( (x) + (n) - 1, n )
 
-#define FT_PIX_FLOOR( x )     ( (x) & ~FT_TYPEOF( x )63 )
+//#define FT_PIX_FLOOR( x )     ( (x) & ~FT_TYPEOF( x )63 )
 #define FT_PIX_ROUND( x )     FT_PIX_FLOOR( (x) + 32 )
 #define FT_PIX_CEIL( x )      FT_PIX_FLOOR( (x) + 63 )
 
@@ -115,16 +115,16 @@
    */
 #define  ft_isdigit( x )   ( ( (unsigned)(x) - '0' ) < 10U )
 
-#define  ft_isxdigit( x )  ( ( (unsigned)(x) - '0' ) < 10U || \
-                             ( (unsigned)(x) - 'a' ) < 6U  || \
+#define  ft_isxdigit( x )  ( ( (unsigned)(x) - '0' ) < 10U | \
+                             ( (unsigned)(x) - 'a' ) < 6U  | \
                              ( (unsigned)(x) - 'A' ) < 6U  )
 
   /* the next two macros assume ASCII representation */
 #define  ft_isupper( x )  ( ( (unsigned)(x) - 'A' ) < 26U )
 #define  ft_islower( x )  ( ( (unsigned)(x) - 'a' ) < 26U )
 
-#define  ft_isalpha( x )  ( ft_isupper( x ) || ft_islower( x ) )
-#define  ft_isalnum( x )  ( ft_isdigit( x ) || ft_isalpha( x ) )
+#define  ft_isalpha( x )  ( ft_isupper( x ) | ft_islower( x ) )
+#define  ft_isalnum( x )  ( ft_isdigit( x ) | ft_isalpha( x ) )
 
 
   /*************************************************************************/
@@ -226,9 +226,9 @@
   } FT_CMap_ClassRec;
 
 
-#define FT_DECLARE_CMAP_CLASS( class_ )            \
-  FT_CALLBACK_TABLE const FT_CMap_ClassRec  class_;
-
+//#define FT_DECLARE_CMAP_CLASS( class_ )            \
+//  FT_CALLBACK_TABLE const FT_CMap_ClassRec  class_;
+/*
 #define FT_DEFINE_CMAP_CLASS(       \
           class_,                   \
           size_,                    \
@@ -255,22 +255,22 @@
     charvariant_list_,              \
     variantchar_list_               \
   };
-
+*/
 
   /* create a new charmap and add it to charmap->face */
-  FT_BASE( FT_Error )
+   FT_Error 
   FT_CMap_New( FT_CMap_Class  clazz,
                FT_Pointer     init_data,
                FT_CharMap     charmap,
                FT_CMap       *acmap );
 
   /* destroy a charmap and remove it from face's list */
-  FT_BASE( void )
+   void 
   FT_CMap_Done( FT_CMap  cmap );
 
 
   /* add LCD padding to CBox */
-  FT_BASE( void )
+   void 
   ft_lcd_padding( FT_BBox*        cbox,
                   FT_GlyphSlot    slot,
                   FT_Render_Mode  mode );
@@ -282,7 +282,7 @@
 
 
   /* This is the default LCD filter, an in-place, 5-tap FIR filter. */
-  FT_BASE( void )
+   void 
   ft_lcd_filter_fir( FT_Bitmap*           bitmap,
                      FT_LcdFiveTapFilter  weights );
 
@@ -561,17 +561,17 @@
    *   You should better be familiar with FreeType internals to know which
    *   module to look for, and what its interface is :-)
    */
-  FT_BASE( const void* )
+   const void* 
   FT_Get_Module_Interface( FT_Library   library,
                            const char*  mod_name );
 
-  FT_BASE( FT_Pointer )
+   FT_Pointer 
   ft_module_get_service( FT_Module    module,
                          const char*  service_id,
                          FT_Bool      global );
 
 #ifdef FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES
-  FT_BASE( FT_Error )
+   FT_Error 
   ft_property_string_set( FT_Library        library,
                           const FT_String*  module_name,
                           const FT_String*  property_name,
@@ -632,7 +632,7 @@
    * @return:
    *   FreeType error code.  0 means success.
    */
-  FT_BASE( FT_Error )
+   FT_Error 
   FT_New_GlyphSlot( FT_Face        face,
                     FT_GlyphSlot  *aslot );
 
@@ -651,7 +651,7 @@
    *   slot ::
    *     A handle to a target glyph slot.
    */
-  FT_BASE( void )
+   void 
   FT_Done_GlyphSlot( FT_GlyphSlot  slot );
 
   /* */
@@ -668,19 +668,19 @@
 
 
   /* Set the metrics according to a bitmap strike. */
-  FT_BASE( void )
+   void 
   FT_Select_Metrics( FT_Face   face,
                      FT_ULong  strike_index );
 
 
   /* Set the metrics according to a size request. */
-  FT_BASE( FT_Error )
+   FT_Error 
   FT_Request_Metrics( FT_Face          face,
                       FT_Size_Request  req );
 
 
   /* Match a size request against `available_sizes'. */
-  FT_BASE( FT_Error )
+   FT_Error 
   FT_Match_Size( FT_Face          face,
                  FT_Size_Request  req,
                  FT_Bool          ignore_width,
@@ -689,33 +689,33 @@
 
   /* Use the horizontal metrics to synthesize the vertical metrics. */
   /* If `advance' is zero, it is also synthesized.                  */
-  FT_BASE( void )
+   void 
   ft_synthesize_vertical_metrics( FT_Glyph_Metrics*  metrics,
                                   FT_Pos             advance );
 
 
   /* Free the bitmap of a given glyphslot when needed (i.e., only when it */
   /* was allocated with ft_glyphslot_alloc_bitmap).                       */
-  FT_BASE( void )
+   void 
   ft_glyphslot_free_bitmap( FT_GlyphSlot  slot );
 
 
   /* Preset bitmap metrics of an outline glyphslot prior to rendering */
   /* and check whether the truncated bbox is too large for rendering. */
-  FT_BASE( FT_Bool )
+   FT_Bool 
   ft_glyphslot_preset_bitmap( FT_GlyphSlot      slot,
                               FT_Render_Mode    mode,
                               const FT_Vector*  origin );
 
   /* Allocate a new bitmap buffer in a glyph slot. */
-  FT_BASE( FT_Error )
+   FT_Error 
   ft_glyphslot_alloc_bitmap( FT_GlyphSlot  slot,
                              FT_ULong      size );
 
 
   /* Set the bitmap buffer in a glyph slot to a given pointer.  The buffer */
   /* will not be freed by a later call to ft_glyphslot_free_bitmap.        */
-  FT_BASE( void )
+   void 
   ft_glyphslot_set_bitmap( FT_GlyphSlot  slot,
                            FT_Byte*      buffer );
 
@@ -920,12 +920,12 @@
   } FT_LibraryRec;
 
 
-  FT_BASE( FT_Renderer )
+   FT_Renderer 
   FT_Lookup_Renderer( FT_Library       library,
                       FT_Glyph_Format  format,
                       FT_ListNode*     node );
 
-  FT_BASE( FT_Error )
+   FT_Error 
   FT_Render_Glyph_Internal( FT_Library      library,
                             FT_GlyphSlot    slot,
                             FT_Render_Mode  render_mode );
@@ -957,7 +957,7 @@
    * @return:
    *   A pointer to the new memory object.  0 in case of error.
    */
-  FT_BASE( FT_Memory )
+   FT_Memory 
   FT_New_Memory( void );
 
 
@@ -973,7 +973,7 @@
    *   memory ::
    *     A handle to the memory manager.
    */
-  FT_BASE( void )
+   void 
   FT_Done_Memory( FT_Memory  memory );
 
 #endif /* !FT_CONFIG_OPTION_NO_DEFAULT_SYSTEM */
@@ -986,7 +986,7 @@
   /* FT_Set_Raster() API.                                                  */
 
 #ifndef FT_NO_DEFAULT_RASTER
-  FT_EXPORT_VAR( FT_Raster_Funcs )  ft_default_raster;
+   FT_Raster_Funcs   ft_default_raster;
 #endif
 
 
@@ -1000,6 +1000,7 @@
    *   will be allocated in the global scope (or the scope where the macro is
    *   used).
    */
+/*
 #define FT_DEFINE_OUTLINE_FUNCS(           \
           class_,                          \
           move_to_,                        \
@@ -1017,6 +1018,7 @@
     shift_,                                \
     delta_                                 \
   };
+*/
 
 
   /**************************************************************************
@@ -1029,7 +1031,7 @@
    *   will be allocated in the global scope (or the scope where the macro is
    *   used).
    */
-#define FT_DEFINE_RASTER_FUNCS(    \
+/*#define FT_DEFINE_RASTER_FUNCS(    \
           class_,                  \
           glyph_format_,           \
           raster_new_,             \
@@ -1045,7 +1047,7 @@
     raster_set_mode_,              \
     raster_render_,                \
     raster_done_                   \
-  };
+  };*/
 
 
 
@@ -1058,7 +1060,7 @@
    *   The struct will be allocated in the global scope (or the scope where
    *   the macro is used).
    */
-#define FT_DECLARE_GLYPH( class_ )                \
+/*#define FT_DECLARE_GLYPH( class_ )                \
   FT_CALLBACK_TABLE const FT_Glyph_Class  class_;
 
 #define FT_DEFINE_GLYPH(          \
@@ -1082,7 +1084,7 @@
     transform_,                   \
     bbox_,                        \
     prepare_                      \
-  };
+  };*/
 
 
   /**************************************************************************
@@ -1103,7 +1105,7 @@
    *   The struct will be allocated in the global scope (or the scope where
    *   the macro is used).
    */
-#define FT_DECLARE_RENDERER( class_ )               \
+/*#define FT_DECLARE_RENDERER( class_ )               \
   FT_EXPORT_VAR( const FT_Renderer_Class ) class_;
 
 #define FT_DEFINE_RENDERER(                  \
@@ -1143,7 +1145,7 @@
     set_mode_,                               \
                                              \
     raster_class_                            \
-  };
+  };*/
 
 
   /**************************************************************************
@@ -1172,11 +1174,11 @@
    *   another struct that contains it or in a function that initializes that
    *   containing struct.
    */
-#define FT_DECLARE_MODULE( class_ )  \
-  FT_CALLBACK_TABLE                  \
-  const FT_Module_Class  class_;
+//#define FT_DECLARE_MODULE( class_ )  \
+//  FT_CALLBACK_TABLE                  \
+//  const FT_Module_Class  class_;
 
-#define FT_DEFINE_ROOT_MODULE(  \
+/*#define FT_DEFINE_ROOT_MODULE(  \
           flags_,               \
           size_,                \
           name_,                \
@@ -1227,7 +1229,7 @@
     init_,                        \
     done_,                        \
     get_interface_,               \
-  };
+  };*/
 
 
 

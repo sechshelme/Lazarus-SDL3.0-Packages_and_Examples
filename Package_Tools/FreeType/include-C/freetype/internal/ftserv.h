@@ -360,7 +360,7 @@
    * This function can be used by modules to implement their `get_service'
    * method.
    */
-  FT_BASE( FT_Pointer )
+   FT_Pointer 
   ft_service_list_lookup( FT_ServiceDesc  service_descriptors,
                           const char*     service_id );
 

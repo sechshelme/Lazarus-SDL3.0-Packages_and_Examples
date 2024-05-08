@@ -38,6 +38,11 @@ begin
     s:=StringReplace(s,')','',[]);
     WriteLn(s);
   end;
+  if pos('FT_BASE(', s) > 0 then begin
+    s:=StringReplace(s,'FT_BASE(','',[]);
+    s:=StringReplace(s,')','',[]);
+    WriteLn(s);
+  end;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);

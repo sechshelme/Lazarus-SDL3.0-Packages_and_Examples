@@ -75,29 +75,29 @@
 
 
   /* create new empty glyph loader */
-  FT_BASE( FT_Error )
+   FT_Error 
   FT_GlyphLoader_New( FT_Memory        memory,
                       FT_GlyphLoader  *aloader );
 
   /* add an extra points table to a glyph loader */
-  FT_BASE( FT_Error )
+   FT_Error 
   FT_GlyphLoader_CreateExtra( FT_GlyphLoader  loader );
 
   /* destroy a glyph loader */
-  FT_BASE( void )
+   void 
   FT_GlyphLoader_Done( FT_GlyphLoader  loader );
 
   /* reset a glyph loader (frees everything int it) */
-  FT_BASE( void )
+   void 
   FT_GlyphLoader_Reset( FT_GlyphLoader  loader );
 
   /* rewind a glyph loader */
-  FT_BASE( void )
+   void 
   FT_GlyphLoader_Rewind( FT_GlyphLoader  loader );
 
   /* check that there is enough space to add `n_points' and `n_contours' */
   /* to the glyph loader                                                 */
-  FT_BASE( FT_Error )
+   FT_Error 
   FT_GlyphLoader_CheckPoints( FT_GlyphLoader  loader,
                               FT_UInt         n_points,
                               FT_UInt         n_contours );
@@ -126,16 +126,16 @@
 
   /* check that there is enough space to add `n_subs' sub-glyphs to */
   /* a glyph loader                                                 */
-  FT_BASE( FT_Error )
+   FT_Error 
   FT_GlyphLoader_CheckSubGlyphs( FT_GlyphLoader  loader,
                                  FT_UInt         n_subs );
 
   /* prepare a glyph loader, i.e. empty the current glyph */
-  FT_BASE( void )
+   void 
   FT_GlyphLoader_Prepare( FT_GlyphLoader  loader );
 
   /* add the current glyph to the base glyph */
-  FT_BASE( void )
+   void 
   FT_GlyphLoader_Add( FT_GlyphLoader  loader );
 
 

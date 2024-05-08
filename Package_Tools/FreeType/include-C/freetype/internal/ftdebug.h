@@ -181,7 +181,7 @@
    *   This function may be useful if you want to access elements of the
    *   internal trace levels array by an index.
    */
-  FT_BASE( FT_Int )
+   FT_Int 
   FT_Trace_Get_Count( void );
 
 
@@ -205,7 +205,7 @@
    *   Use @FT_Trace_Get_Count to get the number of available trace
    *   components.
    */
-  FT_BASE( const char* )
+   const char* 
   FT_Trace_Get_Name( FT_Int  idx );
 
 
@@ -218,7 +218,7 @@
    *   Switch off tracing temporarily.  It can be activated again with
    *   @FT_Trace_Enable.
    */
-  FT_BASE( void )
+   void 
   FT_Trace_Disable( void );
 
 
@@ -231,7 +231,7 @@
    *   Activate tracing.  Use it after tracing has been switched off with
    *   @FT_Trace_Disable.
    */
-  FT_BASE( void )
+   void 
   FT_Trace_Enable( void );
 
 
@@ -342,17 +342,17 @@
 #include "stdio.h"  /* for vfprintf() */
 
   /* print a message */
-  FT_BASE( void )
+   void 
   FT_Message( const char*  fmt,
               ... );
 
   /* print a message and exit */
-  FT_BASE( void )
+   void 
   FT_Panic( const char*  fmt,
             ... );
 
   /* report file name and line number of an error */
-  FT_BASE( int )
+   int 
   FT_Throw( FT_Error     error,
             int          line,
             const char*  file );
@@ -360,7 +360,7 @@
 #endif /* FT_DEBUG_LEVEL_ERROR */
 
 
-  FT_BASE( void )
+   void 
   ft_debug_init( void );
 
 
@@ -372,7 +372,7 @@
    * printed.  Therefore we need to define a default output handler for
    * FreeType.
    */
-  FT_BASE( void )
+   void 
   ft_log_handler( const struct dlg_origin*  origin,
                   const char*               string,
                   void*                     data );
@@ -399,10 +399,10 @@
    *
    * These functions are defined in `ftdebug.c`.
    */
-  FT_BASE( void )
+   void 
   ft_logging_init( void );
 
-  FT_BASE( void )
+   void 
   ft_logging_deinit( void );
 
 
@@ -413,10 +413,10 @@
    *
    * These functions are defined in `ftdebug.c`.
    */
-  FT_BASE( void )
+   void 
   ft_add_tag( const char*  tag );
 
-  FT_BASE( void )
+   void 
   ft_remove_tag( const char*  tag );
 
 
@@ -427,7 +427,7 @@
    *
    * This function is defined in `ftdebug.c`.
    */
-  FT_BASE( void )
+   void 
   FT_Logging_Callback( const char*  fmt,
                        ... );
 

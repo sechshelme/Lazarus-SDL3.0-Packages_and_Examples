@@ -104,7 +104,7 @@
 #define FT_VALIDATOR( x )  ( (FT_Validator)( x ) )
 
 
-  FT_BASE( void )
+   void 
   ft_validator_init( FT_Validator        valid,
                      const FT_Byte*      base,
                      const FT_Byte*      limit,
@@ -112,14 +112,14 @@
 
   /* Do not use this. It's broken and will cause your validator to crash */
   /* if you run it on an invalid font.                                   */
-  FT_BASE( FT_Int )
+   FT_Int 
   ft_validator_run( FT_Validator  valid );
 
   /* Sets the error field in a validator, then calls `longjmp' to return */
   /* to high-level caller.  Using `setjmp/longjmp' avoids many stupid    */
   /* error checks within the validation routines.                        */
   /*                                                                     */
-  FT_BASE( void )
+   void 
   ft_validator_error( FT_Validator  valid,
                       FT_Error      error );
 

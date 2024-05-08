@@ -137,6 +137,8 @@ var
     end;
   end;
 
+// https://wiki.libsdl.org/SDL3/SDL_CreateSoftwareRenderer
+
 begin
   SDL_init(SDL_INIT_VIDEO);
 
@@ -145,7 +147,15 @@ begin
     SDL_Log('Kann kein SDL-Fenster erzeugen !');
   end;
 
-  renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_ACCELERATED);
+//  sur:=SDL_CreateSurface(100,100,SDL_PIXELFORMAT_ABGR32);
+  sur:=SDL_GetWindowSurface(window);
+  if sur = nil then begin
+    SDL_Log('Kann kein Surface erzeugen !');
+  end;
+
+
+//  renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_ACCELERATED);
+  renderer := SDL_CreateSoftwareRenderer(sur);
 
   if renderer = nil then begin
     SDL_Log('Kann kein SDL-Renderer erzeugen !');

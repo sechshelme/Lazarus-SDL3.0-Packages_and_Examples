@@ -94,7 +94,7 @@ uses
     }
 type
   PFT_Bool = ^TFT_Bool;
-  TFT_Bool = byte;
+  TFT_Bool = Boolean8;
 {*************************************************************************
    *
    * @type:
@@ -312,7 +312,7 @@ type
     }
 
   PFT_Offset = ^TFT_Offset;
-  TFT_Offset = Tsize_t;
+  TFT_Offset = SizeInt;
 {*************************************************************************
    *
    * @type:
@@ -325,7 +325,7 @@ type
     }
 
   PFT_PtrDist = ^TFT_PtrDist;
-  TFT_PtrDist = Tft_ptrdiff_t;
+  TFT_PtrDist = SizeUInt;
 {*************************************************************************
    *
    * @struct:
@@ -426,7 +426,7 @@ type
    *   client data is accessed through its `generic` field.
     }
 
-  TFT_Generic_Finalizer = procedure (object:pointer);cdecl;
+  TFT_Generic_Finalizer = procedure (object_:pointer);cdecl;
 {*************************************************************************
    *
    * @struct:
@@ -481,7 +481,7 @@ type
 { argument types are unknown }
 { return type might be wrong }   
 
-function FT_MAKE_TAG(_x1,_x2,_x3,_x4 : longint) : longint;
+function FT_MAKE_TAG(_x1,_x2,_x3,_x4 : Byte) : longint;
 
 {*********************************************************************** }
 {*********************************************************************** }
@@ -508,7 +508,17 @@ function FT_MAKE_TAG(_x1,_x2,_x3,_x4 : longint) : longint;
     }
 type
   PFT_ListNode = ^TFT_ListNode;
-  TFT_ListNode = PFT_ListNodeRec_;
+//  TFT_ListNode = PFT_ListNodeRec;
+
+//  PFT_ListNodeRec = ^TFT_ListNodeRec;
+  TFT_ListNode = record
+      prev : PFT_ListNode;
+      next : PFT_ListNode;
+      data : pointer;
+    end;
+//  TFT_ListNodeRec = TFT_ListNodeRec_;
+//  PFT_ListNodeRec = ^TFT_ListNodeRec;
+
 {*************************************************************************
    *
    * @type:
@@ -519,64 +529,21 @@ type
     }
 
   PFT_List = ^TFT_List;
-  TFT_List = PFT_ListRec_;
-{*************************************************************************
-   *
-   * @struct:
-   *   FT_ListNodeRec
-   *
-   * @description:
-   *   A structure used to hold a single list element.
-   *
-   * @fields:
-   *   prev ::
-   *     The previous element in the list.  `NULL` if first.
-   *
-   *   next ::
-   *     The next element in the list.  `NULL` if last.
-   *
-   *   data ::
-   *     A typeless pointer to the listed object.
-    }
+//  TFT_List = PFT_ListRec_;
 
-  PFT_ListNodeRec_ = ^TFT_ListNodeRec_;
-  TFT_ListNodeRec_ = record
-      prev : TFT_ListNode;
-      next : TFT_ListNode;
-      data : pointer;
-    end;
-  TFT_ListNodeRec = TFT_ListNodeRec_;
-  PFT_ListNodeRec = ^TFT_ListNodeRec;
-{*************************************************************************
-   *
-   * @struct:
-   *   FT_ListRec
-   *
-   * @description:
-   *   A structure used to hold a simple doubly-linked list.  These are used
-   *   in many parts of FreeType.
-   *
-   * @fields:
-   *   head ::
-   *     The head (first element) of doubly-linked list.
-   *
-   *   tail ::
-   *     The tail (last element) of doubly-linked list.
-    }
-
-  PFT_ListRec_ = ^TFT_ListRec_;
-  TFT_ListRec_ = record
+//  PFT_ListRec_ = ^TFT_ListRec_;
+  TFT_List = record
       head : TFT_ListNode;
       tail : TFT_ListNode;
     end;
-  TFT_ListRec = TFT_ListRec_;
-  PFT_ListRec = ^TFT_ListRec;
+//  TFT_ListRec = TFT_ListRec_;
+//  PFT_ListRec = ^TFT_ListRec;
 {  }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 
-function FT_IS_EMPTY(list : longint) : longint;
+function FT_IS_EMPTY(list : TFT_List) : longint;
 
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
@@ -600,11 +567,11 @@ in define line 596 *)
 
     { was #define dname(params) para_def_expr }
     { argument types are unknown }
-    function FT_ERROR_BASE(x : longint) : Tx;    
+    function FT_ERROR_BASE(x : longint) : LongInt;    
 
     { was #define dname(params) para_def_expr }
     { argument types are unknown }
-    function FT_ERROR_MODULE(x : longint) : Tx;    
+    function FT_ERROR_MODULE(x : longint) : LongInt;    
 
     { was #define dname(params) para_def_expr }
     { argument types are unknown }
@@ -616,26 +583,24 @@ in define line 596 *)
     { return type might be wrong }   
     function FT_ERR_NEQ(x,e : longint) : longint;    
 
-{$endif}
-    { FTTYPES_H_  }
-    { END  }
 
 implementation
 
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
-function FT_MAKE_TAG(_x1,_x2,_x3,_x4 : longint) : longint;
+function FT_MAKE_TAG(_x1,_x2,_x3,_x4 : Byte) : longint;
 begin
-  FT_MAKE_TAG:=((((FT_STATIC_BYTE_CAST(FT_Tag,_x1)) shl 24) or ((FT_STATIC_BYTE_CAST(FT_Tag,_x2)) shl 16)) or ((FT_STATIC_BYTE_CAST(FT_Tag,_x3)) shl 8)) or (FT_STATIC_BYTE_CAST(FT_Tag,_x4));
+  FT_MAKE_TAG:=(_x1 shl 24 )or (_x2 shl 16) or (_x3 shl 8) or (_x4);
+//  FT_MAKE_TAG:=((((FT_STATIC_BYTE_CAST(FT_Tag,_x1)) shl 24) or ((FT_STATIC_BYTE_CAST(FT_Tag,_x2)) shl 16)) or ((FT_STATIC_BYTE_CAST(FT_Tag,_x3)) shl 8)) or (FT_STATIC_BYTE_CAST(FT_Tag,_x4));
 end;
 
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
-function FT_IS_EMPTY(list : longint) : longint;
+function FT_IS_EMPTY(list : TFT_List) : longint;
 begin
-  FT_IS_EMPTY:=(list.head)=0;
+//  FT_IS_EMPTY:=(list.head)=nil;
 end;
 
 { was #define dname(params) para_def_expr }
@@ -643,7 +608,7 @@ end;
 { return type might be wrong }   
 function FT_BOOL(x : longint) : longint;
 begin
-  FT_BOOL:=FT_STATIC_CAST(FT_Bool,x<>0);
+//  FT_BOOL:=FT_STATIC_CAST(FT_Bool,x<>0);
 end;
 
     { was #define dname(params) para_def_expr }
@@ -651,7 +616,7 @@ end;
     { return type might be wrong }   
     function FT_ERR_CAT(x,y : longint) : longint;
     begin
-      FT_ERR_CAT:=FT_ERR_XCAT(x,y);
+//      FT_ERR_CAT:=FT_ERR_XCAT(x,y);
     end;
 
     { was #define dname(params) para_def_expr }
@@ -659,21 +624,21 @@ end;
     { return type might be wrong }   
     function FT_ERR(e : longint) : longint;
     begin
-      FT_ERR:=FT_ERR_CAT(FT_ERR_PREFIX,e);
+//      FT_ERR:=FT_ERR_CAT(FT_ERR_PREFIX,e);
     end;
 
     { was #define dname(params) para_def_expr }
     { argument types are unknown }
-    function FT_ERROR_BASE(x : longint) : Tx;
+    function FT_ERROR_BASE(x : longint) : LongInt;
     begin
-      FT_ERROR_BASE:=Tx(@($FF));
+//      FT_ERROR_BASE:=Tx(@($FF));
     end;
 
     { was #define dname(params) para_def_expr }
     { argument types are unknown }
-    function FT_ERROR_MODULE(x : longint) : Tx;
+    function FT_ERROR_MODULE(x : longint) : LongInt;
     begin
-      FT_ERROR_MODULE:=Tx(@($FF00));
+//      FT_ERROR_MODULE:=Tx(@($FF00));
     end;
 
     { was #define dname(params) para_def_expr }
@@ -681,7 +646,7 @@ end;
     { return type might be wrong }   
     function FT_ERR_EQ(x,e : longint) : longint;
     begin
-      FT_ERR_EQ:=(FT_ERROR_BASE(x))=(FT_ERROR_BASE(FT_ERR(e)));
+  //    FT_ERR_EQ:=(FT_ERROR_BASE(x))=(FT_ERROR_BASE(FT_ERR(e)));
     end;
 
     { was #define dname(params) para_def_expr }
@@ -689,7 +654,7 @@ end;
     { return type might be wrong }   
     function FT_ERR_NEQ(x,e : longint) : longint;
     begin
-      FT_ERR_NEQ:=(FT_ERROR_BASE(x))<>(FT_ERROR_BASE(FT_ERR(e)));
+//      FT_ERR_NEQ:=(FT_ERROR_BASE(x))<>(FT_ERROR_BASE(FT_ERR(e)));
     end;
 
 

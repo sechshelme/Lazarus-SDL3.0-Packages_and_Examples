@@ -88,7 +88,7 @@ extern "C++"
 
 #else
 
-#define FT_ASSIGNP( p, val )  (p) = (val)
+//#define FT_ASSIGNP( p, val )  (p) = (val)
 
 #endif
 
@@ -96,17 +96,17 @@ extern "C++"
 
 #ifdef FT_DEBUG_MEMORY
 
-  FT_BASE( const char* )  ft_debug_file_;
-  FT_BASE( long )         ft_debug_lineno_;
+   const char*   ft_debug_file_;
+   long          ft_debug_lineno_;
 
-#define FT_DEBUG_INNER( exp )  ( ft_debug_file_   = __FILE__, \
+/*#define FT_DEBUG_INNER( exp )  ( ft_debug_file_   = __FILE__, \
                                  ft_debug_lineno_ = __LINE__, \
                                  (exp) )
 
 #define FT_ASSIGNP_INNER( p, exp )  ( ft_debug_file_   = __FILE__, \
                                       ft_debug_lineno_ = __LINE__, \
                                       FT_ASSIGNP( p, exp ) )
-
+*/
 #else /* !FT_DEBUG_MEMORY */
 
 #define FT_DEBUG_INNER( exp )       (exp)
@@ -123,17 +123,17 @@ extern "C++"
   /* The `q' variants of the functions below (`q' for `quick') don't fill */
   /* the allocated or reallocated memory with zero bytes.                 */
 
-  FT_BASE( FT_Pointer )
+   FT_Pointer 
   ft_mem_alloc( FT_Memory  memory,
                 FT_Long    size,
                 FT_Error  *p_error );
 
-  FT_BASE( FT_Pointer )
+   FT_Pointer 
   ft_mem_qalloc( FT_Memory  memory,
                  FT_Long    size,
                  FT_Error  *p_error );
 
-  FT_BASE( FT_Pointer )
+   FT_Pointer 
   ft_mem_realloc( FT_Memory  memory,
                   FT_Long    item_size,
                   FT_Long    cur_count,
@@ -141,7 +141,7 @@ extern "C++"
                   void*      block,
                   FT_Error  *p_error );
 
-  FT_BASE( FT_Pointer )
+   FT_Pointer 
   ft_mem_qrealloc( FT_Memory  memory,
                    FT_Long    item_size,
                    FT_Long    cur_count,
@@ -149,7 +149,7 @@ extern "C++"
                    void*      block,
                    FT_Error  *p_error );
 
-  FT_BASE( void )
+   void 
   ft_mem_free( FT_Memory    memory,
                const void*  P );
 
@@ -157,7 +157,7 @@ extern "C++"
   /* The `Q' variants of the macros below (`Q' for `quick') don't fill */
   /* the allocated or reallocated memory with zero bytes.              */
 
-#define FT_MEM_ALLOC( ptr, size )                               \
+/*#define FT_MEM_ALLOC( ptr, size )                               \
           FT_ASSIGNP_INNER( ptr, ft_mem_alloc( memory,          \
                                                (FT_Long)(size), \
                                                &error ) )
@@ -258,14 +258,14 @@ extern "C++"
 #define FT_ARRAY_MOVE( dest, source, count )                     \
           FT_MEM_MOVE( dest,                                     \
                        source,                                   \
-                       (FT_Offset)(count) * sizeof ( *(dest) ) )
+                       (FT_Offset)(count) * sizeof ( *(dest) ) )*/
 
 
   /*
    * Return the maximum number of addressable elements in an array.  We limit
    * ourselves to INT_MAX, rather than UINT_MAX, to avoid any problems.
    */
-#define FT_ARRAY_MAX( ptr )           ( FT_INT_MAX / sizeof ( *(ptr) ) )
+//#define FT_ARRAY_MAX( ptr )           ( FT_INT_MAX / sizeof ( *(ptr) ) )
 
 #define FT_ARRAY_CHECK( ptr, count )  ( (count) <= FT_ARRAY_MAX( ptr ) )
 
@@ -276,7 +276,7 @@ extern "C++"
    * _typed_ in order to automatically compute array element sizes.
    */
 
-#define FT_MEM_NEW_ARRAY( ptr, count )                              \
+/*#define FT_MEM_NEW_ARRAY( ptr, count )                              \
           FT_ASSIGNP_INNER( ptr, ft_mem_realloc( memory,            \
                                                  sizeof ( *(ptr) ), \
                                                  0,                 \
@@ -306,7 +306,7 @@ extern "C++"
                                                   (FT_Long)(cursz),  \
                                                   (FT_Long)(newsz),  \
                                                   (ptr),             \
-                                                  &error ) )
+                                                  &error ) )*/
 
 #define FT_ALLOC( ptr, size )                           \
           FT_MEM_SET_ERROR( FT_MEM_ALLOC( ptr, size ) )
@@ -353,26 +353,26 @@ extern "C++"
           FT_MEM_SET_ERROR( FT_MEM_QRENEW_ARRAY( ptr, curcnt, newcnt ) )
 
 
-  FT_BASE( FT_Pointer )
+   FT_Pointer 
   ft_mem_strdup( FT_Memory    memory,
                  const char*  str,
                  FT_Error    *p_error );
 
-  FT_BASE( FT_Pointer )
+   FT_Pointer 
   ft_mem_dup( FT_Memory    memory,
               const void*  address,
               FT_ULong     size,
               FT_Error    *p_error );
 
 
-#define FT_MEM_STRDUP( dst, str )                                            \
-          (dst) = (char*)ft_mem_strdup( memory, (const char*)(str), &error )
+//#define FT_MEM_STRDUP( dst, str )                                            \
+//          (dst) = (char*)ft_mem_strdup( memory, (const char*)(str), &error )
 
 #define FT_STRDUP( dst, str )                           \
           FT_MEM_SET_ERROR( FT_MEM_STRDUP( dst, str ) )
 
-#define FT_MEM_DUP( dst, address, size )                                    \
-          (dst) = ft_mem_dup( memory, (address), (FT_ULong)(size), &error )
+//#define FT_MEM_DUP( dst, address, size )                                    \
+//          (dst) = ft_mem_dup( memory, (address), (FT_ULong)(size), &error )
 
 #define FT_DUP( dst, address, size )                           \
           FT_MEM_SET_ERROR( FT_MEM_DUP( dst, address, size ) )
@@ -381,7 +381,7 @@ extern "C++"
   /* Return >= 1 if a truncation occurs.            */
   /* Return 0 if the source string fits the buffer. */
   /* This is *not* the same as strlcpy().           */
-  FT_BASE( FT_Int )
+   FT_Int 
   ft_mem_strcpyn( char*        dst,
                   const char*  src,
                   FT_ULong     size );

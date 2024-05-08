@@ -769,11 +769,11 @@
 
 #ifndef FT_ENC_TAG
 
-#define FT_ENC_TAG( value, a, b, c, d )                             \
-          value = ( ( FT_STATIC_BYTE_CAST( FT_UInt32, a ) << 24 ) | \
-                    ( FT_STATIC_BYTE_CAST( FT_UInt32, b ) << 16 ) | \
-                    ( FT_STATIC_BYTE_CAST( FT_UInt32, c ) <<  8 ) | \
-                      FT_STATIC_BYTE_CAST( FT_UInt32, d )         )
+//#define FT_ENC_TAG( value, a, b, c, d )                             \
+//          value = ( ( FT_STATIC_BYTE_CAST( FT_UInt32, a ) << 24 ) | \
+//                    ( FT_STATIC_BYTE_CAST( FT_UInt32, b ) << 16 ) | \
+//                    ( FT_STATIC_BYTE_CAST( FT_UInt32, c ) <<  8 ) | \
+//                      FT_STATIC_BYTE_CAST( FT_UInt32, d )         )
 
 #endif /* FT_ENC_TAG */
 
@@ -924,37 +924,37 @@
    *   Greek encoding, not Roman.  `TT_MAC_ID_ARABIC` with
    *   `TT_MAC_LANGID_FARSI` means the Farsi variant of the Arabic encoding.
    */
-  typedef enum  FT_Encoding_
-  {
-    FT_ENC_TAG( FT_ENCODING_NONE, 0, 0, 0, 0 ),
+//  typedef enum  FT_Encoding_
+//   {
+//     FT_ENC_TAG( FT_ENCODING_NONE, 0, 0, 0, 0 ),
 
-    FT_ENC_TAG( FT_ENCODING_MS_SYMBOL, 's', 'y', 'm', 'b' ),
-    FT_ENC_TAG( FT_ENCODING_UNICODE,   'u', 'n', 'i', 'c' ),
+//     FT_ENC_TAG( FT_ENCODING_MS_SYMBOL, 's', 'y', 'm', 'b' ),
+//     FT_ENC_TAG( FT_ENCODING_UNICODE,   'u', 'n', 'i', 'c' ),
 
-    FT_ENC_TAG( FT_ENCODING_SJIS,    's', 'j', 'i', 's' ),
-    FT_ENC_TAG( FT_ENCODING_PRC,     'g', 'b', ' ', ' ' ),
-    FT_ENC_TAG( FT_ENCODING_BIG5,    'b', 'i', 'g', '5' ),
-    FT_ENC_TAG( FT_ENCODING_WANSUNG, 'w', 'a', 'n', 's' ),
-    FT_ENC_TAG( FT_ENCODING_JOHAB,   'j', 'o', 'h', 'a' ),
+//     FT_ENC_TAG( FT_ENCODING_SJIS,    's', 'j', 'i', 's' ),
+//     FT_ENC_TAG( FT_ENCODING_PRC,     'g', 'b', ' ', ' ' ),
+//     FT_ENC_TAG( FT_ENCODING_BIG5,    'b', 'i', 'g', '5' ),
+//     FT_ENC_TAG( FT_ENCODING_WANSUNG, 'w', 'a', 'n', 's' ),
+//     FT_ENC_TAG( FT_ENCODING_JOHAB,   'j', 'o', 'h', 'a' ),
 
     /* for backward compatibility */
-    FT_ENCODING_GB2312     = FT_ENCODING_PRC,
-    FT_ENCODING_MS_SJIS    = FT_ENCODING_SJIS,
-    FT_ENCODING_MS_GB2312  = FT_ENCODING_PRC,
-    FT_ENCODING_MS_BIG5    = FT_ENCODING_BIG5,
-    FT_ENCODING_MS_WANSUNG = FT_ENCODING_WANSUNG,
-    FT_ENCODING_MS_JOHAB   = FT_ENCODING_JOHAB,
+//     FT_ENCODING_GB2312     = FT_ENCODING_PRC,
+//     FT_ENCODING_MS_SJIS    = FT_ENCODING_SJIS,
+//     FT_ENCODING_MS_GB2312  = FT_ENCODING_PRC,
+//     FT_ENCODING_MS_BIG5    = FT_ENCODING_BIG5,
+//     FT_ENCODING_MS_WANSUNG = FT_ENCODING_WANSUNG,
+//     FT_ENCODING_MS_JOHAB   = FT_ENCODING_JOHAB,
 
-    FT_ENC_TAG( FT_ENCODING_ADOBE_STANDARD, 'A', 'D', 'O', 'B' ),
-    FT_ENC_TAG( FT_ENCODING_ADOBE_EXPERT,   'A', 'D', 'B', 'E' ),
-    FT_ENC_TAG( FT_ENCODING_ADOBE_CUSTOM,   'A', 'D', 'B', 'C' ),
-    FT_ENC_TAG( FT_ENCODING_ADOBE_LATIN_1,  'l', 'a', 't', '1' ),
+//     FT_ENC_TAG( FT_ENCODING_ADOBE_STANDARD, 'A', 'D', 'O', 'B' ),
+//     FT_ENC_TAG( FT_ENCODING_ADOBE_EXPERT,   'A', 'D', 'B', 'E' ),
+//     FT_ENC_TAG( FT_ENCODING_ADOBE_CUSTOM,   'A', 'D', 'B', 'C' ),
+//     FT_ENC_TAG( FT_ENCODING_ADOBE_LATIN_1,  'l', 'a', 't', '1' ),
 
-    FT_ENC_TAG( FT_ENCODING_OLD_LATIN_2, 'l', 'a', 't', '2' ),
+//     FT_ENC_TAG( FT_ENCODING_OLD_LATIN_2, 'l', 'a', 't', '2' ),
+// 
+//     FT_ENC_TAG( FT_ENCODING_APPLE_ROMAN, 'a', 'r', 'm', 'n' )
 
-    FT_ENC_TAG( FT_ENCODING_APPLE_ROMAN, 'a', 'r', 'm', 'n' )
-
-  } FT_Encoding;
+//   } FT_Encoding;
 
 
   /* these constants are deprecated; use the corresponding `FT_Encoding` */

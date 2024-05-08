@@ -225,7 +225,7 @@
    * `Use FT_BASE` and `FT_BASE_DEF` to declare and define, respectively, an
    * internal library function that is used by more than a single module.
    */
-#define FT_BASE( x )      FT_INTERNAL_FUNCTION_ATTRIBUTE \
+#define  x       FT_INTERNAL_FUNCTION_ATTRIBUTE \
                           FT_FUNCTION_DECLARATION( x )
 #define FT_BASE_DEF( x )  FT_FUNCTION_DEFINITION( x )
 
