@@ -48,7 +48,7 @@ draw_bitmap( FT_Bitmap*  bitmap,
    //     printf("%i - ", bitmap->buffer[q * bitmap->width + p]);
       }
 
-      image[j][i] |= bitmap->buffer[q * bitmap->width + p];
+      image[j][i] = bitmap->buffer[q * bitmap->width + p];
     }
   }
 }
@@ -125,6 +125,8 @@ text = "Hello World";
 
 
   /* set up matrix */
+
+
   matrix.xx = (FT_Fixed)( cos( angle ) * 0x10000L );
   matrix.xy = (FT_Fixed)(-sin( angle ) * 0x10000L );
   matrix.yx = (FT_Fixed)( sin( angle ) * 0x10000L );
@@ -167,7 +169,7 @@ text = "Hello World";
     pen.y += slot->advance.y;
   }
 
- // show_image();
+  show_image();
 
   FT_Done_Face    ( face );
   FT_Done_FreeType( library );

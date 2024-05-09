@@ -19,47 +19,67 @@ uses
   fttypes;
 
 const
-  Width = 320;
+  Width = 160;
   Height = 160;
+var
+  image: array [0..Height - 1, 0..Width] of char;
 
   procedure draw_bitmap(bitmap: PFT_Bitmap; x: TFT_Int; y: TFT_Int);
   var
-    x_max, y_max, i,j,p,q: TFT_Int;
-    ch: cuchar;
+    x_max, y_max, i, j, p, q: TFT_Int;
+    ch: char;
   begin
-    x_max:=x+bitmap^.width;
-    y_max:=y+bitmap^.rows;
+    x_max := x + bitmap^.Width;
+    y_max := y + bitmap^.rows;
 
-//    WriteLn('x: ', x_max,'  y: ',y_max);
-    WriteLn('x: ', bitmap^.width,'  y: ',bitmap^.rows);
 
-    i:=x;
-    p:=0;
-    while (i<x_max) do begin
+    i := x;
+    p := 0;
+    while (i < x_max) do begin
       Inc(i);
       Inc(p);
 
-      j:=y;
-      q:=0;
-      while (j<y_max) do begin
+      j := y;
+      q := 0;
+      while (j < y_max) do begin
         Inc(j);
         Inc(q);
 
-        ch:=bitmap^.buffer[q*bitmap^.width+p];
-    //    GotoXY(j,i);
-//        Write(ch,' - ');
+        if (i < 0) or (j < 0) or (i >= Width) or (j >= Height) then begin
+          Continue;
+        end;
 
+        image[j, i] := char(bitmap^.buffer[q * bitmap^.Width + p]);
+//        Write(byte(image[j, i]), ' - ');
+        //  GotoXY(10,10);
+        //  TextAttr:=ch;
 
+      end;
     end;
-    end;
+  end;
 
+  procedure show_image;
+  var
+    i, j: Integer;
+    ch: Char;
+  begin
+    for i := 0 to Height - 1 do begin
+      for j := 0 to Width - 1 do begin
+        case image[i,j] of
+        #0 :ch:= ' ';
+        #1..#127 :ch:= '+';
+        #128..#255 :ch:= '*';
+        end;
+        Write(ch);
+      end;
+    end;
   end;
 
   procedure main;
   const
     fileName = '/usr/share/fonts/truetype/freefont/FreeMono.ttf';
-//    fileName2 = '/usr/share/wine/fonts/courier.ttf';
-    Text :PChar= 'Hello World';
+    //    fileName2 = '/usr/share/wine/fonts/courier.ttf';
+    Text: PChar = 'Hello World';
   var
     library_: TFT_Library;
     face: TFT_Face;
@@ -74,7 +94,7 @@ const
     target_height, n: integer;
 
   begin
-    angle := ( 120.0 / 360 ) * 3.14159 * 2;
+    angle := (120.0 / 360) * 3.14159 * 2;
     target_height := Height;
 
     error := FT_Init_FreeType(@library_);
@@ -88,32 +108,30 @@ const
     end;
 
     //  error := FT_Set_Char_Size(face, 50 * 64,0,100,0);
-    error := FT_Set_Char_Size(face, 50 * 15, 0, 100, 0);
+    error := FT_Set_Char_Size(face, 50 * 15, 0, 150, 0);
     if error <> 0 then begin
       WriteLn('Fehler: Set_Char_Size   ', error);
     end;
 
     slot := face^.glyph;
 
+    matrix.xx := Round(Cos(angle) * $10000);
+    matrix.xy := Round(-Sin(angle) * $10000);
+    matrix.yx := Round(Sin(angle) * $10000);
+    matrix.yy := Round(Cos(angle) * $10000);
 
+    pen.x := 100 * 64;
+    pen.y := (target_height - 150) * 64;
 
-    matrix.xx := Round(Cos(angle) * 10000);
-    matrix.xy := Round(-Sin(angle) * 10000);
-    matrix.yx := Round(Sin(angle) * 10000);
-    matrix.yy := Round(Cos(angle) * 10000);
-
-    pen.x := 200 * 64;
-    pen.y := (target_height - 200) * 64;
-
-    WriteLn('angle:', angle:10:4);
-    WriteLn('size: matrix: ', SizeOf(matrix));
-    WriteLn('size: pen:    ', SizeOf(pen));
-    WriteLn('pen.x:    ', pen.x);
-    WriteLn('pen.y:    ', pen.y);
-    WriteLn('matrix.xx:    ', matrix.xx);
-    WriteLn('matrix.xy:    ', matrix.xy);
-    WriteLn('matrix.yx:    ', matrix.yx);
-    WriteLn('matrix.yy:    ', matrix.yy);
+    //WriteLn('angle:', angle:10:4);
+    //WriteLn('size: matrix: ', SizeOf(matrix));
+    //WriteLn('size: pen:    ', SizeOf(pen));
+    //WriteLn('pen.x:    ', pen.x);
+    //WriteLn('pen.y:    ', pen.y);
+    //WriteLn('matrix.xx:    ', matrix.xx);
+    //WriteLn('matrix.xy:    ', matrix.xy);
+    //WriteLn('matrix.yx:    ', matrix.yx);
+    //WriteLn('matrix.yy:    ', matrix.yy);
 
     for n := 0 to Length(Text) - 1 do begin
       FT_Set_Transform(face, @matrix, @pen);
@@ -123,12 +141,14 @@ const
         WriteLn('Fehler: Load_Char   ', error);
       end;
 
-      Write('n: ',n,'   ');
+      //      Write('n: ',n,'   ');
       draw_bitmap(@slot^.bitmap, slot^.bitmap_left, target_height - slot^.bitmap_top);
 
-      pen.x+=slot^.advance.x;
-      pen.y+=slot^.advance.y;
+      pen.x += slot^.advance.x;
+      pen.y += slot^.advance.y;
     end;
+
+    show_image;
 
     FT_Done_Face(face);
     FT_Done_FreeType(library_);
