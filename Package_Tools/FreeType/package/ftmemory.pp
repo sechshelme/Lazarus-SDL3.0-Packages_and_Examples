@@ -527,7 +527,7 @@ end;
 { return type might be wrong }   
 function FT_STRCPYN(dst,src,size : longint) : longint;
 begin
-  FT_STRCPYN:=ft_mem_strcpyn(Pchar(dst),Pchar(src),TFT_ULong(size));
+//  FT_STRCPYN:=ft_mem_strcpyn(Pchar(dst),Pchar(src),TFT_ULong(size));
 end;
 
 

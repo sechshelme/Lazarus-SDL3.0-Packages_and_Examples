@@ -2,6 +2,9 @@ unit ftimage;
 
 interface
 
+uses
+  ctypes;
+
 {$IFDEF FPC}
 {$PACKRECORDS C}
 {$ENDIF}
@@ -10,51 +13,10 @@ const
  SHRT_MIN=	(-32768);
  SHRT_MAX=	32767    ;
 
-
-{***************************************************************************
- *
- * ftimage.h
- *
- *   FreeType glyph image formats and default raster interface
- *   (specification).
- *
- * Copyright (C) 1996-2024 by
- * David Turner, Robert Wilhelm, and Werner Lemberg.
- *
- * This file is part of the FreeType project, and may only be used,
- * modified, and distributed under the terms of the FreeType project
- * license, LICENSE.TXT.  By continuing to use, modify, or distribute
- * this file you indicate that you have read the license and
- * understand and accept it fully.
- *
-  }
-{*************************************************************************
-   *
-   * Note: A 'raster' is simply a scan-line converter, used to render
-   *       `FT_Outline`s into `FT_Bitmap`s.
-   *
-    }
-{$ifndef FTIMAGE_H_}
-{$define FTIMAGE_H_}
-{*************************************************************************
-   *
-   * @section:
-   *   basic_types
-   *
-    }
-{*************************************************************************
-   *
-   * @type:
-   *   FT_Pos
-   *
-   * @description:
-   *   The type FT_Pos is used to store vectorial coordinates.  Depending on
-   *   the context, these can represent distances in integer font units, or
-   *   16.16, or 26.6 fixed-point pixel coordinates.
-    }
 type
   PFT_Pos = ^TFT_Pos;
-  TFT_Pos = longint;
+//  TFT_Pos = longint;
+  TFT_Pos = cslong;
 {*************************************************************************
    *
    * @struct:
@@ -268,13 +230,13 @@ type
 type
   PFT_Bitmap_ = ^TFT_Bitmap_;
   TFT_Bitmap_ = record
-      rows : dword;
-      width : dword;
-      pitch : longint;
-      buffer : Pbyte;
-      num_grays : word;
-      pixel_mode : byte;
-      palette_mode : byte;
+      rows : cuint;
+      width : cuint;
+      pitch : cint;
+      buffer : pcuchar;
+      num_grays : cushort;
+      pixel_mode : cuchar;
+      palette_mode : cuchar;
       palette : pointer;
     end;
   TFT_Bitmap = TFT_Bitmap_;
@@ -1246,12 +1208,6 @@ type
   TFT_Raster_Funcs = TFT_Raster_Funcs_;
   PFT_Raster_Funcs = ^TFT_Raster_Funcs;
 {  }
-{$endif}
-{ FTIMAGE_H_  }
-{ END  }
-{ Local Variables:  }
-{ coding: utf-8     }
-{ End:              }
 
 implementation
 

@@ -3,7 +3,7 @@ unit fttypes;
 interface
 
 uses
-  integer_types;
+ ctypes, integer_types;
 
 {$IFDEF FPC}
 {$PACKRECORDS C}
@@ -106,7 +106,7 @@ type
     }
 
   PFT_FWord = ^TFT_FWord;
-  TFT_FWord = smallint;
+  TFT_FWord = csshort;
 { distance in FUnits  }
 {*************************************************************************
    *
@@ -119,7 +119,7 @@ type
     }
 
   PFT_UFWord = ^TFT_UFWord;
-  TFT_UFWord = word;
+  TFT_UFWord = cushort;
 { unsigned distance  }
 {*************************************************************************
    *
@@ -131,7 +131,7 @@ type
     }
 
   PFT_Char = ^TFT_Char;
-  TFT_Char = char;
+  TFT_Char = cschar;
 {*************************************************************************
    *
    * @type:
@@ -143,7 +143,7 @@ type
 
   PPFT_Byte = ^PFT_Byte;
   PFT_Byte = ^TFT_Byte;
-  TFT_Byte = byte;
+  TFT_Byte = cuchar;
 {*************************************************************************
    *
    * @type:
@@ -188,7 +188,7 @@ type
     }
 
   PFT_Short = ^TFT_Short;
-  TFT_Short = smallint;
+  TFT_Short = csshort;
 {*************************************************************************
    *
    * @type:
@@ -199,7 +199,7 @@ type
     }
 
   PFT_UShort = ^TFT_UShort;
-  TFT_UShort = word;
+  TFT_UShort = cushort;
 {*************************************************************************
    *
    * @type:
@@ -210,7 +210,7 @@ type
     }
 
   PFT_Int = ^TFT_Int;
-  TFT_Int = longint;
+  TFT_Int = csint;
 {*************************************************************************
    *
    * @type:
@@ -221,7 +221,7 @@ type
     }
 
   PFT_UInt = ^TFT_UInt;
-  TFT_UInt = dword;
+  TFT_UInt = cuint;
 {*************************************************************************
    *
    * @type:
@@ -232,7 +232,7 @@ type
     }
 
   PFT_Long = ^TFT_Long;
-  TFT_Long = longint;
+  TFT_Long = cslong;
 {*************************************************************************
    *
    * @type:
@@ -243,7 +243,7 @@ type
     }
 
   PFT_ULong = ^TFT_ULong;
-  TFT_ULong = dword;
+  TFT_ULong = culong;
 {*************************************************************************
    *
    * @type:
@@ -254,7 +254,7 @@ type
     }
 
   PFT_F2Dot14 = ^TFT_F2Dot14;
-  TFT_F2Dot14 = smallint;
+  TFT_F2Dot14 = csshort;
 {*************************************************************************
    *
    * @type:
@@ -265,7 +265,7 @@ type
     }
 
   PFT_F26Dot6 = ^TFT_F26Dot6;
-  TFT_F26Dot6 = longint;
+  TFT_F26Dot6 = cslong;
 {*************************************************************************
    *
    * @type:
@@ -277,7 +277,7 @@ type
     }
 
   PFT_Fixed = ^TFT_Fixed;
-  TFT_Fixed = longint;
+  TFT_Fixed = cslong;
 {*************************************************************************
    *
    * @type:
@@ -289,7 +289,7 @@ type
     }
 
   PFT_Error = ^TFT_Error;
-  TFT_Error = longint;
+  TFT_Error = cint;
 {*************************************************************************
    *
    * @type:
@@ -300,7 +300,7 @@ type
     }
 
   PFT_Pointer = ^TFT_Pointer;
-  TFT_Pointer = pointer;
+  TFT_Pointer = Pointer;
 {*************************************************************************
    *
    * @type:
@@ -313,7 +313,7 @@ type
     }
 
   PFT_Offset = ^TFT_Offset;
-  TFT_Offset = SizeInt;
+  TFT_Offset = csize_t;
 {*************************************************************************
    *
    * @type:
