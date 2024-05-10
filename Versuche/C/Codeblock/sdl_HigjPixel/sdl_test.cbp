@@ -30,10 +30,10 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add option="`pkg-config --cflags freetype2`" />
 		</Compiler>
 		<Linker>
-			<Add option="`pkg-config --libs freetype2`" />
+			<Add library="SDL3" />
+			<Add library="GL" />
 		</Linker>
 		<Unit filename="main.cpp" />
 		<Extensions />

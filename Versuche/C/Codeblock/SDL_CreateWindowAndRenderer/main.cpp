@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
 
     SDL_bool quit = SDL_FALSE;
 
+
     SDL_ShowWindow(win);
     while (!quit)
     {

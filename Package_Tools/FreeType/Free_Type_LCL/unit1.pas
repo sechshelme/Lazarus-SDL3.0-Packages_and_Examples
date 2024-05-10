@@ -17,12 +17,13 @@ type
 
   TForm1 = class(TForm)
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure FormPaint(Sender: TObject);
   private
+    bitmap:TBitmap;
     procedure Init_FreeType;
     procedure show_image;
   public
-
   end;
 
 var
@@ -41,24 +42,31 @@ var
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
+  bitmap:=TBitmap.Create;
+  bitmap.SetSize(ImgWidth,ImgHeight);
   Init_FreeType;
   ClientWidth:=ImgWidth;
   ClientHeight:=ImgHeight;
 end;
 
+procedure TForm1.FormDestroy(Sender: TObject);
+begin
+  bitmap.Free;
+end;
+
 procedure TForm1.FormPaint(Sender: TObject);
 begin
   show_image;
+  canvas.Draw(00,00,bitmap);
 end;
 
-procedure draw_bitmap(bitmap: PFT_Bitmap; x: TFT_Int; y: TFT_Int);
+procedure draw_bitmap(bit: PFT_Bitmap; x: TFT_Int; y: TFT_Int);
 var
   x_max, y_max, i, j, p, q: TFT_Int;
   ch: char;
 begin
-  x_max := x + bitmap^.Width;
-  y_max := y + bitmap^.rows;
-
+  x_max := x + bit^.Width;
+  y_max := y + bit^.rows;
 
   i := x;
   p := 0;
@@ -76,7 +84,7 @@ begin
         Continue;
       end;
 
-      image[j, i] := char(bitmap^.buffer[q * bitmap^.Width + p]);
+      image[j, i] := char(bit^.buffer[q * bit^.Width + p]);
     end;
   end;
 end;
@@ -113,7 +121,7 @@ procedure TForm1.Init_FreeType;
       WriteLn('Fehler: ', error);
     end;
 
-    error := FT_Set_Char_Size(face, 150 * 15, 0, 150, 0);
+    error := FT_Set_Char_Size(face, 50 * 15, 0, 150, 0);
     if error <> 0 then begin
       WriteLn('Fehler: Set_Char_Size   ', error);
     end;
@@ -125,18 +133,8 @@ procedure TForm1.Init_FreeType;
     matrix.yx := Round(Sin(angle) * $10000);
     matrix.yy := Round(Cos(angle) * $10000);
 
-    pen.x :=  20000;
+    pen.x :=  40000;
     pen.y := 20000;
-
-    //WriteLn('angle:', angle:10:4);
-    //WriteLn('size: matrix: ', SizeOf(matrix));
-    //WriteLn('size: pen:    ', SizeOf(pen));
-    //WriteLn('pen.x:    ', pen.x);
-    //WriteLn('pen.y:    ', pen.y);
-    //WriteLn('matrix.xx:    ', matrix.xx);
-    //WriteLn('matrix.xy:    ', matrix.xy);
-    //WriteLn('matrix.yx:    ', matrix.yx);
-    //WriteLn('matrix.yy:    ', matrix.yy);
 
     for n := 0 to Length(HelloText) - 1 do begin
       FT_Set_Transform(face, @matrix, @pen);
@@ -146,7 +144,23 @@ procedure TForm1.Init_FreeType;
         WriteLn('Fehler: Load_Char   ', error);
       end;
 
-      //      Write('n: ',n,'   ');
+      draw_bitmap(@slot^.bitmap, slot^.bitmap_left, target_height - slot^.bitmap_top);
+
+      pen.x += slot^.advance.x;
+      pen.y += slot^.advance.y;
+    end;
+
+    pen.x :=  40000;
+    pen.y := 30000;
+
+    for n := 0 to Length(HelloText) - 1 do begin
+      FT_Set_Transform(face, @matrix, @pen);
+
+      error := FT_Load_Char(face, TFT_ULong(HelloText[n]), FT_LOAD_RENDER);
+      if error <> 0 then begin
+        WriteLn('Fehler: Load_Char   ', error);
+      end;
+
       draw_bitmap(@slot^.bitmap, slot^.bitmap_left, target_height - slot^.bitmap_top);
 
       pen.x += slot^.advance.x;
@@ -164,20 +178,9 @@ procedure TForm1.show_image;
 begin
   for i := 0 to ImgHeight - 1 do begin
     for j := 0 to ImgWidth - 1 do begin
-      Canvas.Pixels[i,j]:=TColor( image[i,j]) or $888800;
+     bitmap.Canvas.Pixels[i,j]:=TColor( image[i,j]) or $888800;
     end;
   end;
-  //for i := 0 to ImgHeight - 1 do begin
-  //  for j := 0 to ImgWidth - 1 do begin
-  //    case image[i,j] of
-  //    #0 :ch:= ' ';
-  //    #1..#127 :ch:= '+';
-  //    #128..#255 :ch:= '*';
-  //    end;
-  //    Write(ch);
-  //  end;
-  //end;
-
 end;
 
 end.

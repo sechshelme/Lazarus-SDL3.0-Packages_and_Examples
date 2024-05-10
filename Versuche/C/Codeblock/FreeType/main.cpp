@@ -1,29 +1,48 @@
 #include <freetype2/ft2build.h>
-// #include <SDL3/SDL.h>
+//#include FT_FREETYPE_H
+
+#include <freetype/freetype.h>
+//#include <freetype2/freetype/fttypes.h>
+//#include <freetype2/freetype/ftsystem.h>
+//#include <freetype2/freetype/config/integer-types.h>
+
+// https://freetype.org/freetype2/docs/tutorial/step1.html
+
+
+typedef struct  Test_
+  {
+    FT_Long           num_faces;
+
+  } Test;
+
+
 
 int main()
 {
-        uint32_t initFlags = SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS;
-        SDL_Init(initFlags);
-        uint32_t windowFlags = SDL_WINDOW_HIDDEN | SDL_WINDOW_TRANSPARENT | SDL_WINDOW_BORDERLESS;
-        SDL_Surface * shapeSurface = SDL_CreateSurface(800, 600, SDL_PIXELFORMAT_RGBA8888);
-        SDL_Rect r;
-        r = {0, 0, 400, 300};
-        SDL_FillSurfaceRect(shapeSurface, &r, 0x00000080);
-        r = {400, 300, 400, 300};
-        SDL_FillSurfaceRect(shapeSurface, &r, 0x000000FF);
+printf(" Start\n");
 
-        SDL_Window * win = SDL_CreateWindow("Shapes", 800, 600, windowFlags);
-        SDL_Delay(2000);
-        SDL_Renderer * screen = SDL_CreateRenderer(win, 0, SDL_RENDERER_PRESENTVSYNC);
-        SDL_SetWindowShape(win, shapeSurface);
-        SDL_ShowWindow(win);
+FT_Library  library;   /* handle to library     */
+FT_Face     face;      /* handle to face object */
 
-        SDL_SetRenderDrawColor(screen, 255, 255, 25, SDL_ALPHA_OPAQUE);
-        SDL_RenderClear(screen);
-        SDL_RenderPresent(screen);
+FT_Error error;
 
-        SDL_Delay(5000);
-        SDL_DestroyWindow(win);
-        SDL_Quit();
+
+error = FT_Init_FreeType( &library );
+if ( error ) { printf("Init error\n"); }
+
+
+printf("addr face: %i\n", &face);
+error = FT_New_Face( library, "/usr/share/wine/fonts/courier.ttf", 0, &face );
+printf("addr face: %i\n", &face);
+if ( error == FT_Err_Unknown_File_Format )
+{
+  printf("... the font file could be opened and read, but it appears  ... that its font format is unsupported\n");
+}
+else if ( error )
+{
+printf("Face error %i\n", error);
+}
+else printf("io.  %i\n",error);
+
+printf("Ende\n");
 }
