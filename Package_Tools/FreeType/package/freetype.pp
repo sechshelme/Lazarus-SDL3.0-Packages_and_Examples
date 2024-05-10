@@ -6,8 +6,6 @@ uses
   ftobjs,
   integer_types, ftsystem, ftgloadr, fttypes, ftimage;
 
-
-
   {$IFDEF FPC}
   {$PACKRECORDS C}
   {$ENDIF}
