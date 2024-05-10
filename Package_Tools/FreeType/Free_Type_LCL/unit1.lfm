@@ -1,11 +1,24 @@
 object Form1: TForm1
-  Left = 200
-  Height = 240
-  Top = 114
-  Width = 320
+  Left = 619
+  Height = 1062
+  Top = 233
+  Width = 2084
   Caption = 'Form1'
+  ClientHeight = 1062
+  ClientWidth = 2084
   LCLVersion = '3.99.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnPaint = FormPaint
+  object Image1: TImage
+    Left = 48
+    Height = 976
+    Top = 32
+    Width = 1922
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 111
+    Top = 82
+  end
 end
