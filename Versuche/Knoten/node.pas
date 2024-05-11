@@ -8,18 +8,20 @@ uses
 type
   PNode = ^TNode;
 
+  { TNode }
+
   TNode = class(TObject)
     renderer: PSDL_Renderer;
     image: PSDL_Texture;
     Fpos: TSDL_FRect;
-    link: PNode;
-    backLink: PNode;
+    link: TNode;
+    backLink: TNode;
     constructor Create(screen: PSDL_Renderer);
     function isHis(var pt: TSDL_FPoint): TSDL_bool;
     procedure Clear;
     procedure SetPos(x, y: single);
     procedure unlink;
-    procedure linkTo(other: PNode);
+    procedure linkTo(other: TNode);
     procedure draw;
   end;
 
@@ -38,7 +40,7 @@ begin
   Fpos.y := 0;
   Fpos.w := 15;
   Fpos.h := 15;
-  image := SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, Trunc(Fpos.w), Trunc(Fpos.x));
+  image := SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, Trunc(Fpos.w), Trunc(Fpos.h));
   fill.r := 100;
   fill.g := 200;
   fill.b := 100;
@@ -54,8 +56,8 @@ end;
 procedure TNode.Clear;
 begin
   SDL_DestroyTexture(image);
-  if backLink^.link = @Self then begin
-    backLink^.unlink;
+  if backLink.link = Self then begin
+    backLink.unlink;
   end;
 end;
 
@@ -71,7 +73,7 @@ begin
   backLink := nil;
 end;
 
-procedure TNode.linkTo(other: PNode);
+procedure TNode.linkTo(other: TNode);
 begin
   link := other;
 end;
@@ -81,8 +83,8 @@ begin
   SDL_RenderTexture(renderer, image, nil, @Fpos);
   if link <> nil then begin
     SDL_SetRenderDrawColor(renderer, $FF, $FF, $FF, $FF);
+      SDL_RenderLine(renderer, Fpos.x + Fpos.w / 2, Fpos.y + Fpos.h / 2, link.Fpos.x + link.Fpos.w / 2, link.Fpos.y + link.Fpos.h / 2);
   end;
-  SDL_RenderLine(renderer, Fpos.x + Fpos.w / 2, Fpos.y + Fpos.h / 2, link^.Fpos.x + link^.Fpos.w / 2, link^.Fpos.y + link^.Fpos.h / 2);
 end;
 
 end.

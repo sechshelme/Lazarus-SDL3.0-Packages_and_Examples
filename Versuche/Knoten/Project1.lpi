@@ -53,6 +53,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="FillCol"/>
       </Unit>
+      <Unit>
+        <Filename Value="attribute.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Attribute"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
