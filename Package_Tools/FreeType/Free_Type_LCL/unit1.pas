@@ -6,29 +6,25 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  ctypes,
-  freetype,
-  ftimage,
-  fttypes;
+  OpenGLContext,
+  gl,
+  ctypes, freetype, ftimage, fttypes;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
-    Image1: TImage;
+    OpenGLControl1: TOpenGLControl;
     Timer1: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure FormPaint(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
   private
     library_: TFT_Library;
     face: TFT_Face;
 
-    bitmap: TBitmap;
     procedure Face_To_Image(angle: single);
-    procedure Image_To_Bitmap;
   public
   end;
 
@@ -56,12 +52,11 @@ var
 begin
   Timer1.Enabled := False;
   Timer1.Interval := 100;
-  Image1.Align := alClient;
-  bitmap := TBitmap.Create;
-  bitmap.SetSize(ImgWidth, ImgHeight);
   ClientWidth := ImgWidth + 50;
   ClientHeight := ImgHeight + 50;
-  Image1.Picture.Bitmap.SetSize(ImgWidth, ImgHeight);
+
+  OpenGLControl1.MakeCurrent();
+  glClearColor(0, 0, 0, 0);
 
   error := FT_Init_FreeType(@library_);
   if error <> 0 then begin
@@ -83,24 +78,19 @@ end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
-  bitmap.Free;
   FT_Done_Face(face);
   FT_Done_FreeType(library_);
-end;
-
-procedure TForm1.FormPaint(Sender: TObject);
-begin
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 const
   angle: single = 0.0;
 begin
-  angle += pi / 4;
-  angle:=0;
+  angle += 0.1;
   Face_To_Image(angle);
-  Image_To_Bitmap;
-  Repaint;
+
+glDrawPixels(ImgWidth,ImgHeight,GL_LUMINANCE,GL_UNSIGNED_BYTE,@image);
+OpenGLControl1.SwapBuffers;
 end;
 
 procedure draw_bitmap(bit: PFT_Bitmap; x: TFT_Int; y: TFT_Int);
@@ -126,7 +116,7 @@ begin
         Continue;
       end;
 
-      image[j, i] := char(bit^.buffer[p * bit^.Width + q]);
+      image[j, i] :=char(byte(image[j, i])or byte(bit^.buffer[q * bit^.Width + p]));
     end;
   end;
 end;
@@ -145,7 +135,8 @@ var
 begin
   slot := face^.glyph;
 
-  angle:=pi / 8 + pi;
+  angle+=pi / 7 ;
+  WriteLn(angle:4:2);
 //  angle:=pi;
 
   matrix.xx := Round(Cos(angle) * $10000);
@@ -154,7 +145,7 @@ begin
   matrix.yy := Round(Cos(angle) * $10000);
 
   pen.x := 40000;
-  pen.y := 20000;
+  pen.y := 30000;
 
   for n := 0 to Length(HelloText) - 1 do begin
     FT_Set_Transform(face, @matrix, @pen);
@@ -169,31 +160,6 @@ begin
     pen.x += slot^.advance.x;
     pen.y += slot^.advance.y;
   end;
-end;
-
-
-procedure TForm1.Image_To_Bitmap;
-var
-  i, j: integer;
-
-  procedure SetPixel(x, y: integer; col: byte);
-  begin
-    //    bitmap.RawImage.Data[y * ImgWidth + x * 4] := $FF;
-    //    bitmap.RawImage.Data[y * ImgWidth + x * 4 + 1] := $00;
-    bitmap.RawImage.Data[(y * ImgWidth + x) * 4 + 1] := col;
-    //    bitmap.RawImage.Data[y * ImgWidth + x * 4 + 3] := $FF;
-  end;
-
-begin
-  for j := 0 to ImgHeight - 1 do begin
-    for i := 0 to ImgWidth - 1 do begin
-      SetPixel(i, j, byte(image[j, i]));
-//      SetPixel(i, j, Random($ff));
-    end;
-  end;
-
-  Image1.Canvas.Draw(00, 00, bitmap);
-  Invalidate;
 end;
 
 end.

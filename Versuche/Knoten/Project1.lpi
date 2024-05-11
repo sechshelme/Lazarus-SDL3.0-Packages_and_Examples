@@ -43,6 +43,16 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="AudioBar"/>
       </Unit>
+      <Unit>
+        <Filename Value="node.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Node"/>
+      </Unit>
+      <Unit>
+        <Filename Value="fillcol.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="FillCol"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
