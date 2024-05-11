@@ -76,6 +76,7 @@ end;
 procedure TNode.linkTo(other: TNode);
 begin
   link := other;
+  other.backLink:=Self;
 end;
 
 procedure TNode.draw;
@@ -83,7 +84,7 @@ begin
   SDL_RenderTexture(renderer, image, nil, @Fpos);
   if link <> nil then begin
     SDL_SetRenderDrawColor(renderer, $FF, $FF, $FF, $FF);
-      SDL_RenderLine(renderer, Fpos.x + Fpos.w / 2, Fpos.y + Fpos.h / 2, link.Fpos.x + link.Fpos.w / 2, link.Fpos.y + link.Fpos.h / 2);
+    SDL_RenderLine(renderer, Fpos.x + Fpos.w / 2, Fpos.y + Fpos.h / 2, link.Fpos.x + link.Fpos.w / 2, link.Fpos.y + link.Fpos.h / 2);
   end;
 end;
 

@@ -10,7 +10,7 @@ uses
   FillCol,
   Attribute;
 
-// https://discourse.libsdl.org/t/node-graph-ui-example/50993/3
+  // https://discourse.libsdl.org/t/node-graph-ui-example/50993/3
 
   procedure main;
   var
@@ -32,7 +32,9 @@ uses
 
     while not quit do begin
       while SDL_PollEvent(@event) do begin
-        for i:=0 to Length(Attributes)-1 do Attributes[i].handleEvent(@event);
+        for i := 0 to Length(Attributes) - 1 do begin
+          Attributes[i].handleEvent(@event);
+        end;
 
         case event.type_ of
           SDL_EVENT_KEY_DOWN: begin
@@ -48,7 +50,7 @@ uses
         end;
       end;
 
-      SDL_SetRenderDrawColor(screen,95,95,125,255);
+      SDL_SetRenderDrawColor(screen, 95, 95, 125, 255);
       SDL_RenderClear(screen);
 
       for i := 0 to Length(Attributes) - 1 do begin
