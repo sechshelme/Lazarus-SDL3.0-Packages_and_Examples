@@ -25,10 +25,10 @@ uses
     win := SDL_CreateWindow('Knoten', 1000, 1000, SDL_WINDOW_RESIZABLE);
     screen := SDL_CreateRenderer(win, nil, SDL_RENDERER_PRESENTVSYNC);
 
-    Attributes += [TAttribute.Create(screen)];
-    Attributes += [TAttribute.Create(screen)];
-    Attributes += [TAttribute.Create(screen)];
-    Attributes += [TAttribute.Create(screen)];
+
+    for i := 0 to 8 do begin
+      Attributes += [TAttribute.Create(screen)];
+    end;
 
     while not quit do begin
       while SDL_PollEvent(@event) do begin

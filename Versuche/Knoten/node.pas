@@ -20,8 +20,8 @@ type
     link: TNode;
     backLink: TNode;
     constructor Create(screen: PSDL_Renderer);
+    destructor Destroy; override;
     function isHis(var pt: TSDL_FPoint): TSDL_bool;
-    procedure Clear;
     procedure SetPos(x, y: single);
     procedure unlink;
     procedure linkTo(other: TNode);
@@ -37,24 +37,25 @@ var
   fill: TSDL_Color;
 begin
   renderer := screen;
-  Fpos.items:=[0, 0, 15, 15];
+  Fpos.items := [0, 0, 15, 15];
   image := SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, Trunc(Fpos.w), Trunc(Fpos.h));
 
-  fill.items :=[ 100, 200, 100, 255];
+  fill.items := [100, 200, 100, 255];
   fillColor(renderer, image, fill);
 end;
 
-function TNode.isHis(var pt: TSDL_FPoint): TSDL_bool;
-begin
-  Result := SDL_PointInRectFloat(@pt, @Fpos);
-end;
-
-procedure TNode.Clear;
+destructor TNode.Destroy;
 begin
   SDL_DestroyTexture(image);
   if backLink.link = Self then begin
     backLink.unlink;
   end;
+  inherited Destroy;
+end;
+
+function TNode.isHis(var pt: TSDL_FPoint): TSDL_bool;
+begin
+  Result := SDL_PointInRectFloat(@pt, @Fpos);
 end;
 
 procedure TNode.SetPos(x, y: single);
@@ -72,7 +73,7 @@ end;
 procedure TNode.linkTo(other: TNode);
 begin
   link := other;
-  other.backLink:=Self;
+  other.backLink := Self;
 end;
 
 procedure TNode.draw;

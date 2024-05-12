@@ -8,6 +8,9 @@ uses
   SDL3, FillCol, Node;
 
 type
+
+  { TAttribute }
+
   TAttribute = class(TObject)
     renderer: PSDL_Renderer;
     image: TSDL_Texture;
@@ -17,7 +20,7 @@ type
     dragging: TSDL_bool;
     Value: integer;
     constructor Create(screen: PSDL_Renderer);
-    procedure Clear;
+    destructor Destroy; override;
     procedure SetPos(x, y: single);
     procedure handleEvent(event: PSDL_Event);
     procedure draw;
@@ -47,12 +50,13 @@ begin
   SetPos(Random(900), Random(900));
 end;
 
-procedure TAttribute.Clear;
+destructor TAttribute.Destroy;
 begin
   SDL_DestroyTexture(image);
   image := nil;
-  input.Free;
-  output.Free;
+  //  input.Free;
+  //  output.Free;
+  inherited Destroy;
 end;
 
 procedure TAttribute.SetPos(x, y: single);
@@ -104,7 +108,6 @@ begin
             end;
           end;
         end;
-        dragLink.Clear;
         dragLink.Free;
         dragLink := nil;
       end;
