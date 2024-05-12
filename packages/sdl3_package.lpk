@@ -16,235 +16,29 @@
         <UnitName Value="SDL3"/>
       </Item>
       <Item>
-        <Filename Value="sdl3_vulkan.pas"/>
-        <AddToUsesPkgSection Value="False"/>
-        <UnitName Value="sdl3_vulkan"/>
-      </Item>
-      <Item>
         <Filename Value="sdl3_main.pas"/>
         <AddToUsesPkgSection Value="False"/>
         <UnitName Value="SDL3_main"/>
       </Item>
       <Item>
-        <Filename Value="sdl3_revision.pas"/>
-        <AddToUsesPkgSection Value="False"/>
-        <UnitName Value="SDL3_revision"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_joystick.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_rect.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_hidapi.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_blendmode.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_filesystem.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_error.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_init.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_log.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_clipboard.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_audio.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_stdinc.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_locale.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_guid.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_messagebox.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_atomic.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_video.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_properties.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_version.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_pen.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_loadso.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_egl.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_camera.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_gamepad.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_hints.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_scancode.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_system.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_cpuinfo.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_thread.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_surface.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_events.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_touch.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_platform.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_pixels.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_power.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_mutex.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_timer.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_render.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_misc.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_keyboard.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_keycode.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_mouse.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_metal.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_haptic.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_sensor.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_assert.inc"/>
-        <Type Value="Include"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_opengl.pas"/>
-        <UnitName Value="SDL3_opengl"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_opengl_glext.pas"/>
-        <UnitName Value="SDL3_opengl_glext"/>
-      </Item>
-      <Item>
         <Filename Value="sdl3_image.pas"/>
-        <UnitName Value="sdl3_image"/>
-      </Item>
-      <Item>
-        <Filename Value="copyright.md"/>
-        <Type Value="Text"/>
+        <UnitName Value="SDL3_image"/>
       </Item>
       <Item>
         <Filename Value="sdl3_rtf.pas"/>
-        <UnitName Value="sdl3_rtf"/>
+        <UnitName Value="SDL3_rtf"/>
       </Item>
       <Item>
         <Filename Value="sdl3_ttf.pas"/>
-        <UnitName Value="sdl3_ttf"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_dialog.inc"/>
-        <Type Value="Include"/>
+        <UnitName Value="SDL3_ttf"/>
       </Item>
       <Item>
         <Filename Value="sdl3_mixer.pas"/>
-        <UnitName Value="sdl3_mixer"/>
+        <UnitName Value="SDL3_mixer"/>
       </Item>
       <Item>
         <Filename Value="sdl3_net.pas"/>
-        <UnitName Value="sdl3_net"/>
+        <UnitName Value="SDL3_net"/>
       </Item>
     </Files>
     <RequiredPkgs>

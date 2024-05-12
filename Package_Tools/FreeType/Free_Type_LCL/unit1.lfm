@@ -1,18 +1,20 @@
 object Form1: TForm1
-  Left = 247
+  Left = 572
   Height = 737
-  Top = 199
+  Top = 204
   Width = 1431
   Caption = 'Form1'
   ClientHeight = 737
   ClientWidth = 1431
+  Color = clForm
   LCLVersion = '3.99.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnResize = FormResize
   object OpenGLControl1: TOpenGLControl
-    Left = 72
+    Left = 56
     Height = 624
-    Top = 48
+    Top = 32
     Width = 1232
   end
   object Timer1: TTimer
