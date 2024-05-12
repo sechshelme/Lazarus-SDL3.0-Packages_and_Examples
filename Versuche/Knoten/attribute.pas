@@ -90,8 +90,10 @@ begin
         dragLink.SetPos(mouse.x, mouse.y);
         output.linkTo(dragLink);
       end else if input.isHis(mouse) then begin
-        input.backLink.unlink;
-        input.backLink := nil;
+        if input.backLink<> nil then begin
+          input.backLink.unlink;
+          input.backLink := nil;
+        end;
       end else if SDL_PointInRectFloat(@mouse, @Fpos) then begin
         dragging := SDL_TRUE;
       end;

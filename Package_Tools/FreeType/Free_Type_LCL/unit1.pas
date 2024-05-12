@@ -68,7 +68,7 @@ begin
     WriteLn('Fehler: ', error);
   end;
 
-  error := FT_Set_Char_Size(face, 100 * 15, 0, 150, 0);
+  error := FT_Set_Char_Size(face, 2500, 0, 150, 0);
   if error <> 0 then begin
     WriteLn('Fehler: Set_Char_Size   ', error);
   end;
@@ -89,8 +89,8 @@ begin
   angle += 0.1;
   Face_To_Image(angle);
 
-glDrawPixels(ImgWidth,ImgHeight,GL_LUMINANCE,GL_UNSIGNED_BYTE,@image);
-OpenGLControl1.SwapBuffers;
+  glDrawPixels(ImgWidth, ImgHeight, GL_LUMINANCE, GL_UNSIGNED_BYTE, @image);
+  OpenGLControl1.SwapBuffers;
 end;
 
 procedure draw_bitmap(bit: PFT_Bitmap; x: TFT_Int; y: TFT_Int);
@@ -116,14 +116,15 @@ begin
         Continue;
       end;
 
-      image[j, i] :=char(byte(image[j, i])or byte(bit^.buffer[q * bit^.Width + p]));
+    //  image[j, ImgHeight - i] := char(byte(image[j, ImgHeight - i]) or byte(bit^.buffer[q * bit^.Width + p]));
+            image[j, i] :=char(byte(image[j, i])or byte(bit^.buffer[q * bit^.Width + p]));
     end;
   end;
 end;
 
 procedure TForm1.Face_To_Image(angle: single);
 const
-//  HelloText: PChar = 'Hello world !   Hallo Welt !';
+  //  HelloText: PChar = 'Hello world !   Hallo Welt !';
   HelloText: PChar = 'Computer sind dumm';
 var
   error: TFT_Error;
@@ -135,9 +136,9 @@ var
 begin
   slot := face^.glyph;
 
-  angle+=pi / 7 ;
-  WriteLn(angle:4:2);
-//  angle:=pi;
+  angle += pi / 7;
+  WriteLn(angle: 4: 2);
+//  angle := pi;
 
   matrix.xx := Round(Cos(angle) * $10000);
   matrix.xy := Round(-Sin(angle) * $10000);
@@ -145,7 +146,7 @@ begin
   matrix.yy := Round(Cos(angle) * $10000);
 
   pen.x := 40000;
-  pen.y := 30000;
+  pen.y := 50000;
 
   for n := 0 to Length(HelloText) - 1 do begin
     FT_Set_Transform(face, @matrix, @pen);
