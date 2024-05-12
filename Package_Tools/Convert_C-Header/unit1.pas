@@ -37,7 +37,7 @@ var
   i, j: integer;
 begin
   Memo1.Clear;
-  slFile := FindAllFiles('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-2/sdl3/packages/Tools/include_C', '*.h');
+  slFile := FindAllFiles('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/Package_Tools/include_C', '*.h');
   Memo1.Lines := slFile;
 
   for i := 0 to slFile.Count - 1 do begin

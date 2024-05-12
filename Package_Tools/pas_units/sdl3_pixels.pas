@@ -262,24 +262,23 @@ type
     SDL_COLORSPACE_BT2020_FULL = (uint32(SDL_COLOR_TYPE_YCBCR) shl 28) or (uint32(SDL_COLOR_RANGE_FULL) shl 24) or (uint32(SDL_COLOR_PRIMARIES_BT2020) shl 20) or (uint32(SDL_TRANSFER_CHARACTERISTICS_PQ) shl 16) or (uint32(SDL_MATRIX_COEFFICIENTS_BT2020_NCL) shl 8) or (uint32(SDL_CHROMA_LOCATION_LEFT) shl 0);
     SDL_COLORSPACE_RGB_DEFAULT = SDL_COLORSPACE_SRGB;
     SDL_COLORSPACE_YUV_DEFAULT = SDL_COLORSPACE_JPEG;
+
 type
   PSDL_Color = ^TSDL_Color;
   TSDL_Color = record
-      r : Uint8;
-      g : Uint8;
-      b : Uint8;
-      a : Uint8;
-    end;
+    case byte of
+      1: (r, g, b, a: uint8);
+      2: (items: array[0..3] of uint8);
+  end;   
 
   TSDL_Colour = TSDL_Color;
 
 type
   PSDL_FColor = ^TSDL_FColor;
   TSDL_FColor = record
-      r : single;
-      g : single;
-      b : single;
-      a : single;
+    case byte of
+      1: (r, g, b, a: single);
+      2: (items: array[0..3] of single);
     end;
 
   TSDL_FColour = TSDL_FColor;

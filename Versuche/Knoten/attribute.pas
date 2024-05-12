@@ -36,15 +36,9 @@ begin
   dragging := SDL_FALSE;
   Value := 0;
   renderer := screen;
-  Fpos.x := 0;
-  Fpos.y := 0;
-  Fpos.w := 80;
-  Fpos.h := 50;
+  Fpos.items := [0, 0, 80, 50];
   image := SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, Trunc(Fpos.w), Trunc(Fpos.h));
-  fill.r := 200;
-  fill.g := 200;
-  fill.b := 120;
-  fill.a := 255;
+  fill.items := [200, 200, 120, 255];
   fillColor(renderer, image, fill);
   input := TNode.Create(renderer);
   inputs += [input];
@@ -75,8 +69,7 @@ var
 begin
   case event^.type_ of
     SDL_EVENT_MOUSE_MOTION: begin
-      mouse.x := event^.button.x;
-      mouse.y := event^.button.y;
+      mouse.items := [event^.button.x, event^.button.y];
       if dragLink <> nil then begin
         dragLink.SetPos(mouse.x - 8, mouse.y - 8);
       end else if dragging then begin

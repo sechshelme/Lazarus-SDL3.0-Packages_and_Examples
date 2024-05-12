@@ -1,5 +1,8 @@
 unit Node;
 
+{$modeswitch arrayoperators on}
+
+
 interface
 
 uses
@@ -25,8 +28,6 @@ type
     procedure draw;
   end;
 
-
-
 implementation
 
 { TNode }
@@ -36,15 +37,10 @@ var
   fill: TSDL_Color;
 begin
   renderer := screen;
-  Fpos.x := 0;
-  Fpos.y := 0;
-  Fpos.w := 15;
-  Fpos.h := 15;
+  Fpos.items:=[0, 0, 15, 15];
   image := SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, Trunc(Fpos.w), Trunc(Fpos.h));
-  fill.r := 100;
-  fill.g := 200;
-  fill.b := 100;
-  fill.a := 255;
+
+  fill.items :=[ 100, 200, 100, 255];
   fillColor(renderer, image, fill);
 end;
 

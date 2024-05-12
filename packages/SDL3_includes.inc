@@ -11,14 +11,17 @@
  {$include SDL3_locale.inc}
  {$include SDL3_thread.inc}
  {$include SDL3_error.inc}
- {$include SDL3_filesystem.inc}
+{$include SDL3_filesystem.inc}
+
  {$include SDL3_log.inc}
  {$include SDL3_platform.inc}
  {$include SDL3_misc.inc}
  {$include SDL3_power.inc}
- {$include SDL3_timer.inc}
+{$include SDL3_timer.inc}
+{$include SDL3_time.inc}
  {$include SDL3_pixels.inc}
  {$include SDL3_properties.inc}
+{$include SDL3_storage.inc}
  {$include SDL3_rect.inc}
 // {$include SDL3_rwops.inc}
 {$include sdl3_iostream.inc}

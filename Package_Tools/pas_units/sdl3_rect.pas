@@ -12,35 +12,31 @@ uses
 
 type
   PSDL_Point = ^TSDL_Point;
-
   TSDL_Point = record
-    x: longint;
-    y: longint;
+    case byte of
+      1: (x, y: longint);
+      2: (items: array[0..1] of longint);
   end;
 
   PSDL_FPoint = ^TSDL_FPoint;
-
   TSDL_FPoint = record
-    x: single;
-    y: single;
+    case byte of
+      1: (x, y: single);
+      2: (items: array[0..1] of single);
   end;
 
   PSDL_Rect = ^TSDL_Rect;
-
   TSDL_Rect = record
-    x: longint;
-    y: longint;
-    w: longint;
-    h: longint;
+    case byte of
+      1: (x, y, w, h: longint);
+      2: (items: array[0..3] of longint);
   end;
 
   PSDL_FRect = ^TSDL_FRect;
-
   TSDL_FRect = record
-    x: single;
-    y: single;
-    w: single;
-    h: single;
+    case byte of
+      1: (x, y, w, h: single);
+      2: (items: array[0..3] of single);
   end;
 
 function SDL_PointInRect(p: PSDL_Point; r: PSDL_Rect): TSDL_bool;

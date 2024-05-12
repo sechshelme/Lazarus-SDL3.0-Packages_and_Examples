@@ -7,6 +7,10 @@ interface
 uses
 //  SDL3_error,
 // SDL3_iostream, SDL3_audio,  SDL_image,
+//  SDL_time,
+//  SDL_filesystem,
+//    SDL_storage,
+//  SDL3,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, FileUtil;
 
 type
@@ -88,6 +92,7 @@ begin
         halt;
       end;
     until p = 1;
+
 
     inc_dest.Add('{$ENDIF read_interface}');
     inc_dest.Add('');

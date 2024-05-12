@@ -4,16 +4,70 @@ h2pas -p -T -d -c -e xxx.h
 ```
 
 # Spezielle Behandlungen:
-## sdl_pixels.h 
+## vor h2pas
+### .../include_C/sdl_pixels.h 
 Die *.pp mit folgendem Tool bearbeiten "convert_SDL_pixels.pp", wegen den Makros.
 
-## sdl3_log.pas
+## nach h2pas
+### .../pas_units/sdl3_pixels.pas
+Folgendes ersetzen:
+```pascal
+type
+  PSDL_Color = ^TSDL_Color;
+  TSDL_Color = record
+    case byte of
+      1: (r, r, b, a: uint8);
+      2: (items: array[0..3] of uint8);
+  end;   
+
+  PSDL_FColor = ^TSDL_FColor;
+  TSDL_FColor = record
+    case byte of
+      1: (r, r, b, a: single);
+      2: (items: array[0..3] of single);
+    end;
+```
+
+### .../pas_units/sdl3_rect.pas
+Folgendes ersetzen:
+```pascal
+type
+  PSDL_Point = ^TSDL_Point;
+  TSDL_Point = record
+    case byte of
+      1: (x, y: longint);
+      2: (items: array[0..1] of longint);
+  end;
+
+  PSDL_FPoint = ^TSDL_FPoint;
+  TSDL_FPoint = record
+    case byte of
+      1: (x, y: single);
+      2: (items: array[0..1] of single);
+  end;
+
+  PSDL_Rect = ^TSDL_Rect;
+  TSDL_Rect = record
+    case byte of
+      1: (x, y, w, h: longint);
+      2: (items: array[0..3] of longint);
+  end;
+
+  PSDL_FRect = ^TSDL_FRect;
+  TSDL_FRect = record
+    case byte of
+      1: (x, y, w, h: single);
+      2: (items: array[0..3] of single);
+  end;
+```
+
+### .../pas_units/sdl3_log.pas
 Folgendes ergänzen:
 ```pascal
 procedure SDL_Log(fmt: PChar); varargs; cdecl; external name 'SDL_Log';
 ```
 
-## sdl3_stdinc.pas
+### .../pas_units/sdl3_stdinc.pas
 Folgendes ergänzen:
 ```pascal
 type
@@ -77,24 +131,12 @@ function SDL_log(x: cdouble): cdouble; cdecl; external name 'SDL_log';
 
 
 
+
 # Gröbere Änderungen
-  sdl_dialogs.h neu
 
- include/SDL3/{SDL_rwops.h => SDL_iostream.h}                             | 646 +++++++++++++++++++++++++++++++++++---------------------------------------
- include/SDL3/SDL_oldnames.h                                              |  46 ++++--
- include/SDL3/SDL_storage.h 
-
-include/SDL3/SDL_time.h                             | 208 +++++++++++++++++++++++++++++++++++++++
- include/SDL3/SDL_filesystem.h                       |  85 +++++++++++++++-
-
-
-
- include/SDL3/SDL_filesystem.h         |  49 +++++++++++++++++++-
- include/SDL3/SDL_storage.h            |  43 +++++++++++++++++-
- src/dynapi/SDL_dynapi.sym             |   2 +
-
-SDL_renderer.h
+## Müssen neu gemacht werden:
 
 
 
 
+ 

@@ -53,6 +53,10 @@ type
   Tintptr_t = Pointer;
 
   PPUint8 = ^PUint8;
+  
+  PSDL_Time = ^TSDL_Time;
+  TSDL_Time = TSint64;
+
 
 const
   SDL_FALSE = False;

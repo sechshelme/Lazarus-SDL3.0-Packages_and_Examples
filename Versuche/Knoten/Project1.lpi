@@ -34,16 +34,6 @@
         <IsPartOfProject Value="True"/>
       </Unit>
       <Unit>
-        <Filename Value="button.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="Button"/>
-      </Unit>
-      <Unit>
-        <Filename Value="audiobar.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="AudioBar"/>
-      </Unit>
-      <Unit>
         <Filename Value="node.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Node"/>
