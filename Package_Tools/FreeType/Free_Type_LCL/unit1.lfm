@@ -1,11 +1,11 @@
 object Form1: TForm1
-  Left = 572
-  Height = 737
-  Top = 204
-  Width = 1431
+  Left = 169
+  Height = 285
+  Top = 91
+  Width = 570
   Caption = 'Form1'
-  ClientHeight = 737
-  ClientWidth = 1431
+  ClientHeight = 285
+  ClientWidth = 570
   Color = clForm
   LCLVersion = '3.99.0.0'
   OnCreate = FormCreate
@@ -13,9 +13,10 @@ object Form1: TForm1
   OnResize = FormResize
   object OpenGLControl1: TOpenGLControl
     Left = 56
-    Height = 624
+    Height = 200
     Top = 32
-    Width = 1232
+    Width = 464
+    OnClick = OpenGLControl1Click
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer

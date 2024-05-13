@@ -2,6 +2,7 @@ program Project1;
 
 // https://wiki.libsdl.org/SDL3/Tutorials-TextInput
 // https://lazyfoo.net/tutorials/SDL/32_text_input_and_clipboard_handling/index.php
+// https://github.com/libsdl-org/SDL/issues/9761
 
 uses
   ctypes,
@@ -32,7 +33,7 @@ var
 //       SDL_GL_GetProcAddress();
     SDL_StartTextInput;
     while not quit do begin
-      while SDL_PollEvent(@event) <> 0 do begin
+      while SDL_PollEvent(@event) do begin
 
         case event.type_ of
           SDL_EVENT_KEY_DOWN: begin

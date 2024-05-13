@@ -6,9 +6,9 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  OpenGLContext,
-  gl,
-  ctypes, freetype, ftimage, fttypes;
+  OpenGLContext, gl,
+  ctypes, freetype, ftimage, fttypes,
+  LazUTF8;
 
 type
 
@@ -20,8 +20,10 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure OpenGLControl1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
   private
+    imageWidht, imageHeight: integer;
     library_: TFT_Library;
     face: TFT_Face;
 
@@ -42,9 +44,9 @@ var
 
 procedure TForm1.FormCreate(Sender: TObject);
 const
-//  fileName = '/usr/share/fonts/truetype/freefont/FreeMono.ttf';
-//  fileName = '/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf';
-      fileName = '/usr/share/fonts/truetype/ubuntu/Ubuntu-MI.ttf';
+  //  fileName = '/usr/share/fonts/truetype/freefont/FreeMono.ttf';
+  //  fileName = '/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf';
+  fileName = '/usr/share/fonts/truetype/ubuntu/Ubuntu-MI.ttf';
 var
   error: TFT_Error;
 begin
@@ -54,7 +56,7 @@ begin
   ClientHeight := 1200;
 
   OpenGLControl1.Align := alClient;
-  OpenGLControl1.AutoResizeViewport:=False;
+  OpenGLControl1.AutoResizeViewport := False;
   OpenGLControl1.MakeCurrent();
   glClearColor(0, 0, 0, 0);
 
@@ -84,11 +86,15 @@ end;
 
 procedure TForm1.FormResize(Sender: TObject);
 begin
-  Timer1.Enabled := False;
-  SetLength(image, OpenGLControl1.Width * OpenGLControl1.Height);
-  WriteLn('OpenGlControl: ', OpenGLControl1.Width, ' x ', OpenGLControl1.Height, '     Form: ', Width, ' x ', Height);
-  FillChar(image[0], Length(image), 0);
-  Timer1.Enabled := True;
+  imageWidht := ClientWidth and not %11;
+  imageHeight := ClientHeight;
+  SetLength(image, imageWidht * imageHeight);
+  FillDWord(image[0], Length(image) div 4, 0);
+end;
+
+procedure TForm1.OpenGLControl1Click(Sender: TObject);
+begin
+  Width := Width + 1;
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
@@ -98,41 +104,41 @@ begin
   angle += 0.3;
   Face_To_Image(angle);
 
-  glDrawPixels(OpenGLControl1.Width, OpenGLControl1.Height, GL_LUMINANCE, GL_UNSIGNED_BYTE, Pointer(image));
+  glDrawPixels(imageWidht, imageHeight, GL_LUMINANCE, GL_UNSIGNED_BYTE, Pointer(image));
   OpenGLControl1.SwapBuffers;
 end;
 
 procedure TForm1.draw_bitmap(bit: PFT_Bitmap; x: TFT_Int; y: TFT_Int);
 var
-  x_max, y_max, i, j, p, q: TFT_Int;
+  x_max, y_max, ofs, i, j, p, q: TFT_Int;
 begin
   x_max := x + bit^.Width;
   y_max := y + bit^.rows;
 
   i := x;
-  p := -1;
+  p := 0;
   while (i < x_max) do begin
-    Inc(i);
-    Inc(p);
 
     j := y;
-    q := -1;
+    q := 0;
     while (j < y_max) do begin
-      Inc(j);
-      Inc(q);
 
-      if (i < 0) or (j < 0) or (i >= OpenGLControl1.Width) or (j >= OpenGLControl1.Height) then begin
-        Continue;
+      if (i >= 0) and (j >= 0) and (i < imageWidht) and (j < imageHeight) then begin
+        ofs := j * imageWidht + i;
+        image[ofs] := image[ofs] or bit^.buffer[q * bit^.Width + p];
       end;
 
-      image[j * OpenGLControl1.Width + i] := image[j * OpenGLControl1.Width + i] or bit^.buffer[q * bit^.Width + p];
+      Inc(j);
+      Inc(q);
     end;
+    Inc(i);
+    Inc(p);
   end;
 end;
 
 procedure TForm1.Face_To_Image(angle: single);
 const
-  //  HelloText: PChar = 'Hello world !   Hallo Welt !';
+  //  HelloText: PChar = 'Hello world !   Hallo Welt öäü!';
   HelloText: PChar = 'Computer sind dumm';
 var
   error: TFT_Error;
@@ -141,6 +147,7 @@ var
   slot: TFT_GlyphSlot;
 
   n: integer;
+  ut16: UnicodeString;
 begin
   slot := face^.glyph;
 
@@ -155,7 +162,10 @@ begin
   for n := 0 to Length(HelloText) - 1 do begin
     FT_Set_Transform(face, @matrix, @pen);
 
-    error := FT_Load_Char(face, TFT_ULong(HelloText[n]), FT_LOAD_RENDER);
+    ut16:=UTF8ToUTF16('w');
+
+//    error := FT_Load_Char(face, TFT_ULong(HelloText[n]), FT_LOAD_RENDER);
+      error := FT_Load_Char(face,DWord( ut16[1]), FT_LOAD_RENDER);
     if error <> 0 then begin
       WriteLn('Fehler: Load_Char   ', error);
     end;
