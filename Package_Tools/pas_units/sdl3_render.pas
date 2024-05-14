@@ -68,7 +68,8 @@ function SDL_GetNumRenderDrivers: longint; cdecl; external sdl3_lib;
 function SDL_GetRenderDriver(index: longint): PChar; cdecl; external sdl3_lib;
 function SDL_CreateWindowAndRenderer(title:PChar; Width: longint; Height: longint; window_flags: uint32; window: PPSDL_Window; renderer: PPSDL_Renderer): longint; cdecl; external sdl3_lib;
 //function SDL_CreateWindowAndRenderer(Width: longint; Height: longint; window_flags: uint32; window: PPSDL_Window; renderer: PPSDL_Renderer): longint; cdecl; external sdl3_lib;
-function SDL_CreateRenderer(window: PSDL_Window; Name: PChar; flags: uint32): PSDL_Renderer; cdecl; external sdl3_lib;
+//function SDL_CreateRenderer(window: PSDL_Window; Name: PChar; flags: uint32): PSDL_Renderer; cdecl; external sdl3_lib;
+function SDL_CreateRenderer(window: PSDL_Window; Name: PChar): PSDL_Renderer; cdecl; external sdl3_lib;
 function SDL_CreateRendererWithProperties(props: TSDL_PropertiesID): PSDL_Renderer; cdecl; external sdl3_lib;
 
 const

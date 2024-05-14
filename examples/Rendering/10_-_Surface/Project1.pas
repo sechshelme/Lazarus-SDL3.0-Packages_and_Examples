@@ -8,6 +8,7 @@ uses
 var
   window: PSDL_Window;
   surface, image: PSDL_Surface;
+ rSrc, rDest:TSDL_Rect;
 begin
   if SDL_init(SDL_INIT_VIDEO) < 0 then begin
     SDL_Log('Konnte SDL-VIDEO nicht laden!:  %s', SDL_GetError);
@@ -28,6 +29,9 @@ begin
     SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
   end;
 
+  rDest.items:=[100,100, 200,200];
+  rSrc.items:=[0,0, 20,20];
+  SDL_BlitSurfaceScaled(image, nil, surface, @rDest, SDL_SCALEMODE_NEAREST);
   SDL_BlitSurface(image, nil, surface, nil);
   SDL_UpdateWindowSurface(window);
 

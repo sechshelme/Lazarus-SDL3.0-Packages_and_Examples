@@ -37,7 +37,7 @@ var
       Halt(-1);
     end;
 
-    renderer := SDL_CreateRenderer(win, nil, SDL_RENDERER_ACCELERATED);
+    renderer := SDL_CreateRenderer(win, nil);
     if renderer = nil then begin
       SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Kann kein SDL-Renderer erzeugen !');
       Halt(-1);

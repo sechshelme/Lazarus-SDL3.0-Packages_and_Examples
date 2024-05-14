@@ -11,6 +11,7 @@ uses
 
 function SDL_SetError(fmt: PChar): longint; varargs; cdecl; external sdl3_lib;
 //function SDL_SetError(fmt:Pchar):longint;cdecl;external sdl3_lib;
+function SDL_OutOfMemory: longint; cdecl; external sdl3_lib;
 function SDL_GetError: PChar; cdecl; external sdl3_lib;
 procedure SDL_ClearError; cdecl; external sdl3_lib;
 
@@ -30,7 +31,7 @@ const
   SDL_UNSUPPORTED_ = 4;
   SDL_LASTERROR = 5;
 
-function SDL_Error(code: TSDL_errorcode): longint; cdecl; external sdl3_lib;
+//function SDL_Error(code: TSDL_errorcode): longint; cdecl; external sdl3_lib;
 
 implementation
 
@@ -41,7 +42,7 @@ end;
 
 function SDL_Unsupported: longint;
 begin
-  SDL_Unsupported := SDL_Error(SDL_UNSUPPORTED_);
+  SDL_Unsupported := SDL_SetError('That operation is not supported');
 end;
 
 function SDL_InvalidParamError(param: PChar): longint;

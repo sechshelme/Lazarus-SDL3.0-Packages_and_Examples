@@ -164,8 +164,8 @@ begin
 
     ut16:=UTF8ToUTF16('w');
 
-//    error := FT_Load_Char(face, TFT_ULong(HelloText[n]), FT_LOAD_RENDER);
-      error := FT_Load_Char(face,DWord( ut16[1]), FT_LOAD_RENDER);
+    error := FT_Load_Char(face, TFT_ULong(HelloText[n]), FT_LOAD_RENDER);
+//      error := FT_Load_Char(face,DWord( ut16[1]), FT_LOAD_RENDER);
     if error <> 0 then begin
       WriteLn('Fehler: Load_Char   ', error);
     end;

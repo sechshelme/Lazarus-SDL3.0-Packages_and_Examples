@@ -227,7 +227,8 @@ procedure Mix_CloseAudio; cdecl; external sdl3_mixer_lib;
 function Mix_SetError(fmt: PChar): longint; varargs; cdecl; external sdl3_lib Name 'SDL_SetError';
 function Mix_GetError: PChar; cdecl; external sdl3_lib Name 'SDL_GetError';
 procedure Mix_ClearError; cdecl; external sdl3_lib Name 'SDL_ClearError';
-function Mix_OutOfMemory: longint;
+procedure Mix_OutOfMemory; cdecl; external sdl3_lib Name 'SDL_OutOfMemory';
+//function Mix_OutOfMemory: longint;
 
 implementation
 
@@ -248,9 +249,9 @@ begin
   SDL_MIXER_COMPILEDVERSION := SDL_VERSIONNUM(SDL_MIXER_MAJOR_VERSION, SDL_MIXER_MINOR_VERSION, SDL_MIXER_PATCHLEVEL);
 end;
 
-function Mix_OutOfMemory: longint;
-begin
-  Result := SDL_Error(SDL_ENOMEM);
-end;
+//function Mix_OutOfMemory: longint;
+//begin
+//  Result := SDL_Error(SDL_ENOMEM);
+//end;
 
 end.

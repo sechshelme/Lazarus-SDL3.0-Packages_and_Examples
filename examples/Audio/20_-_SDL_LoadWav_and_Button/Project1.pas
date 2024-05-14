@@ -42,7 +42,7 @@ type
       SDL_Log('Kann kein Window erzeugen !   %s', SDL_GetError);
     end;
 
-    renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_PRESENTVSYNC);
+    renderer := SDL_CreateRenderer(window, nil);
     if renderer = nil then begin
       SDL_Log('Kann kein SDL-Renderer erzeugen !   %s', SDL_GetError);
     end;

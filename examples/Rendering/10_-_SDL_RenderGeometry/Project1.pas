@@ -83,7 +83,7 @@ end;
       Halt;
     end;
 
-    renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_PRESENTVSYNC);
+    renderer := SDL_CreateRenderer(window, nil);
     if renderer = nil then begin
       Halt;
     end;
