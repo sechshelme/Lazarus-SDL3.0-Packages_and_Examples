@@ -10,6 +10,8 @@ uses
   ctypes, freetype, ftimage, fttypes,
   LazUTF8;
 
+// https://cplusplus.com/reference/cstdlib/mbstowcs/
+function mbstowcs(dest:PDWord; src:PChar; max :SizeInt): SizeInt; cdecl; external 'c';
 type
 
   { TForm1 }
@@ -50,6 +52,7 @@ const
 var
   error: TFT_Error;
 begin
+
   Timer1.Enabled := False;
   Timer1.Interval := 100;
   ClientWidth := 1600;
@@ -138,8 +141,9 @@ end;
 
 procedure TForm1.Face_To_Image(angle: single);
 const
-  //  HelloText: PChar = 'Hello world !   Hallo Welt öäü!';
-  HelloText: PChar = 'Computer sind dumm';
+    HelloText: PChar = 'Hello world !  öäü ÄÖÜ ÿï ŸÏ!';
+//  HelloText: PChar = 'Computer sind dumm';
+//  uml:PChar='äöüÄÖÜ';
 var
   error: TFT_Error;
   pen: TFT_Vector;
@@ -147,8 +151,12 @@ var
   slot: TFT_GlyphSlot;
 
   n: integer;
-  ut16: UnicodeString;
+//wc:array of WideChar=nil;
+wc:array of DWord=nil;
 begin
+  SetLength(wc, Length(HelloText));
+  WriteLn(mbstowcs(PDWord(wc), HelloText, Length(wc)));
+
   slot := face^.glyph;
 
   matrix.xx := Round(Cos(angle) * 10000);
@@ -159,13 +167,12 @@ begin
   pen.x := 40000;
   pen.y := 50000;
 
-  for n := 0 to Length(HelloText) - 1 do begin
+  for n := 0 to Length(wc) - 1 do begin
     FT_Set_Transform(face, @matrix, @pen);
 
-    ut16:=UTF8ToUTF16('w');
 
-    error := FT_Load_Char(face, TFT_ULong(HelloText[n]), FT_LOAD_RENDER);
-//      error := FT_Load_Char(face,DWord( ut16[1]), FT_LOAD_RENDER);
+//    error := FT_Load_Char(face, TFT_ULong(HelloText[n]), FT_LOAD_RENDER);
+      error := FT_Load_Char(face, wc[n], FT_LOAD_RENDER);
     if error <> 0 then begin
       WriteLn('Fehler: Load_Char   ', error);
     end;

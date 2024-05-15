@@ -6,6 +6,12 @@ uses
   SDL3,
   SDL3_ttf;
 
+const
+  fileName = '/usr/share/fonts/truetype/freefont/FreeMono.ttf';
+  //  fileName = '/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf';
+  //  fileName = '/usr/share/fonts/truetype/ubuntu/Ubuntu-MI.ttf';
+  //    fileName = '/usr/share/wine/fonts/courier.ttf';
+
   function Createsurface: PSDL_Surface;
   begin
     Result := SDL_LoadBMP('mauer.bmp');
@@ -16,16 +22,11 @@ uses
 
   function LoafFont: PSDL_Surface;
   const
-    fileName = '/usr/share/fonts/truetype/freefont/FreeMono.ttf';
-    //  fileName = '/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf';
-    //  fileName = '/usr/share/fonts/truetype/ubuntu/Ubuntu-MI.ttf';
-    //    fileName = '/usr/share/wine/fonts/courier.ttf';
-
-    hello=                              'Hello World !\n'#10'Hallo Welt !';
+    hello = 'Hello World !\n'#10'Hallo Welt !';
   var
     font: PTTF_Font;
     fg, bg: TSDL_Color;
-    w, h: Longint;
+    w, h: longint;
 
   begin
     font := TTF_OpenFont(fileName, 20);
@@ -34,19 +35,33 @@ uses
     end;
     fg.items := [$FF, $00, $00, $FF];
     bg.items := [$00, $FF, $00, $FF];
-//    Result := TTF_RenderText(font, hello, fg, bg);
-    Result := TTF_RenderText_Solid_Wrapped(font, hello, fg, 40);
-//    Result := TTF_RenderUTF8(font, 'Hello World !'#10'Hallo Welt !', fg, bg);
- TTF_SizeText(font,hello,@w,@h);
- SDL_Log('Text size: %i x %i',w,h);
+    //    Result := TTF_RenderText(font, hello, fg, bg);
+    Result := TTF_RenderText_Solid_Wrapped(font, hello, fg, 200);
+    //    Result := TTF_RenderUTF8(font, 'Hello World !'#10'Hallo Welt !', fg, bg);
+    TTF_SizeText(font, hello, @w, @h);
+    SDL_Log('Text size: %i x %i', w, h);
 
+    TTF_CloseFont(font);
+  end;
+
+  function LoadGlyph: PSDL_Surface;
+  var
+    font: PTTF_Font;
+    fg: TSDL_Color;
+  begin
+    font := TTF_OpenFont(fileName, 50);
+    if font = nil then begin
+      SDL_Log('Konnte Font nicht laden!:  %s', SDL_GetError);
+    end;
+    fg.items := [$FF, $00, $00, $FF];
+    Result := TTF_RenderGlyph_Solid(font, word('ö'), fg);
     TTF_CloseFont(font);
   end;
 
   procedure main;
   var
     window: PSDL_Window;
-    winSurface, imageSurface, FontSurface: PSDL_Surface;
+    winSurface, imageSurface, FontSurface, GlyphSurface: PSDL_Surface;
     rSrc, rDest: TSDL_Rect;
     quit: boolean = False;
     event: TSDL_Event;
@@ -70,6 +85,8 @@ uses
     end;
 
     imageSurface := Createsurface;
+
+    GlyphSurface := LoadGlyph;
     FontSurface := LoafFont;
 
     while not quit do begin
@@ -88,11 +105,17 @@ uses
         end;
       end;
 
-      rDest.items := [100, 100, 200, 200];
+      rDest.items := [10, 10, 100, 100];
       rSrc.items := [0, 0, 20, 20];
       SDL_BlitSurfaceScaled(imageSurface, nil, winSurface, @rDest, SDL_SCALEMODE_NEAREST);
       SDL_BlitSurface(imageSurface, nil, winSurface, nil);
-      SDL_BlitSurface(FontSurface, nil, winSurface, nil);
+
+      rDest.items := [10, 120, 100, 100];
+      SDL_BlitSurface(FontSurface, nil, winSurface, @rDest);
+
+      rDest.items := [10, 220, 1, 1];
+      SDL_BlitSurface(GlyphSurface, nil, winSurface, @rDest);
+
       SDL_UpdateWindowSurface(window);
     end;
 
