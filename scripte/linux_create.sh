@@ -80,6 +80,21 @@ make -j16
 sudo make install
 cd ../..
 
+echo =======================  SDL2_comapat ==============================
+mkdir SDL2-compat
+cd SDL2-compat
+git clone https://github.com/libsdl-org/sdl2-compat.git
+
+# Linux
+mkdir build
+cd build
+cmake ../sdl2-compat
+make -j16
+sudo make install
+cd ../..
+
+echo ==== Ende ====
+
 cd ..
 
 

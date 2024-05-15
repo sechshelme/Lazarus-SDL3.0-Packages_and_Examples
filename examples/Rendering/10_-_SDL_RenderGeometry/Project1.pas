@@ -31,37 +31,37 @@ uses
     SDL_RenderGeometry(renderer, nil, PSDL_Vertex(vert), Length(vert), PInteger(indices), Length(indices));
   end;
 
-function CreateTexture(renderer: PSDL_Renderer): PSDL_Texture;
-var
-  bitmapSurface: PSDL_Surface;
-begin
-  bitmapSurface := SDL_LoadBMP('mauer.bmp');
-  if bitmapSurface = nil then  begin
-    SDL_Log('Kann keine textur erzeugen !');
+  function CreateTexture(renderer: PSDL_Renderer): PSDL_Texture;
+  var
+    bitmapSurface: PSDL_Surface;
+  begin
+    bitmapSurface := SDL_LoadBMP('mauer.bmp');
+    if bitmapSurface = nil then  begin
+      SDL_Log('Kann keine textur erzeugen !');
+    end;
+
+    Result := SDL_CreateTextureFromSurface(renderer, bitmapSurface);
+    if Result = nil then begin
+      SDL_Log('Kann Textur nicht laden ezeugen !');
+    end;
+    SDL_DestroySurface(bitmapSurface);
   end;
 
-  Result := SDL_CreateTextureFromSurface(renderer, bitmapSurface);
-  if Result = nil then begin
-    SDL_Log('Kann Textur nicht laden ezeugen !');
+  procedure TexturQuad(renderer: PSDL_Renderer);
+  const
+    vert: array of TSDL_Vertex = (
+      (position: (x: 500; y: 350); color: (r: 1.0; g: 1.0; b: 1.0; a: 1.0); tex_coord: (x: 0.0; y: 0.0)),
+      (position: (x: 700; y: 350); color: (r: 1.0; g: 1.0; b: 1.0; a: 1.0); tex_coord: (x: 1.0; y: 0.0)),
+      (position: (x: 700; y: 450); color: (r: 1.0; g: 1.0; b: 1.0; a: 1.0); tex_coord: (x: 1.0; y: 1.0)),
+      (position: (x: 500; y: 450); color: (r: 1.0; g: 1.0; b: 1.0; a: 1.0); tex_coord: (x: 0.0; y: 1.0)));
+    indices: array of integer = (0, 1, 2, 2, 3, 0);
+  var
+    texture: PSDL_Texture;
+  begin
+    texture := CreateTexture(renderer);
+    SDL_RenderGeometry(renderer, texture, PSDL_Vertex(vert), Length(vert), PInteger(indices), Length(indices));
+    SDL_DestroyTexture(texture);
   end;
-  SDL_DestroySurface(bitmapSurface);
-end;
-
-procedure TexturQuad(renderer: PSDL_Renderer);
-const
-  vert: array of TSDL_Vertex = (
-    (position: (x: 500; y: 350); color: (r: 1.0; g: 1.0; b: 1.0; a: 1.0); tex_coord: (x: 0.0; y: 0.0)),
-    (position: (x: 700; y: 350); color: (r: 1.0; g: 1.0; b: 1.0; a: 1.0); tex_coord: (x: 1.0; y: 0.0)),
-    (position: (x: 700; y: 450); color: (r: 1.0; g: 1.0; b: 1.0; a: 1.0); tex_coord: (x: 1.0; y: 1.0)),
-    (position: (x: 500; y: 450); color: (r: 1.0; g: 1.0; b: 1.0; a: 1.0); tex_coord: (x: 0.0; y: 1.0)));
-  indices: array of integer = (0, 1, 2, 2, 3, 0);
-var
-  texture: PSDL_Texture;
-begin
-  texture:=CreateTexture(renderer);
-  SDL_RenderGeometry(renderer, texture, PSDL_Vertex(vert), Length(vert), PInteger(indices), Length(indices));
-  SDL_DestroyTexture(texture);
-end;
 
 
 
