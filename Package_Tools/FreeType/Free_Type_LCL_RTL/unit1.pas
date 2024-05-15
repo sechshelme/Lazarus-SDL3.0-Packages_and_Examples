@@ -5,9 +5,10 @@ unit Unit1;
 interface
 
 uses
+  ctypes,    dynlibs,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   OpenGLContext, gl,
-  ctypes, freetype, ftimage, fttypes,
+  freetype,freetypehdyn,
   LazUTF8;
 
 // https://cplusplus.com/reference/cstdlib/mbstowcs/
@@ -28,10 +29,10 @@ type
     procedure Timer1Timer(Sender: TObject);
   private
     imageWidht, imageHeight: integer;
-    library_: TFT_Library;
-    face: TFT_Face;
+    library_: PFT_Library;
+    face: PFT_Face;
 
-    procedure draw_bitmap(var bit: TFT_Bitmap; x: TFT_Int; y: TFT_Int);
+    procedure draw_bitmap(var bit: FT_Bitmap; x: FT_Int; y: FT_Int);
     procedure Face_To_Image(angle: single);
   public
   end;
@@ -52,8 +53,9 @@ const
   //  fileName = '/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf';
   fileName = '/usr/share/fonts/truetype/ubuntu/Ubuntu-MI.ttf';
 var
-  error: TFT_Error;
+  error: FT_Error;
 begin
+  InitializeFreetype();
 
   Timer1.Enabled := False;
   Timer1.Interval := 100;
@@ -65,12 +67,13 @@ begin
   OpenGLControl1.MakeCurrent();
   glClearColor(0, 0, 0, 0);
 
-  error := FT_Init_FreeType(@library_);
+  error := FT_Init_FreeType(library_);
   if error <> 0 then begin
     WriteLn('Fehler: ', error);
   end;
 
-  error := FT_New_Face(library_, fileName, 0, @face);
+  WriteLn('io');
+  error := FT_New_Face(library_, fileName, 0, face);
   if error <> 0 then begin
     WriteLn('Fehler: ', error);
   end;
@@ -113,9 +116,10 @@ begin
   OpenGLControl1.SwapBuffers;
 end;
 
-procedure TForm1.draw_bitmap(var bit: TFT_Bitmap; x: TFT_Int; y: TFT_Int);
+procedure TForm1.draw_bitmap(var bit: FT_Bitmap; x: FT_Int; y: FT_Int);
 var
-  x_max, y_max, ofs, i, j, p, q: TFT_Int;
+  x_max, y_max, ofs, i, j, p, q: FT_Int;
+  buf:PByte;
 begin
   x_max := x + bit.Width;
   y_max := y + bit.rows;
@@ -130,7 +134,8 @@ begin
 
       if (i >= 0) and (j >= 0) and (i < imageWidht) and (j < imageHeight) then begin
         ofs := j * imageWidht + i;
-        image[ofs] := image[ofs] or bit.buffer[q * bit.Width + p];
+        buf:=bit.buffer;
+        image[ofs] := image[ofs] or buf[q * bit.Width + p];
       end;
 
       Inc(j);
@@ -147,10 +152,10 @@ const
 //  HelloText: PChar = 'Computer sind dumm';
   HelloText:PChar='äöüÄÖÜ';
 var
-  error: TFT_Error;
-  pen: TFT_Vector;
-  matrix: TFT_Matrix;
-  slot: TFT_GlyphSlot;
+  error: FT_Error;
+  pen: FT_Vector;
+  matrix: FT_Matrix;
+  slot: PFT_GlyphSlot;
 
   n: integer;
 //wc:array of WideChar=nil;
@@ -171,7 +176,6 @@ begin
   pen.y := 50000;
 
   for n := 0 to Length(wc) - 1 do begin
-//    FT_Set_Transform(face, @matrix, @pen);
     FT_Set_Transform(face, @matrix, @pen);
 
 
