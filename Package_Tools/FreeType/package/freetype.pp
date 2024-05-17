@@ -10,6 +10,16 @@ uses
   {$PACKRECORDS C}
   {$ENDIF}
 
+  const
+  {$IFDEF Linux}
+  libfreetype = 'libfreetype';
+  {$ENDIF}
+
+  {$IFDEF Windows}
+  libfreetype = 'libfreetype-6.dll';
+  {$ENDIF}
+
+
 const
   FT_FACE_FLAG_SCALABLE = 1 shl 0;
   FT_FACE_FLAG_FIXED_SIZES = 1 shl 1;
@@ -273,18 +283,18 @@ type
   end;
   PFT_Open_Args = ^TFT_Open_Args;
 
-function FT_Init_FreeType(alibrary: PFT_Library): TFT_Error; cdecl; external;
-function FT_Done_FreeType(library_: TFT_Library): TFT_Error; cdecl; external;
+function FT_Init_FreeType(alibrary: PFT_Library): TFT_Error; cdecl; external libfreetype;
+function FT_Done_FreeType(library_: TFT_Library): TFT_Error; cdecl; external libfreetype;
 
 
-function FT_New_Face(library_: TFT_Library; filepathname: PChar; face_index: TFT_Long; aface: PFT_Face): TFT_Error; cdecl; external;
-function FT_New_Memory_Face(library_: TFT_Library; file_base: PFT_Byte; file_size: TFT_Long; face_index: TFT_Long; aface: PFT_Face): TFT_Error; cdecl; external;
-function FT_Open_Face(library_: TFT_Library; args: PFT_Open_Args; face_index: TFT_Long; aface: PFT_Face): TFT_Error; cdecl; external;
-function FT_Attach_File(face: TFT_Face; filepathname: PChar): TFT_Error; cdecl; external;
-function FT_Attach_Stream(face: TFT_Face; parameters: PFT_Open_Args): TFT_Error; cdecl; external;
-function FT_Reference_Face(face: TFT_Face): TFT_Error; cdecl; external;
-function FT_Done_Face(face: TFT_Face): TFT_Error; cdecl; external;
-function FT_Select_Size(face: TFT_Face; strike_index: TFT_Int): TFT_Error; cdecl; external;
+function FT_New_Face(library_: TFT_Library; filepathname: PChar; face_index: TFT_Long; aface: PFT_Face): TFT_Error; cdecl; external libfreetype;
+function FT_New_Memory_Face(library_: TFT_Library; file_base: PFT_Byte; file_size: TFT_Long; face_index: TFT_Long; aface: PFT_Face): TFT_Error; cdecl; external libfreetype;
+function FT_Open_Face(library_: TFT_Library; args: PFT_Open_Args; face_index: TFT_Long; aface: PFT_Face): TFT_Error; cdecl; external libfreetype;
+function FT_Attach_File(face: TFT_Face; filepathname: PChar): TFT_Error; cdecl; external libfreetype;
+function FT_Attach_Stream(face: TFT_Face; parameters: PFT_Open_Args): TFT_Error; cdecl; external libfreetype;
+function FT_Reference_Face(face: TFT_Face): TFT_Error; cdecl; external libfreetype;
+function FT_Done_Face(face: TFT_Face): TFT_Error; cdecl; external libfreetype;
+function FT_Select_Size(face: TFT_Face; strike_index: TFT_Int): TFT_Error; cdecl; external libfreetype;
 
 type
   PFT_Size_Request_Type_ = ^TFT_Size_Request_Type_;
@@ -318,11 +328,11 @@ type
   PFT_Size_Request = ^TFT_Size_Request;
   TFT_Size_Request = PFT_Size_RequestRec_;
 
-function FT_Request_Size(face: TFT_Face; req: TFT_Size_Request): TFT_Error; cdecl; external;
-function FT_Set_Char_Size(face: TFT_Face; char_width: TFT_F26Dot6; char_height: TFT_F26Dot6; horz_resolution: TFT_UInt; vert_resolution: TFT_UInt): TFT_Error; cdecl; external;
-function FT_Set_Pixel_Sizes(face: TFT_Face; pixel_width: TFT_UInt; pixel_height: TFT_UInt): TFT_Error; cdecl; external;
-function FT_Load_Glyph(face: TFT_Face; glyph_index: TFT_UInt; load_flags: TFT_Int32): TFT_Error; cdecl; external;
-function FT_Load_Char(face: TFT_Face; char_code: TFT_ULong; load_flags: TFT_Int32): TFT_Error; cdecl; external;
+function FT_Request_Size(face: TFT_Face; req: TFT_Size_Request): TFT_Error; cdecl; external libfreetype;
+function FT_Set_Char_Size(face: TFT_Face; char_width: TFT_F26Dot6; char_height: TFT_F26Dot6; horz_resolution: TFT_UInt; vert_resolution: TFT_UInt): TFT_Error; cdecl; external libfreetype;
+function FT_Set_Pixel_Sizes(face: TFT_Face; pixel_width: TFT_UInt; pixel_height: TFT_UInt): TFT_Error; cdecl; external libfreetype;
+function FT_Load_Glyph(face: TFT_Face; glyph_index: TFT_UInt; load_flags: TFT_Int32): TFT_Error; cdecl; external libfreetype;
+function FT_Load_Char(face: TFT_Face; char_code: TFT_ULong; load_flags: TFT_Int32): TFT_Error; cdecl; external libfreetype;
 
 const
   FT_LOAD_DEFAULT = $0;
@@ -355,8 +365,8 @@ function FT_LOAD_TARGET_MONO: longint; { return type might be wrong }
 function FT_LOAD_TARGET_LCD: longint; { return type might be wrong }
 function FT_LOAD_TARGET_LCD_V: longint; { return type might be wrong }
 function FT_LOAD_TARGET_MODE(x: longint): longint;
-procedure FT_Set_Transform(face: TFT_Face; matrix: PFT_Matrix; delta: PFT_Vector); cdecl; external;
-procedure FT_Get_Transform(face: TFT_Face; matrix: PFT_Matrix; delta: PFT_Vector); cdecl; external;
+procedure FT_Set_Transform(face: TFT_Face; matrix: PFT_Matrix; delta: PFT_Vector); cdecl; external libfreetype;
+procedure FT_Get_Transform(face: TFT_Face; matrix: PFT_Matrix; delta: PFT_Vector); cdecl; external libfreetype;
 
 type
   PFT_Render_Mode_ = ^TFT_Render_Mode_;
@@ -375,7 +385,7 @@ type
   TFT_Render_Mode = TFT_Render_Mode_;
   PFT_Render_Mode = ^TFT_Render_Mode;
 
-function FT_Render_Glyph(slot: TFT_GlyphSlot; render_mode: TFT_Render_Mode): TFT_Error; cdecl; external;
+function FT_Render_Glyph(slot: TFT_GlyphSlot; render_mode: TFT_Render_Mode): TFT_Error; cdecl; external libfreetype;
 
 type
   PFT_Kerning_Mode_ = ^TFT_Kerning_Mode_;
@@ -390,18 +400,18 @@ type
   TFT_Kerning_Mode = TFT_Kerning_Mode_;
   PFT_Kerning_Mode = ^TFT_Kerning_Mode;
 
-function FT_Get_Kerning(face: TFT_Face; left_glyph: TFT_UInt; right_glyph: TFT_UInt; kern_mode: TFT_UInt; akerning: PFT_Vector): TFT_Error; cdecl; external;
-function FT_Get_Track_Kerning(face: TFT_Face; point_size: TFT_Fixed; degree: TFT_Int; akerning: PFT_Fixed): TFT_Error; cdecl; external;
-function FT_Select_Charmap(face: TFT_Face; encoding: TFT_Encoding): TFT_Error; cdecl; external;
-function FT_Set_Charmap(face: TFT_Face; charmap: TFT_CharMap): TFT_Error; cdecl; external;
-function FT_Get_Charmap_Index(charmap: TFT_CharMap): TFT_Int; cdecl; external;
-function FT_Get_Char_Index(face: TFT_Face; charcode: TFT_ULong): TFT_UInt; cdecl; external;
-function FT_Get_First_Char(face: TFT_Face; agindex: PFT_UInt): TFT_ULong; cdecl; external;
-function FT_Get_Next_Char(face: TFT_Face; char_code: TFT_ULong; agindex: PFT_UInt): TFT_ULong; cdecl; external;
-function FT_Face_Properties(face: TFT_Face; num_properties: TFT_UInt; properties: PFT_Parameter): TFT_Error; cdecl; external;
-function FT_Get_Name_Index(face: TFT_Face; glyph_name: PFT_String): TFT_UInt; cdecl; external;
-function FT_Get_Glyph_Name(face: TFT_Face; glyph_index: TFT_UInt; buffer: TFT_Pointer; buffer_max: TFT_UInt): TFT_Error; cdecl; external;
-function FT_Get_Postscript_Name(face: TFT_Face): PChar; cdecl; external;
+function FT_Get_Kerning(face: TFT_Face; left_glyph: TFT_UInt; right_glyph: TFT_UInt; kern_mode: TFT_UInt; akerning: PFT_Vector): TFT_Error; cdecl; external libfreetype;
+function FT_Get_Track_Kerning(face: TFT_Face; point_size: TFT_Fixed; degree: TFT_Int; akerning: PFT_Fixed): TFT_Error; cdecl; external libfreetype;
+function FT_Select_Charmap(face: TFT_Face; encoding: TFT_Encoding): TFT_Error; cdecl; external libfreetype;
+function FT_Set_Charmap(face: TFT_Face; charmap: TFT_CharMap): TFT_Error; cdecl; external libfreetype;
+function FT_Get_Charmap_Index(charmap: TFT_CharMap): TFT_Int; cdecl; external libfreetype;
+function FT_Get_Char_Index(face: TFT_Face; charcode: TFT_ULong): TFT_UInt; cdecl; external libfreetype;
+function FT_Get_First_Char(face: TFT_Face; agindex: PFT_UInt): TFT_ULong; cdecl; external libfreetype;
+function FT_Get_Next_Char(face: TFT_Face; char_code: TFT_ULong; agindex: PFT_UInt): TFT_ULong; cdecl; external libfreetype;
+function FT_Face_Properties(face: TFT_Face; num_properties: TFT_UInt; properties: PFT_Parameter): TFT_Error; cdecl; external libfreetype;
+function FT_Get_Name_Index(face: TFT_Face; glyph_name: PFT_String): TFT_UInt; cdecl; external libfreetype;
+function FT_Get_Glyph_Name(face: TFT_Face; glyph_index: TFT_UInt; buffer: TFT_Pointer; buffer_max: TFT_UInt): TFT_Error; cdecl; external libfreetype;
+function FT_Get_Postscript_Name(face: TFT_Face): PChar; cdecl; external libfreetype;
 
 const
   FT_SUBGLYPH_FLAG_ARGS_ARE_WORDS = 1;
@@ -413,7 +423,7 @@ const
   FT_SUBGLYPH_FLAG_USE_MY_METRICS = $200;
 
 function FT_Get_SubGlyph_Info(glyph: TFT_GlyphSlot; sub_index: TFT_UInt; p_index: PFT_Int; p_flags: PFT_UInt; p_arg1: PFT_Int;
-  p_arg2: PFT_Int; p_transform: PFT_Matrix): TFT_Error; cdecl; external;
+  p_arg2: PFT_Int; p_transform: PFT_Matrix): TFT_Error; cdecl; external libfreetype;
 
 const
   FT_FSTYPE_INSTALLABLE_EMBEDDING = $0000;
@@ -423,28 +433,28 @@ const
   FT_FSTYPE_NO_SUBSETTING = $0100;
   FT_FSTYPE_BITMAP_EMBEDDING_ONLY = $0200;
 
-function FT_Get_FSType_Flags(face: TFT_Face): TFT_UShort; cdecl; external;
-function FT_Face_GetCharVariantIndex(face: TFT_Face; charcode: TFT_ULong; variantSelector: TFT_ULong): TFT_UInt; cdecl; external;
-function FT_Face_GetCharVariantIsDefault(face: TFT_Face; charcode: TFT_ULong; variantSelector: TFT_ULong): TFT_Int; cdecl; external;
-function FT_Face_GetVariantSelectors(face: TFT_Face): PFT_UInt32; cdecl; external;
-function FT_Face_GetVariantsOfChar(face: TFT_Face; charcode: TFT_ULong): PFT_UInt32; cdecl; external;
-function FT_Face_GetCharsOfVariant(face: TFT_Face; variantSelector: TFT_ULong): PFT_UInt32; cdecl; external;
-function FT_MulDiv(a: TFT_Long; b: TFT_Long; c: TFT_Long): TFT_Long; cdecl; external;
-function FT_MulFix(a: TFT_Long; b: TFT_Long): TFT_Long; cdecl; external;
-function FT_DivFix(a: TFT_Long; b: TFT_Long): TFT_Long; cdecl; external;
-function FT_RoundFix(a: TFT_Fixed): TFT_Fixed; cdecl; external;
-function FT_CeilFix(a: TFT_Fixed): TFT_Fixed; cdecl; external;
-function FT_FloorFix(a: TFT_Fixed): TFT_Fixed; cdecl; external;
-procedure FT_Vector_Transform(vector: PFT_Vector; matrix: PFT_Matrix); cdecl; external;
+function FT_Get_FSType_Flags(face: TFT_Face): TFT_UShort; cdecl; external libfreetype;
+function FT_Face_GetCharVariantIndex(face: TFT_Face; charcode: TFT_ULong; variantSelector: TFT_ULong): TFT_UInt; cdecl; external libfreetype;
+function FT_Face_GetCharVariantIsDefault(face: TFT_Face; charcode: TFT_ULong; variantSelector: TFT_ULong): TFT_Int; cdecl; external libfreetype;
+function FT_Face_GetVariantSelectors(face: TFT_Face): PFT_UInt32; cdecl; external libfreetype;
+function FT_Face_GetVariantsOfChar(face: TFT_Face; charcode: TFT_ULong): PFT_UInt32; cdecl; external libfreetype;
+function FT_Face_GetCharsOfVariant(face: TFT_Face; variantSelector: TFT_ULong): PFT_UInt32; cdecl; external libfreetype;
+function FT_MulDiv(a: TFT_Long; b: TFT_Long; c: TFT_Long): TFT_Long; cdecl; external libfreetype;
+function FT_MulFix(a: TFT_Long; b: TFT_Long): TFT_Long; cdecl; external libfreetype;
+function FT_DivFix(a: TFT_Long; b: TFT_Long): TFT_Long; cdecl; external libfreetype;
+function FT_RoundFix(a: TFT_Fixed): TFT_Fixed; cdecl; external libfreetype;
+function FT_CeilFix(a: TFT_Fixed): TFT_Fixed; cdecl; external libfreetype;
+function FT_FloorFix(a: TFT_Fixed): TFT_Fixed; cdecl; external libfreetype;
+procedure FT_Vector_Transform(vector: PFT_Vector; matrix: PFT_Matrix); cdecl; external libfreetype;
 
 const
   FREETYPE_MAJOR = 2;
   FREETYPE_MINOR = 13;
   FREETYPE_PATCH = 2;
 
-procedure FT_Library_Version(_library: TFT_Library; amajor: PFT_Int; aminor: PFT_Int; apatch: PFT_Int); cdecl; external;
-function FT_Face_CheckTrueTypePatents(face: TFT_Face): TFT_Bool; cdecl; external;
-function FT_Face_SetUnpatentedHinting(face: TFT_Face; Value: TFT_Bool): TFT_Bool; cdecl; external;
+procedure FT_Library_Version(_library: TFT_Library; amajor: PFT_Int; aminor: PFT_Int; apatch: PFT_Int); cdecl; external libfreetype;
+function FT_Face_CheckTrueTypePatents(face: TFT_Face): TFT_Bool; cdecl; external libfreetype;
+function FT_Face_SetUnpatentedHinting(face: TFT_Face; Value: TFT_Bool): TFT_Bool; cdecl; external libfreetype;
 
 implementation
 

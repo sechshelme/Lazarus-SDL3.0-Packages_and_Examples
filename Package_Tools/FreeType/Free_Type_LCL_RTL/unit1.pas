@@ -11,9 +11,18 @@ uses
   freetype,freetypehdyn,
   LazUTF8;
 
+const
+  {$IFDEF Linux}
+  libc = 'c';
+  {$ENDIF}
+
+  {$IFDEF Windows}
+  libc = 'msvcrt.dll';
+  {$ENDIF}
+
 // https://cplusplus.com/reference/cstdlib/mbstowcs/
-function mbstowcs(dest:PDWord; src:PChar; max :SizeInt): SizeInt; cdecl; external 'c';
-function mblen(pmb:PDWord; max :SizeInt): cint; cdecl; external 'c';
+function mbstowcs(dest:PDWord; src:PChar; max :SizeInt): SizeInt; cdecl; external libc;
+function mblen(pmb:PDWord; max :SizeInt): cint; cdecl; external libc;
 
 type
 
@@ -55,7 +64,7 @@ const
 var
   error: FT_Error;
 begin
-  InitializeFreetype();
+  InitializeFreetype('libfreetype-6.dll');
 
   Timer1.Enabled := False;
   Timer1.Interval := 100;
@@ -72,7 +81,6 @@ begin
     WriteLn('Fehler: ', error);
   end;
 
-  WriteLn('io');
   error := FT_New_Face(library_, fileName, 0, face);
   if error <> 0 then begin
     WriteLn('Fehler: ', error);
@@ -162,8 +170,8 @@ var
 wc:array of DWord=nil;
 begin
   SetLength(wc, Length(HelloText));
-  WriteLn(mbstowcs(PDWord(wc), HelloText, Length(wc)));
-  WriteLn('mblen: ', mblen(PDWord(wc), Length(wc)));
+  mbstowcs(PDWord(wc), HelloText, Length(wc));
+ // WriteLn('mblen: ', mblen(PDWord(wc), Length(wc)));
 
   slot := face^.glyph;
 

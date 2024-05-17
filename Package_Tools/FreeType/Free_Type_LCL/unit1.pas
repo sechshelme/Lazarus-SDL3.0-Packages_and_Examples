@@ -10,9 +10,18 @@ uses
   ctypes, freetype, ftimage, fttypes,
   LazUTF8;
 
+const
+{$IFDEF Linux}
+libc = 'c';
+{$ENDIF}
+
+{$IFDEF Windows}
+libc = 'msvcrt.dll';
+{$ENDIF}
+
 // https://cplusplus.com/reference/cstdlib/mbstowcs/
-function mbstowcs(dest:PDWord; src:PChar; max :SizeInt): SizeInt; cdecl; external 'c';
-function mblen(pmb:PDWord; max :SizeInt): cint; cdecl; external 'c';
+function mbstowcs(dest:PDWord; src:PChar; max :SizeInt): SizeInt; cdecl; external libc;
+function mblen(pmb:PDWord; max :SizeInt): cint; cdecl; external libc;
 
 type
 
@@ -144,8 +153,8 @@ end;
 procedure TForm1.Face_To_Image(angle: single);
 const
 //    HelloText: PChar = 'Hello world !  öäü ÄÖÜ ÿï ŸÏ!';
-//  HelloText: PChar = 'Computer sind dumm';
-  HelloText:PChar='äöüÄÖÜ';
+  HelloText: PChar = 'Computer sind dumm';
+//  HelloText:PChar='äöüÄÖÜ';
 var
   error: TFT_Error;
   pen: TFT_Vector;
