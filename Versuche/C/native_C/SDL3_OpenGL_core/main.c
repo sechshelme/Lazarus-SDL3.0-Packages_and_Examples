@@ -7,13 +7,7 @@
   x86_64-w64-mingw32-gcc main.c opengl.c -o main.exe -lopengl32 -lSDL3 -I/usr/local/include -L/usr/local/bin
 */
 
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include <SDL3/SDL.h>
-//#include <SDL3/SDL_oldnames.h>
 #include <SDL3/SDL_opengl.h>
 
 #include "opengl.h"
@@ -29,17 +23,6 @@ const float SQUARE[] = {
      1.0f, -1.0f
 };
 
-static void
-print_usage(const char* arg0)
-{
-    printf("usage: %s [options]\n", arg0);
-    printf("\n");
-    printf("Options:\n");
-    printf("  -h --help        print this help\n");
-    printf("  -f --fullscreen  fullscreen window\n");
-    printf("  -v --vsync       enable vsync\n");
-}
-
 static bool
 opengl_shader_compile_source(GLuint shader, const GLchar* source)
 {
@@ -48,15 +31,15 @@ opengl_shader_compile_source(GLuint shader, const GLchar* source)
 
     GLint success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-    if (success != GL_TRUE) {
+    if (!success) {
         GLint info_log_length;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &info_log_length);
 
-        GLchar* info_log = malloc(info_log_length);
+        GLchar* info_log = SDL_malloc(info_log_length);
         glGetShaderInfoLog(shader, info_log_length, NULL, info_log);
 
-        fprintf(stderr, "failed to compile shader:\n%s\n", info_log);
-        free(info_log);
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "failed to compile shader:\n%s", info_log);
+        SDL_free(info_log);
 
         return false;
     }
@@ -77,11 +60,11 @@ opengl_shader_link_program(GLuint program, GLuint vertex_shader, GLuint fragment
         GLint info_log_length;
         glGetProgramiv(program, GL_INFO_LOG_LENGTH, &info_log_length);
 
-        GLchar* info_log = malloc(info_log_length);
+        GLchar* info_log = SDL_malloc(info_log_length);
         glGetProgramInfoLog(program, info_log_length, NULL, info_log);
 
-        fprintf(stderr, "failed to link program:\n%s\n", info_log);
-        free(info_log);
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "failed to link program:\n%s", info_log);
+        SDL_free(info_log);
 
         glDetachShader(program, vertex_shader);
         glDetachShader(program, fragment_shader);
@@ -94,38 +77,24 @@ opengl_shader_link_program(GLuint program, GLuint vertex_shader, GLuint fragment
     return false;
 }
 
-int
-main(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
     bool fullscreen = false;
     bool vsync = false;
 
-    for (int i = 1; i < argc; i++) {
-        if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
-            print_usage(argv[0]);
-            return EXIT_SUCCESS;
-        }
-        if (strcmp(argv[i], "-f") == 0 || strcmp(argv[i], "--fullscreen") == 0) {
-            fullscreen = true;
-        }
-        if (strcmp(argv[i], "-v") == 0 || strcmp(argv[i], "--vsync") == 0) {
-            vsync = true;
-        }
-    }
-
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        fprintf(stderr, "failed to init SDL2: %s\n", SDL_GetError());
-        return EXIT_FAILURE;
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "failed to init SDL2: %s", SDL_GetError());
+        return 1;
     }
 
-    printf("Platform:        %s\n", SDL_GetPlatform());
-    printf("CPU Count:       %d\n", SDL_GetCPUCount());
-    printf("System RAM:      %d MB\n", SDL_GetSystemRAM());
-    printf("Supports SSE:    %s\n", SDL_HasSSE() ? "true" : "false");
-    printf("Supports SSE2:   %s\n", SDL_HasSSE2() ? "true" : "false");
-    printf("Supports SSE3:   %s\n", SDL_HasSSE3() ? "true" : "false");
-    printf("Supports SSE4.1: %s\n", SDL_HasSSE41() ? "true" : "false");
-    printf("Supports SSE4.2: %s\n", SDL_HasSSE42() ? "true" : "false");
+    SDL_Log("Platform:        %s", SDL_GetPlatform());
+    SDL_Log("CPU Count:       %d", SDL_GetCPUCount());
+    SDL_Log("System RAM:      %d MB", SDL_GetSystemRAM());
+    SDL_Log("Supports SSE:    %s", SDL_HasSSE() ? "true" : "false");
+    SDL_Log("Supports SSE2:   %s", SDL_HasSSE2() ? "true" : "false");
+    SDL_Log("Supports SSE3:   %s", SDL_HasSSE3() ? "true" : "false");
+    SDL_Log("Supports SSE4.1: %s", SDL_HasSSE41() ? "true" : "false");
+    SDL_Log("Supports SSE4.2: %s", SDL_HasSSE42() ? "true" : "false");
 
     // Request at least 32-bit color
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
@@ -142,33 +111,27 @@ main(int argc, char* argv[])
     unsigned long flags = SDL_WINDOW_OPENGL;
 //    if (fullscreen) flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 
-    SDL_Window* window = SDL_CreateWindow(
-        "SDL2 OpenGL Demo",
-//        SDL_WINDOWPOS_UNDEFINED,
-//        SDL_WINDOWPOS_UNDEFINED,
-        640,
-        640,
-        flags);
+    SDL_Window* window = SDL_CreateWindow("SDL2 OpenGL Demo", 640, 640, flags);
 
     if (window == NULL) {
-        fprintf(stderr, "failed to create SDL2 window: %s\n", SDL_GetError());
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "failed to create SDL2 window: %s", SDL_GetError());
         SDL_Quit();
-        return EXIT_FAILURE;
+        return 1;
     }
 
     // SDL_GLContext is an alias for "void*"
     SDL_GLContext context = SDL_GL_CreateContext(window);
     if (context == NULL) {
-        fprintf(stderr, "failed to create OpenGL context: %s\n", SDL_GetError());
+        SDL_LogError(SDL_LOG_PRIORITY_ERROR, "failed to create OpenGL context: %s", SDL_GetError());
         SDL_DestroyWindow(window);
         SDL_Quit();
-        return EXIT_FAILURE;
+        return 1;
     }
 
-    printf("OpenGL Vendor:   %s\n", glGetString(GL_VENDOR));
-    printf("OpenGL Renderer: %s\n", glGetString(GL_RENDERER));
-    printf("OpenGL Version:  %s\n", glGetString(GL_VERSION));
-    printf("GLSL Version:    %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+    SDL_Log("OpenGL Vendor:   %s", glGetString(GL_VENDOR));
+    SDL_Log("OpenGL Renderer: %s", glGetString(GL_RENDERER));
+    SDL_Log("OpenGL Version:  %s", glGetString(GL_VERSION));
+    SDL_Log("GLSL Version:    %s", glGetString(GL_SHADING_LANGUAGE_VERSION));
 
     // Enable v-sync (set 1 to enable, 0 to disable)
     SDL_GL_SetSwapInterval(vsync ? 1 : 0);
@@ -187,6 +150,7 @@ main(int argc, char* argv[])
         "                       sin(angle), cos(angle));\n"
         "    gl_Position = vec4(0.75 * rotate * point, 0.0, 1.0);\n"
         "}\n";
+
     const GLchar *fs_source =
         "#version 330\n"
         "out vec4 color;\n"
@@ -257,7 +221,7 @@ main(int argc, char* argv[])
         if (angle > 2 * M_PI) angle -= 2 * M_PI;
 
         if (now - last_second >= 1000) {
-            printf("FPS: %ld\n", frame_count);
+            SDL_Log("FPS: %ld\n", frame_count);
             frame_count = 0;
             last_second = now;
         }
@@ -276,9 +240,6 @@ main(int argc, char* argv[])
     SDL_DestroyWindow(window);
     SDL_Quit();
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
-//int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
-//  main(0, NULL);
-//}
