@@ -12,7 +12,7 @@ sudo ninja install
 
 ## cross.txt
 ```
-[binaries]
+[binaries]ini
 c = 'x86_64-w64-mingw32-gcc'
 cpp = 'x86_64-w64-mingw32-g++'
 ar = 'x86_64-w64-mingw32-ar'
@@ -25,6 +25,32 @@ system = 'windows'
 cpu_family = 'x86_64'
 cpu = 'x86_64'
 endian = 'little'
+```
+
+## cross.txt ( Muster GTK4 )
+```ini
+[host_machine]
+system = 'windows'
+cpu_family = 'x86_64'
+cpu = 'x86_64'
+endian = 'little'
+
+# Fedora builds GCC with --enable-default-ssp by default, but mingw64 puts its
+# stack-protected functions in a separate library which needs to be linked
+# explicitly, hence this flag.
+[properties]
+c_args = []
+c_link_args = ['-fstack-protector']
+
+[binaries]
+c = 'x86_64-w64-mingw32-gcc'
+cpp = 'x86_64-w64-mingw32-g++'
+ar = 'x86_64-w64-mingw32-ar'
+ld = 'x86_64-w64-mingw32-ld'
+objcopy = 'x86_64-w64-mingw32-objcopy'
+strip = 'x86_64-w64-mingw32-strip'
+pkgconfig = 'x86_64-w64-mingw32-pkg-config'
+windres = 'x86_64-w64-mingw32-windres'
 ```
 
 ## Mehr Infos
