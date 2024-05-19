@@ -19,6 +19,11 @@ uses
     Result := R or (G shl 8) or (B shl 16) or (A shl 24);
   end;
 
+  function RGBA16(R, G, B, A: byte): uint16; inline;
+  begin
+    Result := R or (G shl 4) or (B shl 8) or (A shl 12);
+  end;
+
 const
   Screen_Widht = 320;
   Screen_Height = 240;
@@ -123,12 +128,12 @@ const
     glBindTexture(GL_TEXTURE_2D, 0);
   end;
 
-  procedure CreateTexturSurface(var TexturID: GLuint);
+  procedure CreateTexturSurface32(var TexturID: GLuint);
   const
     size = 32;
   var
     surface: PSDL_Surface;
-    mode, i: integer;
+    i: integer;
     r: TSDL_Rect;
   begin
     surface := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA8888);
@@ -138,28 +143,34 @@ const
       SDL_FillSurfaceRect(surface, @r, RGBA(i * 25, i * 50, i * 75, $FF));
     end;
 
-    case surface^.format^.bytes_per_pixel of
-      3: begin
-        WriteLn(surface^.format^.Rmask);
-        if surface^.format^.Rmask = $FF then  begin
-          mode := GL_RGB;
-        end else begin
-          mode := GL_BGR;
-        end;
-      end;
-      4: begin
-        WriteLn(surface^.format^.Rmask);
-        if surface^.format^.Rmask = $FF then  begin
-          mode := GL_RGBA;
-        end else begin
-          mode := GL_BGRA;
-        end;
-      end;
+    // Textur
+    glBindTexture(GL_TEXTURE_2D, TexturID);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, surface^.pixels);
+    //  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface^.pixels);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    SDL_DestroySurface(surface);
+  end;
+
+  procedure CreateTexturSurface16(var TexturID: GLuint);
+  const
+    size = 32;
+  var
+    surface: PSDL_Surface;
+    i: integer;
+    r: TSDL_Rect;
+  begin
+    surface := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA4444);
+
+    for i := 0 to size div 4 do begin
+      r.items := [i * 2, i * 2, size - i * 4, size - i * 4];
+      SDL_FillSurfaceRect(surface, @r, RGBA16((i * 25) div 16, (i * 50) div 16, (i * 75) div 16, $FF));
     end;
 
     // Textur
     glBindTexture(GL_TEXTURE_2D, TexturID);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, mode, GL_UNSIGNED_BYTE, surface^.pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4_REV, surface^.pixels);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -222,7 +233,8 @@ const
 
     CreateSurfaceBMPTextur(Texture[TexID1]);
     CreateTexture(Texture[TexID2]);
-    CreateTexturSurface(Texture[TexID3]);
+    CreateTexturSurface32(Texture[TexID3]);
+    CreateTexturSurface16(Texture[TexID4]);
 
     // Shader
     MyShader := TShader.Create;
@@ -270,6 +282,15 @@ const
     glBindVertexArray(VAOs[vaQuad]);
     glDrawArrays(GL_TRIANGLES, 0, Length(QuadVertex));
 
+    // === 4
+    ModelMatrix.Identity;
+    ModelMatrix.Translate([0.5, -0.5, 0.0]);
+    ModelMatrix *= RotMatrix;
+    ModelMatrix.Uniform(mat_id);
+    glBindTexture(GL_TEXTURE_2D, Texture[TexID4]);
+    glBindVertexArray(VAOs[vaQuad]);
+    glDrawArrays(GL_TRIANGLES, 0, Length(QuadVertex));
+
     SDL_GL_SwapWindow(gWindow);
   end;
 
@@ -288,7 +309,7 @@ const
 
   procedure RunScene;
   var
-    w, h: Int32;
+    w, h: int32;
   begin
     while not quit do begin
       while SDL_PollEvent(@e) do begin

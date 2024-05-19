@@ -34,7 +34,6 @@ const
     (-0.90, -0.90), (0.85, -0.90), (-0.90, 0.85),
     (0.90, -0.85), (0.90, 0.90), (-0.85, 0.90));
 
-
   procedure Init_SDL_and_OpenGL;
   var
     i: integer;
@@ -72,9 +71,6 @@ const
 
   procedure CreateScene;
   begin
-    glCreateBuffers(1, @VBO);
-    glNamedBufferStorage(VBO, Length(vertices) * SizeOf(TVector3f), PVector3f(vertices), 0);
-
     MyShader := TShader.Create;
     MyShader.LoadShaderObjectFromFile(GL_VERTEX_SHADER, 'Vertexshader.glsl');
     MyShader.LoadShaderObjectFromFile(GL_FRAGMENT_SHADER, 'Fragmentshader.glsl');
@@ -82,13 +78,15 @@ const
     MyShader.UseProgram;
     Color_ID := MyShader.UniformLocation('uCol');
 
+    glCreateBuffers(1, @VBO);
+    glNamedBufferStorage(VBO, Length(vertices) * SizeOf(TVector3f), PVector3f(vertices), 0);
+
     glGenVertexArrays(1, @VAO);
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nil);
     glEnableVertexAttribArray(0);
   end;
-
 
   procedure DrawScene;
   const
@@ -102,9 +100,13 @@ const
     MeshColor: array of PVector3f = (@vec3blue, @vec3green, @vec3cyan, @vec3red, @vec3magenta, @vec3yellow);
   var
     i: integer;
+    w, h: Longint;
   begin
     for i := 0 to Length(window) - 1 do begin
       SDL_GL_MakeCurrent(window[i], glcontext);
+      SDL_GetWindowSize(window[i],@w,@h);
+      glViewport(0, 0, w, h);
+
       glClearBufferfv(GL_COLOR, 0, BKColor[i mod Length(window)]^);
 
       MyShader.UseProgram;
@@ -123,7 +125,6 @@ const
   begin
     glDeleteVertexArrays(1, @VAO);
     glDeleteBuffers(1, @VBO);
-
     MyShader.Free;
 
     SDL_GL_DeleteContext(glcontext);
@@ -134,9 +135,6 @@ const
   end;
 
   procedure RunScene;
-  var
-    w, h: Int32;
-    win: PSDL_Window;
   begin
     while not quit do begin
       while SDL_PollEvent(@e) do begin
@@ -147,13 +145,6 @@ const
                 quit := True;
               end;
             end;
-          end;
-          SDL_EVENT_WINDOW_RESIZED: begin
-            win:=SDL_GetWindowFromID(e.window.windowID);
-            SDL_GL_MakeCurrent(win, glcontext);
-            w := e.window.data1;
-            h := e.window.data2;
-            glViewport(0, 0, w, h);
           end;
           SDL_EVENT_QUIT: begin
             quit := True;

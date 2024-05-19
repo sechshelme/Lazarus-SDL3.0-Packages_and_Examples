@@ -10,7 +10,7 @@
 
 int WinMain(int argc, char* argv[]) {
     SDL_Init(SDL_INIT_VIDEO);   
-    SDL_Window *window = SDL_CreateWindow("An SDL2 window",  640, 480, SDL_WINDOW_OPENGL);
+    SDL_Window *window = SDL_CreateWindow("An SDL3 window",  640, 480, SDL_WINDOW_OPENGL);
     SDL_Delay(3000);  
     SDL_DestroyWindow(window);
     SDL_Quit();
