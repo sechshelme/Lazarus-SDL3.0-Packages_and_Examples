@@ -82,8 +82,7 @@ var
       SDLFail('Kann kein SDL-Fenster erzeugen !');
     end;
 
-//    renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_PRESENTVSYNC);
-    renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_ACCELERATED);
+    renderer := SDL_CreateRenderer(window, nil);
     if renderer = nil then begin
       SDLFail('Kann kein SDL-Renderer erzeugen !');
     end;

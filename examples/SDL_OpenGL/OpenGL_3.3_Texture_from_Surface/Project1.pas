@@ -14,6 +14,10 @@ uses
   //Writeln('Error');
   {$endif}
 
+  function RGBA(R, G, B, A: byte): uint32; inline;
+  begin
+    Result := R or (G shl 8) or (B shl 16) or (A shl 24);
+  end;
 
 const
   Screen_Widht = 320;
@@ -29,25 +33,21 @@ var
 
   // OpenGL
   MyShader: TShader;
-  ModelMatrix: Tmat4x4;
-  textur0, textur1: GLuint;
+  RotMatrix, ModelMatrix: Tmat4x4;
+  //  textur0, textur1: GLuint;
 
-  //  Texture:array[(TexID)] of GLuint;
+  Texture: array[(TexID1, TexID2, TexID3, TexID4)] of GLuint;
   VAOs: array [(vaQuad)] of TGLuint;
   Mesh_Buffers: array [(mbVector, mbTexturCord)] of TGLuint;
 
 const
   QuadVertex: array of TVector3f =
-    ((-0.8, -0.8, 0.0), (0.8, 0.8, 0.0), (-0.8, 0.8, 0.0),
-    (-0.8, -0.8, 0.0), (0.8, -0.8, 0.0), (0.8, 0.8, 0.0));
+    ((-0.2, -0.2, 0.0), (0.2, 0.2, 0.0), (-0.2, 0.2, 0.0),
+    (-0.2, -0.2, 0.0), (0.2, -0.2, 0.0), (0.2, 0.2, 0.0));
 
   TextureVertex: array of TVector2f =
     ((0.0, 0.0), (1.0, 1.0), (0.0, 1.0),
     (0.0, 0.0), (1.0, 0.0), (1.0, 1.0));
-
-const
-  Textur32_0: packed array[0..1, 0..1, 0..3] of byte = ((($FF, $00, $00, $FF), ($00, $FF, $00, $FF)), (($00, $00, $FF, $FF), ($FF, $00, $00, $FF)));
-
 
   vertex_shader_text: string =
     '#version 330 core' + #10 +
@@ -78,7 +78,7 @@ const
     '  fColor = texture( Sampler, UV0);' + #10 +
     '}';
 
-  function CreateSurfaceTextur: GLuint;
+  procedure CreateSurfaceBMPTextur(var TexturID: GLuint);
   var
     surface: PSDL_Surface;
     mode: GLint;
@@ -105,26 +105,65 @@ const
     end;
 
     // Textur
-    glGenTextures(1, @Result);
-
-    glBindTexture(GL_TEXTURE_2D, Result);
-    WriteLn(surface^.w, ' - ', surface^.h);
-    //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, @Textur32_0);
+    glBindTexture(GL_TEXTURE_2D, TexturID);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, mode, GL_UNSIGNED_BYTE, surface^.pixels);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glBindTexture(GL_TEXTURE_2D, 0);
 
-
     SDL_DestroySurface(surface);
   end;
 
-  function CreateTextur: GLuint;
+  procedure CreateTexture(var TexturID: GLuint);
+  const
+    Textur32_0: packed array[0..1, 0..1, 0..3] of byte = ((($FF, $00, $00, $FF), ($00, $FF, $00, $FF)), (($00, $00, $FF, $FF), ($FF, $00, $00, $FF)));
   begin
-    glGenTextures(1, @Result);
-    glBindTexture(GL_TEXTURE_2D, Result);
+    glBindTexture(GL_TEXTURE_2D, TexturID);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, @Textur32_0);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glBindTexture(GL_TEXTURE_2D, 0);
+  end;
+
+  procedure CreateTexturSurface(var TexturID: GLuint);
+  const
+    size = 32;
+  var
+    surface: PSDL_Surface;
+    mode, i: integer;
+    r: TSDL_Rect;
+  begin
+    surface := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA8888);
+
+    for i := 0 to size div 4 do begin
+      r.items := [i * 2, i * 2, size - i * 4, size - i * 4];
+      SDL_FillSurfaceRect(surface, @r, RGBA(i * 25, i * 50, i * 75, $FF));
+    end;
+
+    case surface^.format^.bytes_per_pixel of
+      3: begin
+        WriteLn(surface^.format^.Rmask);
+        if surface^.format^.Rmask = $FF then  begin
+          mode := GL_RGB;
+        end else begin
+          mode := GL_BGR;
+        end;
+      end;
+      4: begin
+        WriteLn(surface^.format^.Rmask);
+        if surface^.format^.Rmask = $FF then  begin
+          mode := GL_RGBA;
+        end else begin
+          mode := GL_BGRA;
+        end;
+      end;
+    end;
+
+    // Textur
+    glBindTexture(GL_TEXTURE_2D, TexturID);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, mode, GL_UNSIGNED_BYTE, surface^.pixels);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    SDL_DestroySurface(surface);
   end;
 
   procedure Init_SDL_and_OpenGL;
@@ -151,8 +190,8 @@ const
       WriteLn('Warning: Unable to set VSync! SDL Error: ', SDL_GetError);
     end;
 
+    RotMatrix.Identity;
     Load_GLADE;
-    ModelMatrix.Identity;
   end;
 
   procedure CreateScene;
@@ -179,13 +218,11 @@ const
     glBindVertexArray(0);
 
     // Textur
-    textur0 := CreateSurfaceTextur;
-    //glGenTextures(Length(Texture), Texture);
-    //
-    //glBindTexture(GL_TEXTURE_2D, Texture[TexID]);
-    //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, @Textur32_0);
-    //glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    //glBindTexture(GL_TEXTURE_2D, 0);
+    glGenTextures(Length(Texture), Texture);
+
+    CreateSurfaceBMPTextur(Texture[TexID1]);
+    CreateTexture(Texture[TexID2]);
+    CreateTexturSurface(Texture[TexID3]);
 
     // Shader
     MyShader := TShader.Create;
@@ -203,13 +240,33 @@ const
     mat_id: GLint;
   begin
     glClearBufferfv(GL_COLOR, 0, black);
-
-    ModelMatrix.RotateC(0.01);
     mat_id := MyShader.UniformLocation('matrix');
+    RotMatrix.RotateC(0.01);
+
+    // === 1
+    ModelMatrix.Identity;
+    ModelMatrix.Translate([-0.5, 0.5, 0.0]);
+    ModelMatrix *= RotMatrix;
     ModelMatrix.Uniform(mat_id);
+    glBindTexture(GL_TEXTURE_2D, Texture[TexID1]);
+    glBindVertexArray(VAOs[vaQuad]);
+    glDrawArrays(GL_TRIANGLES, 0, Length(QuadVertex));
 
-    glBindTexture(GL_TEXTURE_2D, textur0);
+    // === 2
+    ModelMatrix.Identity;
+    ModelMatrix.Translate([-0.5, -0.5, 0.0]);
+    ModelMatrix *= RotMatrix;
+    ModelMatrix.Uniform(mat_id);
+    glBindTexture(GL_TEXTURE_2D, Texture[TexID2]);
+    glBindVertexArray(VAOs[vaQuad]);
+    glDrawArrays(GL_TRIANGLES, 0, Length(QuadVertex));
 
+    // === 3
+    ModelMatrix.Identity;
+    ModelMatrix.Translate([0.5, 0.5, 0.0]);
+    ModelMatrix *= RotMatrix;
+    ModelMatrix.Uniform(mat_id);
+    glBindTexture(GL_TEXTURE_2D, Texture[TexID3]);
     glBindVertexArray(VAOs[vaQuad]);
     glDrawArrays(GL_TRIANGLES, 0, Length(QuadVertex));
 
@@ -218,7 +275,7 @@ const
 
   procedure Destroy_SDL_and_OpenGL;
   begin
-    glDeleteTextures(1, @textur0);
+    glDeleteTextures(Length(Texture), Texture);
     glDeleteVertexArrays(Length(VAOs), VAOs);
     glDeleteBuffers(Length(Mesh_Buffers), Mesh_Buffers);
 
@@ -230,6 +287,8 @@ const
   end;
 
   procedure RunScene;
+  var
+    w, h: Int32;
   begin
     while not quit do begin
       while SDL_PollEvent(@e) do begin
@@ -240,6 +299,11 @@ const
                 quit := True;
               end;
             end;
+          end;
+          SDL_EVENT_WINDOW_RESIZED: begin
+            w := e.window.data1;
+            h := e.window.data2;
+            glViewport(0, 0, w, h);
           end;
           SDL_EVENT_QUIT: begin
             quit := True;

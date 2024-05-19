@@ -14,7 +14,6 @@ uses
   //Writeln('Error');
   {$endif}
 
-
 const
   Screen_Widht = 320;
   Screen_Height = 240;
@@ -31,7 +30,7 @@ var
   MyShader: TShader;
   ModelMatrix: Tmat4x4;
 
-  Texture:array[(TexID)] of GLuint;
+  Texture: array[(TexID)] of GLuint;
   VAOs: array [(vaQuad)] of TGLuint;
   Mesh_Buffers: array [(mbVector, mbTexturCord)] of TGLuint;
 
@@ -52,16 +51,16 @@ const
     '#version 330 core' + #10 +
     '' + #10 +
     'layout (location = 0) in vec3 vPosition;' + #10 +
-    'layout (location = 1) in vec2 inUV;'+#10+    // Textur-Koordinaten
+    'layout (location = 1) in vec2 inUV;' + #10 +    // Textur-Koordinaten
     '' + #10 +
     'uniform mat4x4 matrix;' + #10 +
     '' + #10 +
-    'out vec2 UV0;' +#10+
+    'out vec2 UV0;' + #10 +
     '' + #10 +
     'void main()' + #10 +
     '{' + #10 +
     '  gl_Position = matrix * vec4(vPosition, 1);' + #10 +
-    'UV0 = inUV;'+#10+
+    'UV0 = inUV;' + #10 +
     '}';
 
   fragment_shader_text =
@@ -180,6 +179,8 @@ const
   end;
 
   procedure RunScene;
+  var
+    w, h: int32;
   begin
     while not quit do begin
       while SDL_PollEvent(@e) do begin
@@ -190,6 +191,11 @@ const
                 quit := True;
               end;
             end;
+          end;
+          SDL_EVENT_WINDOW_RESIZED: begin
+            w := e.window.data1;
+            h := e.window.data2;
+            glViewport(0, 0, w, h);
           end;
           SDL_EVENT_QUIT: begin
             quit := True;

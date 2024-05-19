@@ -15,7 +15,7 @@ const
 
 var
   // SDL
-  win: array[0..5] of PSDL_Window;
+  window: array[0..5] of PSDL_Window;
   glcontext: TSDL_GLContext;
 
   quit: boolean = False;
@@ -50,11 +50,11 @@ const
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-    for i := 0 to Length(win) - 1 do begin
-      win[i] := SDL_CreateWindow(PChar('SDL OpenGL (' + char(i + 48) + ')'), Screen_Widht, Screen_Height, SDL_WINDOW_RESIZABLE or SDL_WINDOW_OPENGL);
-      SDL_SetWindowPosition(win[i], 100 + (Screen_Widht + 20) * (i mod 3), 50 + (Screen_Height + 40) * (i div 3));
+    for i := 0 to Length(window) - 1 do begin
+      window[i] := SDL_CreateWindow(PChar('SDL OpenGL (' + char(i + 48) + ')'), Screen_Widht, Screen_Height, SDL_WINDOW_RESIZABLE or SDL_WINDOW_OPENGL);
+      SDL_SetWindowPosition(window[i], 100 + (Screen_Widht + 20) * (i mod 3), 50 + (Screen_Height + 40) * (i div 3));
     end;
-    glcontext := SDL_GL_CreateContext(win[0]);
+    glcontext := SDL_GL_CreateContext(window[0]);
 
     if glcontext = nil then begin
       SDL_Log('OpenGL context could not be created! SDL Error (0): ', SDL_GetError);
@@ -103,17 +103,17 @@ const
   var
     i: integer;
   begin
-    for i := 0 to Length(win) - 1 do begin
-      SDL_GL_MakeCurrent(win[i], glcontext);
-      glClearBufferfv(GL_COLOR, 0, BKColor[i mod Length(win)]^);
+    for i := 0 to Length(window) - 1 do begin
+      SDL_GL_MakeCurrent(window[i], glcontext);
+      glClearBufferfv(GL_COLOR, 0, BKColor[i mod Length(window)]^);
 
       MyShader.UseProgram;
-      MeshColor[i mod Length(win)]^.Uniform(Color_ID);
+      MeshColor[i mod Length(window)]^.Uniform(Color_ID);
 
       glBindVertexArray(VAO);
       glDrawArrays(GL_TRIANGLES, 0, Length(vertices));
 
-      SDL_GL_SwapWindow(win[i]);
+      SDL_GL_SwapWindow(window[i]);
     end;
   end;
 
@@ -127,13 +127,16 @@ const
     MyShader.Free;
 
     SDL_GL_DeleteContext(glcontext);
-    for i := 0 to Length(win) - 1 do begin
-      SDL_DestroyWindow(win[i]);
+    for i := 0 to Length(window) - 1 do begin
+      SDL_DestroyWindow(window[i]);
     end;
     SDL_Quit();
   end;
 
   procedure RunScene;
+  var
+    w, h: Int32;
+    win: PSDL_Window;
   begin
     while not quit do begin
       while SDL_PollEvent(@e) do begin
@@ -144,6 +147,13 @@ const
                 quit := True;
               end;
             end;
+          end;
+          SDL_EVENT_WINDOW_RESIZED: begin
+            win:=SDL_GetWindowFromID(e.window.windowID);
+            SDL_GL_MakeCurrent(win, glcontext);
+            w := e.window.data1;
+            h := e.window.data2;
+            glViewport(0, 0, w, h);
           end;
           SDL_EVENT_QUIT: begin
             quit := True;
