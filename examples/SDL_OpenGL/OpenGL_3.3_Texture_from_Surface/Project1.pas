@@ -30,8 +30,9 @@ var
   // OpenGL
   MyShader: TShader;
   ModelMatrix: Tmat4x4;
+  textur0, textur1: GLuint;
 
-  Texture:array[(TexID)] of GLuint;
+  //  Texture:array[(TexID)] of GLuint;
   VAOs: array [(vaQuad)] of TGLuint;
   Mesh_Buffers: array [(mbVector, mbTexturCord)] of TGLuint;
 
@@ -52,16 +53,16 @@ const
     '#version 330 core' + #10 +
     '' + #10 +
     'layout (location = 0) in vec3 vPosition;' + #10 +
-    'layout (location = 1) in vec2 inUV;'+#10+    // Textur-Koordinaten
+    'layout (location = 1) in vec2 inUV;' + #10 +    // Textur-Koordinaten
     '' + #10 +
     'uniform mat4x4 matrix;' + #10 +
     '' + #10 +
-    'out vec2 UV0;' +#10+
+    'out vec2 UV0;' + #10 +
     '' + #10 +
     'void main()' + #10 +
     '{' + #10 +
     '  gl_Position = matrix * vec4(vPosition, 1);' + #10 +
-    'UV0 = inUV;'+#10+
+    'UV0 = inUV;' + #10 +
     '}';
 
   fragment_shader_text =
@@ -77,6 +78,54 @@ const
     '  fColor = texture( Sampler, UV0);' + #10 +
     '}';
 
+  function CreateSurfaceTextur: GLuint;
+  var
+    surface: PSDL_Surface;
+    mode: GLint;
+  begin
+    surface := SDL_LoadBMP('mauer.bmp');
+
+    case surface^.format^.bytes_per_pixel of
+      3: begin
+        WriteLn(surface^.format^.Rmask);
+        if surface^.format^.Rmask = $FF then  begin
+          mode := GL_RGB;
+        end else begin
+          mode := GL_BGR;
+        end;
+      end;
+      4: begin
+        WriteLn(surface^.format^.Rmask);
+        if surface^.format^.Rmask = $FF then  begin
+          mode := GL_RGBA;
+        end else begin
+          mode := GL_BGRA;
+        end;
+      end;
+    end;
+
+    // Textur
+    glGenTextures(1, @Result);
+
+    glBindTexture(GL_TEXTURE_2D, Result);
+    WriteLn(surface^.w, ' - ', surface^.h);
+    //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, @Textur32_0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, mode, GL_UNSIGNED_BYTE, surface^.pixels);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+
+    SDL_DestroySurface(surface);
+  end;
+
+  function CreateTextur: GLuint;
+  begin
+    glGenTextures(1, @Result);
+    glBindTexture(GL_TEXTURE_2D, Result);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, @Textur32_0);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glBindTexture(GL_TEXTURE_2D, 0);
+  end;
 
   procedure Init_SDL_and_OpenGL;
   begin
@@ -130,12 +179,13 @@ const
     glBindVertexArray(0);
 
     // Textur
-    glGenTextures(Length(Texture), Texture);
-
-    glBindTexture(GL_TEXTURE_2D, Texture[TexID]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, @Textur32_0);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    textur0 := CreateSurfaceTextur;
+    //glGenTextures(Length(Texture), Texture);
+    //
+    //glBindTexture(GL_TEXTURE_2D, Texture[TexID]);
+    //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, @Textur32_0);
+    //glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    //glBindTexture(GL_TEXTURE_2D, 0);
 
     // Shader
     MyShader := TShader.Create;
@@ -158,7 +208,7 @@ const
     mat_id := MyShader.UniformLocation('matrix');
     ModelMatrix.Uniform(mat_id);
 
-    glBindTexture(GL_TEXTURE_2D, Texture[TexID]);
+    glBindTexture(GL_TEXTURE_2D, textur0);
 
     glBindVertexArray(VAOs[vaQuad]);
     glDrawArrays(GL_TRIANGLES, 0, Length(QuadVertex));
@@ -168,7 +218,7 @@ const
 
   procedure Destroy_SDL_and_OpenGL;
   begin
-    glDeleteTextures(Length(Texture), Texture);
+    glDeleteTextures(1, @textur0);
     glDeleteVertexArrays(Length(VAOs), VAOs);
     glDeleteBuffers(Length(Mesh_Buffers), Mesh_Buffers);
 
