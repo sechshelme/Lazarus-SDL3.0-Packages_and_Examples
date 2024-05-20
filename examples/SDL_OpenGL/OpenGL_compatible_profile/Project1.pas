@@ -3,7 +3,7 @@ program Project1;
 uses
   sdl3,
   oglDebug,
-  oglglad_gl;
+  GL;
 
 var
   window: PSDL_Window;
@@ -16,7 +16,6 @@ begin
   window := SDL_CreateWindow('SDL3 Window', 320, 200, SDL_WINDOW_OPENGL or SDL_WINDOW_RESIZABLE);
 
   glcontext := SDL_GL_CreateContext(window);
-  Load_GLADE();
 
   glClearColor(0, 1, 0, 0);
 

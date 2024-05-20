@@ -2,7 +2,6 @@ program Project1;
 
 uses
   oglglad_gl,
-  oglContext,
   oglVector,
   oglMatrix,
   oglShader,
@@ -100,11 +99,11 @@ const
     MeshColor: array of PVector3f = (@vec3blue, @vec3green, @vec3cyan, @vec3red, @vec3magenta, @vec3yellow);
   var
     i: integer;
-    w, h: Longint;
+    w, h: longint;
   begin
     for i := 0 to Length(window) - 1 do begin
       SDL_GL_MakeCurrent(window[i], glcontext);
-      SDL_GetWindowSize(window[i],@w,@h);
+      SDL_GetWindowSize(window[i], @w, @h);
       glViewport(0, 0, w, h);
 
       glClearBufferfv(GL_COLOR, 0, BKColor[i mod Length(window)]^);

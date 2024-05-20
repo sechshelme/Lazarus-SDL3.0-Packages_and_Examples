@@ -1,10 +1,13 @@
 program Project1;
 
+{$modeswitch arrayoperators on}
+
 uses
   SDL3,
   oglglad_gl,
   oglVector,
   oglMatrix,
+  oglTextur,
   oglShader;
 
   function RGBA(R, G, B, A: byte): uint32; inline;
@@ -32,16 +35,15 @@ var
   // OpenGL
   MyShader: TShader;
   RotMatrix, ModelMatrix: Tmat4x4;
-  //  textur0, textur1: GLuint;
 
-  Texture: array[(TexID1, TexID2, TexID3, TexID4)] of GLuint;
+  Texture: array of TTexturBuffer = nil;
   VAOs: array [(vaQuad)] of TGLuint;
   Mesh_Buffers: array [(mbVector, mbTexturCord)] of TGLuint;
 
 const
   QuadVertex: array of TVector3f =
-    ((-0.2, -0.2, 0.0), (0.2, 0.2, 0.0), (-0.2, 0.2, 0.0),
-    (-0.2, -0.2, 0.0), (0.2, -0.2, 0.0), (0.2, 0.2, 0.0));
+    ((-0.3, -0.3, 0.0), (0.3, 0.3, 0.0), (-0.3, 0.3, 0.0),
+    (-0.3, -0.3, 0.0), (0.3, -0.3, 0.0), (0.3, 0.3, 0.0));
 
   TextureVertex: array of TVector2f =
     ((0.0, 0.0), (1.0, 1.0), (0.0, 1.0),
@@ -76,7 +78,7 @@ const
     '  fColor = texture( Sampler, UV0);' + #10 +
     '}';
 
-  procedure CreateSurfaceBMPTextur(var TexturID: GLuint);
+  function CreateSurfaceBMPTextur: TTexturBuffer;
   var
     surface: PSDL_Surface;
     mode: GLint;
@@ -103,25 +105,21 @@ const
     end;
 
     // Textur
-    glBindTexture(GL_TEXTURE_2D, TexturID);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, mode, GL_UNSIGNED_BYTE, surface^.pixels);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    Result := TTexturBuffer.Create;
+    Result.LoadTextures(surface^.w, surface^.h, surface^.pixels, mode);
 
     SDL_DestroySurface(surface);
   end;
 
-  procedure CreateTexture(var TexturID: GLuint);
+  function CreateTexture: TTexturBuffer;
   const
     Textur32_0: packed array[0..1, 0..1, 0..3] of byte = ((($FF, $00, $00, $FF), ($00, $FF, $00, $FF)), (($00, $00, $FF, $FF), ($FF, $00, $00, $FF)));
   begin
-    glBindTexture(GL_TEXTURE_2D, TexturID);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, @Textur32_0);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    Result := TTexturBuffer.Create;
+    Result.LoadTextures(2, 2, @Textur32_0);
   end;
 
-  procedure CreateTexturSurface32(var TexturID: GLuint);
+  function CreateTexturSurface32: TTexturBuffer;
   const
     size = 32;
   var
@@ -137,16 +135,13 @@ const
     end;
 
     // Textur
-    glBindTexture(GL_TEXTURE_2D, TexturID);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, surface^.pixels);
-    //  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface^.pixels);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    Result := TTexturBuffer.Create;
+    Result.LoadTextures(surface^.w, surface^.h, surface^.pixels, GL_RGBA);
 
     SDL_DestroySurface(surface);
   end;
 
-  procedure CreateTexturSurface16(var TexturID: GLuint);
+  function CreateTexturSurface16: TTexturBuffer;
   const
     size = 32;
   var
@@ -162,10 +157,8 @@ const
     end;
 
     // Textur
-    glBindTexture(GL_TEXTURE_2D, TexturID);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4_REV, surface^.pixels);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    Result := TTexturBuffer.Create;
+    Result.LoadTextures(surface^.w, surface^.h, surface^.pixels, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4_REV);
 
     SDL_DestroySurface(surface);
   end;
@@ -222,12 +215,10 @@ const
     glBindVertexArray(0);
 
     // Textur
-    glGenTextures(Length(Texture), Texture);
-
-    CreateSurfaceBMPTextur(Texture[TexID1]);
-    CreateTexture(Texture[TexID2]);
-    CreateTexturSurface32(Texture[TexID3]);
-    CreateTexturSurface16(Texture[TexID4]);
+    Texture += [CreateSurfaceBMPTextur];
+    Texture += [CreateTexture];
+    Texture += [CreateTexturSurface32];
+    Texture += [CreateTexturSurface16];
 
     // Shader
     MyShader := TShader.Create;
@@ -253,7 +244,7 @@ const
     ModelMatrix.Translate([-0.5, 0.5, 0.0]);
     ModelMatrix *= RotMatrix;
     ModelMatrix.Uniform(mat_id);
-    glBindTexture(GL_TEXTURE_2D, Texture[TexID1]);
+    Texture[0].ActiveAndBind;
     glBindVertexArray(VAOs[vaQuad]);
     glDrawArrays(GL_TRIANGLES, 0, Length(QuadVertex));
 
@@ -262,7 +253,7 @@ const
     ModelMatrix.Translate([-0.5, -0.5, 0.0]);
     ModelMatrix *= RotMatrix;
     ModelMatrix.Uniform(mat_id);
-    glBindTexture(GL_TEXTURE_2D, Texture[TexID2]);
+    Texture[1].ActiveAndBind;
     glBindVertexArray(VAOs[vaQuad]);
     glDrawArrays(GL_TRIANGLES, 0, Length(QuadVertex));
 
@@ -271,7 +262,7 @@ const
     ModelMatrix.Translate([0.5, 0.5, 0.0]);
     ModelMatrix *= RotMatrix;
     ModelMatrix.Uniform(mat_id);
-    glBindTexture(GL_TEXTURE_2D, Texture[TexID3]);
+    Texture[2].ActiveAndBind;
     glBindVertexArray(VAOs[vaQuad]);
     glDrawArrays(GL_TRIANGLES, 0, Length(QuadVertex));
 
@@ -280,7 +271,7 @@ const
     ModelMatrix.Translate([0.5, -0.5, 0.0]);
     ModelMatrix *= RotMatrix;
     ModelMatrix.Uniform(mat_id);
-    glBindTexture(GL_TEXTURE_2D, Texture[TexID4]);
+    Texture[3].ActiveAndBind;
     glBindVertexArray(VAOs[vaQuad]);
     glDrawArrays(GL_TRIANGLES, 0, Length(QuadVertex));
 
@@ -288,8 +279,12 @@ const
   end;
 
   procedure Destroy_SDL_and_OpenGL;
+  var
+    i: integer;
   begin
-    glDeleteTextures(Length(Texture), Texture);
+    for i := 0 to Length(Texture) - 1 do begin
+      Texture[i].Free;
+    end;
     glDeleteVertexArrays(Length(VAOs), VAOs);
     glDeleteBuffers(Length(Mesh_Buffers), Mesh_Buffers);
 
