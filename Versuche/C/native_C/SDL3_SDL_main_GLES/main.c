@@ -1,4 +1,14 @@
-//  g++ main_GLSE.c -o main_GLES -lSDL3 -lGL
+ ///////  g++ main_GLSE.c -o main_GLES -lSDL3 -lGL
+//  gcc main_GLSE.c -o main_GLES -lSDL3 -lGL
+
+/*
+  Linux:
+  gcc main.c -o main -lSDL3 -lGL
+
+  Windows: geht nicht!! 
+  x86_64-w64-mingw32-gcc main.c -o main.exe -lSDL3 -lopengl32 -I/usr/local/include -L/usr/local/bin
+  x86_64-w64-mingw32-gcc main.c -o main.exe -lSDL3 -lopengl32 -I/usr/local/include -I/usr/include -I/usr/include/x86_64-linux-gnu/ -L/usr/local/bin
+*/
 
 
 #define SDL_MAIN_USE_CALLBACKS
@@ -6,21 +16,18 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3/SDL_opengles2.h>
-#include <cmath>
-#include <vector>
 
-struct AppContext
-{
-    SDL_Window *window;
+struct AppContext {
+    SDL_Window* window;
     SDL_GLContext glcontext;
-    SDL_bool app_quit = SDL_FALSE;
-};
+    SDL_bool app_quit;
+} appContext;
 
 const char *vertexShaderSource =
     "attribute vec2 aPosition;\n"
     "void main()"
     "{\n"
-    "    gl_Position = vec4(aPosition, 0.0, 1.0);\n"
+    "   gl_Position = vec4(aPosition, 0.0, 1.0);\n"
     "}\n";
 
 const char *fragmentShaderSource =
@@ -40,10 +47,14 @@ GLuint createShader(const char *shaderSource, int shaderType)
     {
         GLint maxLength = 0;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
-        std::vector<GLchar> errorLog(maxLength);
-        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
+      
+        GLchar *errorLog;
+        errorLog = SDL_malloc(maxLength);
+//        std::vector<GLchar> errorLog(maxLength);
+        glGetShaderInfoLog(shader, maxLength, &maxLength, errorLog);
         glDeleteShader(shader); // Don't leak the shader
-        // std::printf("%s\n", &(errorLog[0]));
+        SDL_Log("%s", errorLog);
+        SDL_free(errorLog); 
     }
     return shader;
 }
@@ -73,8 +84,7 @@ void initVertexBuffers(GLuint program)
     glGenBuffers(1, &vertPosBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertPosBuffer);
     int amount = sizeof(vertPositions) / sizeof(vertPositions[0]);
-    glBufferData(GL_ARRAY_BUFFER, amount * sizeof(GLfloat),
-        vertPositions, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, amount * sizeof(GLfloat), vertPositions, GL_STATIC_DRAW);
     GLint aPositionLocation = glGetAttribLocation(program, "aPosition");
     glVertexAttribPointer(aPositionLocation, 2, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(aPositionLocation);
@@ -109,12 +119,10 @@ int SDL_AppInit(void **appstate, int argc, char *argv[])
 
     SDL_ShowWindow(window);
 
-    // Set up the application data
-    *appstate = new AppContext {
-        window,
-        glcontext,
-    };
-
+    appContext.window = window;
+    appContext.glcontext = glcontext;
+    appContext.app_quit = SDL_FALSE;
+    *appstate = &appContext;
     SDL_Log("Application started successfully!");
 
     return 0;
@@ -122,10 +130,9 @@ int SDL_AppInit(void **appstate, int argc, char *argv[])
 
 int SDL_AppEvent(void *appstate, const SDL_Event *event)
 {
-    auto *app = (AppContext *)appstate;
+    struct AppContext *app = appstate;
 
-    if (event->type == SDL_EVENT_QUIT)
-    {
+    if (event->type == SDL_EVENT_QUIT) {
         app->app_quit = SDL_TRUE;
     }
 
@@ -134,7 +141,7 @@ int SDL_AppEvent(void *appstate, const SDL_Event *event)
 
 int SDL_AppIterate(void *appstate)
 {
-    auto *app = (AppContext *)appstate;
+    struct AppContext *app = appstate;
 
     glClearColor(0.1, 0.3, 0.2, 1.f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -146,12 +153,11 @@ int SDL_AppIterate(void *appstate)
 
 void SDL_AppQuit(void *appstate)
 {
-    auto *app = (AppContext *)appstate;
+    struct AppContext *app = appstate;
     if (app)
     {
         SDL_GL_DeleteContext(app->glcontext);
         SDL_DestroyWindow(app->window);
-        delete app;
     }
 
     SDL_Quit();

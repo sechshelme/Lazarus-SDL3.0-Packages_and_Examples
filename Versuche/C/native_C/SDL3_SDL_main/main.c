@@ -54,8 +54,7 @@ int SDL_AppInit(void** appstate, int argc, char* argv[]) {
 
     appContext.window = window;
     appContext.renderer = renderer;
-    appContext.app_quit=SDL_FALSE;
-
+    appContext.app_quit = SDL_FALSE;
     *appstate = &appContext;
 
     SDL_Log("Application started successfully!");
@@ -99,3 +98,4 @@ void SDL_AppQuit(void* appstate) {
     SDL_Quit();
     SDL_Log("Application quit successfully!");
 }
+

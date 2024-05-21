@@ -3,8 +3,7 @@
   gcc main.c -o main -lSDL2
 
   Windows:
-  Folgende Datei muss im Ordner der DLLs sein libSDL2main.a
-  x86_64-w64-mingw32-gcc main.c -o main.exe -lmingw32 -lSDL2main -lSDL2 -mwindows -I/usr/local/include -L/usr/local/bin 
+  x86_64-w64-mingw32-gcc main.c -o main.exe -lSDL2 -I/usr/local/include -L/usr/local/bin
 */
 
 #include <SDL2/SDL.h>
@@ -14,11 +13,11 @@
 #include <windows.h>
 #endif
 
-//#if defined(_WIN64)
-//int WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw) 
-//#else
+#if defined(_WIN64)
+int WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR szCmdLine, int sw) 
+#else
 int main(int argc, char *argv[])
-//#endif    
+#endif    
 
 //int SDL_main(int argc, char *argv[])
 {
