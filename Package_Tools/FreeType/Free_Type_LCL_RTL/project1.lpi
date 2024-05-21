@@ -56,7 +56,7 @@
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <CodeGeneration>
-      <TargetOS Value="win64"/>
+      <TargetOS Value="linux"/>
     </CodeGeneration>
     <Linking>
       <Debugging>

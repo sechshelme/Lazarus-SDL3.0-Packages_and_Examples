@@ -24,6 +24,13 @@ const
 function mbstowcs(dest:PDWord; src:PChar; max :SizeInt): SizeInt; cdecl; external libc;
 function mblen(pmb:PDWord; max :SizeInt): cint; cdecl; external libc;
 
+function setlocale(catogory:cint; locale:PChar ): PChar; cdecl; external libc;
+
+// https://cplusplus.com/reference/cuchar/mbrtoc32/
+// size_t mbrtoc32 ( char32_t * pc32, const char * pmb, size_t max, mbstate_t * ps);
+function mbrtoc32(dest:PDWord; src:PChar; max :SizeInt; state:Pointer): SizeInt; cdecl; external libc;
+
+
 type
 
   { TForm1 }
@@ -55,6 +62,20 @@ implementation
 
 var
   image: array of byte = nil;
+//
+//  #define __LC_CTYPE		 0
+//  #define __LC_NUMERIC		 1
+//  #define __LC_TIME		 2
+//  #define __LC_COLLATE		 3
+//  #define __LC_MONETARY		 4
+//  #define __LC_MESSAGES		 5
+//  #define __LC_ALL		 6
+//  #define __LC_PAPER		 7
+//  #define __LC_NAME		 8
+//  #define __LC_ADDRESS		 9
+//  #define __LC_TELEPHONE	10
+//  #define __LC_MEASUREMENT	11
+//  #define __LC_IDENTIFICATION	12
 
 procedure TForm1.FormCreate(Sender: TObject);
 const
@@ -64,7 +85,12 @@ const
 var
   error: FT_Error;
 begin
+  {$ifdef windows}
   InitializeFreetype('libfreetype-6.dll');
+  {$else}
+  InitializeFreetype('');
+  {$endif}
+  setlocale(6,'en_US.utf8');
 
   Timer1.Enabled := False;
   Timer1.Interval := 100;
@@ -117,7 +143,7 @@ procedure TForm1.Timer1Timer(Sender: TObject);
 const
   angle: single = 0.0;
 begin
-  angle += 0.3;
+  angle += 0.0;
   Face_To_Image(angle);
 
   glDrawPixels(imageWidht, imageHeight, GL_LUMINANCE, GL_UNSIGNED_BYTE, Pointer(image));
@@ -158,20 +184,26 @@ procedure TForm1.Face_To_Image(angle: single);
 const
 //    HelloText: PChar = 'Hello world !  öäü ÄÖÜ ÿï ŸÏ!';
 //  HelloText: PChar = 'Computer sind dumm';
-  HelloText:PChar='äöüÄÖÜ';
+  HelloText:PChar='ABCäöüÄÖÜ';
+//  HelloText:PChar='AäÄ';
+//  HelloText:PChar=#$41#$C3#$A4#$C3#$84;
 var
   error: FT_Error;
   pen: FT_Vector;
   matrix: FT_Matrix;
   slot: PFT_GlyphSlot;
+  n, i: integer;
 
-  n: integer;
 //wc:array of WideChar=nil;
 wc:array of DWord=nil;
 begin
   SetLength(wc, Length(HelloText));
-  mbstowcs(PDWord(wc), HelloText, Length(wc));
- // WriteLn('mblen: ', mblen(PDWord(wc), Length(wc)));
+  WriteLn(HelloText);
+  WriteLn('len_wc: ',Length(wc));
+//  mbstowcs(PDWord(wc), HelloText, Length(wc));
+  mbrtoc32(PDWord(wc), HelloText, Length(wc),nil);
+  WriteLn('mblen: ', mblen(PDWord(wc), Length(wc)));
+  for i:=0 to Length(wc)-1 do Write(IntToHex(wc[i],8),' - ');
 
   slot := face^.glyph;
 
@@ -187,7 +219,7 @@ begin
     FT_Set_Transform(face, @matrix, @pen);
 
 
-//    error := FT_Load_Char(face, TFT_ULong(HelloText[n]), FT_LOAD_RENDER);
+//    error := FT_Load_Char(face, FT_ULong(HelloText[n]), FT_LOAD_RENDER);
       error := FT_Load_Char(face, wc[n], FT_LOAD_RENDER);
     if error <> 0 then begin
       WriteLn('Fehler: Load_Char   ', error);
@@ -200,4 +232,30 @@ begin
   end;
 end;
 
+//Ja, in C gibt es die Funktionen `mbsrtowcs` und `mbsnrtowcs`, die verwendet werden können, um eine multibyte-Zeichenfolge in eine wide-character-Zeichenfolge umzuwandeln. Diese Funktionen können mit `wchar_t`, `char16_t` oder `char32_t` als Zieltyp verwendet werden, je nachdem, wie die Funktion deklariert ist.
+//
+//Hier ist ein Beispiel für die Verwendung von `mbsrtowcs` mit `char16_t`:
+//
+//```c
+//#include
+//
+//#include
+//#include
+//
+//int main() {
+//setlocale(LC_ALL, "en_US.UTF-8");
+//
+//char mbstr[] = u8"Hello, こんにちは, नमस्ते";
+//char16_t wcstr[100];
+//
+//mbsrtowcs((char16_t *)wcstr, &mbstr, 100, NULL);
+//
+//printf("Wide-character string: %ls\n", wcstr);
+//
+//return 0;
+//}
+//```
+//
+//In diesem Beispiel wird die multibyte-Zeichenfolge `mbstr` in eine wide-character-Zeichenfolge `wcstr` umgewandelt, wobei `char16_t` als Zieltyp verwendet wird.
+//
 end.
