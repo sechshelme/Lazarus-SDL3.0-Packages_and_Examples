@@ -5,10 +5,10 @@ unit Unit1;
 interface
 
 uses
-  ctypes,    dynlibs,
+  ctypes, dynlibs,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   OpenGLContext, gl,
-  freetype,freetypehdyn,
+  freetype, freetypehdyn,
   LazUTF8;
 
 const
@@ -21,14 +21,15 @@ const
   {$ENDIF}
 
 // https://cplusplus.com/reference/cstdlib/mbstowcs/
-function mbstowcs(dest:PDWord; src:PChar; max :SizeInt): SizeInt; cdecl; external libc;
-function mblen(pmb:PDWord; max :SizeInt): cint; cdecl; external libc;
+//function mbstowcs(dest:PDWord; src:PChar; max :SizeInt): SizeInt; cdecl; external libc;
+function mbstowcs(dest: Pointer; src: PChar; max: SizeInt): SizeInt; cdecl; external libc;
+function mblen(pmb: PDWord; max: SizeInt): cint; cdecl; external libc;
 
-function setlocale(catogory:cint; locale:PChar ): PChar; cdecl; external libc;
+function setlocale(catogory: cint; locale: PChar): PChar; cdecl; external libc;
 
 // https://cplusplus.com/reference/cuchar/mbrtoc32/
 // size_t mbrtoc32 ( char32_t * pc32, const char * pmb, size_t max, mbstate_t * ps);
-function mbrtoc32(dest:PDWord; src:PChar; max :SizeInt; state:Pointer): SizeInt; cdecl; external libc;
+function mbrtoc32(dest: PDWord; src: PChar; max: SizeInt; state: Pointer): SizeInt; cdecl; external libc;
 
 
 type
@@ -61,21 +62,27 @@ implementation
 {$R *.lfm}
 
 var
+  state: record
+    Count: cint;
+    wchb: array[0..3] of char;
+      end;
+
+var
   image: array of byte = nil;
-//
-//  #define __LC_CTYPE		 0
-//  #define __LC_NUMERIC		 1
-//  #define __LC_TIME		 2
-//  #define __LC_COLLATE		 3
-//  #define __LC_MONETARY		 4
-//  #define __LC_MESSAGES		 5
-//  #define __LC_ALL		 6
-//  #define __LC_PAPER		 7
-//  #define __LC_NAME		 8
-//  #define __LC_ADDRESS		 9
-//  #define __LC_TELEPHONE	10
-//  #define __LC_MEASUREMENT	11
-//  #define __LC_IDENTIFICATION	12
+  //
+  //  #define __LC_CTYPE     0
+  //  #define __LC_NUMERIC     1
+  //  #define __LC_TIME     2
+  //  #define __LC_COLLATE     3
+  //  #define __LC_MONETARY     4
+  //  #define __LC_MESSAGES     5
+  //  #define __LC_ALL     6
+  //  #define __LC_PAPER     7
+  //  #define __LC_NAME     8
+  //  #define __LC_ADDRESS     9
+  //  #define __LC_TELEPHONE  10
+  //  #define __LC_MEASUREMENT  11
+  //  #define __LC_IDENTIFICATION  12
 
 procedure TForm1.FormCreate(Sender: TObject);
 const
@@ -90,7 +97,7 @@ begin
   {$else}
   InitializeFreetype('');
   {$endif}
-  setlocale(6,'en_US.utf8');
+  setlocale(6, 'en_US.utf8');
 
   Timer1.Enabled := False;
   Timer1.Interval := 100;
@@ -153,7 +160,7 @@ end;
 procedure TForm1.draw_bitmap(var bit: FT_Bitmap; x: FT_Int; y: FT_Int);
 var
   x_max, y_max, ofs, i, j, p, q: FT_Int;
-  buf:PByte;
+  buf: pbyte;
 begin
   x_max := x + bit.Width;
   y_max := y + bit.rows;
@@ -168,7 +175,7 @@ begin
 
       if (i >= 0) and (j >= 0) and (i < imageWidht) and (j < imageHeight) then begin
         ofs := j * imageWidht + i;
-        buf:=bit.buffer;
+        buf := bit.buffer;
         image[ofs] := image[ofs] or buf[q * bit.Width + p];
       end;
 
@@ -180,13 +187,18 @@ begin
   end;
 end;
 
+// https://onlinetools.com/utf8/convert-utf8-to-utf32
+
 procedure TForm1.Face_To_Image(angle: single);
 const
-//    HelloText: PChar = 'Hello world !  öäü ÄÖÜ ÿï ŸÏ!';
-//  HelloText: PChar = 'Computer sind dumm';
-  HelloText:PChar='ABCäöüÄÖÜ';
-//  HelloText:PChar='AäÄ';
-//  HelloText:PChar=#$41#$C3#$A4#$C3#$84;
+  //    HelloText: PChar = 'Hello world !  öäü ÄÖÜ ÿï ŸÏ!';
+  //  HelloText: PChar = 'Computer sind dumm';
+  HelloText: PChar = 'ŸAÄÖÜ';
+  //  HelloText:PChar='AäÄ';
+  //  HelloText:PChar=#$41#$C3#$A4#$C3#$84;
+
+
+  TestText: array of DWord = ($00000178, $00000041, $000000C4, $000000D6, $000000DC);
 var
   error: FT_Error;
   pen: FT_Vector;
@@ -194,16 +206,30 @@ var
   slot: PFT_GlyphSlot;
   n, i: integer;
 
-//wc:array of WideChar=nil;
-wc:array of DWord=nil;
+  {$ifdef windows}
+  str32: array of word = nil;
+  {$else}
+  str32: array of dword = nil;
+  {$endif}
+  len: SizeInt;
+
 begin
-  SetLength(wc, Length(HelloText));
+  Timer1.Enabled := False;
+
   WriteLn(HelloText);
-  WriteLn('len_wc: ',Length(wc));
-//  mbstowcs(PDWord(wc), HelloText, Length(wc));
-  mbrtoc32(PDWord(wc), HelloText, Length(wc),nil);
-  WriteLn('mblen: ', mblen(PDWord(wc), Length(wc)));
-  for i:=0 to Length(wc)-1 do Write(IntToHex(wc[i],8),' - ');
+  len := mbstowcs(nil, HelloText, Length(str32));
+  SetLength(str32, len);
+  WriteLn('len_UTF8: ', Length(HelloText));
+  WriteLn('len_UTF32: ', len);
+
+  mbstowcs(PDWord(str32), HelloText, len);
+  for i := 0 to Length(HelloText) - 1 do begin
+    Write('0x',IntToHex(byte(HelloText[i]), 2), '    -    ');
+  end;
+  WriteLn();
+  for i := 0 to len - 1 do begin
+    Write('0x',IntToHex(str32[i], 8), ' - ');
+  end;
 
   slot := face^.glyph;
 
@@ -213,14 +239,32 @@ begin
   matrix.yy := -Round(Cos(angle) * 10000);
 
   pen.x := 40000;
-  pen.y := 50000;
+  pen.y := 40000;
 
-  for n := 0 to Length(wc) - 1 do begin
+  for n := 0 to Length(str32) - 1 do begin
     FT_Set_Transform(face, @matrix, @pen);
 
 
-//    error := FT_Load_Char(face, FT_ULong(HelloText[n]), FT_LOAD_RENDER);
-      error := FT_Load_Char(face, wc[n], FT_LOAD_RENDER);
+    //    error := FT_Load_Char(face, FT_ULong(HelloText[n]), FT_LOAD_RENDER);
+
+    error := FT_Load_Char(face, str32[n], FT_LOAD_RENDER);
+    //    error := FT_Load_Char(face, str32[n], FT_LOAD_RENDER);
+    if error <> 0 then begin
+      WriteLn('Fehler: Load_Char   ', error);
+    end;
+
+    draw_bitmap(slot^.bitmap, slot^.bitmap_left, OpenGLControl1.Height - slot^.bitmap_top);
+
+    pen.x += slot^.advance.x;
+    pen.y += slot^.advance.y;
+  end;
+
+  pen.x := 40000;
+  pen.y := 50000;
+
+  for n := 0 to Length(TestText) - 1 do begin
+    FT_Set_Transform(face, @matrix, @pen);
+    error := FT_Load_Char(face, FT_ULong(TestText[n]), FT_LOAD_RENDER);
     if error <> 0 then begin
       WriteLn('Fehler: Load_Char   ', error);
     end;
