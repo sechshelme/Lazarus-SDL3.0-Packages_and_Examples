@@ -16,7 +16,6 @@ object Form1: TForm1
     Height = 200
     Top = 32
     Width = 464
-    OnClick = OpenGLControl1Click
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer

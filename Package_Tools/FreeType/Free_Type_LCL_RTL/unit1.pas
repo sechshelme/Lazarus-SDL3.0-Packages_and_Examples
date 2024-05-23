@@ -1,10 +1,13 @@
 unit Unit1;
 
-{$mode objfpc}{$H+}
+//{$mode objfpc}{$H+}
 
 interface
 
 uses
+  {$IFDEF Windows}
+  Windows,
+  {$ENDIF}
   ctypes, dynlibs,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls,
   OpenGLContext, gl,
@@ -42,7 +45,6 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormResize(Sender: TObject);
-    procedure OpenGLControl1Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
   private
     imageWidht, imageHeight: integer;
@@ -62,27 +64,22 @@ implementation
 {$R *.lfm}
 
 var
-  state: record
-    Count: cint;
-    wchb: array[0..3] of char;
-      end;
-
-var
   image: array of byte = nil;
-  //
-  //  #define __LC_CTYPE     0
-  //  #define __LC_NUMERIC     1
-  //  #define __LC_TIME     2
-  //  #define __LC_COLLATE     3
-  //  #define __LC_MONETARY     4
-  //  #define __LC_MESSAGES     5
-  //  #define __LC_ALL     6
-  //  #define __LC_PAPER     7
-  //  #define __LC_NAME     8
-  //  #define __LC_ADDRESS     9
-  //  #define __LC_TELEPHONE  10
-  //  #define __LC_MEASUREMENT  11
-  //  #define __LC_IDENTIFICATION  12
+
+const
+  LC_CTYPE = 0;
+  LC_NUMERIC = 1;
+  LC_TIME = 2;
+  LC_COLLATE = 3;
+  LC_MONETARY = 4;
+  LC_MESSAGES = 5;
+  LC_ALL = 6;
+  LC_PAPER = 7;
+  LC_NAME = 8;
+  LC_ADDRESS = 9;
+  LC_TELEPHONE = 10;
+  LC_MEASUREMENT = 11;
+  LC_IDENTIFICATION = 12;
 
 procedure TForm1.FormCreate(Sender: TObject);
 const
@@ -97,8 +94,9 @@ begin
   {$else}
   InitializeFreetype('');
   {$endif}
-  setlocale(6, 'en_US.utf8');
-
+//  setlocale(LC_ALL, 'en_US.utf8');
+//  setlocale(LC_ALL, 'de_DE.utf8');
+//  setlocale(LC_ALL, 'C' + '');
   Timer1.Enabled := False;
   Timer1.Interval := 100;
   ClientWidth := 1600;
@@ -139,11 +137,6 @@ begin
   imageHeight := ClientHeight;
   SetLength(image, imageWidht * imageHeight);
   FillDWord(image[0], Length(image) div 4, 0);
-end;
-
-procedure TForm1.OpenGLControl1Click(Sender: TObject);
-begin
-  Width := Width + 1;
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
@@ -206,29 +199,40 @@ var
   slot: PFT_GlyphSlot;
   n, i: integer;
 
-  {$ifdef windows}
-  str32: array of word = nil;
-  {$else}
   str32: array of dword = nil;
-  {$endif}
-  len: SizeInt;
+  len: SizeInt = 0;
 
 begin
   Timer1.Enabled := False;
-
+  WriteLn(SizeOf(WideChar));
   WriteLn(HelloText);
+
+  {$IFDEF Linux}
   len := mbstowcs(nil, HelloText, Length(str32));
   SetLength(str32, len);
   WriteLn('len_UTF8: ', Length(HelloText));
   WriteLn('len_UTF32: ', len);
+  {$ENDIF}
+
+  {$IFDEF Windows}
+  // https://stackoverflow.com/questions/6693010/how-do-i-use-multibytetowidechar
+
+  len := MultiByteToWideChar(CP_UTF8, 0, @HelloText, Length(HelloText), nil, 0);
+  SetLength(str32, len);
+  Writeln('converResult: ', MultiByteToWideChar(CP_UTF8, 0, @HelloText, Length(HelloText), pwidechar(str32), len));
+  {$ENDIF}
+
 
   mbstowcs(PDWord(str32), HelloText, len);
+
+  WriteLn('Input len: ', Length(HelloText));
   for i := 0 to Length(HelloText) - 1 do begin
-    Write('0x',IntToHex(byte(HelloText[i]), 2), '    -    ');
+    Write('0x', IntToHex(byte(HelloText[i]), 2), '    -    ');
   end;
   WriteLn();
+  WriteLn('Output len: ', len);
   for i := 0 to len - 1 do begin
-    Write('0x',IntToHex(str32[i], 8), ' - ');
+    Write('0x', IntToHex(DWORD(str32[i]), 8), ' - ');
   end;
 
   slot := face^.glyph;
@@ -244,11 +248,7 @@ begin
   for n := 0 to Length(str32) - 1 do begin
     FT_Set_Transform(face, @matrix, @pen);
 
-
-    //    error := FT_Load_Char(face, FT_ULong(HelloText[n]), FT_LOAD_RENDER);
-
-    error := FT_Load_Char(face, str32[n], FT_LOAD_RENDER);
-    //    error := FT_Load_Char(face, str32[n], FT_LOAD_RENDER);
+    error := FT_Load_Char(face, FT_ULong(str32[n]), FT_LOAD_RENDER);
     if error <> 0 then begin
       WriteLn('Fehler: Load_Char   ', error);
     end;
