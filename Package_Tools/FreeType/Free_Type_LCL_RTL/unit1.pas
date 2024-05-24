@@ -81,6 +81,7 @@ const
   LC_MEASUREMENT = 11;
   LC_IDENTIFICATION = 12;
 
+
 procedure TForm1.FormCreate(Sender: TObject);
 const
   //  fileName = '/usr/share/fonts/truetype/freefont/FreeMono.ttf';
@@ -94,9 +95,9 @@ begin
   {$else}
   InitializeFreetype('');
   {$endif}
-//  setlocale(LC_ALL, 'en_US.utf8');
-//  setlocale(LC_ALL, 'de_DE.utf8');
-//  setlocale(LC_ALL, 'C' + '');
+  //  setlocale(LC_ALL, 'en_US.utf8');
+  //  setlocale(LC_ALL, 'de_DE.utf8');
+  //  setlocale(LC_ALL, 'C' + '');
   Timer1.Enabled := False;
   Timer1.Interval := 100;
   ClientWidth := 1600;
@@ -192,6 +193,9 @@ const
 
 
   TestText: array of DWord = ($00000178, $00000041, $000000C4, $000000D6, $000000DC);
+type
+  TChar2BString = type ansistring(CP_UTF16BE);
+
 var
   error: FT_Error;
   pen: FT_Vector;
@@ -202,27 +206,45 @@ var
   str32: array of dword = nil;
   len: SizeInt = 0;
 
+  //  Char2BString:TChar2BString;
+  Char2BString: unicodestring;
+
+  // https://gist.github.com/jiaoyk/c9ba7fed2a086c73aecb3edee83af0f6
+
 begin
   Timer1.Enabled := False;
-  WriteLn(SizeOf(WideChar));
-  WriteLn(HelloText);
 
-  {$IFDEF Linux}
+  slot := face^.glyph;
+
+  matrix.xx := Round(Cos(angle) * 10000);
+  matrix.xy := -Round(-Sin(angle) * 10000);
+  matrix.yx := Round(Sin(angle) * 10000);
+  matrix.yy := -Round(Cos(angle) * 10000);
+
+  pen.x := 40000;
+  pen.y := 40000;
+
+  Char2BString := UTF8ToUTF16(HelloText);
+  WriteLn(#10'Length Char2BString: ', Length(Char2BString));
+  for n := 1 to Length(Char2BString) do begin
+    FT_Set_Transform(face, @matrix, @pen);
+    error := FT_Load_Char(face, FT_ULong(Char2BString[n]), FT_LOAD_RENDER);
+    if error <> 0 then begin
+      WriteLn('Fehler: Load_Char   ', error);
+    end;
+    draw_bitmap(slot^.bitmap, slot^.bitmap_left, OpenGLControl1.Height - slot^.bitmap_top);
+
+    pen.x += slot^.advance.x;
+    pen.y += slot^.advance.y;
+  end;
+
+  // =================
+
+
   len := mbstowcs(nil, HelloText, Length(str32));
   SetLength(str32, len);
   WriteLn('len_UTF8: ', Length(HelloText));
   WriteLn('len_UTF32: ', len);
-  {$ENDIF}
-
-  {$IFDEF Windows}
-  // https://stackoverflow.com/questions/6693010/how-do-i-use-multibytetowidechar
-
-  len := MultiByteToWideChar(CP_UTF8, 0, @HelloText, Length(HelloText), nil, 0);
-  SetLength(str32, len);
-  Writeln('converResult: ', MultiByteToWideChar(CP_UTF8, 0, @HelloText, Length(HelloText), pwidechar(str32), len));
-  {$ENDIF}
-
-
   mbstowcs(PDWord(str32), HelloText, len);
 
   WriteLn('Input len: ', Length(HelloText));
@@ -235,45 +257,21 @@ begin
     Write('0x', IntToHex(DWORD(str32[i]), 8), ' - ');
   end;
 
-  slot := face^.glyph;
-
-  matrix.xx := Round(Cos(angle) * 10000);
-  matrix.xy := -Round(-Sin(angle) * 10000);
-  matrix.yx := Round(Sin(angle) * 10000);
-  matrix.yy := -Round(Cos(angle) * 10000);
-
   pen.x := 40000;
-  pen.y := 40000;
+  pen.y := 50000;
 
   for n := 0 to Length(str32) - 1 do begin
     FT_Set_Transform(face, @matrix, @pen);
-
     error := FT_Load_Char(face, FT_ULong(str32[n]), FT_LOAD_RENDER);
     if error <> 0 then begin
       WriteLn('Fehler: Load_Char   ', error);
     end;
-
     draw_bitmap(slot^.bitmap, slot^.bitmap_left, OpenGLControl1.Height - slot^.bitmap_top);
 
     pen.x += slot^.advance.x;
     pen.y += slot^.advance.y;
   end;
 
-  pen.x := 40000;
-  pen.y := 50000;
-
-  for n := 0 to Length(TestText) - 1 do begin
-    FT_Set_Transform(face, @matrix, @pen);
-    error := FT_Load_Char(face, FT_ULong(TestText[n]), FT_LOAD_RENDER);
-    if error <> 0 then begin
-      WriteLn('Fehler: Load_Char   ', error);
-    end;
-
-    draw_bitmap(slot^.bitmap, slot^.bitmap_left, OpenGLControl1.Height - slot^.bitmap_top);
-
-    pen.x += slot^.advance.x;
-    pen.y += slot^.advance.y;
-  end;
 end;
 
 //Ja, in C gibt es die Funktionen `mbsrtowcs` und `mbsnrtowcs`, die verwendet werden können, um eine multibyte-Zeichenfolge in eine wide-character-Zeichenfolge umzuwandeln. Diese Funktionen können mit `wchar_t`, `char16_t` oder `char32_t` als Zieltyp verwendet werden, je nachdem, wie die Funktion deklariert ist.
