@@ -37,48 +37,53 @@ implementation
 
 {$R *.lfm}
 
-function UTF8toUniStr(const s: string): unicodestring;
+type  TXChar2BArray = array of Word;
+procedure UTF8toXChar2b(var output: TXChar2BArray; const s: string);
 type
-  TXChar2b = array[0..1] of byte;
+  PXChar2b = ^TXChar2b;
+  TXChar2b = record
+       byte2 : cuchar;
+       byte1 : cuchar;
+    end;
 var
   StrLen: IntPtr;
   StrPtr: pbyte;
-  C2BPtr: ^TXChar2b;
+  C2BPtr: PXChar2b;
   c: byte;
 begin
   StrLen := Length(s);
-  SetLength(Result, StrLen);
+  SetLength(output, StrLen);
   StrPtr := @s[1];
-  C2BPtr := @Result[1];
-  while ((PtrUInt(StrPtr) - PtrUInt(@s[1])) < StrLen) do begin
+  C2BPtr := @output[0];
+  while ((PtrUInt(StrPtr) - PtrUInt(@s[1])) div SizeOf(char) < StrLen) do begin
     c := StrPtr^;
     if c < 128 then  begin
-      C2BPtr^[1] := 0;
-      C2BPtr^[0] := c;
+      C2BPtr^.byte1 := 0;
+      C2BPtr^.byte2 := c;
       Inc(C2BPtr);
     end else if StrPtr^ < $C0 then begin
       Continue;
     end else begin
       case StrPtr^ and $F0 of
         $C0, $D0: begin
-          C2BPtr^[1] := (c and $1C) shr 2;
+          C2BPtr^.byte1 := (c and $1C) shr 2;
           Inc(StrPtr);
-          C2BPtr^[0] := ((c and $03) shl 6) + (StrPtr^ and $3F);
+          C2BPtr^.byte2 := ((c and $03) shl 6) + (StrPtr^ and $3F);
           Inc(C2BPtr);
         end;
         $E0: begin
           Inc(StrPtr);
-          C2BPtr^[1] := ((c and $0F) shl 4) + ((StrPtr^ and $3C) shr 2);
+          C2BPtr^.byte1 := ((c and $0F) shl 4) + ((StrPtr^ and $3C) shr 2);
           c := StrPtr^;
           Inc(StrPtr);
-          C2BPtr^[0] := ((c and $03) shl 6) + (StrPtr^ and $3F);
+          C2BPtr^.byte2 := ((c and $03) shl 6) + (StrPtr^ and $3F);
           Inc(C2BPtr);
         end;
       end;
     end;
     Inc(StrPtr);
   end;
-  SetLength(Result, (PtrUInt(C2BPtr) - PtrUInt(@Result[1])) div 2);
+  SetLength(output, (PtrUInt(C2BPtr) - PtrUInt(@output[0])) div SizeOf(TXChar2b));
 end;
 
 
@@ -183,9 +188,9 @@ end;
 
 procedure TForm1.Face_To_Image(angle: single);
 const
-      HelloText: PChar = 'Hello world !  öäü ÄÖÜ ÿï ŸÏ!';
+  //    HelloText: PChar = 'Hello world !  öäü ÄÖÜ ÿï ŸÏ!';
   //  HelloText: PChar = 'Computer sind dumm';
-//  HelloText: PChar = 'ŸAÄÖÜ';
+  HelloText: PChar = 'ŸAÄÖÜ';
   //  HelloText:PChar='AäÄ';
   //  HelloText:PChar=#$41#$C3#$A4#$C3#$84;
 var
@@ -195,7 +200,8 @@ var
   slot: PFT_GlyphSlot;
   n: integer;
 
-  str32: unicodestring = '';
+  str32: TXChar2BArray = nil;
+  len: SizeInt = 0;
 
 begin
   Timer1.Enabled := False;
@@ -207,12 +213,12 @@ begin
   matrix.yx := Round(Sin(angle) * 10000);
   matrix.yy := -Round(Cos(angle) * 10000);
 
-  str32 := UTF8toUniStr(HelloText);
+  UTF8toXChar2b(str32,HelloText);
 
-  pen.x := 20000;
+  pen.x := 40000;
   pen.y := 50000;
 
-  for n := 1 to Length(str32) do begin
+  for n := 0 to Length(str32) - 1 do begin
     FT_Set_Transform(face, @matrix, @pen);
     error := FT_Load_Char(face, FT_ULong(str32[n]), FT_LOAD_RENDER);
     if error <> 0 then begin
