@@ -74,6 +74,9 @@ begin
           C2BPtr^[0] := ((c and $03) shl 6) + (StrPtr^ and $3F);
           Inc(C2BPtr);
         end;
+        $FF: begin
+          Continue;
+        end;
       end;
     end;
     Inc(StrPtr);
@@ -183,9 +186,9 @@ end;
 
 procedure TForm1.Face_To_Image(angle: single);
 const
-      HelloText: PChar = 'Hello world !  öäü ÄÖÜ ÿï ŸÏ!';
+ // HelloText: PChar = 'Hello world !  öäü ÄÖÜ ÿï ŸÏ!';
   //  HelloText: PChar = 'Computer sind dumm';
-//  HelloText: PChar = 'ŸAÄÖÜ';
+   HelloText: PChar = 'ABCÄÖÜŸ';
   //  HelloText:PChar='AäÄ';
   //  HelloText:PChar=#$41#$C3#$A4#$C3#$84;
 var
@@ -193,11 +196,19 @@ var
   pen: FT_Vector;
   matrix: FT_Matrix;
   slot: PFT_GlyphSlot;
-  n: integer;
+  i: integer;
 
-  str32: unicodestring = '';
+  UniStr: unicodestring = '';
+
+  glyph_index: FT_UInt;
 
 begin
+  for i := 0 to Length(HelloText)-1 do begin
+    Write(byte(HelloText[i]), ' - ');
+  end;
+
+
+
   Timer1.Enabled := False;
 
   slot := face^.glyph;
@@ -207,14 +218,18 @@ begin
   matrix.yx := Round(Sin(angle) * 10000);
   matrix.yy := -Round(Cos(angle) * 10000);
 
-  str32 := UTF8toUniStr(HelloText);
+  UniStr := UTF8toUniStr(HelloText);
 
   pen.x := 20000;
   pen.y := 50000;
 
-  for n := 1 to Length(str32) do begin
+  for i := 1 to Length(UniStr) do begin
     FT_Set_Transform(face, @matrix, @pen);
-    error := FT_Load_Char(face, FT_ULong(str32[n]), FT_LOAD_RENDER);
+
+    glyph_index := FT_Get_Char_Index(face, FT_ULong(UniStr[i]));
+    error := FT_Load_Glyph(face, glyph_index, FT_LOAD_RENDER);
+
+    //    error := FT_Load_Char(face, FT_ULong(UniStr[i]), FT_LOAD_RENDER);
     if error <> 0 then begin
       WriteLn('Fehler: Load_Char   ', error);
     end;
