@@ -47,6 +47,7 @@ const
     end;
 
     surface := SDL_CreateSurface(widht, Height, SDL_PIXELFORMAT_INDEX8);
+//    surface := SDL_CreateSurface(widht, Height, SDL_PIXELFORMAT_RGBA8888);
     if surface = nil then begin
       SDL_Log('Konnte kein Surface erzeugen!:  %s', SDL_GetError);
     end;
@@ -87,7 +88,8 @@ const
 
       SDL_Delay(10);
 
-//      SDL_FillSurfaceRect(winSurface, @rect, $FFFFFF);
+      SDL_FillSurfaceRect(winSurface,nil,$80);
+      SDL_FillSurfaceRect(surface, @rect, $FFFFFFFF);
       SDL_BlitSurfaceScaled(surface, nil, winSurface, nil, SDL_SCALEMODE_NEAREST);
       SDL_UpdateWindowSurface(window);
     end;

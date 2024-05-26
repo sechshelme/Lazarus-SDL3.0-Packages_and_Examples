@@ -22,7 +22,7 @@ const
 
   function LoafFont: PSDL_Surface;
   const
-    hello = 'Hello World !\n'#10'Hallo Welt !';
+    hello = 'Hello World !';
   var
     font: PTTF_Font;
     fg, bg: TSDL_Color;

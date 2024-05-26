@@ -58,7 +58,9 @@ int main(int argc, char **argv)
   printf("Testring 1: %s\n", TestString1);
   printf("Testring 2: %s\n", TestString2);
 #if defined(_WIN64)
-  printf("setlocale: %s\n", setlocale(LC_ALL, "German_Switzerland.utf8"));
+    printf("setlocale: %s\n", setlocale(LC_ALL, ".UTF8"));
+  //printf("setlocale: %s\n", setlocale(LC_ALL, "German_Switzerland.utf8"));
+  //printf("setlocale: %s\n", setlocale(LC_ALL, "German_Switzerland.utf8"));
 #else
   printf("setlocale: %s\n", setlocale(LC_ALL, ""));
 #endif
