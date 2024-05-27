@@ -25,7 +25,7 @@ uses
       SDL_Log('Konnte SDL-VIDEO nicht laden!:  %s', SDL_GetError);
     end;
 
-    window := SDL_CreateWindow('Surface Example', 640, 480, 0);
+    window := SDL_CreateWindow('Surface Example', 640, 480, SDL_WINDOW_RESIZABLE);
     if window = nil then begin
       SDL_Log('Konnte kein Windows erzeugen!:  %s', SDL_GetError);
     end;

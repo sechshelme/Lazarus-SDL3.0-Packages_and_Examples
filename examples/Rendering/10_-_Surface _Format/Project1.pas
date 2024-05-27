@@ -24,7 +24,7 @@ uses
     printFormat(surface);
     SDL_DestroySurface(surface);
 
-    surface := SDL_CreateSurface(128, 128, SDL_PIXELFORMAT_ABGR8888);
+    surface := SDL_CreateSurface(128, 128, SDL_PIXELFORMAT_RGBA8888);
     printFormat(surface);
     SDL_DestroySurface(surface);
 

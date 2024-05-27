@@ -71,12 +71,12 @@ const
     surfaceBMP, surfaceTexture: PSDL_Surface;
   begin
     surfaceBMP := SDL_LoadBMP('mauer.bmp');
-    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_RGB24);
+    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_RGBA32);
     SDL_DestroySurface(surfaceBMP);
 
     // Textur
     glBindTexture(GL_TEXTURE_2D, TexturID);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surfaceTexture^.w, surfaceTexture^.h, 0, GL_RGB, GL_UNSIGNED_BYTE, surfaceTexture^.pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surfaceTexture^.w, surfaceTexture^.h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surfaceTexture^.pixels);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glBindTexture(GL_TEXTURE_2D, 0);
 
