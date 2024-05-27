@@ -1,6 +1,7 @@
 program Project1;
 
 uses
+  sysutils,
   SDL3,
   oglglad_GLES32,
   oglVector,
@@ -66,12 +67,26 @@ const
     '  fColor = texture(Sampler, UV0);' + #10 +
     '}';
 
+procedure printFormat(sur: PSDL_Surface);
+begin
+//  WriteLn('format: ', IntToHex(sur^.format^.format, 8));
+  WriteLn('format: ', sur^.format^.format);
+  WriteLn('bit per pixel: ', sur^.format^.bits_per_pixel, '   bytes per pixel: ', sur^.format^.bytes_per_pixel);
+  WriteLn('Rmask: ', IntToHex(sur^.format^.Rmask, 8), '  Gmask: ', IntToHex(sur^.format^.Gmask, 8), '  Bmask: ', IntToHex(sur^.format^.Bmask, 8), '  Amask: ', IntToHex(sur^.format^.Amask, 8));
+  WriteLn('Rshift: ', sur^.format^.Rshift: 7, '  Gshift: ', sur^.format^.Gshift: 7, '  Bshift: ', sur^.format^.Bshift: 7, '  Ashift: ', sur^.format^.Ashift: 7);
+  WriteLn('Rloss: ', sur^.format^.Rloss: 8, '  Gloss: ', sur^.format^.Gloss: 8, '  Bloss: ', sur^.format^.Bloss: 8, '  Aloss: ', sur^.format^.Aloss: 8);
+  WriteLn();
+end;
+
+
   procedure CreateSurfaceBMPTextur(var TexturID: GLuint);
   var
     surfaceBMP, surfaceTexture: PSDL_Surface;
   begin
     surfaceBMP := SDL_LoadBMP('mauer.bmp');
-    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_RGBA32);
+    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_ABGR8888);
+    printFormat(surfaceBMP);
+    printFormat(surfaceTexture);
     SDL_DestroySurface(surfaceBMP);
 
     // Textur
