@@ -13,7 +13,7 @@ function SDL_OutOfMemory: longint; cdecl; external sdl3_lib;
 function SDL_GetError: PChar; cdecl; external sdl3_lib;
 procedure SDL_ClearError; cdecl; external sdl3_lib;
 
-//function SDL_OutOfMemory: longint;
+function SDL_OutOfMemory: longint;
 function SDL_Unsupported: longint;
 function SDL_InvalidParamError(param: PChar): longint;
 
@@ -36,10 +36,10 @@ const
 
 {$IFDEF read_implementation}
 
-//function SDL_OutOfMemory: longint;
-//begin
-//  SDL_OutOfMemory := SDL_Error(SDL_ENOMEM);
-//end;
+function SDL_OutOfMemory: longint;
+begin
+  SDL_OutOfMemory := SDL_Error(SDL_ENOMEM);
+end;
 
 function SDL_Unsupported: longint;
 begin

@@ -1,7 +1,7 @@
 program Project1;
 
 uses
-  sysutils,
+  SysUtils,
   SDL3,
   oglglad_GLES32,
   oglVector,
@@ -67,32 +67,65 @@ const
     '  fColor = texture(Sampler, UV0);' + #10 +
     '}';
 
-procedure printFormat(sur: PSDL_Surface);
-begin
-//  WriteLn('format: ', IntToHex(sur^.format^.format, 8));
-  WriteLn('format: ', sur^.format^.format);
-  WriteLn('bit per pixel: ', sur^.format^.bits_per_pixel, '   bytes per pixel: ', sur^.format^.bytes_per_pixel);
-  WriteLn('Rmask: ', IntToHex(sur^.format^.Rmask, 8), '  Gmask: ', IntToHex(sur^.format^.Gmask, 8), '  Bmask: ', IntToHex(sur^.format^.Bmask, 8), '  Amask: ', IntToHex(sur^.format^.Amask, 8));
-  WriteLn('Rshift: ', sur^.format^.Rshift: 7, '  Gshift: ', sur^.format^.Gshift: 7, '  Bshift: ', sur^.format^.Bshift: 7, '  Ashift: ', sur^.format^.Ashift: 7);
-  WriteLn('Rloss: ', sur^.format^.Rloss: 8, '  Gloss: ', sur^.format^.Gloss: 8, '  Bloss: ', sur^.format^.Bloss: 8, '  Aloss: ', sur^.format^.Aloss: 8);
-  WriteLn();
-end;
+  procedure printPixels(sur: PSDL_Surface);
+  begin
+    WriteLn('Pixel: ', pbyte(sur^.pixels)[0], ' ', pbyte(sur^.pixels)[1], ' ', pbyte(sur^.pixels)[2], ' ', pbyte(sur^.pixels)[3]);
+    WriteLn();
+  end;
 
+  procedure printFormat(sur: PSDL_Surface);
+  begin
+    //  WriteLn('format: ', IntToHex(sur^.format^.format, 8));
+    WriteLn('format: ', sur^.format^.format);
+    WriteLn('bit per pixel: ', sur^.format^.bits_per_pixel, '   bytes per pixel: ', sur^.format^.bytes_per_pixel);
+    WriteLn('Rmask: ', IntToHex(sur^.format^.Rmask, 8), '  Gmask: ', IntToHex(sur^.format^.Gmask, 8), '  Bmask: ', IntToHex(sur^.format^.Bmask, 8), '  Amask: ', IntToHex(sur^.format^.Amask, 8));
+    WriteLn('Rshift: ', sur^.format^.Rshift: 7, '  Gshift: ', sur^.format^.Gshift: 7, '  Bshift: ', sur^.format^.Bshift: 7, '  Ashift: ', sur^.format^.Ashift: 7);
+    WriteLn('Rloss: ', sur^.format^.Rloss: 8, '  Gloss: ', sur^.format^.Gloss: 8, '  Bloss: ', sur^.format^.Bloss: 8, '  Aloss: ', sur^.format^.Aloss: 8);
+    WriteLn();
+    printPixels(sur);
+  end;
+
+
+  function CreateSurface: PSDL_Surface;
+  const
+    pixels: array[0..3] of byte = ($00, $FF, $00, $00);
+  begin
+    //Result := SDL_LoadBMP('mauer.bmp');
+    //if Result = nil then begin
+    //  SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
+    //end;
+
+    Result := SDL_CreateSurface(1, 1, SDL_PIXELFORMAT_BGR24);
+    Result^.pixels := Pointer(@pixels);
+  end;
+
+
+
+  //const
+  //  Texure24: array of byte = ($FF, $00, $00, $00, $00, $00);
 
   procedure CreateSurfaceBMPTextur(var TexturID: GLuint);
   var
-    surfaceBMP, surfaceTexture: PSDL_Surface;
+    surfaceBMP: PSDL_Surface = nil;
+    surfaceTexture: PSDL_Surface = nil;
   begin
-    surfaceBMP := SDL_LoadBMP('mauer.bmp');
-    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_ABGR8888);
+    //  surfaceBMP := SDL_LoadBMP('mauer.bmp');
+    surfaceBMP := CreateSurface;
     printFormat(surfaceBMP);
+
+    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_RGB24);
     printFormat(surfaceTexture);
-    SDL_DestroySurface(surfaceBMP);
+    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_RGBA32);
+//    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_ABGR32);
+    printFormat(surfaceTexture);
 
     // Textur
     glBindTexture(GL_TEXTURE_2D, TexturID);
+    // SDL_DestroySurface(surfaceBMP);
+    //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, Pointer(Texure24));
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surfaceTexture^.w, surfaceTexture^.h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surfaceTexture^.pixels);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glBindTexture(GL_TEXTURE_2D, 0);
 
     SDL_DestroySurface(surfaceTexture);

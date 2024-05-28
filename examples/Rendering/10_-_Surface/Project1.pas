@@ -1,7 +1,5 @@
 program Project1;
 
-// https://wiki.libsdl.org/SDL3/SDL_GetWindowSurface
-
 uses
   SDL3;
 
@@ -17,7 +15,7 @@ uses
   var
     window: PSDL_Window;
     winSurface, imageSurface: PSDL_Surface;
-    rSrc, rDest: TSDL_Rect;
+    rDest: TSDL_Rect;
     quit: boolean = False;
     event: TSDL_Event;
   begin
@@ -54,7 +52,6 @@ uses
       end;
 
       rDest.items := [100, 100, 200, 200];
-      rSrc.items := [0, 0, 20, 20];
       SDL_BlitSurfaceScaled(imageSurface, nil, winSurface, @rDest, SDL_SCALEMODE_NEAREST);
       SDL_BlitSurface(imageSurface, nil, winSurface, nil);
       SDL_UpdateWindowSurface(window);

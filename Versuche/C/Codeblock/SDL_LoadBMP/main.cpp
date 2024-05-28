@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
       printFormat(BMP_Surface);
     }
 
-    SDL_Surface *surfaceTexture = SDL_ConvertSurfaceFormat(BMP_Surface, SDL_PIXELFORMAT_RGBA8888);
+    SDL_Surface *surfaceTexture = SDL_ConvertSurfaceFormat(BMP_Surface, SDL_PIXELFORMAT_RGBA32);
     printFormat(surfaceTexture);
 
 

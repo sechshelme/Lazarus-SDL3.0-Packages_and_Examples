@@ -24,7 +24,8 @@ const
   SDLK_TAB = TSDL_KeyCode(#9);
   SDLK_SPACE = TSDL_KeyCode(' ');
   SDLK_EXCLAIM = TSDL_KeyCode('!');
-  SDLK_QUOTEDBL = TSDL_KeyCode('"');
+//  SDLK_QUOTEDBL = TSDL_KeyCode('"');
+  SDLK_DBLAPOSTROPHE = TSDL_KeyCode('"');
   SDLK_HASH = TSDL_KeyCode('#');
   SDLK_PERCENT = TSDL_KeyCode('%');
   SDLK_DOLLAR = TSDL_KeyCode('$');
