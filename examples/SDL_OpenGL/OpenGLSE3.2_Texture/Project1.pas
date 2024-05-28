@@ -88,35 +88,34 @@ const
 
   function CreateSurface: PSDL_Surface;
   const
-    pixels: array[0..3] of byte = ($00, $FF, $00, $00);
+    pixels: array of array[0..3] of byte = (
+      ($FF, $00, $00, $00),
+      ($00, $FF, $00, $00),
+      ($00, $00, $FF, $00),
+      ($FF, $FF, $00, $00));
   begin
     //Result := SDL_LoadBMP('mauer.bmp');
-    //if Result = nil then begin
-    //  SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
-    //end;
 
-    Result := SDL_CreateSurface(1, 1, SDL_PIXELFORMAT_BGR24);
-    Result^.pixels := Pointer(@pixels);
+    Result := SDL_CreateSurface(2, 2, SDL_PIXELFORMAT_RGBA32);
+    Result := SDL_CreateSurfaceFrom(Pointer(pixels), 2, 2, 8, SDL_PIXELFORMAT_RGBA32);
+    if Result = nil then begin
+      SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
+    end;
   end;
-
-
-
-  //const
-  //  Texure24: array of byte = ($FF, $00, $00, $00, $00, $00);
 
   procedure CreateSurfaceBMPTextur(var TexturID: GLuint);
   var
     surfaceBMP: PSDL_Surface = nil;
     surfaceTexture: PSDL_Surface = nil;
   begin
-    //  surfaceBMP := SDL_LoadBMP('mauer.bmp');
+    //      surfaceBMP := SDL_LoadBMP('mauer.bmp');
     surfaceBMP := CreateSurface;
     printFormat(surfaceBMP);
 
     surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_RGB24);
     printFormat(surfaceTexture);
     surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_RGBA32);
-//    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_ABGR32);
+    //    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_ABGR32);
     printFormat(surfaceTexture);
 
     // Textur
