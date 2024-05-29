@@ -93,14 +93,22 @@ const
       ($00, $FF, $00, $00),
       ($00, $00, $FF, $00),
       ($FF, $FF, $00, $00));
+    pixels2: array of uint32 = (
+      $FF000000,
+      $00FF0000,
+      $0000FF00,
+      $FFFF0000);
+
   begin
     //Result := SDL_LoadBMP('mauer.bmp');
 
-    Result := SDL_CreateSurface(2, 2, SDL_PIXELFORMAT_RGBA32);
-    Result := SDL_CreateSurfaceFrom(Pointer(pixels), 2, 2, 8, SDL_PIXELFORMAT_RGBA32);
+    Result := SDL_CreateSurface(2, 2, SDL_PIXELFORMAT_RGBA8888);
+//    Result := SDL_CreateSurfaceFrom(Pointer(pixels), 2, 2, 8, SDL_PIXELFORMAT_RGBA32);
     if Result = nil then begin
       SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
     end;
+//    Result^.pixels:=Pointer(pixels);
+    SDL_memcpy(Result^.pixels, Pointer(pixels2), 16);
   end;
 
   procedure CreateSurfaceBMPTextur(var TexturID: GLuint);
@@ -108,26 +116,18 @@ const
     surfaceBMP: PSDL_Surface = nil;
     surfaceTexture: PSDL_Surface = nil;
   begin
-    //      surfaceBMP := SDL_LoadBMP('mauer.bmp');
     surfaceBMP := CreateSurface;
-    printFormat(surfaceBMP);
-
-    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_RGB24);
-    printFormat(surfaceTexture);
     surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_RGBA32);
-    //    surfaceTexture := SDL_ConvertSurfaceFormat(surfaceBMP, SDL_PIXELFORMAT_ABGR32);
-    printFormat(surfaceTexture);
 
     // Textur
     glBindTexture(GL_TEXTURE_2D, TexturID);
-    // SDL_DestroySurface(surfaceBMP);
-    //    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2, 2, 0, GL_RGB, GL_UNSIGNED_BYTE, Pointer(Texure24));
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surfaceTexture^.w, surfaceTexture^.h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surfaceTexture^.pixels);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glBindTexture(GL_TEXTURE_2D, 0);
 
     SDL_DestroySurface(surfaceTexture);
+    SDL_DestroySurface(surfaceBMP);
   end;
 
   procedure Init_SDL_and_OpenGL;
