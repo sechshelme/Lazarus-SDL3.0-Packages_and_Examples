@@ -1,5 +1,7 @@
 program Project1;
 
+{$modeswitch ArrayOperators}
+
 uses
   SysUtils,
   SDL3;
@@ -32,23 +34,27 @@ uses
     win := SDL_CreateWindow('Big / Little-Endian', 320, 200, SDL_WINDOW_RESIZABLE);
     winSurface := SDL_GetWindowSurface(win);
 
-    SetLength(Surface, 3);
-
     // io.
-    Surface[0] := SDL_CreateSurface(1, 1, SDL_PIXELFORMAT_RGBA32);
+    Surface += [SDL_CreateSurface(1, 1, SDL_PIXELFORMAT_RGBA32)];
     SDL_memcpy(Surface[0]^.pixels, @pixels_1, sizeof(pixels_1));
 
     // warped
-    Surface[1] := SDL_CreateSurface(1, 1, SDL_PIXELFORMAT_RGBA32);
+    Surface += [SDL_CreateSurface(1, 1, SDL_PIXELFORMAT_RGBA32)];
     SDL_memcpy(Surface[1]^.pixels, @pixels_2, sizeof(pixels_2));
 
     // io.
-    Surface[2] := SDL_CreateSurface(1, 1, SDL_PIXELFORMAT_RGBA8888);
+    Surface += [SDL_CreateSurface(1, 1, SDL_PIXELFORMAT_RGBA8888)];
     SDL_memcpy(Surface[2]^.pixels, @pixels_2, sizeof(pixels_2));
+
+    Surface += [SDL_LoadBMP('mauer.bmp')];
+    Surface += [SDL_LoadBMP('autos4bit.bmp')];
+    Surface += [SDL_LoadBMP('autos8bit.bmp')];
+
+    Surface += [SDL_ConvertSurfaceFormat(Surface[4], SDL_PIXELFORMAT_RGBA32)];
 
     for i := 0 to Length(Surface) - 1 do begin
       printSurface(Surface[i]);
-      r.items := [10 + i * 40, 10, 30, 30];
+      r.items := [10 + (i mod 3) * 40, 10 + (i div 3) * 40, 30, 30];
       SDL_BlitSurfaceScaled(Surface[i], nil, winSurface, @r, SDL_SCALEMODE_NEAREST);
     end;
 
