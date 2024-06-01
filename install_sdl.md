@@ -67,4 +67,17 @@ cmake --install build --install-prefix /usr/local
 sudo ldconfig
 ```
 
+#CMAKE-Tools
+```bash
+sudo apt install cmake-qt-gui
+
+make edit_cache
+
+sudo apt install cmake-curses-gui 
+ccmake .
+```
+
+
+
+
 

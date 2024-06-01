@@ -34,9 +34,6 @@ var
     rSrc, rDest: TSDL_FRect;
     keyStat: PUInt8;
     IsCtrl: TSDL_bool;
-    format: DWord;
-    x, y: longint;
-    access: Plongint;
   begin
     rDest.x := 0;
     rDest.y := 0;

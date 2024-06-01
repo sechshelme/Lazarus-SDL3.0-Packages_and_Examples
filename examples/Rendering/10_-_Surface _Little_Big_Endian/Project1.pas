@@ -19,8 +19,6 @@ uses
     SDL_Log('Rloss: %u   Gloss: %u   Bloss: %u   Aloss: %u'#10#10, sur^.format^.Rloss, sur^.format^.Gloss, sur^.format^.Bloss, sur^.format^.Aloss);
   end;
 
-  type
-  TTriByte=0..$FFFFFF;
 
   function CreateSurface1: PSDL_Surface;
   begin
@@ -30,37 +28,41 @@ uses
     end;
   end;
 
-function CreateSurface2: PSDL_Surface;
-const
-  Data: array of DWord = (
-    $000000FF, $FF0000FF, $00FF00FF, $0000FFFF,
-    $444444FF, $FF4444FF, $44FF44FF, $4444FFFF,
-    $888888FF, $FF8888FF, $88FF88FF, $8888FFFF,
-    $AAAAAAFF, $FFAAAAFF, $AAFFAAFF, $AAAAAAFF);
-begin
-  Result := SDL_CreateSurfaceFrom(PDWord(Data), 4, 4, 16, SDL_PIXELFORMAT_RGBA8888);
-  if Result = nil then begin
-    SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
+  function CreateSurface2: PSDL_Surface;
+  const
+    Data: array of DWord = (
+      $000000FF, $FF0000FF, $00FF00FF, $0000FFFF,
+      $444444FF, $FF4444FF, $44FF44FF, $4444FFFF,
+      $888888FF, $FF8888FF, $88FF88FF, $8888FFFF,
+      $AAAAAAFF, $FFAAAAFF, $AAFFAAFF, $AAAAAAFF);
+  begin
+    Result := SDL_CreateSurfaceFrom(PDWord(Data), 4, 4, 16, SDL_PIXELFORMAT_RGBA8888);
+    if Result = nil then begin
+      SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
+    end;
   end;
-  WriteLn(PtrUInt(@data));
-  WriteLn(PtrUInt(Result^.pixels));
-end;
 
-function CreateSurface3: PSDL_Surface;
-const
-  Data: array of TTriByte = (
-    $000000, $FF0000, $00FF00, $0000FF,
-    $444444, $FF4444, $44FF44, $4444FF,
-    $888888, $FF8888, $88FF88, $8888FF,
-    $AAAAAA, $FFAAAA, $AAFFAA, $AAAAAA);
-begin
-  Result := SDL_CreateSurfaceFrom(PDWord(Data), 4, 4, 16, SDL_PIXELFORMAT_RGBX8888);
-  if Result = nil then begin
-    SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
+  function CreateSurface3: PSDL_Surface;
+  type
+    TTriByte = bitpacked record
+    rgb: 0..$FFFFFF;
   end;
-  WriteLn(PtrUInt(@data));
-  WriteLn(PtrUInt(Result^.pixels));
-end;
+  const
+    Data: array of TTriByte = (
+      (rgb: $000000), (rgb: $FF0000), (rgb: $00FF00), (rgb: $0000FF),
+      (rgb: $444444), (rgb: $FF4444), (rgb: $44FF44), (rgb: $4444FF),
+      (rgb: $888888), (rgb: $FF8888), (rgb: $88FF88), (rgb: $8888FF),
+      (rgb: $AAAAAA), (rgb: $FFAAAA), (rgb: $AAFFAA), (rgb: $AAAAAA));
+  begin
+    Result := SDL_CreateSurfaceFrom(PDWord(Data), 4, 4, 12, SDL_PIXELFORMAT_RGB24);
+    if Result = nil then begin
+      SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
+    end;
+    WriteLn(SizeOf(TTriByte));
+    WriteLn(PtrUInt(@Data[0]));
+    WriteLn(PtrUInt(@Data[1]));
+    WriteLn(PtrUInt(@Data[2]));
+  end;
 
 
 
@@ -76,10 +78,10 @@ end;
     i: integer;
     quit: boolean = False;
     event: TSDL_Event;
+    w, h: longint;
   begin
     SDL_Init(SDL_INIT_VIDEO);
     win := SDL_CreateWindow('Big / Little-Endian', 320, 200, SDL_WINDOW_RESIZABLE);
-    winSurface := SDL_GetWindowSurface(win);
 
     // io.
     Surface += [SDL_CreateSurface(1, 1, SDL_PIXELFORMAT_RGBA32)];
@@ -121,12 +123,17 @@ end;
           end;
         end;
       end;
-    for i := 0 to Length(Surface) - 1 do begin
-      r.items := [10 + (i mod 3) * 40, 10 + (i div 3) * 40, 30, 30];
-      SDL_BlitSurfaceScaled(Surface[i], nil, winSurface, @r, SDL_SCALEMODE_NEAREST);
-    end;
+      winSurface := SDL_GetWindowSurface(win);
+      SDL_FillSurfaceRect(winSurface, nil, $004400);
 
-    SDL_UpdateWindowSurface(win);
+      SDL_GetWindowSize(win, @w, @h);
+
+      for i := 0 to Length(Surface) - 1 do begin
+        r.items := [10 + (i mod 3) * (w div 5), 10 + (i div 3) * (h div 5), w div 6, h div 6];
+        SDL_BlitSurfaceScaled(Surface[i], nil, winSurface, @r, SDL_SCALEMODE_NEAREST);
+      end;
+
+      SDL_UpdateWindowSurface(win);
 
     end;
 
