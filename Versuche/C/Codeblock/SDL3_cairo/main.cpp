@@ -9,7 +9,7 @@ void CairoDraw(SDL_Texture *texture, int w, int h){
   cairo_t *context = cairo_create(surface);
 
   cairo_set_source_rgba(context, 1.0, 1.0, 1.0, 1.0);
-  cairo_arc(context, w / 2, h / 2, w / 4, 0, 3.14 * 2);
+  cairo_arc(context, w / 2, h / 2, w / 4, 0, SDL_PI_D * 2);
   cairo_stroke(context);
 
   cairo_destroy(context);

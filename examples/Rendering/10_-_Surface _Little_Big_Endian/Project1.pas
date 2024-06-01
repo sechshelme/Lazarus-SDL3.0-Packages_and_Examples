@@ -11,7 +11,7 @@ uses
     ch: pbyte;
   begin
     ch := sur^.pixels;
-    SDL_Log('Pixel: %2X %2X %2X %2X ', ch[0], ch[1], ch[2], ch[3]);
+    SDL_Log('Pixel: %02X %02X %02X %02X ', ch[0], ch[1], ch[2], ch[3]);
     SDL_Log('format: %u', sur^.format^.format);
     SDL_Log('bit per pixel: %u    bytes per Pixel: %u', sur^.format^.bits_per_pixel, sur^.format^.bytes_per_pixel);
     SDL_Log('Rmask:  %08X   Gmask:  %08X   Bmask:  %08X   Amask:  %08X   ', sur^.format^.Rmask, sur^.format^.Gmask, sur^.format^.Bmask, sur^.format^.Amask);
@@ -42,11 +42,13 @@ uses
     end;
   end;
 
-  function CreateSurface3: PSDL_Surface;
-  type
-    TTriByte = bitpacked record
+type
+  TTriByte = bitpacked record
     rgb: 0..$FFFFFF;
   end;
+  PTriByte=^TTriByte;
+
+  function CreateSurface3: PSDL_Surface;
   const
     Data: array of TTriByte = (
       (rgb: $000000), (rgb: $FF0000), (rgb: $00FF00), (rgb: $0000FF),
@@ -58,13 +60,33 @@ uses
     if Result = nil then begin
       SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
     end;
-    WriteLn(SizeOf(TTriByte));
-    WriteLn(PtrUInt(@Data[0]));
-    WriteLn(PtrUInt(@Data[1]));
-    WriteLn(PtrUInt(@Data[2]));
   end;
 
+  operator := (const AValue: integer): TTriByte; inline;
+  begin
+    Result.rgb := AValue;
+  end;
 
+  operator := (const AValue: TTriByte): integer; inline;
+  begin
+    Result := AValue.rgb;
+  end;
+
+  function CreateSurface4: PSDL_Surface;
+  var
+    Data: array of TTriByte = nil;
+  begin
+    Data := [
+      $000000, $FF0000, $00FF00, $0000FF,
+      $444444, $FF4444, $44FF44, $4444FF,
+      $888888, $FF8888, $88FF88, $8888FF,
+      $AAAAAA, $FFAAAA, $AAFFAA, $AAAAAA];
+
+    Result := SDL_CreateSurfaceFrom(PTriByte(Data), 4, 4, 12, SDL_PIXELFORMAT_RGB24);
+    if Result = nil then begin
+      SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
+    end;
+  end;
 
   procedure main;
   const
@@ -103,6 +125,7 @@ uses
 
     Surface += [CreateSurface2];
     Surface += [CreateSurface3];
+    Surface += [CreateSurface4];
 
     for i := 0 to Length(Surface) - 1 do begin
       printSurface(Surface[i]);

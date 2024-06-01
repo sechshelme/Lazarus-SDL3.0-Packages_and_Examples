@@ -18,7 +18,7 @@ uses
     context := cairo_create(Surface);
 
     cairo_set_source_rgba(context, 1.0, 1.0, 1.0, 1.0);
-    cairo_arc(context, w / 2, h / 2, w / 4, 0, 2 * Pi);
+    cairo_arc(context, w / 2, h / 2, w / 4, 0, 2 * SDL_PI_D);
     cairo_stroke(context);
 
     cairo_destroy(context);
