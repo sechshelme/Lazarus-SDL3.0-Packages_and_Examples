@@ -63,7 +63,6 @@ begin
         end;
         SDL_EVENT_WINDOW_RESIZED: begin
           begin
-            WriteLn('W. resized');
             SDL_GetWindowSize(win, @Width, @Height);
             SDL_DestroyTexture(texture);
             texture := CreateTexture;

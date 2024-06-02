@@ -4,9 +4,6 @@ uses
   Cairo,
   SDL3;
 
-  // Ist bei Lazarus nicht dabei !
-  procedure cairo_surface_set_device_scale(cr: Pcairo_surface_t; x, y: double); cdecl; external LIB_CAIRO;
-
 var
   window: PSDL_Window;
   sd_surface: PSDL_Surface;
