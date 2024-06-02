@@ -24,103 +24,12 @@ const
   {$include SDL3_includes.inc}
   {$UNDEF read_interface}
 
-//type
-//  TVector4b = array[0..3] of uint8;
-//  TVector4i = array[0..3] of longint;
-//  TVector4f = array[0..3] of single;
-//
-//
-//  { TSDL_ColorHelper }
-//
-//  TSDL_ColorHelper = type Helper for TSDL_Color
-//  private
-//    function Getarr: TVector4b;
-//    procedure Setarr(AValue: TVector4b);
-//  public
-//    property arr2: TVector4b read Getarr write Setarr;
-//  end;
-//
-//{ TSDL_RectHelper }
-//
-//  TSDL_RectHelper = type Helper for TSDL_Rect
-//  private
-//    function Getarr: TVector4i;
-//    procedure Setarr(AValue: TVector4i);
-//  public
-//    property arr: TVector4i read Getarr write Setarr;
-//  end;
-//
-//  { TSDL_FRectHelper }
-//
-//  TSDL_FRectHelper = type Helper for TSDL_FRect
-//  private
-//    function Getarr: TVector4f;
-//    procedure Setarr(AValue: TVector4f);
-//  public
-//    property arr: TVector4f read Getarr write Setarr;
-//  end;
 
 implementation
 
 {$DEFINE read_implementation}
 {$include SDL3_includes.inc}
 {$UNDEF read_implementation}
-
-//{ TSDL_ColorHelper }
-//
-//function TSDL_ColorHelper.Getarr: TVector4b;
-//begin
-//  Result[0] := Self.r;
-//  Result[1] := Self.g;
-//  Result[2] := Self.b;
-//  Result[3] := Self.a;
-//end;
-//
-//procedure TSDL_ColorHelper.Setarr(AValue: TVector4b);
-//begin
-//  Self.r := AValue[0];
-//  Self.g := AValue[1];
-//  Self.b := AValue[2];
-//  Self.a := AValue[3];
-//end;
-//
-//{ TSDL_RectHelper }
-//
-//function TSDL_RectHelper.Getarr: TVector4i;
-//begin
-//  Result[0] := Self.x;
-//  Result[1] := Self.y;
-//  Result[2] := Self.w;
-//  Result[3] := Self.h;
-//end;
-//
-//procedure TSDL_RectHelper.Setarr(AValue: TVector4i);
-//begin
-//  Self.x := AValue[0];
-//  Self.y := AValue[1];
-//  Self.w := AValue[2];
-//  Self.h := AValue[3];
-//end;
-//
-//{ TSDL_FRectHelper }
-//
-//function TSDL_FRectHelper.Getarr: TVector4f;
-//begin
-//  Result[0] := Self.x;
-//  Result[1] := Self.y;
-//  Result[2] := Self.w;
-//  Result[3] := Self.h;
-//end;
-//
-//procedure TSDL_FRectHelper.Setarr(AValue: TVector4f);
-//begin
-//  Self.x := AValue[0];
-//  Self.y := AValue[1];
-//  Self.w := AValue[2];
-//  Self.h := AValue[3];
-//end;
-//
-
 
 end.
 (*
