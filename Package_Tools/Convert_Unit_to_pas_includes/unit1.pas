@@ -11,6 +11,7 @@ uses
 //  SDL_filesystem,
 //    SDL_storage,
 //  SDL3,
+  SDL3_mouse,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, FileUtil;
 
 type
@@ -54,6 +55,7 @@ begin
     inc_dest.Add('//                                                         //');
     inc_dest.Add('//   WARNUNG, dies Datei wird automatisch durch            //');
     inc_dest.Add('//   das Program "Convert_Unit_to_pas_includes" erzeugt !  //');
+    inc_dest.Add('//   Erzeugt am: '+FormatDateTime('dd/mm/yyyy   hh:nn', now)+  '                        //');
     inc_dest.Add('//                                                         //');
     inc_dest.Add('/////////////////////////////////////////////////////////////');
     inc_dest.Add('');

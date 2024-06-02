@@ -1,12 +1,13 @@
-/////////////////////////////////////////////////////////////
-//                                                         //
-//   WARNUNG, dies Datei wird automatisch durch            //
-//   das Program "Convert_Unit_to_pas_includes" erzeugt !  //
-//   Erzeugt am: 02-06-2024   16:12                        //
-//                                                         //
-/////////////////////////////////////////////////////////////
+unit SDL3_mouse;
 
-{$IFDEF read_interface}
+interface
+
+uses
+  SDL3_stdinc, SDL3_video, SDL3_surface;
+
+  {$IFDEF FPC}
+  {$PACKRECORDS C}
+  {$ENDIF}
 
 type
   PSDL_MouseID = ^TSDL_MouseID;
@@ -83,10 +84,7 @@ function SDL_BUTTON_RMASK: int32;
 function SDL_BUTTON_X1MASK: int32;
 function SDL_BUTTON_X2MASK: int32;
 
-{$ENDIF read_interface}
-
-
-{$IFDEF read_implementation}
+implementation
 
 function SDL_BUTTON(X: int32): int32;
 begin
@@ -118,4 +116,4 @@ begin
   SDL_BUTTON_X2MASK := SDL_BUTTON(SDL_BUTTON_X2);
 end;
 
-{$ENDIF read_implementation}
+end.
