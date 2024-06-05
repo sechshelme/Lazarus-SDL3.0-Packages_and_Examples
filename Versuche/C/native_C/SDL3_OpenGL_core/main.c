@@ -12,10 +12,6 @@
 
 #include "opengl.h"
 
-#ifndef M_PI
-#define M_PI 3.141592653589793
-#endif
-
 const float SQUARE[] = {
     -1.0f,  1.0f,
     -1.0f, -1.0f,
@@ -218,7 +214,7 @@ int main(int argc, char* argv[])
         last_frame = now;
 
         angle += diff / 1000.0;
-        if (angle > 2 * M_PI) angle -= 2 * M_PI;
+        if (angle > 2 * SDL_PI_F) angle -= 2 * SDL_PI_F;
 
         if (now - last_second >= 1000) {
             SDL_Log("FPS: %ld\n", frame_count);

@@ -21,9 +21,6 @@ int TestThread(void * Data)
 
 #define len 8
 
-
-
-//int WinMain(int argc, char* argv[]) {
 int main(int argc, char* argv[]) {
   SDL_Thread * thread[len];
   int threadReturnValue;

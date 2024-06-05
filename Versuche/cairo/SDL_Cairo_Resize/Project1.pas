@@ -17,7 +17,7 @@ uses
     Surface := cairo_image_surface_create_for_data(Pixels, CAIRO_FORMAT_ARGB32, w, h, Pitch);
     context := cairo_create(Surface);
 
-    cairo_set_source_rgba(context, 1.0, 1.0, 1.0, 1.0);
+    cairo_set_source_rgba(context, Random, Random, Random, Random);
     cairo_arc(context, w / 2, h / 2, w / 4, 0, 2 * SDL_PI_D);
     cairo_stroke(context);
 

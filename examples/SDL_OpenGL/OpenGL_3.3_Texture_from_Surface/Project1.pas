@@ -141,6 +141,7 @@ const
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, surface^.pixels);
     //  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, GL_RGBA, GL_UNSIGNED_BYTE, surface^.pixels);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glBindTexture(GL_TEXTURE_2D, 0);
 
     SDL_DestroySurface(surface);

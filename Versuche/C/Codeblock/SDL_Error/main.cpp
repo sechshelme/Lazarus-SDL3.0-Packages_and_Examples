@@ -11,7 +11,6 @@ void * CreateObject()
 
 int main(int argc, char *argv[])
 {
-SDL_LoadWAV()
   void * object;
   object = CreateObject();
   if (!object) {

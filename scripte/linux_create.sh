@@ -10,7 +10,7 @@ git clone https://github.com/libsdl-org/SDL.git
 # Linux
 mkdir build
 cd build
-cmake ../SDL
+cmake ../SDL -DSDL_TESTS=ON
 make -j16
 sudo make install
 cd ../..

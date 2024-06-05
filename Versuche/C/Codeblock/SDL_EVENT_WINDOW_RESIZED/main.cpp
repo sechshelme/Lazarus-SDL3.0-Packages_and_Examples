@@ -5,7 +5,7 @@ int main(int argc, char *argv[])
   SDL_bool quit = SDL_FALSE;
   SDL_Window *window = SDL_CreateWindow("SDL_EVENT_WINDOW_RESIZED Example", 800, 600, SDL_WINDOW_RESIZABLE);
 
-  SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL, SDL_RENDERER_PRESENTVSYNC);
+  SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
 
 
    while (!quit) {

@@ -14,7 +14,7 @@ int main()
 
         SDL_Window * win = SDL_CreateWindow("Shapes", 800, 600, windowFlags);
         SDL_Delay(2000);
-        SDL_Renderer * screen = SDL_CreateRenderer(win, 0, SDL_RENDERER_PRESENTVSYNC);
+        SDL_Renderer * screen = SDL_CreateRenderer(win, 0);
         SDL_SetWindowShape(win, shapeSurface);
         SDL_ShowWindow(win);
 

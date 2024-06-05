@@ -43,9 +43,8 @@ GLuint createShader(const char *shaderSource, int shaderType)
 
         GLchar *errorLog;
         errorLog = SDL_malloc(maxLength);
-//        std::vector<GLchar> errorLog(maxLength);
         glGetShaderInfoLog(shader, maxLength, &maxLength, errorLog);
-        glDeleteShader(shader); // Don't leak the shader
+        glDeleteShader(shader);
         SDL_Log("%s", errorLog);
         SDL_free(errorLog);
     }
@@ -91,13 +90,11 @@ int SDL_Fail()
 
 int SDL_AppInit(void **appstate, int argc, char *argv[])
 {
-    // Init the library, here we make a window so we only need the Video capabilities
     if (SDL_Init(SDL_INIT_VIDEO))
     {
         return SDL_Fail();
     }
 
-    // create a window
     SDL_Window *window = SDL_CreateWindow("OpenGL Window", 352, 430,
         SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
     if (!window)

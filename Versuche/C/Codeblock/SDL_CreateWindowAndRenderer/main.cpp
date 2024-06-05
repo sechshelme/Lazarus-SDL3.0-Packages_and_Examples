@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     win = SDL_CreateWindow("Hello World", 640, 480, SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN) ;
 
     SDL_Renderer  * renderer;
-    renderer = SDL_CreateRenderer(win, NULL, SDL_RENDERER_PRESENTVSYNC);
+    renderer = SDL_CreateRenderer(win, NULL);
 
     SDL_bool quit = SDL_FALSE;
 
