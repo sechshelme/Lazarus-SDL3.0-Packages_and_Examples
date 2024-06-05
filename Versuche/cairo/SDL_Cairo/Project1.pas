@@ -30,13 +30,9 @@ var
     cairo_y_multiplier := 1;
 
     cr_surface := cairo_image_surface_create_for_data(surface^.pixels, CAIRO_FORMAT_RGB24, surface^.w, surface^.h, surface^.pitch);
-
     cairo_surface_set_device_scale(cr_surface, cairo_x_multiplier, cairo_y_multiplier);
 
     cr := cairo_create(cr_surface);
-
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-    SDL_RenderClear(renderer);
 
     cairo_set_source_rgba(cr, 1, 1, 1, 1.0);
     cairo_rectangle(cr, 0, 0, 640, 480);
@@ -58,6 +54,9 @@ var
     cairo_arc(cr, xc, yc, radius, angele2, angele2);
     cairo_line_to(cr, xc, yc);
     cairo_stroke(cr);
+
+    cairo_destroy(cr);
+    cairo_surface_destroy(cr_surface);
   end;
 
 begin
@@ -66,8 +65,10 @@ begin
   renderer := SDL_CreateRenderer(window, nil);
   SDL_GetWindowSize(window, @window_width, @window_height);
 
-  //      sd_surface := SDL_CreateRGBSurface(0, renderer_width, renderer_height, 32, $FF0000, $00FF00, $0000FF, 0);
   sd_surface := SDL_CreateSurface(640, 480, SDL_PIXELFORMAT_BGRA32);
+
+  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+  SDL_RenderClear(renderer);
 
   Create_Cairo(sd_surface);
   while not quit do begin
@@ -93,5 +94,6 @@ begin
   end;
   SDL_DestroySurface(sd_surface);
   SDL_DestroyWindow(window);
+  SDL_DestroyRenderer(renderer);
   SDL_Quit();
 end.

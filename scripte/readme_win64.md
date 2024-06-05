@@ -1,7 +1,7 @@
 # Einleitung
 
 Die folgende Anleitung gilt, wen man den Istallations-Ordner von `CMAKE` auf default belässt.
-**Als erstes den Ordner `usr/local/` sichern.**
+**Als erstes diesen Ordner sichern.** `usr/local/` 
 
 
 # SDL3_ttf.dll

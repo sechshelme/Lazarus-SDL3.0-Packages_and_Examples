@@ -36,7 +36,6 @@
 
 #if CAIRO_HAS_SVG_SURFACE
 
-CAIRO_BEGIN_DECLS
 
 /**
  * cairo_svg_version_t:
@@ -121,7 +120,6 @@ cairo_svg_surface_set_document_unit (cairo_surface_t	*surface,
 extern cairo_svg_unit_t
 cairo_svg_surface_get_document_unit (cairo_surface_t	*surface);
 
-CAIRO_END_DECLS
 
 #else  /* CAIRO_HAS_SVG_SURFACE */
 # error Cairo was not compiled with support for the svg backend

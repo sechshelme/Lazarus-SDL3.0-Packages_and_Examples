@@ -27,9 +27,6 @@
       <Item>
         <PackageName Value="cairo_package"/>
       </Item>
-      <Item>
-        <PackageName Value="SDL3_package"/>
-      </Item>
     </RequiredPackages>
     <Units>
       <Unit>

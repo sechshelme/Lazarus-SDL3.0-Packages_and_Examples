@@ -6,13 +6,17 @@
     <CompilerOptions>
       <Version Value="11"/>
       <SearchPaths>
-        <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)/"/>
+        <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Files>
       <Item>
         <Filename Value="cairo.pas"/>
         <UnitName Value="cairo"/>
+      </Item>
+      <Item>
+        <Filename Value="cairo_svg.pas"/>
+        <UnitName Value="cairo_svg"/>
       </Item>
     </Files>
     <RequiredPkgs>
