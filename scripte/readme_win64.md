@@ -24,12 +24,14 @@ cpu = 'x86_64'
 endian = 'little'
 ```
 - Dann folgende Komandos ausführen um die FreeType DLLs zu bauen 
-- - `git clone https://github.com/freetype/freetype.git`
-- - `mkdir win64_build` 
-- - `cd win64_build` 
-- - `meson setup --cross-file ../cross.txt ../freetype/`
-- - `ninja -j16`
-- - `ninja install`
+```bash
+git clone https://github.com/freetype/freetype.git
+mkdir win64_build 
+cd win64_build 
+meson setup --cross-file ../cross.txt ../freetype/
+ninja -j16 # Je nach CPU-Kerne
+ninja install
+```
 
 
 # SDL3_ttf.dll
