@@ -24,7 +24,7 @@ cpu = 'x86_64'
 endian = 'little'
 ```
 - Dann folgende Komandos ausführen um die FreeType DLLs zu bauen 
-```bash
+```sh
 git clone https://github.com/freetype/freetype.git
 mkdir win64_build 
 cd win64_build 
