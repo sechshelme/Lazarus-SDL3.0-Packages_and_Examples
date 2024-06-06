@@ -52,8 +52,8 @@ Das man `SDL3_ttf.dll` trozdem bauen kann folgendes machen
 - Doppelklick auf `CMakeCache.txt` , dies sollte es dann mit `cmake-gui` öffnen.
 
 - Folgende Pfade ändern:
-- -> FREETYPE_INCLUDE_DIR_freetype `usr/include/freetype2` -> `/usr/local/include/freetype2`
-- -> FREETYPE_INCLUDE_DIR_ft2build `usr/include/freetype2` -> `/usr/local/include/freetype2`
+- - FREETYPE_INCLUDE_DIR_freetype `usr/include/freetype2` -> `/usr/local/include/freetype2`
+- - FREETYPE_INCLUDE_DIR_ft2build `usr/include/freetype2` -> `/usr/local/include/freetype2`
 
 - `[Generate]` klicken.
 - Tool beenden.
@@ -64,7 +64,7 @@ Das man `SDL3_ttf.dll` trozdem bauen kann folgendes machen
 - Doppelklick auf `CMakeCache.txt` , dies sollte es dannn mit `cmake-gui` öffnen.
 
 Folgende Pfad ändern:
-- -> SDL3_ttf_DIR `SDL3_ttf_DIR-NOTFOUND` -> `/usr/local/lib/cmake/SDL3_ttf`
+- - SDL3_ttf_DIR `SDL3_ttf_DIR-NOTFOUND` -> `/usr/local/lib/cmake/SDL3_ttf`
 
 - `[Generate]` klicken.
 - Tool beenden.
