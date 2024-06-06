@@ -1,5 +1,6 @@
 #include <SDL3/SDL.h>
 #include <cairo/cairo.h>
+#include <cairo/cairo-gobject.h>
 
 void CairoDraw(SDL_Texture *texture, int w, int h){
   void *pixels;

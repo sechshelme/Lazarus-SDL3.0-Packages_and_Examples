@@ -40,7 +40,6 @@
 
 #if CAIRO_HAS_TEE_SURFACE
 
-CAIRO_BEGIN_DECLS
 
 extern cairo_surface_t *
 cairo_tee_surface_create (cairo_surface_t *primary);
@@ -57,7 +56,6 @@ extern cairo_surface_t *
 cairo_tee_surface_index (cairo_surface_t *abstract_surface,
 			 unsigned int index);
 
-CAIRO_END_DECLS
 
 #else  /*CAIRO_HAS_TEE_SURFACE*/
 # error Cairo was not compiled with support for the TEE backend

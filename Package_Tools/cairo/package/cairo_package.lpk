@@ -18,6 +18,14 @@
         <Filename Value="cairo_svg.pas"/>
         <UnitName Value="cairo_svg"/>
       </Item>
+      <Item>
+        <Filename Value="cairo_tee.pas"/>
+        <UnitName Value="cairo_tee"/>
+      </Item>
+      <Item>
+        <Filename Value="cairo_gobject.pp"/>
+        <UnitName Value="cairo_gobject"/>
+      </Item>
     </Files>
     <RequiredPkgs>
       <Item>

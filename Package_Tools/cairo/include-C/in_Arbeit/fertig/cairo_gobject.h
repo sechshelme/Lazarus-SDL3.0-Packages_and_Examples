@@ -43,7 +43,6 @@
 
 #include <glib-object.h>
 
-CAIRO_BEGIN_DECLS
 
 /* structs */
 
@@ -191,7 +190,6 @@ cairo_gobject_filter_get_type (void);
 extern GType
 cairo_gobject_region_overlap_get_type (void);
 
-CAIRO_END_DECLS
 
 #else  /* CAIRO_HAS_GOBJECT_FUNCTIONS */
 # error Cairo was not compiled with support for GObject
