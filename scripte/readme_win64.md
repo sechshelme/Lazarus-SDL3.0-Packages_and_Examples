@@ -63,7 +63,7 @@ Das man `SDL3_ttf.dll` trozdem bauen kann folgendes machen
 - In den Ordner mit `.../SDL/SDL3_ttf/build_win64` wechseln.
 - Doppelklick auf `CMakeCache.txt` , dies sollte es dannn mit `cmake-gui` öffnen.
 
-Folgende Pfad ändern:
+- Folgende Pfad ändern:
   - SDL3_ttf_DIR `SDL3_ttf_DIR-NOTFOUND` -> `/usr/local/lib/cmake/SDL3_ttf`
 
 - `[Generate]` klicken.
