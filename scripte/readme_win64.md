@@ -1,7 +1,7 @@
 # Einleitung
 
 Die folgende Anleitung gilt, wen man den Istallations-Ordner von `CMAKE` auf default belässt.
-- **Als erstes diesen Ordner sichern.** `usr/local/` 
+- `#FF00000`**Als erstes diesen Ordner sichern.** `usr/local/` 
 - Einen beliebigen Ordner für die Sourcen erstellen, Leerzeichen im Pfad sind zu vermeiden.
 
 # FreeType 
