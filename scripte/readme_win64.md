@@ -4,7 +4,7 @@ Die folgende Anleitung gilt, wen man den Istallations-Ordner von `CMAKE` auf def
 **Als erstes diesen Ordner sichern.** `usr/local/` 
 - Einen beliebigen Ordner für die Sourcen erstellen, Leerzeichen im Pfad sind zu vermeiden.
 
-# FreeType bauen
+# FreeType 
 FreeType ist die Voraussetzung, das man `SDL3_ttf.dll` bauen kann.
 - In den Sourcen Ordner wechseln ein Ordner `freetype` erstellen und in diesen wechseln.
 - Dort eine Datei `win64_cross,txt` mit folgendem Inhalt erstellen: 
@@ -36,7 +36,7 @@ ninja install
 
 # SDL3_ttf.dll
 
-Folgender Fehler kommt wen man FreeType nicht installiert hat.
+Es kommt folgender Fehler beim `cmake` von `SDL3_ttf.dll`
 ```
 CMake Error at /usr/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
   Could NOT find Freetype (missing: FREETYPE_LIBRARY) (found version
@@ -46,29 +46,25 @@ Call Stack (most recent call first):
   /usr/share/cmake-3.22/Modules/FindFreetype.cmake:162 (find_package_handle_standard_args)
   CMakeLists.txt:253 (find_package)
 ```
+Das man `SDL3_ttf.dll` trozdem bauen kann folgendes machen
+- cmake-gui installieren `sudo apt install cmake-qt-gui`
+- In den Ordner `.../SDL/SDL3_ttf/build_win64` wechseln.
+- Doppelklick auf `CMakeCache.txt` , dies sollte es dann mit `cmake-gui` öffnen.
 
-cmake-gui installieren
-```bash
-sudo apt install cmake-qt-gui
-```
-
-In den Ordner mit `.../SDL/SDL3_ttf/build_win64` wechseln.
-Doppelklick auf `CMakeCache.txt` , dies sollte es dannn mit `cmake-gui` öffnen.
-
-Folgende Pfade ändern:
-- FREETYPE_INCLUDE_DIR_freetype `usr/include/freetype2` -> `/usr/local/include/freetype2`
-- FREETYPE_INCLUDE_DIR_ft2build `usr/include/freetype2` -> `/usr/local/include/freetype2`
+- Folgende Pfade ändern:
+- -> FREETYPE_INCLUDE_DIR_freetype `usr/include/freetype2` -> `/usr/local/include/freetype2`
+- -> FREETYPE_INCLUDE_DIR_ft2build `usr/include/freetype2` -> `/usr/local/include/freetype2`
 
 - `[Generate]` klicken.
 - Tool beenden.
 - In der Konsole `make`/`make install`, dann sollte die `SDL3_ttf.dll` gebaut werden.
 
 # SDL3_rtf.dll
-In den Ordner mit `.../SDL/SDL3_ttf/build_win64` wechseln.
-Doppelklick auf `CMakeCache.txt` , dies sollte es dannn mit `cmake-gui` öffnen.
+- In den Ordner mit `.../SDL/SDL3_ttf/build_win64` wechseln.
+- Doppelklick auf `CMakeCache.txt` , dies sollte es dannn mit `cmake-gui` öffnen.
 
 Folgende Pfad ändern:
-- SDL3_ttf_DIR `SDL3_ttf_DIR-NOTFOUND` -> `/usr/local/lib/cmake/SDL3_ttf`
+- -> SDL3_ttf_DIR `SDL3_ttf_DIR-NOTFOUND` -> `/usr/local/lib/cmake/SDL3_ttf`
 
 - `[Generate]` klicken.
 - Tool beenden.
