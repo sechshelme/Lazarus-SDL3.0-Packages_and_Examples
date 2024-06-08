@@ -39,7 +39,7 @@
 #include <cairo.h>
 #include <stdio.h>
 
-CAIRO_BEGIN_DECLS
+
 
 typedef struct _cairo_script_interpreter cairo_script_interpreter_t;
 
@@ -119,6 +119,6 @@ cairo_script_interpreter_translate_stream (FILE *stream,
 	                                   cairo_write_func_t write_func,
 					   void *closure);
 
-CAIRO_END_DECLS
+
 
 #endif /*CAIRO_SCRIPT_INTERPRETER_H*/

@@ -44,7 +44,7 @@
 #include <X11/Xlib.h>
 #include <X11/extensions/Xrender.h>
 
-CAIRO_BEGIN_DECLS
+
 
 extern cairo_surface_t *
 cairo_xlib_surface_create_with_xrender_format (Display		 *dpy,
@@ -57,7 +57,7 @@ cairo_xlib_surface_create_with_xrender_format (Display		 *dpy,
 extern XRenderPictFormat *
 cairo_xlib_surface_get_xrender_format (cairo_surface_t *surface);
 
-CAIRO_END_DECLS
+
 
 #else  /* CAIRO_HAS_XLIB_XRENDER_SURFACE */
 # error Cairo was not compiled with support for the xlib XRender backend

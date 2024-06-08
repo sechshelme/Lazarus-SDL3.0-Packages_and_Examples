@@ -31,25 +31,10 @@ implementation
 
 { TForm1 }
 
-//procedure Find_FT_EXPORT(var s: string);
-//begin
-//  if pos('FT_EXPORT(', s) > 0 then begin
-//    s:=StringReplace(s,'FT_EXPORT(','',[]);
-//    s:=StringReplace(s,')','',[]);
-//    WriteLn(s);
-//  end;
-//  if pos('FT_BASE(', s) > 0 then begin
-//    s:=StringReplace(s,'FT_BASE(','',[]);
-//    s:=StringReplace(s,')','',[]);
-//    WriteLn(s);
-//  end;
-//end;
-
 procedure TForm1.Button1Click(Sender: TObject);
 var
   slFile, slHeader: TStringList;
   i, j: integer;
-  s: string;
 begin
   Memo1.Clear;
   slFile := FindAllFiles('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/Package_Tools/cairo/include-C', '*.h');
@@ -60,9 +45,8 @@ begin
     slHeader.LoadFromFile(slFile[i]);
     for j := 0 to slHeader.Count - 1 do begin
       slHeader[j] := StringReplace(slHeader[j], 'cairo_public', 'extern', [rfReplaceAll]);
-      s := slHeader[j];
-//      Find_FT_EXPORT(s);
-//      slHeader[j] := s;
+      slHeader[j] := StringReplace(slHeader[j], 'CAIRO_BEGIN_DECLS', '', [rfReplaceAll]);
+      slHeader[j] := StringReplace(slHeader[j], 'CAIRO_END_DECLS', '', [rfReplaceAll]);
     end;
     slHeader.SaveToFile(slFile[i]);
     slHeader.Free;

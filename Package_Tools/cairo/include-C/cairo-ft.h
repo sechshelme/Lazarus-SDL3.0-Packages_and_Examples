@@ -50,7 +50,7 @@
 #include <fontconfig/fontconfig.h>
 #endif
 
-CAIRO_BEGIN_DECLS
+
 
 extern cairo_font_face_t *
 cairo_ft_font_face_create_for_ft_face (FT_Face         face,
@@ -109,7 +109,7 @@ cairo_ft_font_options_substitute (const cairo_font_options_t *options,
 
 #endif
 
-CAIRO_END_DECLS
+
 
 #else  /* CAIRO_HAS_FT_FONT */
 # error Cairo was not compiled with support for the freetype font backend

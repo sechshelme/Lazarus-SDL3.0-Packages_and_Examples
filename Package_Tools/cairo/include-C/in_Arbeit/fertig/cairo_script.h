@@ -40,7 +40,7 @@
 
 #if CAIRO_HAS_SCRIPT_SURFACE
 
-CAIRO_BEGIN_DECLS
+
 
 /**
  * cairo_script_mode_t:
@@ -89,7 +89,7 @@ extern cairo_status_t
 cairo_script_from_recording_surface (cairo_device_t	*script,
 				     cairo_surface_t	*recording_surface);
 
-CAIRO_END_DECLS
+
 
 #else  /*CAIRO_HAS_SCRIPT_SURFACE*/
 # error Cairo was not compiled with support for the CairoScript backend

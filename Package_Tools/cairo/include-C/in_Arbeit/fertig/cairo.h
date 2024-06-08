@@ -43,11 +43,11 @@
 #include "cairo-deprecated.h"
 
 #ifdef  __cplusplus
-# define CAIRO_BEGIN_DECLS  extern "C" {
-# define CAIRO_END_DECLS    }
+# define   extern "C" {
+# define     }
 #else
-# define CAIRO_BEGIN_DECLS
-# define CAIRO_END_DECLS
+# define 
+# define 
 #endif
 
 #if (defined(_WIN32) || defined(__CYGWIN__)) && !defined(CAIRO_WIN32_STATIC_BUILD)
@@ -69,7 +69,7 @@
 
 // #define extern _cairo_api extern
 
-// CAIRO_BEGIN_DECLS
+// 
 
 #define CAIRO_VERSION_ENCODE(major, minor, micro) (	\
 	  ((major) * 10000)				\
@@ -3343,6 +3343,6 @@ extern void
 cairo_debug_reset_static_data (void);
 
 
-//CAIRO_END_DECLS
+//
 
 #endif /* CAIRO_H */

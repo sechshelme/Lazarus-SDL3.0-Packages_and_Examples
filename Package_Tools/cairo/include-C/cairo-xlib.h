@@ -43,7 +43,7 @@
 
 #include <X11/Xlib.h>
 
-CAIRO_BEGIN_DECLS
+
 
 extern cairo_surface_t *
 cairo_xlib_surface_create (Display     *dpy,
@@ -109,7 +109,7 @@ cairo_xlib_device_debug_set_precision (cairo_device_t *device,
 extern int
 cairo_xlib_device_debug_get_precision (cairo_device_t *device);
 
-CAIRO_END_DECLS
+
 
 #else  /* CAIRO_HAS_XLIB_SURFACE */
 # error Cairo was not compiled with support for the xlib backend

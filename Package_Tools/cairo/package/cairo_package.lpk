@@ -23,8 +23,20 @@
         <UnitName Value="cairo_tee"/>
       </Item>
       <Item>
-        <Filename Value="cairo_gobject.pp"/>
+        <Filename Value="cairo_gobject.pas"/>
         <UnitName Value="cairo_gobject"/>
+      </Item>
+      <Item>
+        <Filename Value="cairo_pdf.pas"/>
+        <UnitName Value="cairo_pdf"/>
+      </Item>
+      <Item>
+        <Filename Value="cairo_ps.pas"/>
+        <UnitName Value="cairo_ps"/>
+      </Item>
+      <Item>
+        <Filename Value="cairo_script.pas"/>
+        <UnitName Value="cairo_script"/>
       </Item>
     </Files>
     <RequiredPkgs>

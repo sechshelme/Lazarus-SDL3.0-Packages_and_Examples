@@ -8,7 +8,8 @@ unit cairo_package;
 interface
 
 uses
-  cairo, cairo_svg, cairo_tee, cairo_gobject, LazarusPackageIntf;
+  cairo, cairo_svg, cairo_tee, cairo_gobject, cairo_pdf, cairo_ps, 
+  cairo_script, LazarusPackageIntf;
 
 implementation
 

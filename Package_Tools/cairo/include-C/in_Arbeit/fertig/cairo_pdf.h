@@ -41,7 +41,6 @@
 
 #if CAIRO_HAS_PDF_SURFACE
 
-CAIRO_BEGIN_DECLS
 
 /**
  * cairo_pdf_version_t:
@@ -160,8 +159,6 @@ extern void
 cairo_pdf_surface_set_thumbnail_size (cairo_surface_t *surface,
 				      int              width,
 				      int              height);
-
-CAIRO_END_DECLS
 
 #else  /* CAIRO_HAS_PDF_SURFACE */
 # error Cairo was not compiled with support for the pdf backend

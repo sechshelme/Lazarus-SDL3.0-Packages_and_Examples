@@ -46,7 +46,7 @@
 #include <xcb/xcb.h>
 #include <xcb/render.h>
 
-CAIRO_BEGIN_DECLS
+
 
 extern cairo_surface_t *
 cairo_xcb_surface_create (xcb_connection_t	*connection,
@@ -107,7 +107,7 @@ cairo_xcb_device_debug_set_precision (cairo_device_t *device,
 extern int
 cairo_xcb_device_debug_get_precision (cairo_device_t *device);
 
-CAIRO_END_DECLS
+
 
 #else  /* CAIRO_HAS_XCB_SURFACE */
 # error Cairo was not compiled with support for the xcb backend

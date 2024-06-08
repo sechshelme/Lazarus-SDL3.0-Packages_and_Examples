@@ -43,7 +43,7 @@
 
 #include <stdio.h>
 
-CAIRO_BEGIN_DECLS
+
 
 /* PS-surface functions */
 
@@ -107,7 +107,7 @@ cairo_ps_surface_dsc_begin_setup (cairo_surface_t *surface);
 extern void
 cairo_ps_surface_dsc_begin_page_setup (cairo_surface_t *surface);
 
-CAIRO_END_DECLS
+
 
 #else  /* CAIRO_HAS_PS_SURFACE */
 # error Cairo was not compiled with support for the ps backend
