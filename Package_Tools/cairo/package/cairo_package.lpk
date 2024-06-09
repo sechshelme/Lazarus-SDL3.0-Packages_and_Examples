@@ -38,6 +38,22 @@
         <Filename Value="cairo_script.pas"/>
         <UnitName Value="cairo_script"/>
       </Item>
+      <Item>
+        <Filename Value="cairo_script_interpreter.pas"/>
+        <UnitName Value="cairo_script_interpreter"/>
+      </Item>
+      <Item>
+        <Filename Value="cairo_xcb.pas"/>
+        <UnitName Value="cairo_xcb"/>
+      </Item>
+      <Item>
+        <Filename Value="cairo_xlib.pas"/>
+        <UnitName Value="cairo_xlib"/>
+      </Item>
+      <Item>
+        <Filename Value="cairo_xlib_xrender.pas"/>
+        <UnitName Value="cairo_xlib_xrender"/>
+      </Item>
     </Files>
     <RequiredPkgs>
       <Item>

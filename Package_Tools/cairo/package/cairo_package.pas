@@ -9,7 +9,8 @@ interface
 
 uses
   cairo, cairo_svg, cairo_tee, cairo_gobject, cairo_pdf, cairo_ps, 
-  cairo_script, LazarusPackageIntf;
+  cairo_script, cairo_script_interpreter, cairo_xcb, cairo_xlib, 
+  cairo_xlib_xrender, LazarusPackageIntf;
 
 implementation
 
