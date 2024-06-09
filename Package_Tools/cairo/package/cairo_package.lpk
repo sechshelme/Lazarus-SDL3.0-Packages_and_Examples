@@ -54,6 +54,10 @@
         <Filename Value="cairo_xlib_xrender.pas"/>
         <UnitName Value="cairo_xlib_xrender"/>
       </Item>
+      <Item>
+        <Filename Value="cairo_ft.pas"/>
+        <UnitName Value="cairo_ft"/>
+      </Item>
     </Files>
     <RequiredPkgs>
       <Item>

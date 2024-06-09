@@ -7,7 +7,7 @@ uses
   xutil,
   keysym,
   x,
-  Cairo,
+  cairo,
   cairo_xlib;
 
 type
