@@ -5,7 +5,7 @@
 SDL3 lib installieren:
 - [Installation](install_sdl.md)
 SDL3 für Lazarus
-- Package [SDL3](package) installieren.
+- Package [SDL3](packages) installieren.
 
 # Examples
 - [Examples](examples)
