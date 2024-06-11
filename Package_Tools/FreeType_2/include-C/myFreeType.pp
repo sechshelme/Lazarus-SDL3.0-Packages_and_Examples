@@ -18070,42 +18070,6 @@ type
 { face-specific auto-hinter data  }
 { unused                          }
 
-  PFT_FaceRec_ = ^TFT_FaceRec_;
-  TFT_FaceRec_ = record
-      num_faces : TFT_Long;
-      face_index : TFT_Long;
-      face_flags : TFT_Long;
-      style_flags : TFT_Long;
-      num_glyphs : TFT_Long;
-      family_name : PFT_String;
-      style_name : PFT_String;
-      num_fixed_sizes : TFT_Int;
-      available_sizes : PFT_Bitmap_Size;
-      num_charmaps : TFT_Int;
-      charmaps : PFT_CharMap;
-      generic : TFT_Generic;
-      bbox : TFT_BBox;
-      units_per_EM : TFT_UShort;
-      ascender : TFT_Short;
-      descender : TFT_Short;
-      height : TFT_Short;
-      max_advance_width : TFT_Short;
-      max_advance_height : TFT_Short;
-      underline_position : TFT_Short;
-      underline_thickness : TFT_Short;
-      glyph : TFT_GlyphSlot;
-      size : TFT_Size;
-      charmap : TFT_CharMap;
-      driver : TFT_Driver;
-      memory : TFT_Memory;
-      stream : TFT_Stream;
-      sizes_list : TFT_ListRec;
-      autohint : TFT_Generic;
-      extensions : pointer;
-      internal : TFT_Face_Internal;
-    end;
-  TFT_FaceRec = TFT_FaceRec_;
-  PFT_FaceRec = ^TFT_FaceRec;
 {*************************************************************************
    *
    * @enum:
