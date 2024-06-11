@@ -60,10 +60,19 @@ cd SDL3_ttf
 # git clone https://github.com/libsdl-org/SDL_ttf.git --recursive 
 git clone https://github.com/libsdl-org/SDL_ttf.git
 
-# Windows
 mkdir build_win64
 cd build_win64
-cmake -S ../SDL_ttf -B . -DCMAKE_CXX_COMPILER="/usr/bin/x86_64-w64-mingw32-g++" -DCMAKE_C_COMPILER="/usr/bin/x86_64-w64-mingw32-gcc" -DCMAKE_RC_COMPILER="/usr/bin/x86_64-w64-mingw32-windres" -DCMAKE_FIND_ROOT_PATH="/usr/x86_64-w64-mingw32" -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE="BOTH" -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY="ONLY" -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM="BOTH" -DCMAKE_SYSTEM_NAME="Windows"
+cmake -S ../SDL_ttf -B . \
+  -DCMAKE_CXX_COMPILER="/usr/bin/x86_64-w64-mingw32-g++" \
+  -DCMAKE_C_COMPILER="/usr/bin/x86_64-w64-mingw32-gcc" \
+  -DCMAKE_RC_COMPILER="/usr/bin/x86_64-w64-mingw32-windres" \
+  -DCMAKE_FIND_ROOT_PATH="/usr/x86_64-w64-mingw32" \
+  -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE="BOTH" \
+  -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY="ONLY" \
+  -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM="BOTH" \
+  -DCMAKE_SYSTEM_NAME="Windows" \
+  -DFREETYPE_INCLUDE_DIR_freetype2="/usr/local/include/freetype2" \
+  -DFREETYPE_INCLUDE_DIR_ft2build="/usr/local/include/freetype2"
 make -j16
 sudo make install
 cd ../..
