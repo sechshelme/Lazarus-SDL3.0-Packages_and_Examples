@@ -44,6 +44,11 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
       </Unit>
+      <Unit>
+        <Filename Value="../package/freetype2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="FreeType2"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
