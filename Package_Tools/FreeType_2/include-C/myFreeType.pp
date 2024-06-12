@@ -299,7 +299,7 @@ type
     }
 
 function FTC_Manager_New(library:TFT_Library; max_faces:TFT_UInt; max_sizes:TFT_UInt; max_bytes:TFT_ULong; requester:TFTC_Face_Requester; 
-           req_data:TFT_Pointer; amanager:PFTC_Manager):TFT_Error;cdecl;external;
+           req_data:TFT_Pointer; amanager:PFTC_Manager):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -313,7 +313,7 @@ function FTC_Manager_New(library:TFT_Library; max_faces:TFT_UInt; max_sizes:TFT_
    *   manager ::
    *     A handle to the manager.
     }
-procedure FTC_Manager_Reset(manager:TFTC_Manager);cdecl;external;
+procedure FTC_Manager_Reset(manager:TFTC_Manager);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -326,7 +326,7 @@ procedure FTC_Manager_Reset(manager:TFTC_Manager);cdecl;external;
    *   manager ::
    *     A handle to the target cache manager object.
     }
-procedure FTC_Manager_Done(manager:TFTC_Manager);cdecl;external;
+procedure FTC_Manager_Done(manager:TFTC_Manager);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -370,7 +370,7 @@ procedure FTC_Manager_Done(manager:TFTC_Manager);cdecl;external;
    *   been completely flushed, and still no memory was available for the
    *   operation.
     }
-function FTC_Manager_LookupFace(manager:TFTC_Manager; face_id:TFTC_FaceID; aface:PFT_Face):TFT_Error;cdecl;external;
+function FTC_Manager_LookupFace(manager:TFTC_Manager; face_id:TFTC_FaceID; aface:PFT_Face):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @struct:
@@ -470,7 +470,7 @@ type
    *   operation.
     }
 
-function FTC_Manager_LookupSize(manager:TFTC_Manager; scaler:TFTC_Scaler; asize:PFT_Size):TFT_Error;cdecl;external;
+function FTC_Manager_LookupSize(manager:TFTC_Manager; scaler:TFTC_Scaler; asize:PFT_Size):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -488,7 +488,7 @@ function FTC_Manager_LookupSize(manager:TFTC_Manager; scaler:TFTC_Scaler; asize:
    *   manager ::
    *     The cache manager handle.
     }
-procedure FTC_Node_Unref(node:TFTC_Node; manager:TFTC_Manager);cdecl;external;
+procedure FTC_Node_Unref(node:TFTC_Node; manager:TFTC_Manager);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -516,7 +516,7 @@ procedure FTC_Node_Unref(node:TFTC_Node; manager:TFTC_Manager);cdecl;external;
    *   destroyed when released by all their users.
    *
     }
-procedure FTC_Manager_RemoveFaceID(manager:TFTC_Manager; face_id:TFTC_FaceID);cdecl;external;
+procedure FTC_Manager_RemoveFaceID(manager:TFTC_Manager; face_id:TFTC_FaceID);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @type:
@@ -555,7 +555,7 @@ type
    *
     }
 
-function FTC_CMapCache_New(manager:TFTC_Manager; acache:PFTC_CMapCache):TFT_Error;cdecl;external;
+function FTC_CMapCache_New(manager:TFTC_Manager; acache:PFTC_CMapCache):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -583,7 +583,7 @@ function FTC_CMapCache_New(manager:TFTC_Manager; acache:PFTC_CMapCache):TFT_Erro
    *    Glyph index.  0~means 'no glyph'.
    *
     }
-function FTC_CMapCache_Lookup(cache:TFTC_CMapCache; face_id:TFTC_FaceID; cmap_index:TFT_Int; char_code:TFT_UInt32):TFT_UInt;cdecl;external;
+function FTC_CMapCache_Lookup(cache:TFTC_CMapCache; face_id:TFTC_FaceID; cmap_index:TFT_Int; char_code:TFT_UInt32):TFT_UInt;cdecl; external freetype_lib;
 {*********************************************************************** }
 {*********************************************************************** }
 {*********************************************************************** }
@@ -677,7 +677,7 @@ type
    *   FreeType error code.  0~means success.
     }
 
-function FTC_ImageCache_New(manager:TFTC_Manager; acache:PFTC_ImageCache):TFT_Error;cdecl;external;
+function FTC_ImageCache_New(manager:TFTC_Manager; acache:PFTC_ImageCache):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -722,7 +722,7 @@ function FTC_ImageCache_New(manager:TFTC_Manager; acache:PFTC_ImageCache):TFT_Er
    *   to one of the caching sub-system APIs.  Don't assume that it is
    *   persistent!
     }
-function FTC_ImageCache_Lookup(cache:TFTC_ImageCache; _type:TFTC_ImageType; gindex:TFT_UInt; aglyph:PFT_Glyph; anode:PFTC_Node):TFT_Error;cdecl;external;
+function FTC_ImageCache_Lookup(cache:TFTC_ImageCache; _type:TFTC_ImageType; gindex:TFT_UInt; aglyph:PFT_Glyph; anode:PFTC_Node):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -775,7 +775,7 @@ function FTC_ImageCache_Lookup(cache:TFTC_ImageCache; _type:TFTC_ImageType; gind
    *   glyphs; you should always use the FreeType cache API instead.
     }
 function FTC_ImageCache_LookupScaler(cache:TFTC_ImageCache; scaler:TFTC_Scaler; load_flags:TFT_ULong; gindex:TFT_UInt; aglyph:PFT_Glyph; 
-           anode:PFTC_Node):TFT_Error;cdecl;external;
+           anode:PFTC_Node):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @type:
@@ -880,7 +880,7 @@ type
    *   FreeType error code.  0~means success.
     }
 
-function FTC_SBitCache_New(manager:TFTC_Manager; acache:PFTC_SBitCache):TFT_Error;cdecl;external;
+function FTC_SBitCache_New(manager:TFTC_Manager; acache:PFTC_SBitCache):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -930,7 +930,7 @@ function FTC_SBitCache_New(manager:TFTC_Manager; acache:PFTC_SBitCache):TFT_Erro
    *   one of the caching sub-system APIs.  Don't assume that it is
    *   persistent!
     }
-function FTC_SBitCache_Lookup(cache:TFTC_SBitCache; _type:TFTC_ImageType; gindex:TFT_UInt; sbit:PFTC_SBit; anode:PFTC_Node):TFT_Error;cdecl;external;
+function FTC_SBitCache_Lookup(cache:TFTC_SBitCache; _type:TFTC_ImageType; gindex:TFT_UInt; sbit:PFTC_SBit; anode:PFTC_Node):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -984,7 +984,7 @@ function FTC_SBitCache_Lookup(cache:TFTC_SBitCache; _type:TFTC_ImageType; gindex
    *   persistent!
     }
 function FTC_SBitCache_LookupScaler(cache:TFTC_SBitCache; scaler:TFTC_Scaler; load_flags:TFT_ULong; gindex:TFT_UInt; sbit:PFTC_SBit; 
-           anode:PFTC_Node):TFT_Error;cdecl;external;
+           anode:PFTC_Node):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTCACHE_H_  }
@@ -1070,7 +1070,7 @@ function FTC_SBitCache_LookupScaler(cache:TFTC_SBitCache; scaler:TFTC_Scaler; lo
    *   However, in all cases, it will return valid values.
     }
 
-function FT_Get_PFR_Metrics(face:TFT_Face; aoutline_resolution:PFT_UInt; ametrics_resolution:PFT_UInt; ametrics_x_scale:PFT_Fixed; ametrics_y_scale:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Get_PFR_Metrics(face:TFT_Face; aoutline_resolution:PFT_UInt; ametrics_resolution:PFT_UInt; ametrics_x_scale:PFT_Fixed; ametrics_y_scale:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -1106,7 +1106,7 @@ function FT_Get_PFR_Metrics(face:TFT_Face; aoutline_resolution:PFT_UInt; ametric
    *    You can use the value of the `x_scale` and `y_scale` parameters
    *    returned by @FT_Get_PFR_Metrics to scale these to device subpixels.
     }
-function FT_Get_PFR_Kerning(face:TFT_Face; left:TFT_UInt; right:TFT_UInt; avector:PFT_Vector):TFT_Error;cdecl;external;
+function FT_Get_PFR_Kerning(face:TFT_Face; left:TFT_UInt; right:TFT_UInt; avector:PFT_Vector):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -1134,7 +1134,7 @@ function FT_Get_PFR_Kerning(face:TFT_Face; left:TFT_UInt; right:TFT_UInt; avecto
    *    You can use the `x_scale` or `y_scale` results of @FT_Get_PFR_Metrics
    *    to convert the advance to device subpixels (i.e., 1/64 of pixels).
     }
-function FT_Get_PFR_Advance(face:TFT_Face; gindex:TFT_UInt; aadvance:PFT_Pos):TFT_Error;cdecl;external;
+function FT_Get_PFR_Advance(face:TFT_Face; gindex:TFT_UInt; aadvance:PFT_Pos):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTPFR_H_  }
@@ -1180,7 +1180,7 @@ type
    *   `TT_CONFIG_OPTION_SFNT_NAMES` is not defined in `ftoption.h`.
     }
 
-function FT_Get_Sfnt_Name_Count(face:TFT_Face):TFT_UInt;cdecl;external;
+function FT_Get_Sfnt_Name_Count(face:TFT_Face):TFT_UInt;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -1218,7 +1218,7 @@ function FT_Get_Sfnt_Name_Count(face:TFT_Face):TFT_UInt;cdecl;external;
    *   This function always returns an error if the config macro
    *   `TT_CONFIG_OPTION_SFNT_NAMES` is not defined in `ftoption.h`.
     }
-function FT_Get_Sfnt_Name(face:TFT_Face; idx:TFT_UInt; aname:PFT_SfntName):TFT_Error;cdecl;external;
+function FT_Get_Sfnt_Name(face:TFT_Face; idx:TFT_UInt; aname:PFT_SfntName):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @struct:
@@ -1294,7 +1294,7 @@ type
    *   2.8
     }
 
-function FT_Get_Sfnt_LangTag(face:TFT_Face; langID:TFT_UInt; alangTag:PFT_SfntLangTag):TFT_Error;cdecl;external;
+function FT_Get_Sfnt_LangTag(face:TFT_Face; langID:TFT_UInt; alangTag:PFT_SfntLangTag):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTSNAMES_H_  }
@@ -2008,7 +2008,7 @@ type
    *   2.3.0
     }
 
-function FT_Library_SetLcdFilter(library:TFT_Library; filter:TFT_LcdFilter):TFT_Error;cdecl;external;
+function FT_Library_SetLcdFilter(library:TFT_Library; filter:TFT_LcdFilter):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -2040,7 +2040,7 @@ function FT_Library_SetLcdFilter(library:TFT_Library; filter:TFT_LcdFilter):TFT_
    * @since:
    *   2.4.0
     }
-function FT_Library_SetLcdFilterWeights(library:TFT_Library; weights:Pbyte):TFT_Error;cdecl;external;
+function FT_Library_SetLcdFilterWeights(library:TFT_Library; weights:Pbyte):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @type:
@@ -2103,7 +2103,7 @@ type
    *   2.10.0
     }
 
-function FT_Library_SetLcdGeometry(library:TFT_Library; sub:array[0..2] of TFT_Vector):TFT_Error;cdecl;external;
+function FT_Library_SetLcdGeometry(library:TFT_Library; sub:array[0..2] of TFT_Vector):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTLCDFIL_H_  }
@@ -3489,7 +3489,7 @@ type
 (* Const before type ignored *)
 (* Const before type ignored *)
 
-function FT_Get_BDF_Charset_ID(face:TFT_Face; acharset_encoding:PPchar; acharset_registry:PPchar):TFT_Error;cdecl;external;
+function FT_Get_BDF_Charset_ID(face:TFT_Face; acharset_encoding:PPchar; acharset_registry:PPchar):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -3529,7 +3529,7 @@ function FT_Get_BDF_Charset_ID(face:TFT_Face; acharset_encoding:PPchar; acharset
    *   @BDF_PROPERTY_TYPE_NONE.
     }
 (* Const before type ignored *)
-function FT_Get_BDF_Property(face:TFT_Face; prop_name:Pchar; aproperty:PBDF_PropertyRec):TFT_Error;cdecl;external;
+function FT_Get_BDF_Property(face:TFT_Face; prop_name:Pchar; aproperty:PBDF_PropertyRec):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTBDF_H_  }
@@ -3616,7 +3616,7 @@ function FT_Get_BDF_Property(face:TFT_Face; prop_name:Pchar; aproperty:PBDF_Prop
    *   of FreeType was not compiled with LZW support.
     }
 
-function FT_Stream_OpenLZW(stream:TFT_Stream; source:TFT_Stream):TFT_Error;cdecl;external;
+function FT_Stream_OpenLZW(stream:TFT_Stream; source:TFT_Stream):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTLZW_H_  }
@@ -3700,7 +3700,7 @@ function FT_Stream_OpenLZW(stream:TFT_Stream; source:TFT_Stream):TFT_Error;cdecl
 (* Const before type ignored *)
 (* Const before type ignored *)
 
-function FT_Get_CID_Registry_Ordering_Supplement(face:TFT_Face; registry:PPchar; ordering:PPchar; supplement:PFT_Int):TFT_Error;cdecl;external;
+function FT_Get_CID_Registry_Ordering_Supplement(face:TFT_Face; registry:PPchar; ordering:PPchar; supplement:PFT_Int):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -3729,7 +3729,7 @@ function FT_Get_CID_Registry_Ordering_Supplement(face:TFT_Face; registry:PPchar;
    * @since:
    *    2.3.9
     }
-function FT_Get_CID_Is_Internally_CID_Keyed(face:TFT_Face; is_cid:PFT_Bool):TFT_Error;cdecl;external;
+function FT_Get_CID_Is_Internally_CID_Keyed(face:TFT_Face; is_cid:PFT_Bool):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -3759,7 +3759,7 @@ function FT_Get_CID_Is_Internally_CID_Keyed(face:TFT_Face; is_cid:PFT_Bool):TFT_
    * @since:
    *    2.3.9
     }
-function FT_Get_CID_From_Glyph_Index(face:TFT_Face; glyph_index:TFT_UInt; cid:PFT_UInt):TFT_Error;cdecl;external;
+function FT_Get_CID_From_Glyph_Index(face:TFT_Face; glyph_index:TFT_UInt; cid:PFT_UInt):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTCID_H_  }
@@ -4427,7 +4427,7 @@ type
    *   ```
     }
 
-function FT_Get_Sfnt_Table(face:TFT_Face; tag:TFT_Sfnt_Tag):pointer;cdecl;external;
+function FT_Get_Sfnt_Table(face:TFT_Face; tag:TFT_Sfnt_Tag):pointer;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -4492,7 +4492,7 @@ function FT_Get_Sfnt_Table(face:TFT_Face; tag:TFT_Sfnt_Tag):pointer;cdecl;extern
    *   size (e.g. 32bit vs. 64bit) or order (big endian vs. little endian).
    *
     }
-function FT_Load_Sfnt_Table(face:TFT_Face; tag:TFT_ULong; offset:TFT_Long; buffer:PFT_Byte; length:PFT_ULong):TFT_Error;cdecl;external;
+function FT_Load_Sfnt_Table(face:TFT_Face; tag:TFT_ULong; offset:TFT_Long; buffer:PFT_Byte; length:PFT_ULong):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -4528,7 +4528,7 @@ function FT_Load_Sfnt_Table(face:TFT_Face; tag:TFT_ULong; offset:TFT_Long; buffe
    *   missing.
    *
     }
-function FT_Sfnt_Table_Info(face:TFT_Face; table_index:TFT_UInt; tag:PFT_ULong; length:PFT_ULong):TFT_Error;cdecl;external;
+function FT_Sfnt_Table_Info(face:TFT_Face; table_index:TFT_UInt; tag:PFT_ULong; length:PFT_ULong):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -4549,7 +4549,7 @@ function FT_Sfnt_Table_Info(face:TFT_Face; table_index:TFT_UInt; tag:PFT_ULong; 
    *   For a format~14 cmap (to access Unicode IVS), the return value is
    *   0xFFFFFFFF.
     }
-function FT_Get_CMap_Language_ID(charmap:TFT_CharMap):TFT_ULong;cdecl;external;
+function FT_Get_CMap_Language_ID(charmap:TFT_CharMap):TFT_ULong;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -4566,7 +4566,7 @@ function FT_Get_CMap_Language_ID(charmap:TFT_CharMap):TFT_ULong;cdecl;external;
    *   The format of `charmap`.  If `charmap` doesn't belong to an SFNT face,
    *   return -1.
     }
-function FT_Get_CMap_Format(charmap:TFT_CharMap):TFT_Long;cdecl;external;
+function FT_Get_CMap_Format(charmap:TFT_CharMap):TFT_Long;cdecl; external freetype_lib;
 {  }
 {$endif}
 { TTTABLES_H_  }
@@ -4654,7 +4654,7 @@ function FT_Get_CMap_Format(charmap:TFT_CharMap):TFT_Long;cdecl;external;
    *   of FreeType was not compiled with bzip2 support.
     }
 
-function FT_Stream_OpenBzip2(stream:TFT_Stream; source:TFT_Stream):TFT_Error;cdecl;external;
+function FT_Stream_OpenBzip2(stream:TFT_Stream; source:TFT_Stream):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTBZIP2_H_  }
@@ -4726,9 +4726,9 @@ function FT_Stream_OpenBzip2(stream:TFT_Stream; source:TFT_Stream):TFT_Error;cde
    *   A deprecated name for the same function is `FT_Bitmap_New`.
     }
 
-procedure FT_Bitmap_Init(abitmap:PFT_Bitmap);cdecl;external;
+procedure FT_Bitmap_Init(abitmap:PFT_Bitmap);cdecl; external freetype_lib;
 { deprecated  }
-procedure FT_Bitmap_New(abitmap:PFT_Bitmap);cdecl;external;
+procedure FT_Bitmap_New(abitmap:PFT_Bitmap);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -4756,7 +4756,7 @@ procedure FT_Bitmap_New(abitmap:PFT_Bitmap);cdecl;external;
    *   overlap.
     }
 (* Const before type ignored *)
-function FT_Bitmap_Copy(library:TFT_Library; source:PFT_Bitmap; target:PFT_Bitmap):TFT_Error;cdecl;external;
+function FT_Bitmap_Copy(library:TFT_Library; source:PFT_Bitmap; target:PFT_Bitmap):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -4796,7 +4796,7 @@ function FT_Bitmap_Copy(library:TFT_Library; source:PFT_Bitmap; target:PFT_Bitma
    *   Bitmaps in @FT_PIXEL_MODE_GRAY2 and @FT_PIXEL_MODE_GRAY@ format are
    *   converted to @FT_PIXEL_MODE_GRAY format (i.e., 8bpp).
     }
-function FT_Bitmap_Embolden(library:TFT_Library; bitmap:PFT_Bitmap; xStrength:TFT_Pos; yStrength:TFT_Pos):TFT_Error;cdecl;external;
+function FT_Bitmap_Embolden(library:TFT_Library; bitmap:PFT_Bitmap; xStrength:TFT_Pos; yStrength:TFT_Pos):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -4838,7 +4838,7 @@ function FT_Bitmap_Embolden(library:TFT_Library; bitmap:PFT_Bitmap; xStrength:TF
    *   overlap.
     }
 (* Const before type ignored *)
-function FT_Bitmap_Convert(library:TFT_Library; source:PFT_Bitmap; target:PFT_Bitmap; alignment:TFT_Int):TFT_Error;cdecl;external;
+function FT_Bitmap_Convert(library:TFT_Library; source:PFT_Bitmap; target:PFT_Bitmap; alignment:TFT_Int):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -4895,7 +4895,7 @@ function FT_Bitmap_Convert(library:TFT_Library; source:PFT_Bitmap; target:PFT_Bi
 (* Const before type ignored *)
 (* Const before type ignored *)
 function FT_Bitmap_Blend(library:TFT_Library; source:PFT_Bitmap; source_offset:TFT_Vector; target:PFT_Bitmap; atarget_offset:PFT_Vector; 
-           color:TFT_Color):TFT_Error;cdecl;external;
+           color:TFT_Color):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -4914,7 +4914,7 @@ function FT_Bitmap_Blend(library:TFT_Library; source:PFT_Bitmap; source_offset:T
    * @note:
    *   This function is to be used in combination with @FT_Bitmap_Embolden.
     }
-function FT_GlyphSlot_Own_Bitmap(slot:TFT_GlyphSlot):TFT_Error;cdecl;external;
+function FT_GlyphSlot_Own_Bitmap(slot:TFT_GlyphSlot):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -4937,7 +4937,7 @@ function FT_GlyphSlot_Own_Bitmap(slot:TFT_GlyphSlot):TFT_Error;cdecl;external;
    *   The `library` argument is taken to have access to FreeType's memory
    *   handling functions.
     }
-function FT_Bitmap_Done(library:TFT_Library; bitmap:PFT_Bitmap):TFT_Error;cdecl;external;
+function FT_Bitmap_Done(library:TFT_Library; bitmap:PFT_Bitmap):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTBITMAP_H_  }
@@ -5207,7 +5207,7 @@ type
     }
 (* Const before type ignored *)
 
-function FT_Add_Module(library:TFT_Library; clazz:PFT_Module_Class):TFT_Error;cdecl;external;
+function FT_Add_Module(library:TFT_Library; clazz:PFT_Module_Class):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -5231,7 +5231,7 @@ function FT_Add_Module(library:TFT_Library; clazz:PFT_Module_Class):TFT_Error;cd
    *   should look up the source code for details.
     }
 (* Const before type ignored *)
-function FT_Get_Module(library:TFT_Library; module_name:Pchar):TFT_Module;cdecl;external;
+function FT_Get_Module(library:TFT_Library; module_name:Pchar):TFT_Module;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -5254,7 +5254,7 @@ function FT_Get_Module(library:TFT_Library; module_name:Pchar):TFT_Module;cdecl;
    * @note:
    *   The module object is destroyed by the function in case of success.
     }
-function FT_Remove_Module(library:TFT_Library; module:TFT_Module):TFT_Error;cdecl;external;
+function FT_Remove_Module(library:TFT_Library; module:TFT_Module):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @macro:
@@ -5334,7 +5334,7 @@ function FT_Remove_Module(library:TFT_Library; module:TFT_Module):TFT_Error;cdec
 (* Const before type ignored *)
 (* Const before type ignored *)
 (* Const before type ignored *)
-function FT_Property_Set(library:TFT_Library; module_name:PFT_String; property_name:PFT_String; value:pointer):TFT_Error;cdecl;external;
+function FT_Property_Set(library:TFT_Library; module_name:PFT_String; property_name:PFT_String; value:pointer):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -5393,7 +5393,7 @@ function FT_Property_Set(library:TFT_Library; module_name:PFT_String; property_n
     }
 (* Const before type ignored *)
 (* Const before type ignored *)
-function FT_Property_Get(library:TFT_Library; module_name:PFT_String; property_name:PFT_String; value:pointer):TFT_Error;cdecl;external;
+function FT_Property_Get(library:TFT_Library; module_name:PFT_String; property_name:PFT_String; value:pointer):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -5434,7 +5434,7 @@ function FT_Property_Get(library:TFT_Library; module_name:PFT_String; property_n
    * @since:
    *   2.8
     }
-procedure FT_Set_Default_Properties(library:TFT_Library);cdecl;external;
+procedure FT_Set_Default_Properties(library:TFT_Library);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -5459,7 +5459,7 @@ procedure FT_Set_Default_Properties(library:TFT_Library);cdecl;external;
    * @since:
    *   2.4.2
     }
-function FT_Reference_Library(library:TFT_Library):TFT_Error;cdecl;external;
+function FT_Reference_Library(library:TFT_Library):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -5495,7 +5495,7 @@ function FT_Reference_Library(library:TFT_Library):TFT_Error;cdecl;external;
    *   See the discussion of reference counters in the description of
    *   @FT_Reference_Library.
     }
-function FT_New_Library(memory:TFT_Memory; alibrary:PFT_Library):TFT_Error;cdecl;external;
+function FT_New_Library(memory:TFT_Memory; alibrary:PFT_Library):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -5516,7 +5516,7 @@ function FT_New_Library(memory:TFT_Memory; alibrary:PFT_Library):TFT_Error;cdecl
    *   See the discussion of reference counters in the description of
    *   @FT_Reference_Library.
     }
-function FT_Done_Library(library:TFT_Library):TFT_Error;cdecl;external;
+function FT_Done_Library(library:TFT_Library):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @functype:
@@ -5597,7 +5597,7 @@ const
    *   TrueType interpreter) is defined.
     }
 
-procedure FT_Set_Debug_Hook(library:TFT_Library; hook_index:TFT_UInt; debug_hook:TFT_DebugHook_Func);cdecl;external;
+procedure FT_Set_Debug_Hook(library:TFT_Library; hook_index:TFT_UInt; debug_hook:TFT_DebugHook_Func);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -5612,7 +5612,7 @@ procedure FT_Set_Debug_Hook(library:TFT_Library; hook_index:TFT_UInt; debug_hook
    *   library ::
    *     A handle to a new library object.
     }
-procedure FT_Add_Default_Modules(library:TFT_Library);cdecl;external;
+procedure FT_Add_Default_Modules(library:TFT_Library);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @section:
@@ -5686,7 +5686,7 @@ type
    *
     }
 
-function FT_Get_TrueType_Engine_Type(library:TFT_Library):TFT_TrueTypeEngineType;cdecl;external;
+function FT_Get_TrueType_Engine_Type(library:TFT_Library):TFT_TrueTypeEngineType;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTMODAPI_H_  }
@@ -5802,7 +5802,7 @@ const
    *   the affine transformation specified by @FT_Set_Transform.
     }
 
-function FT_Get_Advance(face:TFT_Face; gindex:TFT_UInt; load_flags:TFT_Int32; padvance:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Get_Advance(face:TFT_Face; gindex:TFT_UInt; load_flags:TFT_Int32; padvance:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -5849,7 +5849,7 @@ function FT_Get_Advance(face:TFT_Face; gindex:TFT_UInt; load_flags:TFT_Int32; pa
    *   Scaled advances are returned in 16.16 format but aren't transformed by
    *   the affine transformation specified by @FT_Set_Transform.
     }
-function FT_Get_Advances(face:TFT_Face; start:TFT_UInt; count:TFT_UInt; load_flags:TFT_Int32; padvances:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Get_Advances(face:TFT_Face; start:TFT_UInt; count:TFT_UInt; load_flags:TFT_Int32; padvances:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTADVANC_H_  }
@@ -5944,7 +5944,7 @@ function FT_Get_Advances(face:TFT_Face; start:TFT_UInt; count:TFT_UInt; load_fla
    *   ```
     }
 
-function FT_New_Face_From_FOND(library:TFT_Library; fond:THandle; face_index:TFT_Long; aface:PFT_Face):TFT_Error;cdecl;external;
+function FT_New_Face_From_FOND(library:TFT_Library; fond:THandle; face_index:TFT_Long; aface:PFT_Face):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -5968,7 +5968,7 @@ function FT_New_Face_From_FOND(library:TFT_Library; fond:THandle; face_index:TFT
    *   FreeType error code.  0~means success.
     }
 (* Const before type ignored *)
-function FT_GetFile_From_Mac_Name(fontName:Pchar; pathSpec:PFSSpec; face_index:PFT_Long):TFT_Error;cdecl;external;
+function FT_GetFile_From_Mac_Name(fontName:Pchar; pathSpec:PFSSpec; face_index:PFT_Long):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -5992,7 +5992,7 @@ function FT_GetFile_From_Mac_Name(fontName:Pchar; pathSpec:PFSSpec; face_index:P
    *   FreeType error code.  0~means success.
     }
 (* Const before type ignored *)
-function FT_GetFile_From_Mac_ATS_Name(fontName:Pchar; pathSpec:PFSSpec; face_index:PFT_Long):TFT_Error;cdecl;external;
+function FT_GetFile_From_Mac_ATS_Name(fontName:Pchar; pathSpec:PFSSpec; face_index:PFT_Long):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6021,7 +6021,7 @@ function FT_GetFile_From_Mac_ATS_Name(fontName:Pchar; pathSpec:PFSSpec; face_ind
    *   FreeType error code.  0~means success.
     }
 (* Const before type ignored *)
-function FT_GetFilePath_From_Mac_ATS_Name(fontName:Pchar; path:PUInt8; maxPathSize:TUInt32; face_index:PFT_Long):TFT_Error;cdecl;external;
+function FT_GetFilePath_From_Mac_ATS_Name(fontName:Pchar; path:PUInt8; maxPathSize:TUInt32; face_index:PFT_Long):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6054,7 +6054,7 @@ function FT_GetFilePath_From_Mac_ATS_Name(fontName:Pchar; path:PUInt8; maxPathSi
    *   accepts an FSSpec instead of a path.
     }
 (* Const before type ignored *)
-function FT_New_Face_From_FSSpec(library:TFT_Library; spec:PFSSpec; face_index:TFT_Long; aface:PFT_Face):TFT_Error;cdecl;external;
+function FT_New_Face_From_FSSpec(library:TFT_Library; spec:PFSSpec; face_index:TFT_Long; aface:PFT_Face):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6087,7 +6087,7 @@ function FT_New_Face_From_FSSpec(library:TFT_Library; spec:PFSSpec; face_index:T
    *   an FSRef instead of a path.
     }
 (* Const before type ignored *)
-function FT_New_Face_From_FSRef(library:TFT_Library; ref:PFSRef; face_index:TFT_Long; aface:PFT_Face):TFT_Error;cdecl;external;
+function FT_New_Face_From_FSRef(library:TFT_Library; ref:PFSRef; face_index:TFT_Long; aface:PFT_Face):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTMAC_H_  }
@@ -6312,7 +6312,7 @@ const
    *   the ability to validate the sfnt table.
     }
 
-function FT_TrueTypeGX_Validate(face:TFT_Face; validation_flags:TFT_UInt; tables:array[0..(FT_VALIDATE_GX_LENGTH)-1] of TFT_Bytes; table_length:TFT_UInt):TFT_Error;cdecl;external;
+function FT_TrueTypeGX_Validate(face:TFT_Face; validation_flags:TFT_UInt; tables:array[0..(FT_VALIDATE_GX_LENGTH)-1] of TFT_Bytes; table_length:TFT_UInt):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6332,7 +6332,7 @@ function FT_TrueTypeGX_Validate(face:TFT_Face; validation_flags:TFT_UInt; tables
    *   This function must be used to free the buffer allocated by
    *   @FT_TrueTypeGX_Validate only.
     }
-procedure FT_TrueTypeGX_Free(face:TFT_Face; table:TFT_Bytes);cdecl;external;
+procedure FT_TrueTypeGX_Free(face:TFT_Face; table:TFT_Bytes);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @enum:
@@ -6393,7 +6393,7 @@ const
    *   indicates that the table doesn't exist in the font.
     }
 
-function FT_ClassicKern_Validate(face:TFT_Face; validation_flags:TFT_UInt; ckern_table:PFT_Bytes):TFT_Error;cdecl;external;
+function FT_ClassicKern_Validate(face:TFT_Face; validation_flags:TFT_UInt; ckern_table:PFT_Bytes):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6414,7 +6414,7 @@ function FT_ClassicKern_Validate(face:TFT_Face; validation_flags:TFT_UInt; ckern
    *   This function must be used to free the buffer allocated by
    *   @FT_ClassicKern_Validate only.
     }
-procedure FT_ClassicKern_Free(face:TFT_Face; table:TFT_Bytes);cdecl;external;
+procedure FT_ClassicKern_Free(face:TFT_Face; table:TFT_Bytes);cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTGXVAL_H_  }
@@ -6802,7 +6802,7 @@ function TTAG_0xA5lst : longint; { return type might be wrong }
     }
 (* Const before type ignored *)
 
-function FT_Outline_Decompose(outline:PFT_Outline; func_interface:PFT_Outline_Funcs; user:pointer):TFT_Error;cdecl;external;
+function FT_Outline_Decompose(outline:PFT_Outline; func_interface:PFT_Outline_Funcs; user:pointer):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6836,7 +6836,7 @@ function FT_Outline_Decompose(outline:PFT_Outline; func_interface:PFT_Outline_Fu
    *   The reason why this function takes a `library` parameter is simply to
    *   use the library's memory allocator.
     }
-function FT_Outline_New(library:TFT_Library; numPoints:TFT_UInt; numContours:TFT_Int; anoutline:PFT_Outline):TFT_Error;cdecl;external;
+function FT_Outline_New(library:TFT_Library; numPoints:TFT_UInt; numContours:TFT_Int; anoutline:PFT_Outline):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6859,7 +6859,7 @@ function FT_Outline_New(library:TFT_Library; numPoints:TFT_UInt; numContours:TFT
    *   If the outline's 'owner' field is not set, only the outline descriptor
    *   will be released.
     }
-function FT_Outline_Done(library:TFT_Library; outline:PFT_Outline):TFT_Error;cdecl;external;
+function FT_Outline_Done(library:TFT_Library; outline:PFT_Outline):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6879,7 +6879,7 @@ function FT_Outline_Done(library:TFT_Library; outline:PFT_Outline):TFT_Error;cde
    *   An empty outline, or an outline with a single point only is also
    *   valid.
     }
-function FT_Outline_Check(outline:PFT_Outline):TFT_Error;cdecl;external;
+function FT_Outline_Check(outline:PFT_Outline):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6909,7 +6909,7 @@ function FT_Outline_Check(outline:PFT_Outline):TFT_Error;cdecl;external;
    *   See @FT_Glyph_Get_CBox for a discussion of tricky fonts.
     }
 (* Const before type ignored *)
-procedure FT_Outline_Get_CBox(outline:PFT_Outline; acbox:PFT_BBox);cdecl;external;
+procedure FT_Outline_Get_CBox(outline:PFT_Outline; acbox:PFT_BBox);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6930,7 +6930,7 @@ procedure FT_Outline_Get_CBox(outline:PFT_Outline; acbox:PFT_BBox);cdecl;externa
    *     The vertical offset.
     }
 (* Const before type ignored *)
-procedure FT_Outline_Translate(outline:PFT_Outline; xOffset:TFT_Pos; yOffset:TFT_Pos);cdecl;external;
+procedure FT_Outline_Translate(outline:PFT_Outline; xOffset:TFT_Pos; yOffset:TFT_Pos);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6953,7 +6953,7 @@ procedure FT_Outline_Translate(outline:PFT_Outline; xOffset:TFT_Pos; yOffset:TFT
    *   FreeType error code.  0~means success.
     }
 (* Const before type ignored *)
-function FT_Outline_Copy(source:PFT_Outline; target:PFT_Outline):TFT_Error;cdecl;external;
+function FT_Outline_Copy(source:PFT_Outline; target:PFT_Outline):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -6977,7 +6977,7 @@ function FT_Outline_Copy(source:PFT_Outline; target:PFT_Outline):TFT_Error;cdecl
     }
 (* Const before type ignored *)
 (* Const before type ignored *)
-procedure FT_Outline_Transform(outline:PFT_Outline; matrix:PFT_Matrix);cdecl;external;
+procedure FT_Outline_Transform(outline:PFT_Outline; matrix:PFT_Matrix);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -7023,7 +7023,7 @@ procedure FT_Outline_Transform(outline:PFT_Outline; matrix:PFT_Matrix);cdecl;ext
    *   ```
    *
     }
-function FT_Outline_Embolden(outline:PFT_Outline; strength:TFT_Pos):TFT_Error;cdecl;external;
+function FT_Outline_Embolden(outline:PFT_Outline; strength:TFT_Pos):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -7037,7 +7037,7 @@ function FT_Outline_Embolden(outline:PFT_Outline; strength:TFT_Pos):TFT_Error;cd
    * @since:
    *   2.4.10
     }
-function FT_Outline_EmboldenXY(outline:PFT_Outline; xstrength:TFT_Pos; ystrength:TFT_Pos):TFT_Error;cdecl;external;
+function FT_Outline_EmboldenXY(outline:PFT_Outline; xstrength:TFT_Pos; ystrength:TFT_Pos):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -7058,7 +7058,7 @@ function FT_Outline_EmboldenXY(outline:PFT_Outline; xstrength:TFT_Pos; ystrength
    *   It shouldn't be used by a normal client application, unless it knows
    *   what it is doing.
     }
-procedure FT_Outline_Reverse(outline:PFT_Outline);cdecl;external;
+procedure FT_Outline_Reverse(outline:PFT_Outline);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -7094,7 +7094,7 @@ procedure FT_Outline_Reverse(outline:PFT_Outline);cdecl;external;
    *   levels, you have to use @FT_Outline_Render directly.
     }
 (* Const before type ignored *)
-function FT_Outline_Get_Bitmap(library:TFT_Library; outline:PFT_Outline; abitmap:PFT_Bitmap):TFT_Error;cdecl;external;
+function FT_Outline_Get_Bitmap(library:TFT_Library; outline:PFT_Outline; abitmap:PFT_Bitmap):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -7127,7 +7127,7 @@ function FT_Outline_Get_Bitmap(library:TFT_Library; outline:PFT_Outline; abitmap
    *   allowing FreeType rasterizer to be used for direct composition,
    *   translucency, etc.  See @FT_Raster_Params for more details.
     }
-function FT_Outline_Render(library:TFT_Library; outline:PFT_Outline; params:PFT_Raster_Params):TFT_Error;cdecl;external;
+function FT_Outline_Render(library:TFT_Library; outline:PFT_Outline; params:PFT_Raster_Params):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @enum:
@@ -7200,7 +7200,7 @@ type
    *
     }
 
-function FT_Outline_Get_Orientation(outline:PFT_Outline):TFT_Orientation;cdecl;external;
+function FT_Outline_Get_Orientation(outline:PFT_Outline):TFT_Orientation;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTOUTLN_H_  }
@@ -7595,7 +7595,7 @@ type
    *
     }
 
-function FT_Has_PS_Glyph_Names(face:TFT_Face):TFT_Int;cdecl;external;
+function FT_Has_PS_Glyph_Names(face:TFT_Face):TFT_Int;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -7635,7 +7635,7 @@ function FT_Has_PS_Glyph_Names(face:TFT_Face):TFT_Int;cdecl;external;
    *   ```
    *
     }
-function FT_Get_PS_Font_Info(face:TFT_Face; afont_info:TPS_FontInfo):TFT_Error;cdecl;external;
+function FT_Get_PS_Font_Info(face:TFT_Face; afont_info:TPS_FontInfo):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -7674,7 +7674,7 @@ function FT_Get_PS_Font_Info(face:TFT_Face; afont_info:TPS_FontInfo):TFT_Error;c
    *   ```
    *
     }
-function FT_Get_PS_Font_Private(face:TFT_Face; afont_private:TPS_Private):TFT_Error;cdecl;external;
+function FT_Get_PS_Font_Private(face:TFT_Face; afont_private:TPS_Private):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @enum:
@@ -7935,7 +7935,7 @@ type
    *
     }
 
-function FT_Get_PS_Font_Value(face:TFT_Face; key:TPS_Dict_Keys; idx:TFT_UInt; value:pointer; value_len:TFT_Long):TFT_Long;cdecl;external;
+function FT_Get_PS_Font_Value(face:TFT_Face; key:TPS_Dict_Keys; idx:TFT_UInt; value:pointer; value_len:TFT_Long):TFT_Long;cdecl; external freetype_lib;
 {  }
 {$endif}
 { T1TABLES_H_  }
@@ -8391,7 +8391,7 @@ type
    *   FreeType error code.  0~means success.
     }
 
-function FT_Get_Multi_Master(face:TFT_Face; amaster:PFT_Multi_Master):TFT_Error;cdecl;external;
+function FT_Get_Multi_Master(face:TFT_Face; amaster:PFT_Multi_Master):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8414,7 +8414,7 @@ function FT_Get_Multi_Master(face:TFT_Face; amaster:PFT_Multi_Master):TFT_Error;
    * @return:
    *   FreeType error code.  0~means success.
     }
-function FT_Get_MM_Var(face:TFT_Face; amaster:PPFT_MM_Var):TFT_Error;cdecl;external;
+function FT_Get_MM_Var(face:TFT_Face; amaster:PPFT_MM_Var):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8431,7 +8431,7 @@ function FT_Get_MM_Var(face:TFT_Face; amaster:PPFT_MM_Var):TFT_Error;cdecl;exter
    * @return:
    *   FreeType error code.  0~means success.
     }
-function FT_Done_MM_Var(library:TFT_Library; amaster:PFT_MM_Var):TFT_Error;cdecl;external;
+function FT_Done_MM_Var(library:TFT_Library; amaster:PFT_MM_Var):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8469,7 +8469,7 @@ function FT_Done_MM_Var(library:TFT_Library; amaster:PFT_MM_Var):TFT_Error;cdecl
    *   (i.e., @FT_IS_VARIATION will return true).  If `num_coords` is zero,
    *   this bit flag gets unset.
     }
-function FT_Set_MM_Design_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Long):TFT_Error;cdecl;external;
+function FT_Set_MM_Design_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Long):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8511,7 +8511,7 @@ function FT_Set_MM_Design_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords
    *   (i.e., @FT_IS_VARIATION will return true).  If `num_coords` is zero,
    *   this bit flag gets unset.
     }
-function FT_Set_Var_Design_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Set_Var_Design_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8546,7 +8546,7 @@ function FT_Set_Var_Design_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coord
    * @since:
    *   2.7.1
     }
-function FT_Get_Var_Design_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Get_Var_Design_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8587,7 +8587,7 @@ function FT_Get_Var_Design_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coord
    *   (i.e., @FT_IS_VARIATION will return true).  If `num_coords` is zero,
    *   this bit flag gets unset.
     }
-function FT_Set_MM_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Set_MM_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8619,7 +8619,7 @@ function FT_Set_MM_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:
    * @since:
    *   2.7.1
     }
-function FT_Get_MM_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Get_MM_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8628,7 +8628,7 @@ function FT_Get_MM_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:
    * @description:
    *   This is another name of @FT_Set_MM_Blend_Coordinates.
     }
-function FT_Set_Var_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Set_Var_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8640,7 +8640,7 @@ function FT_Set_Var_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords
    * @since:
    *   2.7.1
     }
-function FT_Get_Var_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Get_Var_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8685,7 +8685,7 @@ function FT_Get_Var_Blend_Coordinates(face:TFT_Face; num_coords:TFT_UInt; coords
    * @since:
    *   2.10
     }
-function FT_Set_MM_WeightVector(face:TFT_Face; len:TFT_UInt; weightvector:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Set_MM_WeightVector(face:TFT_Face; len:TFT_UInt; weightvector:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8724,7 +8724,7 @@ function FT_Set_MM_WeightVector(face:TFT_Face; len:TFT_UInt; weightvector:PFT_Fi
    * @since:
    *   2.10
     }
-function FT_Get_MM_WeightVector(face:TFT_Face; len:PFT_UInt; weightvector:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Get_MM_WeightVector(face:TFT_Face; len:PFT_UInt; weightvector:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @enum:
@@ -8771,7 +8771,7 @@ const
    *   2.8.1
     }
 
-function FT_Get_Var_Axis_Flags(master:PFT_MM_Var; axis_index:TFT_UInt; flags:PFT_UInt):TFT_Error;cdecl;external;
+function FT_Get_Var_Axis_Flags(master:PFT_MM_Var; axis_index:TFT_UInt; flags:PFT_UInt):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8805,7 +8805,7 @@ function FT_Get_Var_Axis_Flags(master:PFT_MM_Var; axis_index:TFT_UInt; flags:PFT
    * @since:
    *   2.9
     }
-function FT_Set_Named_Instance(face:TFT_Face; instance_index:TFT_UInt):TFT_Error;cdecl;external;
+function FT_Set_Named_Instance(face:TFT_Face; instance_index:TFT_UInt):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -8840,7 +8840,7 @@ function FT_Set_Named_Instance(face:TFT_Face; instance_index:TFT_UInt):TFT_Error
    * @since:
    *   2.13.1
     }
-function FT_Get_Default_Named_Instance(face:TFT_Face; instance_index:PFT_UInt):TFT_Error;cdecl;external;
+function FT_Get_Default_Named_Instance(face:TFT_Face; instance_index:PFT_UInt):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTMM_H_  }
@@ -9173,7 +9173,7 @@ const
     }
 
 function FT_OpenType_Validate(face:TFT_Face; validation_flags:TFT_UInt; BASE_table:PFT_Bytes; GDEF_table:PFT_Bytes; GPOS_table:PFT_Bytes; 
-           GSUB_table:PFT_Bytes; JSTF_table:PFT_Bytes):TFT_Error;cdecl;external;
+           GSUB_table:PFT_Bytes; JSTF_table:PFT_Bytes):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -9194,7 +9194,7 @@ function FT_OpenType_Validate(face:TFT_Face; validation_flags:TFT_UInt; BASE_tab
    *   This function must be used to free the buffer allocated by
    *   @FT_OpenType_Validate only.
     }
-procedure FT_OpenType_Free(face:TFT_Face; table:TFT_Bytes);cdecl;external;
+procedure FT_OpenType_Free(face:TFT_Face; table:TFT_Bytes);cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTOTVAL_H_  }
@@ -9282,7 +9282,7 @@ procedure FT_OpenType_Free(face:TFT_Face; table:TFT_Bytes);cdecl;external;
    *   List node.  `NULL` if it wasn't found.
     }
 
-function FT_List_Find(list:TFT_List; data:pointer):TFT_ListNode;cdecl;external;
+function FT_List_Find(list:TFT_List; data:pointer):TFT_ListNode;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -9297,7 +9297,7 @@ function FT_List_Find(list:TFT_List; data:pointer):TFT_ListNode;cdecl;external;
    *   node ::
    *     The node to append.
     }
-procedure FT_List_Add(list:TFT_List; node:TFT_ListNode);cdecl;external;
+procedure FT_List_Add(list:TFT_List; node:TFT_ListNode);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -9312,7 +9312,7 @@ procedure FT_List_Add(list:TFT_List; node:TFT_ListNode);cdecl;external;
    *   node ::
    *     The node to insert.
     }
-procedure FT_List_Insert(list:TFT_List; node:TFT_ListNode);cdecl;external;
+procedure FT_List_Insert(list:TFT_List; node:TFT_ListNode);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -9330,7 +9330,7 @@ procedure FT_List_Insert(list:TFT_List; node:TFT_ListNode);cdecl;external;
    *   list ::
    *     A pointer to the parent list.
     }
-procedure FT_List_Remove(list:TFT_List; node:TFT_ListNode);cdecl;external;
+procedure FT_List_Remove(list:TFT_List; node:TFT_ListNode);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -9345,7 +9345,7 @@ procedure FT_List_Remove(list:TFT_List; node:TFT_ListNode);cdecl;external;
    *   node ::
    *     The node to move.
     }
-procedure FT_List_Up(list:TFT_List; node:TFT_ListNode);cdecl;external;
+procedure FT_List_Up(list:TFT_List; node:TFT_ListNode);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @functype:
@@ -9389,7 +9389,7 @@ type
    *   The result (a FreeType error code) of the last iterator call.
     }
 
-function FT_List_Iterate(list:TFT_List; iterator:TFT_List_Iterator; user:pointer):TFT_Error;cdecl;external;
+function FT_List_Iterate(list:TFT_List; iterator:TFT_List_Iterator; user:pointer):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @functype:
@@ -9442,7 +9442,7 @@ type
    *   @FT_List_Insert have been dynamically allocated.
     }
 
-procedure FT_List_Finalize(list:TFT_List; destroy:TFT_List_Destructor; memory:TFT_Memory; user:pointer);cdecl;external;
+procedure FT_List_Finalize(list:TFT_List; destroy:TFT_List_Destructor; memory:TFT_Memory; user:pointer);cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTLIST_H_  }
@@ -9534,7 +9534,7 @@ procedure FT_List_Finalize(list:TFT_List; destroy:TFT_List_Destructor; memory:TF
    *   @FT_Load_Glyph, @FT_Load_Char, etc.
     }
 
-function FT_New_Size(face:TFT_Face; size:PFT_Size):TFT_Error;cdecl;external;
+function FT_New_Size(face:TFT_Face; size:PFT_Size):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -9551,7 +9551,7 @@ function FT_New_Size(face:TFT_Face; size:PFT_Size):TFT_Error;cdecl;external;
    * @return:
    *   FreeType error code.  0~means success.
     }
-function FT_Done_Size(size:TFT_Size):TFT_Error;cdecl;external;
+function FT_Done_Size(size:TFT_Size):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -9577,7 +9577,7 @@ function FT_Done_Size(size:TFT_Size):TFT_Error;cdecl;external;
    *   If `face` is the size's parent face object, this function changes the
    *   value of `face->size` to the input size handle.
     }
-function FT_Activate_Size(size:TFT_Size):TFT_Error;cdecl;external;
+function FT_Activate_Size(size:TFT_Size):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTSIZES_H_  }
@@ -11153,7 +11153,7 @@ const
    *   2.3.0
     }
 
-function FT_Get_Gasp(face:TFT_Face; ppem:TFT_UInt):TFT_Int;cdecl;external;
+function FT_Get_Gasp(face:TFT_Face; ppem:TFT_UInt):TFT_Int;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTGASP_H_  }
@@ -11227,10 +11227,10 @@ function FT_Get_Gasp(face:TFT_Face; ppem:TFT_UInt):TFT_Int;cdecl;external;
     }
 (* Const before type ignored *)
 
-function FT_Get_Font_Format(face:TFT_Face):Pchar;cdecl;external;
+function FT_Get_Font_Format(face:TFT_Face):Pchar;cdecl; external freetype_lib;
 { deprecated  }
 (* Const before type ignored *)
-function FT_Get_X11_Font_Format(face:TFT_Face):Pchar;cdecl;external;
+function FT_Get_X11_Font_Format(face:TFT_Face):Pchar;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTFNTFMT_H_  }
@@ -11485,7 +11485,7 @@ type
    *   otherwise.
     }
 
-function FT_Get_WinFNT_Header(face:TFT_Face; aheader:PFT_WinFNT_HeaderRec):TFT_Error;cdecl;external;
+function FT_Get_WinFNT_Header(face:TFT_Face; aheader:PFT_WinFNT_HeaderRec):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTWINFNT_H_  }
@@ -11698,7 +11698,7 @@ type
    *   2.10
     }
 
-function FT_Palette_Data_Get(face:TFT_Face; apalette:PFT_Palette_Data):TFT_Error;cdecl;external;
+function FT_Palette_Data_Get(face:TFT_Face; apalette:PFT_Palette_Data):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -11747,7 +11747,7 @@ function FT_Palette_Data_Get(face:TFT_Face; apalette:PFT_Palette_Data):TFT_Error
    * @since:
    *   2.10
     }
-function FT_Palette_Select(face:TFT_Face; palette_index:TFT_UShort; apalette:PPFT_Color):TFT_Error;cdecl;external;
+function FT_Palette_Select(face:TFT_Face; palette_index:TFT_UShort; apalette:PPFT_Color):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -11780,7 +11780,7 @@ function FT_Palette_Select(face:TFT_Face; palette_index:TFT_UShort; apalette:PPF
    * @since:
    *   2.10
     }
-function FT_Palette_Set_Foreground_Color(face:TFT_Face; foreground_color:TFT_Color):TFT_Error;cdecl;external;
+function FT_Palette_Set_Foreground_Color(face:TFT_Face; foreground_color:TFT_Color):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @section:
@@ -11937,7 +11937,7 @@ type
    *   2.10
     }
 
-function FT_Get_Color_Glyph_Layer(face:TFT_Face; base_glyph:TFT_UInt; aglyph_index:PFT_UInt; acolor_index:PFT_UInt; iterator:PFT_LayerIterator):TFT_Bool;cdecl;external;
+function FT_Get_Color_Glyph_Layer(face:TFT_Face; base_glyph:TFT_UInt; aglyph_index:PFT_UInt; acolor_index:PFT_UInt; iterator:PFT_LayerIterator):TFT_Bool;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @enum:
@@ -12949,7 +12949,7 @@ type
    *   2.13
     }
 
-function FT_Get_Color_Glyph_Paint(face:TFT_Face; base_glyph:TFT_UInt; root_transform:TFT_Color_Root_Transform; paint:PFT_OpaquePaint):TFT_Bool;cdecl;external;
+function FT_Get_Color_Glyph_Paint(face:TFT_Face; base_glyph:TFT_UInt; root_transform:TFT_Color_Root_Transform; paint:PFT_OpaquePaint):TFT_Bool;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -12985,7 +12985,7 @@ function FT_Get_Color_Glyph_Paint(face:TFT_Face; base_glyph:TFT_UInt; root_trans
    * @since:
    *   2.13
     }
-function FT_Get_Color_Glyph_ClipBox(face:TFT_Face; base_glyph:TFT_UInt; clip_box:PFT_ClipBox):TFT_Bool;cdecl;external;
+function FT_Get_Color_Glyph_ClipBox(face:TFT_Face; base_glyph:TFT_UInt; clip_box:PFT_ClipBox):TFT_Bool;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -13027,7 +13027,7 @@ function FT_Get_Color_Glyph_ClipBox(face:TFT_Face; base_glyph:TFT_UInt; clip_box
    * @since:
    *   2.13
     }
-function FT_Get_Paint_Layers(face:TFT_Face; iterator:PFT_LayerIterator; paint:PFT_OpaquePaint):TFT_Bool;cdecl;external;
+function FT_Get_Paint_Layers(face:TFT_Face; iterator:PFT_LayerIterator; paint:PFT_OpaquePaint):TFT_Bool;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -13063,7 +13063,7 @@ function FT_Get_Paint_Layers(face:TFT_Face; iterator:PFT_LayerIterator; paint:PF
    * @since:
    *   2.13
     }
-function FT_Get_Colorline_Stops(face:TFT_Face; color_stop:PFT_ColorStop; iterator:PFT_ColorStopIterator):TFT_Bool;cdecl;external;
+function FT_Get_Colorline_Stops(face:TFT_Face; color_stop:PFT_ColorStop; iterator:PFT_ColorStopIterator):TFT_Bool;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -13094,7 +13094,7 @@ function FT_Get_Colorline_Stops(face:TFT_Face; color_stop:PFT_ColorStop; iterato
    * @since:
    *   2.13
     }
-function FT_Get_Paint(face:TFT_Face; opaque_paint:TFT_OpaquePaint; paint:PFT_COLR_Paint):TFT_Bool;cdecl;external;
+function FT_Get_Paint(face:TFT_Face; opaque_paint:TFT_OpaquePaint; paint:PFT_COLR_Paint):TFT_Bool;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTCOLOR_H_  }
@@ -14139,7 +14139,7 @@ type
    *   eventually converted back to font units.
     }
 
-function FT_Outline_Get_BBox(outline:PFT_Outline; abbox:PFT_BBox):TFT_Error;cdecl;external;
+function FT_Outline_Get_BBox(outline:PFT_Outline; abbox:PFT_BBox):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTBBOX_H_  }
@@ -14367,7 +14367,7 @@ type
    *   outlines.
     }
 
-function FT_Outline_GetInsideBorder(outline:PFT_Outline):TFT_StrokerBorder;cdecl;external;
+function FT_Outline_GetInsideBorder(outline:PFT_Outline):TFT_StrokerBorder;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14385,7 +14385,7 @@ function FT_Outline_GetInsideBorder(outline:PFT_Outline):TFT_StrokerBorder;cdecl
    *   The border index.  @FT_STROKER_BORDER_LEFT for empty or invalid
    *   outlines.
     }
-function FT_Outline_GetOutsideBorder(outline:PFT_Outline):TFT_StrokerBorder;cdecl;external;
+function FT_Outline_GetOutsideBorder(outline:PFT_Outline):TFT_StrokerBorder;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14405,7 +14405,7 @@ function FT_Outline_GetOutsideBorder(outline:PFT_Outline):TFT_StrokerBorder;cdec
    * @return:
    *    FreeType error code.  0~means success.
     }
-function FT_Stroker_New(library:TFT_Library; astroker:PFT_Stroker):TFT_Error;cdecl;external;
+function FT_Stroker_New(library:TFT_Library; astroker:PFT_Stroker):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14442,7 +14442,7 @@ function FT_Stroker_New(library:TFT_Library; astroker:PFT_Stroker):TFT_Error;cde
    *
    *   This function calls @FT_Stroker_Rewind automatically.
     }
-procedure FT_Stroker_Set(stroker:TFT_Stroker; radius:TFT_Fixed; line_cap:TFT_Stroker_LineCap; line_join:TFT_Stroker_LineJoin; miter_limit:TFT_Fixed);cdecl;external;
+procedure FT_Stroker_Set(stroker:TFT_Stroker; radius:TFT_Fixed; line_cap:TFT_Stroker_LineCap; line_join:TFT_Stroker_LineJoin; miter_limit:TFT_Fixed);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14457,7 +14457,7 @@ procedure FT_Stroker_Set(stroker:TFT_Stroker; radius:TFT_Fixed; line_cap:TFT_Str
    *   stroker ::
    *     The target stroker handle.
     }
-procedure FT_Stroker_Rewind(stroker:TFT_Stroker);cdecl;external;
+procedure FT_Stroker_Rewind(stroker:TFT_Stroker);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14491,7 +14491,7 @@ procedure FT_Stroker_Rewind(stroker:TFT_Stroker);cdecl;external;
    *
    *   This function calls @FT_Stroker_Rewind automatically.
     }
-function FT_Stroker_ParseOutline(stroker:TFT_Stroker; outline:PFT_Outline; opened:TFT_Bool):TFT_Error;cdecl;external;
+function FT_Stroker_ParseOutline(stroker:TFT_Stroker; outline:PFT_Outline; opened:TFT_Bool):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14517,7 +14517,7 @@ function FT_Stroker_ParseOutline(stroker:TFT_Stroker; outline:PFT_Outline; opene
    *   This function is useful when you need to stroke a path that is not
    *   stored as an @FT_Outline object.
     }
-function FT_Stroker_BeginSubPath(stroker:TFT_Stroker; to:PFT_Vector; open:TFT_Bool):TFT_Error;cdecl;external;
+function FT_Stroker_BeginSubPath(stroker:TFT_Stroker; to:PFT_Vector; open:TFT_Bool):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14538,7 +14538,7 @@ function FT_Stroker_BeginSubPath(stroker:TFT_Stroker; to:PFT_Vector; open:TFT_Bo
    *   subpath was not 'opened', this function 'draws' a single line segment
    *   to the start position when needed.
     }
-function FT_Stroker_EndSubPath(stroker:TFT_Stroker):TFT_Error;cdecl;external;
+function FT_Stroker_EndSubPath(stroker:TFT_Stroker):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14562,7 +14562,7 @@ function FT_Stroker_EndSubPath(stroker:TFT_Stroker):TFT_Error;cdecl;external;
    *   You should call this function between @FT_Stroker_BeginSubPath and
    *   @FT_Stroker_EndSubPath.
     }
-function FT_Stroker_LineTo(stroker:TFT_Stroker; to:PFT_Vector):TFT_Error;cdecl;external;
+function FT_Stroker_LineTo(stroker:TFT_Stroker; to:PFT_Vector):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14589,7 +14589,7 @@ function FT_Stroker_LineTo(stroker:TFT_Stroker; to:PFT_Vector):TFT_Error;cdecl;e
    *   You should call this function between @FT_Stroker_BeginSubPath and
    *   @FT_Stroker_EndSubPath.
     }
-function FT_Stroker_ConicTo(stroker:TFT_Stroker; control:PFT_Vector; to:PFT_Vector):TFT_Error;cdecl;external;
+function FT_Stroker_ConicTo(stroker:TFT_Stroker; control:PFT_Vector; to:PFT_Vector):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14619,7 +14619,7 @@ function FT_Stroker_ConicTo(stroker:TFT_Stroker; control:PFT_Vector; to:PFT_Vect
    *   You should call this function between @FT_Stroker_BeginSubPath and
    *   @FT_Stroker_EndSubPath.
     }
-function FT_Stroker_CubicTo(stroker:TFT_Stroker; control1:PFT_Vector; control2:PFT_Vector; to:PFT_Vector):TFT_Error;cdecl;external;
+function FT_Stroker_CubicTo(stroker:TFT_Stroker; control1:PFT_Vector; control2:PFT_Vector; to:PFT_Vector):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14659,7 +14659,7 @@ function FT_Stroker_CubicTo(stroker:TFT_Stroker; control1:PFT_Vector; control2:P
    *   Use the function @FT_Stroker_GetCounts instead if you want to retrieve
    *   the counts associated to both borders.
     }
-function FT_Stroker_GetBorderCounts(stroker:TFT_Stroker; border:TFT_StrokerBorder; anum_points:PFT_UInt; anum_contours:PFT_UInt):TFT_Error;cdecl;external;
+function FT_Stroker_GetBorderCounts(stroker:TFT_Stroker; border:TFT_StrokerBorder; anum_points:PFT_UInt; anum_contours:PFT_UInt):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14697,7 +14697,7 @@ function FT_Stroker_GetBorderCounts(stroker:TFT_Stroker; border:TFT_StrokerBorde
    *   Use the function @FT_Stroker_Export instead if you want to retrieve
    *   all borders at once.
     }
-procedure FT_Stroker_ExportBorder(stroker:TFT_Stroker; border:TFT_StrokerBorder; outline:PFT_Outline);cdecl;external;
+procedure FT_Stroker_ExportBorder(stroker:TFT_Stroker; border:TFT_StrokerBorder; outline:PFT_Outline);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14722,7 +14722,7 @@ procedure FT_Stroker_ExportBorder(stroker:TFT_Stroker; border:TFT_StrokerBorder;
    * @return:
    *   FreeType error code.  0~means success.
     }
-function FT_Stroker_GetCounts(stroker:TFT_Stroker; anum_points:PFT_UInt; anum_contours:PFT_UInt):TFT_Error;cdecl;external;
+function FT_Stroker_GetCounts(stroker:TFT_Stroker; anum_points:PFT_UInt; anum_contours:PFT_UInt):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14742,7 +14742,7 @@ function FT_Stroker_GetCounts(stroker:TFT_Stroker; anum_points:PFT_UInt; anum_co
    *   outline ::
    *     The target outline handle.
     }
-procedure FT_Stroker_Export(stroker:TFT_Stroker; outline:PFT_Outline);cdecl;external;
+procedure FT_Stroker_Export(stroker:TFT_Stroker; outline:PFT_Outline);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14755,7 +14755,7 @@ procedure FT_Stroker_Export(stroker:TFT_Stroker; outline:PFT_Outline);cdecl;exte
    *   stroker ::
    *     A stroker handle.  Can be `NULL`.
     }
-procedure FT_Stroker_Done(stroker:TFT_Stroker);cdecl;external;
+procedure FT_Stroker_Done(stroker:TFT_Stroker);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14786,7 +14786,7 @@ procedure FT_Stroker_Done(stroker:TFT_Stroker);cdecl;external;
    *   may need to manually adjust horizontal and vertical advance amounts to
    *   account for this added size.
     }
-function FT_Glyph_Stroke(pglyph:PFT_Glyph; stroker:TFT_Stroker; destroy:TFT_Bool):TFT_Error;cdecl;external;
+function FT_Glyph_Stroke(pglyph:PFT_Glyph; stroker:TFT_Stroker; destroy:TFT_Bool):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -14822,7 +14822,7 @@ function FT_Glyph_Stroke(pglyph:PFT_Glyph; stroker:TFT_Stroker; destroy:TFT_Bool
    *   may need to manually adjust horizontal and vertical advance amounts to
    *   account for this added size.
     }
-function FT_Glyph_StrokeBorder(pglyph:PFT_Glyph; stroker:TFT_Stroker; inside:TFT_Bool; destroy:TFT_Bool):TFT_Error;cdecl;external;
+function FT_Glyph_StrokeBorder(pglyph:PFT_Glyph; stroker:TFT_Stroker; inside:TFT_Bool; destroy:TFT_Bool):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTSTROKE_H_  }
@@ -15268,7 +15268,7 @@ type
    *   renderer by its name, use @FT_Get_Module.
     }
 
-function FT_Get_Renderer(library:TFT_Library; format:TFT_Glyph_Format):TFT_Renderer;cdecl;external;
+function FT_Get_Renderer(library:TFT_Library; format:TFT_Glyph_Format):TFT_Renderer;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -15303,7 +15303,7 @@ function FT_Get_Renderer(library:TFT_Library; format:TFT_Glyph_Format):TFT_Rende
    *   Currently, no FreeType renderer module uses `parameters`; you should
    *   thus always pass `NULL` as the value.
     }
-function FT_Set_Renderer(library:TFT_Library; renderer:TFT_Renderer; num_params:TFT_UInt; parameters:PFT_Parameter):TFT_Error;cdecl;external;
+function FT_Set_Renderer(library:TFT_Library; renderer:TFT_Renderer; num_params:TFT_UInt; parameters:PFT_Parameter):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTRENDER_H_  }
@@ -15366,21 +15366,21 @@ function FT_Set_Renderer(library:TFT_Library; renderer:TFT_Renderer; num_params:
 {                                                                        }
 { You can also call @FT_Outline_Get_CBox to get precise values.          }
 
-procedure FT_GlyphSlot_Embolden(slot:TFT_GlyphSlot);cdecl;external;
+procedure FT_GlyphSlot_Embolden(slot:TFT_GlyphSlot);cdecl; external freetype_lib;
 { Precisely adjust the glyph weight either horizontally or vertically.   }
 { The `xdelta` and `ydelta` values are fractions of the face Em size     }
 { (in fixed-point format).  Considering that a regular face would have   }
 { stem widths on the order of 0.1 Em, a delta of 0.05 (0x0CCC) should    }
 { be very noticeable.  To increase or decrease the weight, use positive  }
 { or negative values, respectively.                                      }
-procedure FT_GlyphSlot_AdjustWeight(slot:TFT_GlyphSlot; xdelta:TFT_Fixed; ydelta:TFT_Fixed);cdecl;external;
+procedure FT_GlyphSlot_AdjustWeight(slot:TFT_GlyphSlot; xdelta:TFT_Fixed; ydelta:TFT_Fixed);cdecl; external freetype_lib;
 { Slant an outline glyph to the right by about 12 degrees.               }
-procedure FT_GlyphSlot_Oblique(slot:TFT_GlyphSlot);cdecl;external;
+procedure FT_GlyphSlot_Oblique(slot:TFT_GlyphSlot);cdecl; external freetype_lib;
 { Slant an outline glyph by a given sine of an angle.  You can apply     }
 { slant along either x- or y-axis by choosing a corresponding non-zero   }
 { argument.  If both slants are non-zero, some affine transformation     }
 { will result.                                                           }
-procedure FT_GlyphSlot_Slant(slot:TFT_GlyphSlot; xslant:TFT_Fixed; yslant:TFT_Fixed);cdecl;external;
+procedure FT_GlyphSlot_Slant(slot:TFT_GlyphSlot; xslant:TFT_Fixed; yslant:TFT_Fixed);cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTSYNTH_H_  }
@@ -15706,7 +15706,7 @@ type
    *   2.10
     }
 
-function FT_New_Glyph(library:TFT_Library; format:TFT_Glyph_Format; aglyph:PFT_Glyph):TFT_Error;cdecl;external;
+function FT_New_Glyph(library:TFT_Library; format:TFT_Glyph_Format; aglyph:PFT_Glyph):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -15732,7 +15732,7 @@ function FT_New_Glyph(library:TFT_Library; format:TFT_Glyph_Format; aglyph:PFT_G
    *   fixed-point numbers, `slot->advance.x` and `slot->advance.y` (which
    *   are in 26.6 fixed-point format) must be in the range ]-32768;32768[.
     }
-function FT_Get_Glyph(slot:TFT_GlyphSlot; aglyph:PFT_Glyph):TFT_Error;cdecl;external;
+function FT_Get_Glyph(slot:TFT_GlyphSlot; aglyph:PFT_Glyph):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -15753,7 +15753,7 @@ function FT_Get_Glyph(slot:TFT_GlyphSlot; aglyph:PFT_Glyph):TFT_Error;cdecl;exte
    * @return:
    *   FreeType error code.  0~means success.
     }
-function FT_Glyph_Copy(source:TFT_Glyph; target:PFT_Glyph):TFT_Error;cdecl;external;
+function FT_Glyph_Copy(source:TFT_Glyph; target:PFT_Glyph):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -15783,7 +15783,7 @@ function FT_Glyph_Copy(source:TFT_Glyph; target:PFT_Glyph):TFT_Error;cdecl;exter
     }
 (* Const before type ignored *)
 (* Const before type ignored *)
-function FT_Glyph_Transform(glyph:TFT_Glyph; matrix:PFT_Matrix; delta:PFT_Vector):TFT_Error;cdecl;external;
+function FT_Glyph_Transform(glyph:TFT_Glyph; matrix:PFT_Matrix; delta:PFT_Vector):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @enum:
@@ -15900,7 +15900,7 @@ type
    *   @FT_GLYPH_BBOX_PIXELS.
     }
 
-procedure FT_Glyph_Get_CBox(glyph:TFT_Glyph; bbox_mode:TFT_UInt; acbox:PFT_BBox);cdecl;external;
+procedure FT_Glyph_Get_CBox(glyph:TFT_Glyph; bbox_mode:TFT_UInt; acbox:PFT_BBox);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -16006,7 +16006,7 @@ procedure FT_Glyph_Get_CBox(glyph:TFT_Glyph; bbox_mode:TFT_UInt; acbox:PFT_BBox)
    *   ```
     }
 (* Const before type ignored *)
-function FT_Glyph_To_Bitmap(the_glyph:PFT_Glyph; render_mode:TFT_Render_Mode; origin:PFT_Vector; destroy:TFT_Bool):TFT_Error;cdecl;external;
+function FT_Glyph_To_Bitmap(the_glyph:PFT_Glyph; render_mode:TFT_Render_Mode; origin:PFT_Vector; destroy:TFT_Bool):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -16019,7 +16019,7 @@ function FT_Glyph_To_Bitmap(the_glyph:PFT_Glyph; render_mode:TFT_Render_Mode; or
    *   glyph ::
    *     A handle to the target glyph object.  Can be `NULL`.
     }
-procedure FT_Done_Glyph(glyph:TFT_Glyph);cdecl;external;
+procedure FT_Done_Glyph(glyph:TFT_Glyph);cdecl; external freetype_lib;
 {  }
 { other helpful functions  }
 {*************************************************************************
@@ -16051,7 +16051,7 @@ procedure FT_Done_Glyph(glyph:TFT_Glyph);cdecl;external;
    *   meaningless if the arguments are very large.
     }
 (* Const before type ignored *)
-procedure FT_Matrix_Multiply(a:PFT_Matrix; b:PFT_Matrix);cdecl;external;
+procedure FT_Matrix_Multiply(a:PFT_Matrix; b:PFT_Matrix);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -16067,7 +16067,7 @@ procedure FT_Matrix_Multiply(a:PFT_Matrix; b:PFT_Matrix);cdecl;external;
    * @return:
    *   FreeType error code.  0~means success.
     }
-function FT_Matrix_Invert(matrix:PFT_Matrix):TFT_Error;cdecl;external;
+function FT_Matrix_Invert(matrix:PFT_Matrix):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTGLYPH_H_  }
@@ -16078,148 +16078,7 @@ function FT_Matrix_Invert(matrix:PFT_Matrix):TFT_Error;cdecl;external;
 { }
 { ===========================  freetype.h  =========================== }
 { }
-{*********************************************************************** }
-{*********************************************************************** }
-{                                                                        }
-{                     O B J E C T   C L A S S E S                        }
-{                                                                        }
-{*********************************************************************** }
-{*********************************************************************** }
-{*************************************************************************
-   *
-   * @section:
-   *   library_setup
-   *
-    }
-{*************************************************************************
-   *
-   * @type:
-   *   FT_Library
-   *
-   * @description:
-   *   A handle to a FreeType library instance.  Each 'library' is completely
-   *   independent from the others; it is the 'root' of a set of objects like
-   *   fonts, faces, sizes, etc.
-   *
-   *   It also embeds a memory manager (see @FT_Memory), as well as a
-   *   scan-line converter object (see @FT_Raster).
-   *
-   *   [Since 2.5.6] In multi-threaded applications it is easiest to use one
-   *   `FT_Library` object per thread.  In case this is too cumbersome, a
-   *   single `FT_Library` object across threads is possible also, as long as
-   *   a mutex lock is used around @FT_New_Face and @FT_Done_Face.
-   *
-   * @note:
-   *   Library objects are normally created by @FT_Init_FreeType, and
-   *   destroyed with @FT_Done_FreeType.  If you need reference-counting
-   *   (cf. @FT_Reference_Library), use @FT_New_Library and @FT_Done_Library.
-    }
 
-
-{*************************************************************************
-   *
-   * @section:
-   *   module_management
-   *
-    }
-{*************************************************************************
-   *
-   * @type:
-   *   FT_Module
-   *
-   * @description:
-   *   A handle to a given FreeType module object.  A module can be a font
-   *   driver, a renderer, or anything else that provides services to the
-   *   former.
-    }
-
-  PFT_Module = ^TFT_Module;
-  TFT_Module = PFT_ModuleRec_;
-
-{*************************************************************************
-   *
-   * @type:
-   *   FT_Renderer
-   *
-   * @description:
-   *   A handle to a given FreeType renderer.  A renderer is a module in
-   *   charge of converting a glyph's outline image to a bitmap.  It supports
-   *   a single glyph image format, and one or more target surface depths.
-    }
-
-  PFT_Renderer = ^TFT_Renderer;
-  TFT_Renderer = PFT_RendererRec_;
-{*************************************************************************
-   *
-   * @section:
-   *   face_creation
-   *
-    }
-{*************************************************************************
-   *
-   * @type:
-   *   FT_Face
-   *
-   * @description:
-   *   A handle to a typographic face object.  A face object models a given
-   *   typeface, in a given style.
-   *
-   * @note:
-   *   A face object also owns a single @FT_GlyphSlot object, as well as one
-   *   or more @FT_Size objects.
-   *
-   *   Use @FT_New_Face or @FT_Open_Face to create a new face object from a
-   *   given filepath or a custom input stream.
-   *
-   *   Use @FT_Done_Face to destroy it (along with its slot and sizes).
-   *
-   *   An `FT_Face` object can only be safely used from one thread at a time.
-   *   Similarly, creation and destruction of `FT_Face` with the same
-   *   @FT_Library object can only be done from one thread at a time.  On the
-   *   other hand, functions like @FT_Load_Glyph and its siblings are
-   *   thread-safe and do not need the lock to be held as long as the same
-   *   `FT_Face` object is not used from multiple threads at the same time.
-   *
-   * @also:
-   *   See @FT_FaceRec for the publicly accessible fields of a given face
-   *   object.
-    }
-
-{*************************************************************************
-   *
-   * @section:
-   *   sizing_and_scaling
-   *
-    }
-{*************************************************************************
-   *
-   * @type:
-   *   FT_Size
-   *
-   * @description:
-   *   A handle to an object that models a face scaled to a given character
-   *   size.
-   *
-   * @note:
-   *   An @FT_Face has one _active_ `FT_Size` object that is used by
-   *   functions like @FT_Load_Glyph to determine the scaling transformation
-   *   that in turn is used to load and hint glyphs and metrics.
-   *
-   *   A newly created `FT_Size` object contains only meaningless zero values.
-   *   You must use @FT_Set_Char_Size, @FT_Set_Pixel_Sizes, @FT_Request_Size
-   *   or even @FT_Select_Size to change the content (i.e., the scaling
-   *   values) of the active `FT_Size`.  Otherwise, the scaling and hinting
-   *   will not be performed.
-   *
-   *   You can use @FT_New_Size to create additional size objects for a given
-   *   @FT_Face, but they won't be used by other functions until you activate
-   *   it through @FT_Activate_Size.  Only one size can be activated at any
-   *   given time per face.
-   *
-   * @also:
-   *   See @FT_SizeRec for the publicly accessible fields of a given size
-   *   object.
-    }
 
 
 
@@ -16263,605 +16122,92 @@ function FT_Matrix_Invert(matrix:PFT_Matrix):TFT_Error;cdecl;external;
 
    FT_Encoding;
  }
-{ these constants are deprecated; use the corresponding `FT_Encoding`  }
-{ values instead                                                       }
-
-const
-  ft_encoding_none = FT_ENCODING_NONE;  
-  ft_encoding_unicode = FT_ENCODING_UNICODE;  
-  ft_encoding_symbol = FT_ENCODING_MS_SYMBOL;  
-  ft_encoding_latin_1 = FT_ENCODING_ADOBE_LATIN_1;  
-  ft_encoding_latin_2 = FT_ENCODING_OLD_LATIN_2;  
-  ft_encoding_sjis = FT_ENCODING_SJIS;  
-  ft_encoding_gb2312 = FT_ENCODING_PRC;  
-  ft_encoding_big5 = FT_ENCODING_BIG5;  
-  ft_encoding_wansung = FT_ENCODING_WANSUNG;  
-  ft_encoding_johab = FT_ENCODING_JOHAB;  
-  ft_encoding_adobe_standard = FT_ENCODING_ADOBE_STANDARD;  
-  ft_encoding_adobe_expert = FT_ENCODING_ADOBE_EXPERT;  
-  ft_encoding_adobe_custom = FT_ENCODING_ADOBE_CUSTOM;  
-  ft_encoding_apple_roman = FT_ENCODING_APPLE_ROMAN;  
-{*********************************************************************** }
-{*********************************************************************** }
-{                                                                        }
-{                 B A S E   O B J E C T   C L A S S E S                  }
-{                                                                        }
-{*********************************************************************** }
-{*********************************************************************** }
-
-{*************************************************************************
-   *
-   * @enum:
-   *   FT_FACE_FLAG_XXX
-   *
-   * @description:
-   *   A list of bit flags used in the `face_flags` field of the @FT_FaceRec
-   *   structure.  They inform client applications of properties of the
-   *   corresponding face.
-   *
-   * @values:
-   *   FT_FACE_FLAG_SCALABLE ::
-   *     The face contains outline glyphs.  Note that a face can contain
-   *     bitmap strikes also, i.e., a face can have both this flag and
-   *     @FT_FACE_FLAG_FIXED_SIZES set.
-   *
-   *   FT_FACE_FLAG_FIXED_SIZES ::
-   *     The face contains bitmap strikes.  See also the `num_fixed_sizes`
-   *     and `available_sizes` fields of @FT_FaceRec.
-   *
-   *   FT_FACE_FLAG_FIXED_WIDTH ::
-   *     The face contains fixed-width characters (like Courier, Lucida,
-   *     MonoType, etc.).
-   *
-   *   FT_FACE_FLAG_SFNT ::
-   *     The face uses the SFNT storage scheme.  For now, this means TrueType
-   *     and OpenType.
-   *
-   *   FT_FACE_FLAG_HORIZONTAL ::
-   *     The face contains horizontal glyph metrics.  This should be set for
-   *     all common formats.
-   *
-   *   FT_FACE_FLAG_VERTICAL ::
-   *     The face contains vertical glyph metrics.  This is only available in
-   *     some formats, not all of them.
-   *
-   *   FT_FACE_FLAG_KERNING ::
-   *     The face contains kerning information.  If set, the kerning distance
-   *     can be retrieved using the function @FT_Get_Kerning.  Otherwise the
-   *     function always returns the vector (0,0).
-   *
-   *     Note that for TrueType fonts only, FreeType supports both the 'kern'
-   *     table and the basic, pair-wise kerning feature from the 'GPOS' table
-   *     (with `TT_CONFIG_OPTION_GPOS_KERNING` enabled), though FreeType does
-   *     not support the more advanced GPOS layout features; use a library
-   *     like HarfBuzz for those instead.
-   *
-   *   FT_FACE_FLAG_FAST_GLYPHS ::
-   *     THIS FLAG IS DEPRECATED.  DO NOT USE OR TEST IT.
-   *
-   *   FT_FACE_FLAG_MULTIPLE_MASTERS ::
-   *     The face contains multiple masters and is capable of interpolating
-   *     between them.  Supported formats are Adobe MM, TrueType GX, and
-   *     OpenType variation fonts.
-   *
-   *     See section @multiple_masters for API details.
-   *
-   *   FT_FACE_FLAG_GLYPH_NAMES ::
-   *     The face contains glyph names, which can be retrieved using
-   *     @FT_Get_Glyph_Name.  Note that some TrueType fonts contain broken
-   *     glyph name tables.  Use the function @FT_Has_PS_Glyph_Names when
-   *     needed.
-   *
-   *   FT_FACE_FLAG_EXTERNAL_STREAM ::
-   *     Used internally by FreeType to indicate that a face's stream was
-   *     provided by the client application and should not be destroyed when
-   *     @FT_Done_Face is called.  Don't read or test this flag.
-   *
-   *   FT_FACE_FLAG_HINTER ::
-   *     The font driver has a hinting machine of its own.  For example, with
-   *     TrueType fonts, it makes sense to use data from the SFNT 'gasp'
-   *     table only if the native TrueType hinting engine (with the bytecode
-   *     interpreter) is available and active.
-   *
-   *   FT_FACE_FLAG_CID_KEYED ::
-   *     The face is CID-keyed.  In that case, the face is not accessed by
-   *     glyph indices but by CID values.  For subsetted CID-keyed fonts this
-   *     has the consequence that not all index values are a valid argument
-   *     to @FT_Load_Glyph.  Only the CID values for which corresponding
-   *     glyphs in the subsetted font exist make `FT_Load_Glyph` return
-   *     successfully; in all other cases you get an
-   *     `FT_Err_Invalid_Argument` error.
-   *
-   *     Note that CID-keyed fonts that are in an SFNT wrapper (that is, all
-   *     OpenType/CFF fonts) don't have this flag set since the glyphs are
-   *     accessed in the normal way (using contiguous indices); the
-   *     'CID-ness' isn't visible to the application.
-   *
-   *   FT_FACE_FLAG_TRICKY ::
-   *     The face is 'tricky', that is, it always needs the font format's
-   *     native hinting engine to get a reasonable result.  A typical example
-   *     is the old Chinese font `mingli.ttf` (but not `mingliu.ttc`) that
-   *     uses TrueType bytecode instructions to move and scale all of its
-   *     subglyphs.
-   *
-   *     It is not possible to auto-hint such fonts using
-   *     @FT_LOAD_FORCE_AUTOHINT; it will also ignore @FT_LOAD_NO_HINTING.
-   *     You have to set both @FT_LOAD_NO_HINTING and @FT_LOAD_NO_AUTOHINT to
-   *     really disable hinting; however, you probably never want this except
-   *     for demonstration purposes.
-   *
-   *     Currently, there are about a dozen TrueType fonts in the list of
-   *     tricky fonts; they are hard-coded in file `ttobjs.c`.
-   *
-   *   FT_FACE_FLAG_COLOR ::
-   *     [Since 2.5.1] The face has color glyph tables.  See @FT_LOAD_COLOR
-   *     for more information.
-   *
-   *   FT_FACE_FLAG_VARIATION ::
-   *     [Since 2.9] Set if the current face (or named instance) has been
-   *     altered with @FT_Set_MM_Design_Coordinates,
-   *     @FT_Set_Var_Design_Coordinates, @FT_Set_Var_Blend_Coordinates, or
-   *     @FT_Set_MM_WeightVector to select a non-default instance.
-   *
-   *   FT_FACE_FLAG_SVG ::
-   *     [Since 2.12] The face has an 'SVG~' OpenType table.
-   *
-   *   FT_FACE_FLAG_SBIX ::
-   *     [Since 2.12] The face has an 'sbix' OpenType table *and* outlines.
-   *     For such fonts, @FT_FACE_FLAG_SCALABLE is not set by default to
-   *     retain backward compatibility.
-   *
-   *   FT_FACE_FLAG_SBIX_OVERLAY ::
-   *     [Since 2.12] The face has an 'sbix' OpenType table where outlines
-   *     should be drawn on top of bitmap strikes.
-   *
-    }
-
-const
-  FT_FACE_FLAG_SCALABLE = 1 shl 0;  
-  FT_FACE_FLAG_FIXED_SIZES = 1 shl 1;  
-  FT_FACE_FLAG_FIXED_WIDTH = 1 shl 2;  
-  FT_FACE_FLAG_SFNT = 1 shl 3;  
-  FT_FACE_FLAG_HORIZONTAL = 1 shl 4;  
-  FT_FACE_FLAG_VERTICAL = 1 shl 5;  
-  FT_FACE_FLAG_KERNING = 1 shl 6;  
-  FT_FACE_FLAG_FAST_GLYPHS = 1 shl 7;  
-  FT_FACE_FLAG_MULTIPLE_MASTERS = 1 shl 8;  
-  FT_FACE_FLAG_GLYPH_NAMES = 1 shl 9;  
-  FT_FACE_FLAG_EXTERNAL_STREAM = 1 shl 10;  
-  FT_FACE_FLAG_HINTER = 1 shl 11;  
-  FT_FACE_FLAG_CID_KEYED = 1 shl 12;  
-  FT_FACE_FLAG_TRICKY = 1 shl 13;  
-  FT_FACE_FLAG_COLOR = 1 shl 14;  
-  FT_FACE_FLAG_VARIATION = 1 shl 15;  
-  FT_FACE_FLAG_SVG = 1 shl 16;  
-  FT_FACE_FLAG_SBIX = 1 shl 17;  
-  FT_FACE_FLAG_SBIX_OVERLAY = 1 shl 18;  
-{*************************************************************************
-   *
-   * @section:
-   *   font_testing_macros
-   *
-    }
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_HAS_HORIZONTAL
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains horizontal
-   *   metrics (this is true for all font formats though).
-   *
-   * @also:
-   *   @FT_HAS_VERTICAL can be used to check for vertical metrics.
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 
 function FT_HAS_HORIZONTAL(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_HAS_VERTICAL
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains real
-   *   vertical metrics (and not only synthesized ones).
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_HAS_VERTICAL(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_HAS_KERNING
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains kerning data
-   *   that can be accessed with @FT_Get_Kerning.
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_HAS_KERNING(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_IS_SCALABLE
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains a scalable
-   *   font face (true for TrueType, Type~1, Type~42, CID, OpenType/CFF, and
-   *   PFR font formats).
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_IS_SCALABLE(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_IS_SFNT
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains a font whose
-   *   format is based on the SFNT storage scheme.  This usually means:
-   *   TrueType fonts, OpenType fonts, as well as SFNT-based embedded bitmap
-   *   fonts.
-   *
-   *   If this macro is true, all functions defined in @FT_SFNT_NAMES_H and
-   *   @FT_TRUETYPE_TABLES_H are available.
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_IS_SFNT(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_IS_FIXED_WIDTH
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains a font face
-   *   that contains fixed-width (or 'monospace', 'fixed-pitch', etc.)
-   *   glyphs.
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_IS_FIXED_WIDTH(face : longint) : longint;
-
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_HAS_FIXED_SIZES
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains some
-   *   embedded bitmaps.  See the `available_sizes` field of the @FT_FaceRec
-   *   structure.
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_HAS_FIXED_SIZES(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @section:
-   *   other_api_data
-   *
-    }
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_HAS_FAST_GLYPHS
-   *
-   * @description:
-   *   Deprecated.
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_HAS_FAST_GLYPHS(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @section:
-   *   font_testing_macros
-   *
-    }
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_HAS_GLYPH_NAMES
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains some glyph
-   *   names that can be accessed through @FT_Get_Glyph_Name.
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_HAS_GLYPH_NAMES(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_HAS_MULTIPLE_MASTERS
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains some
-   *   multiple masters.  The functions provided by @FT_MULTIPLE_MASTERS_H
-   *   are then available to choose the exact design you want.
-   *
-    }
-{ was #define dname(params) para_def_expr }
-{ argument types are unknown }
 { return type might be wrong }   
 function FT_HAS_MULTIPLE_MASTERS(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_IS_NAMED_INSTANCE
-   *
-   * @description:
-   *   A macro that returns true whenever a face object is a named instance
-   *   of a GX or OpenType variation font.
-   *
-   *   [Since 2.9] Changing the design coordinates with
-   *   @FT_Set_Var_Design_Coordinates or @FT_Set_Var_Blend_Coordinates does
-   *   not influence the return value of this macro (only
-   *   @FT_Set_Named_Instance does that).
-   *
-   * @since:
-   *   2.7
-   *
-    }
-{ was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_IS_NAMED_INSTANCE(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_IS_VARIATION
-   *
-   * @description:
-   *   A macro that returns true whenever a face object has been altered by
-   *   @FT_Set_MM_Design_Coordinates, @FT_Set_Var_Design_Coordinates,
-   *   @FT_Set_Var_Blend_Coordinates, or @FT_Set_MM_WeightVector.
-   *
-   * @since:
-   *   2.9
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_IS_VARIATION(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_IS_CID_KEYED
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains a CID-keyed
-   *   font.  See the discussion of @FT_FACE_FLAG_CID_KEYED for more details.
-   *
-   *   If this macro is true, all functions defined in @FT_CID_H are
-   *   available.
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_IS_CID_KEYED(face : longint) : longint;
-
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_IS_TRICKY
-   *
-   * @description:
-   *   A macro that returns true whenever a face represents a 'tricky' font.
-   *   See the discussion of @FT_FACE_FLAG_TRICKY for more details.
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_IS_TRICKY(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_HAS_COLOR
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains tables for
-   *   color glyphs.
-   *
-   * @since:
-   *   2.5.1
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_HAS_COLOR(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_HAS_SVG
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains an 'SVG~'
-   *   OpenType table.
-   *
-   * @since:
-   *   2.12
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_HAS_SVG(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_HAS_SBIX
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains an 'sbix'
-   *   OpenType table *and* outline glyphs.
-   *
-   *   Currently, FreeType only supports bitmap glyphs in PNG format for this
-   *   table (i.e., JPEG and TIFF formats are unsupported, as are
-   *   Apple-specific formats not part of the OpenType specification).
-   *
-   * @note:
-   *   For backward compatibility, a font with an 'sbix' table is treated as
-   *   a bitmap-only face.  Using @FT_Open_Face with
-   *   @FT_PARAM_TAG_IGNORE_SBIX, an application can switch off 'sbix'
-   *   handling so that the face is treated as an ordinary outline font with
-   *   scalable outlines.
-   *
-   *   Here is some pseudo code that roughly illustrates how to implement
-   *   'sbix' handling according to the OpenType specification.
-   *
-   * ```
-   *   if ( FT_HAS_SBIX( face ) )
-   *   
-   *     // open font as a scalable one without sbix handling
-   *     FT_Face       face2;
-   *     FT_Parameter  param =  FT_PARAM_TAG_IGNORE_SBIX, NULL ;
-   *     FT_Open_Args  args  =  FT_OPEN_PARAMS | ...,
-   *                             ...,
-   *                             1, &param ;
-   *
-   *
-   *     FT_Open_Face( library, &args, 0, &face2 );
-   *
-   *     <sort `face->available_size` as necessary into
-   *      `preferred_sizes`[*]>
-   *
-   *     for ( i = 0; i < face->num_fixed_sizes; i++ )
-   *     
-   *       size = preferred_sizes[i].size;
-   *
-   *       error = FT_Set_Pixel_Sizes( face, size, size );
-   *       <error handling omitted>
-   *
-   *       // check whether we have a glyph in a bitmap strike
-   *       error = FT_Load_Glyph( face,
-   *                              glyph_index,
-   *                              FT_LOAD_SBITS_ONLY          |
-   *                              FT_LOAD_BITMAP_METRICS_ONLY );
-   *       if ( error == FT_Err_Invalid_Argument )
-   *         continue;
-   *       else if ( error )
-   *         <other error handling omitted>
-   *       else
-   *         break;
-   *     
-   *
-   *     if ( i != face->num_fixed_sizes )
-   *       <load embedded bitmap with `FT_Load_Glyph`,
-   *        scale it, display it, etc.>
-   *
-   *     if ( i == face->num_fixed_sizes  ||
-   *          FT_HAS_SBIX_OVERLAY( face ) )
-   *       <use `face2` to load outline glyph with `FT_Load_Glyph`,
-   *        scale it, display it on top of the bitmap, etc.>
-   *   
-   * ```
-   *
-   * [*] Assuming a target value of 400dpi and available strike sizes 100,
-   * 200, 300, and 400dpi, a possible order might be [400, 200, 300, 100]:
-   * scaling 200dpi to 400dpi usually gives better results than scaling
-   * 300dpi to 400dpi; it is also much faster.  However, scaling 100dpi to
-   * 400dpi can yield a too pixelated result, thus the preference might be
-   * 300dpi over 100dpi.
-   *
-   * @since:
-   *   2.12
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_HAS_SBIX(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_HAS_SBIX_OVERLAY
-   *
-   * @description:
-   *   A macro that returns true whenever a face object contains an 'sbix'
-   *   OpenType table with bit~1 in its `flags` field set, instructing the
-   *   application to overlay the bitmap strike with the corresponding
-   *   outline glyph.  See @FT_HAS_SBIX for pseudo code how to use it.
-   *
-   * @since:
-   *   2.12
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_HAS_SBIX_OVERLAY(face : longint) : longint;
 
-{*************************************************************************
-   *
-   * @section:
-   *   face_creation
-   *
-    }
-{*************************************************************************
-   *
-   * @enum:
-   *   FT_STYLE_FLAG_XXX
-   *
-   * @description:
-   *   A list of bit flags to indicate the style of a given face.  These are
-   *   used in the `style_flags` field of @FT_FaceRec.
-   *
-   * @values:
-   *   FT_STYLE_FLAG_ITALIC ::
-   *     The face style is italic or oblique.
-   *
-   *   FT_STYLE_FLAG_BOLD ::
-   *     The face is bold.
-   *
-   * @note:
-   *   The style information as provided by FreeType is very basic.  More
-   *   details are beyond the scope and should be done on a higher level (for
-   *   example, by analyzing various fields of the 'OS/2' table in SFNT based
-   *   fonts).
-    }
-const
-  FT_STYLE_FLAG_ITALIC = 1 shl 0;  
-  FT_STYLE_FLAG_BOLD = 1 shl 1;  
 
 
 
@@ -16872,1238 +16218,8 @@ const
 {                                                                        }
 {*********************************************************************** }
 {*********************************************************************** }
-{*************************************************************************
-   *
-   * @section:
-   *   library_setup
-   *
-    }
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Init_FreeType
-   *
-   * @description:
-   *   Initialize a new FreeType library object.  The set of modules that are
-   *   registered by this function is determined at build time.
-   *
-   * @output:
-   *   alibrary ::
-   *     A handle to a new library object.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   In case you want to provide your own memory allocating routines, use
-   *   @FT_New_Library instead, followed by a call to @FT_Add_Default_Modules
-   *   (or a series of calls to @FT_Add_Module) and
-   *   @FT_Set_Default_Properties.
-   *
-   *   See the documentation of @FT_Library and @FT_Face for multi-threading
-   *   issues.
-   *
-   *   If you need reference-counting (cf. @FT_Reference_Library), use
-   *   @FT_New_Library and @FT_Done_Library.
-   *
-   *   If compilation option `FT_CONFIG_OPTION_ENVIRONMENT_PROPERTIES` is
-   *   set, this function reads the `FREETYPE_PROPERTIES` environment
-   *   variable to control driver properties.  See section @properties for
-   *   more.
-    }
 
-function FT_Init_FreeType(alibrary:PFT_Library):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Done_FreeType
-   *
-   * @description:
-   *   Destroy a given FreeType library object and all of its children,
-   *   including resources, drivers, faces, sizes, etc.
-   *
-   * @input:
-   *   library ::
-   *     A handle to the target library object.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-    }
-function FT_Done_FreeType(library:TFT_Library):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @section:
-   *   face_creation
-   *
-    }
-{*************************************************************************
-   *
-   * @enum:
-   *   FT_OPEN_XXX
-   *
-   * @description:
-   *   A list of bit field constants used within the `flags` field of the
-   *   @FT_Open_Args structure.
-   *
-   * @values:
-   *   FT_OPEN_MEMORY ::
-   *     This is a memory-based stream.
-   *
-   *   FT_OPEN_STREAM ::
-   *     Copy the stream from the `stream` field.
-   *
-   *   FT_OPEN_PATHNAME ::
-   *     Create a new input stream from a C~path name.
-   *
-   *   FT_OPEN_DRIVER ::
-   *     Use the `driver` field.
-   *
-   *   FT_OPEN_PARAMS ::
-   *     Use the `num_params` and `params` fields.
-   *
-   * @note:
-   *   The `FT_OPEN_MEMORY`, `FT_OPEN_STREAM`, and `FT_OPEN_PATHNAME` flags
-   *   are mutually exclusive.
-    }
-const
-  FT_OPEN_MEMORY = $1;  
-  FT_OPEN_STREAM = $2;  
-  FT_OPEN_PATHNAME = $4;  
-  FT_OPEN_DRIVER = $8;  
-  FT_OPEN_PARAMS = $10;  
-{ these constants are deprecated; use the corresponding `FT_OPEN_XXX`  }
-{ values instead                                                       }
-  ft_open_memory = FT_OPEN_MEMORY;  
-  ft_open_stream = FT_OPEN_STREAM;  
-  ft_open_pathname = FT_OPEN_PATHNAME;  
-  ft_open_driver = FT_OPEN_DRIVER;  
-  ft_open_params = FT_OPEN_PARAMS;  
-{*************************************************************************
-   *
-   * @struct:
-   *   FT_Parameter
-   *
-   * @description:
-   *   A simple structure to pass more or less generic parameters to
-   *   @FT_Open_Face and @FT_Face_Properties.
-   *
-   * @fields:
-   *   tag ::
-   *     A four-byte identification tag.
-   *
-   *   data ::
-   *     A pointer to the parameter data.
-   *
-   * @note:
-   *   The ID and function of parameters are driver-specific.  See section
-   *   @parameter_tags for more information.
-    }
-type
-  PFT_Parameter_ = ^TFT_Parameter_;
-  TFT_Parameter_ = record
-      tag : TFT_ULong;
-      data : TFT_Pointer;
-    end;
-  TFT_Parameter = TFT_Parameter_;
-  PFT_Parameter = ^TFT_Parameter;
-{*************************************************************************
-   *
-   * @struct:
-   *   FT_Open_Args
-   *
-   * @description:
-   *   A structure to indicate how to open a new font file or stream.  A
-   *   pointer to such a structure can be used as a parameter for the
-   *   functions @FT_Open_Face and @FT_Attach_Stream.
-   *
-   * @fields:
-   *   flags ::
-   *     A set of bit flags indicating how to use the structure.
-   *
-   *   memory_base ::
-   *     The first byte of the file in memory.
-   *
-   *   memory_size ::
-   *     The size in bytes of the file in memory.
-   *
-   *   pathname ::
-   *     A pointer to an 8-bit file pathname, which must be a C~string (i.e.,
-   *     no null bytes except at the very end).  The pointer is not owned by
-   *     FreeType.
-   *
-   *   stream ::
-   *     A handle to a source stream object.
-   *
-   *   driver ::
-   *     This field is exclusively used by @FT_Open_Face; it simply specifies
-   *     the font driver to use for opening the face.  If set to `NULL`,
-   *     FreeType tries to load the face with each one of the drivers in its
-   *     list.
-   *
-   *   num_params ::
-   *     The number of extra parameters.
-   *
-   *   params ::
-   *     Extra parameters passed to the font driver when opening a new face.
-   *
-   * @note:
-   *   The stream type is determined by the contents of `flags`:
-   *
-   *   If the @FT_OPEN_MEMORY bit is set, assume that this is a memory file
-   *   of `memory_size` bytes, located at `memory_address`.  The data are not
-   *   copied, and the client is responsible for releasing and destroying
-   *   them _after_ the corresponding call to @FT_Done_Face.
-   *
-   *   Otherwise, if the @FT_OPEN_STREAM bit is set, assume that a custom
-   *   input stream `stream` is used.
-   *
-   *   Otherwise, if the @FT_OPEN_PATHNAME bit is set, assume that this is a
-   *   normal file and use `pathname` to open it.
-   *
-   *   If none of the above bits are set or if multiple are set at the same
-   *   time, the flags are invalid and @FT_Open_Face fails.
-   *
-   *   If the @FT_OPEN_DRIVER bit is set, @FT_Open_Face only tries to open
-   *   the file with the driver whose handler is in `driver`.
-   *
-   *   If the @FT_OPEN_PARAMS bit is set, the parameters given by
-   *   `num_params` and `params` is used.  They are ignored otherwise.
-   *
-   *   Ideally, both the `pathname` and `params` fields should be tagged as
-   *   'const'; this is missing for API backward compatibility.  In other
-   *   words, applications should treat them as read-only.
-    }
-(* Const before type ignored *)
 
-  PFT_Open_Args_ = ^TFT_Open_Args_;
-  TFT_Open_Args_ = record
-      flags : TFT_UInt;
-      memory_base : PFT_Byte;
-      memory_size : TFT_Long;
-      pathname : PFT_String;
-      stream : TFT_Stream;
-      driver : TFT_Module;
-      num_params : TFT_Int;
-      params : PFT_Parameter;
-    end;
-  TFT_Open_Args = TFT_Open_Args_;
-  PFT_Open_Args = ^TFT_Open_Args;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_New_Face
-   *
-   * @description:
-   *   Call @FT_Open_Face to open a font by its pathname.
-   *
-   * @inout:
-   *   library ::
-   *     A handle to the library resource.
-   *
-   * @input:
-   *   pathname ::
-   *     A path to the font file.
-   *
-   *   face_index ::
-   *     See @FT_Open_Face for a detailed description of this parameter.
-   *
-   * @output:
-   *   aface ::
-   *     A handle to a new face object.  If `face_index` is greater than or
-   *     equal to zero, it must be non-`NULL`.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   The `pathname` string should be recognizable as such by a standard
-   *   `fopen` call on your system; in particular, this means that `pathname`
-   *   must not contain null bytes.  If that is not sufficient to address all
-   *   file name possibilities (for example, to handle wide character file
-   *   names on Windows in UTF-16 encoding) you might use @FT_Open_Face to
-   *   pass a memory array or a stream object instead.
-   *
-   *   Use @FT_Done_Face to destroy the created @FT_Face object (along with
-   *   its slot and sizes).
-    }
-(* Const before type ignored *)
-
-function FT_New_Face(library:TFT_Library; filepathname:Pchar; face_index:TFT_Long; aface:PFT_Face):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_New_Memory_Face
-   *
-   * @description:
-   *   Call @FT_Open_Face to open a font that has been loaded into memory.
-   *
-   * @inout:
-   *   library ::
-   *     A handle to the library resource.
-   *
-   * @input:
-   *   file_base ::
-   *     A pointer to the beginning of the font data.
-   *
-   *   file_size ::
-   *     The size of the memory chunk used by the font data.
-   *
-   *   face_index ::
-   *     See @FT_Open_Face for a detailed description of this parameter.
-   *
-   * @output:
-   *   aface ::
-   *     A handle to a new face object.  If `face_index` is greater than or
-   *     equal to zero, it must be non-`NULL`.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   You must not deallocate the memory before calling @FT_Done_Face.
-    }
-(* Const before type ignored *)
-function FT_New_Memory_Face(library:TFT_Library; file_base:PFT_Byte; file_size:TFT_Long; face_index:TFT_Long; aface:PFT_Face):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Open_Face
-   *
-   * @description:
-   *   Create a face object from a given resource described by @FT_Open_Args.
-   *
-   * @inout:
-   *   library ::
-   *     A handle to the library resource.
-   *
-   * @input:
-   *   args ::
-   *     A pointer to an `FT_Open_Args` structure that must be filled by the
-   *     caller.
-   *
-   *   face_index ::
-   *     This field holds two different values.  Bits 0-15 are the index of
-   *     the face in the font file (starting with value~0).  Set it to~0 if
-   *     there is only one face in the font file.
-   *
-   *     [Since 2.6.1] Bits 16-30 are relevant to GX and OpenType variation
-   *     fonts only, specifying the named instance index for the current face
-   *     index (starting with value~1; value~0 makes FreeType ignore named
-   *     instances).  For non-variation fonts, bits 16-30 are ignored.
-   *     Assuming that you want to access the third named instance in face~4,
-   *     `face_index` should be set to 0x00030004.  If you want to access
-   *     face~4 without variation handling, simply set `face_index` to
-   *     value~4.
-   *
-   *     `FT_Open_Face` and its siblings can be used to quickly check whether
-   *     the font format of a given font resource is supported by FreeType.
-   *     In general, if the `face_index` argument is negative, the function's
-   *     return value is~0 if the font format is recognized, or non-zero
-   *     otherwise.  The function allocates a more or less empty face handle
-   *     in `*aface` (if `aface` isn't `NULL`); the only two useful fields in
-   *     this special case are `face->num_faces` and `face->style_flags`.
-   *     For any negative value of `face_index`, `face->num_faces` gives the
-   *     number of faces within the font file.  For the negative value
-   *     '-(N+1)' (with 'N' a non-negative 16-bit value), bits 16-30 in
-   *     `face->style_flags` give the number of named instances in face 'N'
-   *     if we have a variation font (or zero otherwise).  After examination,
-   *     the returned @FT_Face structure should be deallocated with a call to
-   *     @FT_Done_Face.
-   *
-   * @output:
-   *   aface ::
-   *     A handle to a new face object.  If `face_index` is greater than or
-   *     equal to zero, it must be non-`NULL`.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   Unlike FreeType 1.x, this function automatically creates a glyph slot
-   *   for the face object that can be accessed directly through
-   *   `face->glyph`.
-   *
-   *   Each new face object created with this function also owns a default
-   *   @FT_Size object, accessible as `face->size`.
-   *
-   *   One @FT_Library instance can have multiple face objects, that is,
-   *   @FT_Open_Face and its siblings can be called multiple times using the
-   *   same `library` argument.
-   *
-   *   See the discussion of reference counters in the description of
-   *   @FT_Reference_Face.
-   *
-   *   If `FT_OPEN_STREAM` is set in `args->flags`, the stream in
-   *   `args->stream` is automatically closed before this function returns
-   *   any error (including `FT_Err_Invalid_Argument`).
-   *
-   * @example:
-   *   To loop over all faces, use code similar to the following snippet
-   *   (omitting the error handling).
-   *
-   *   ```
-   *     ...
-   *     FT_Face  face;
-   *     FT_Long  i, num_faces;
-   *
-   *
-   *     error = FT_Open_Face( library, args, -1, &face );
-   *     if ( error )  ... 
-   *
-   *     num_faces = face->num_faces;
-   *     FT_Done_Face( face );
-   *
-   *     for ( i = 0; i < num_faces; i++ )
-   *     
-   *       ...
-   *       error = FT_Open_Face( library, args, i, &face );
-   *       ...
-   *       FT_Done_Face( face );
-   *       ...
-   *     
-   *   ```
-   *
-   *   To loop over all valid values for `face_index`, use something similar
-   *   to the following snippet, again without error handling.  The code
-   *   accesses all faces immediately (thus only a single call of
-   *   `FT_Open_Face` within the do-loop), with and without named instances.
-   *
-   *   ```
-   *     ...
-   *     FT_Face  face;
-   *
-   *     FT_Long  num_faces     = 0;
-   *     FT_Long  num_instances = 0;
-   *
-   *     FT_Long  face_idx     = 0;
-   *     FT_Long  instance_idx = 0;
-   *
-   *
-   *     do
-   *     
-   *       FT_Long  id = ( instance_idx << 16 ) + face_idx;
-   *
-   *
-   *       error = FT_Open_Face( library, args, id, &face );
-   *       if ( error )  ... 
-   *
-   *       num_faces     = face->num_faces;
-   *       num_instances = face->style_flags >> 16;
-   *
-   *       ...
-   *
-   *       FT_Done_Face( face );
-   *
-   *       if ( instance_idx < num_instances )
-   *         instance_idx++;
-   *       else
-   *       
-   *         face_idx++;
-   *         instance_idx = 0;
-   *       
-   *
-   *      while ( face_idx < num_faces )
-   *   ```
-    }
-(* Const before type ignored *)
-function FT_Open_Face(library:TFT_Library; args:PFT_Open_Args; face_index:TFT_Long; aface:PFT_Face):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Attach_File
-   *
-   * @description:
-   *   Call @FT_Attach_Stream to attach a file.
-   *
-   * @inout:
-   *   face ::
-   *     The target face object.
-   *
-   * @input:
-   *   filepathname ::
-   *     The pathname.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-    }
-(* Const before type ignored *)
-function FT_Attach_File(face:TFT_Face; filepathname:Pchar):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Attach_Stream
-   *
-   * @description:
-   *   'Attach' data to a face object.  Normally, this is used to read
-   *   additional information for the face object.  For example, you can
-   *   attach an AFM file that comes with a Type~1 font to get the kerning
-   *   values and other metrics.
-   *
-   * @inout:
-   *   face ::
-   *     The target face object.
-   *
-   * @input:
-   *   parameters ::
-   *     A pointer to @FT_Open_Args that must be filled by the caller.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   The meaning of the 'attach' (i.e., what really happens when the new
-   *   file is read) is not fixed by FreeType itself.  It really depends on
-   *   the font format (and thus the font driver).
-   *
-   *   Client applications are expected to know what they are doing when
-   *   invoking this function.  Most drivers simply do not implement file or
-   *   stream attachments.
-    }
-(* Const before type ignored *)
-function FT_Attach_Stream(face:TFT_Face; parameters:PFT_Open_Args):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Reference_Face
-   *
-   * @description:
-   *   A counter gets initialized to~1 at the time an @FT_Face structure is
-   *   created.  This function increments the counter.  @FT_Done_Face then
-   *   only destroys a face if the counter is~1, otherwise it simply
-   *   decrements the counter.
-   *
-   *   This function helps in managing life-cycles of structures that
-   *   reference @FT_Face objects.
-   *
-   * @input:
-   *   face ::
-   *     A handle to a target face object.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @since:
-   *   2.4.2
-   *
-    }
-function FT_Reference_Face(face:TFT_Face):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Done_Face
-   *
-   * @description:
-   *   Discard a given face object, as well as all of its child slots and
-   *   sizes.
-   *
-   * @input:
-   *   face ::
-   *     A handle to a target face object.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   See the discussion of reference counters in the description of
-   *   @FT_Reference_Face.
-    }
-function FT_Done_Face(face:TFT_Face):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @section:
-   *   sizing_and_scaling
-   *
-    }
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Select_Size
-   *
-   * @description:
-   *   Select a bitmap strike.  To be more precise, this function sets the
-   *   scaling factors of the active @FT_Size object in a face so that
-   *   bitmaps from this particular strike are taken by @FT_Load_Glyph and
-   *   friends.
-   *
-   * @inout:
-   *   face ::
-   *     A handle to a target face object.
-   *
-   * @input:
-   *   strike_index ::
-   *     The index of the bitmap strike in the `available_sizes` field of
-   *     @FT_FaceRec structure.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   For bitmaps embedded in outline fonts it is common that only a subset
-   *   of the available glyphs at a given ppem value is available.  FreeType
-   *   silently uses outlines if there is no bitmap for a given glyph index.
-   *
-   *   For GX and OpenType variation fonts, a bitmap strike makes sense only
-   *   if the default instance is active (that is, no glyph variation takes
-   *   place); otherwise, FreeType simply ignores bitmap strikes.  The same
-   *   is true for all named instances that are different from the default
-   *   instance.
-   *
-   *   Don't use this function if you are using the FreeType cache API.
-    }
-function FT_Select_Size(face:TFT_Face; strike_index:TFT_Int):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @enum:
-   *   FT_Size_Request_Type
-   *
-   * @description:
-   *   An enumeration type that lists the supported size request types, i.e.,
-   *   what input size (in font units) maps to the requested output size (in
-   *   pixels, as computed from the arguments of @FT_Size_Request).
-   *
-   * @values:
-   *   FT_SIZE_REQUEST_TYPE_NOMINAL ::
-   *     The nominal size.  The `units_per_EM` field of @FT_FaceRec is used
-   *     to determine both scaling values.
-   *
-   *     This is the standard scaling found in most applications.  In
-   *     particular, use this size request type for TrueType fonts if they
-   *     provide optical scaling or something similar.  Note, however, that
-   *     `units_per_EM` is a rather abstract value which bears no relation to
-   *     the actual size of the glyphs in a font.
-   *
-   *   FT_SIZE_REQUEST_TYPE_REAL_DIM ::
-   *     The real dimension.  The sum of the `ascender` and (minus of) the
-   *     `descender` fields of @FT_FaceRec is used to determine both scaling
-   *     values.
-   *
-   *   FT_SIZE_REQUEST_TYPE_BBOX ::
-   *     The font bounding box.  The width and height of the `bbox` field of
-   *     @FT_FaceRec are used to determine the horizontal and vertical
-   *     scaling value, respectively.
-   *
-   *   FT_SIZE_REQUEST_TYPE_CELL ::
-   *     The `max_advance_width` field of @FT_FaceRec is used to determine
-   *     the horizontal scaling value; the vertical scaling value is
-   *     determined the same way as @FT_SIZE_REQUEST_TYPE_REAL_DIM does.
-   *     Finally, both scaling values are set to the smaller one.  This type
-   *     is useful if you want to specify the font size for, say, a window of
-   *     a given dimension and 80x24 cells.
-   *
-   *   FT_SIZE_REQUEST_TYPE_SCALES ::
-   *     Specify the scaling values directly.
-   *
-   * @note:
-   *   The above descriptions only apply to scalable formats.  For bitmap
-   *   formats, the behaviour is up to the driver.
-   *
-   *   See the note section of @FT_Size_Metrics if you wonder how size
-   *   requesting relates to scaling values.
-    }
-type
-  PFT_Size_Request_Type_ = ^TFT_Size_Request_Type_;
-  TFT_Size_Request_Type_ =  Longint;
-  Const
-    FT_SIZE_REQUEST_TYPE_NOMINAL = 0;
-    FT_SIZE_REQUEST_TYPE_REAL_DIM = 1;
-    FT_SIZE_REQUEST_TYPE_BBOX = 2;
-    FT_SIZE_REQUEST_TYPE_CELL = 3;
-    FT_SIZE_REQUEST_TYPE_SCALES = 4;
-    FT_SIZE_REQUEST_TYPE_MAX = 5;
-;
-  TFT_Size_Request_Type = TFT_Size_Request_Type_;
-  PFT_Size_Request_Type = ^TFT_Size_Request_Type;
-{*************************************************************************
-   *
-   * @struct:
-   *   FT_Size_RequestRec
-   *
-   * @description:
-   *   A structure to model a size request.
-   *
-   * @fields:
-   *   type ::
-   *     See @FT_Size_Request_Type.
-   *
-   *   width ::
-   *     The desired width, given as a 26.6 fractional point value (with 72pt
-   *     = 1in).
-   *
-   *   height ::
-   *     The desired height, given as a 26.6 fractional point value (with
-   *     72pt = 1in).
-   *
-   *   horiResolution ::
-   *     The horizontal resolution (dpi, i.e., pixels per inch).  If set to
-   *     zero, `width` is treated as a 26.6 fractional **pixel** value, which
-   *     gets internally rounded to an integer.
-   *
-   *   vertResolution ::
-   *     The vertical resolution (dpi, i.e., pixels per inch).  If set to
-   *     zero, `height` is treated as a 26.6 fractional **pixel** value,
-   *     which gets internally rounded to an integer.
-   *
-   * @note:
-   *   If `width` is zero, the horizontal scaling value is set equal to the
-   *   vertical scaling value, and vice versa.
-   *
-   *   If `type` is `FT_SIZE_REQUEST_TYPE_SCALES`, `width` and `height` are
-   *   interpreted directly as 16.16 fractional scaling values, without any
-   *   further modification, and both `horiResolution` and `vertResolution`
-   *   are ignored.
-    }
-type
-  PFT_Size_RequestRec_ = ^TFT_Size_RequestRec_;
-  TFT_Size_RequestRec_ = record
-      _type : TFT_Size_Request_Type;
-      width : TFT_Long;
-      height : TFT_Long;
-      horiResolution : TFT_UInt;
-      vertResolution : TFT_UInt;
-    end;
-  TFT_Size_RequestRec = TFT_Size_RequestRec_;
-  PFT_Size_RequestRec = ^TFT_Size_RequestRec;
-{*************************************************************************
-   *
-   * @struct:
-   *   FT_Size_Request
-   *
-   * @description:
-   *   A handle to a size request structure.
-    }
-
-  PFT_Size_Request = ^TFT_Size_Request;
-  TFT_Size_Request = PFT_Size_RequestRec_;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Request_Size
-   *
-   * @description:
-   *   Resize the scale of the active @FT_Size object in a face.
-   *
-   * @inout:
-   *   face ::
-   *     A handle to a target face object.
-   *
-   * @input:
-   *   req ::
-   *     A pointer to a @FT_Size_RequestRec.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   Although drivers may select the bitmap strike matching the request,
-   *   you should not rely on this if you intend to select a particular
-   *   bitmap strike.  Use @FT_Select_Size instead in that case.
-   *
-   *   The relation between the requested size and the resulting glyph size
-   *   is dependent entirely on how the size is defined in the source face.
-   *   The font designer chooses the final size of each glyph relative to
-   *   this size.  For more information refer to
-   *   'https://www.freetype.org/freetype2/docs/glyphs/glyphs-2.html'.
-   *
-   *   Contrary to @FT_Set_Char_Size, this function doesn't have special code
-   *   to normalize zero-valued widths, heights, or resolutions, which are
-   *   treated as @FT_LOAD_NO_SCALE.
-   *
-   *   Don't use this function if you are using the FreeType cache API.
-    }
-
-function FT_Request_Size(face:TFT_Face; req:TFT_Size_Request):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Set_Char_Size
-   *
-   * @description:
-   *   Call @FT_Request_Size to request the nominal size (in points).
-   *
-   * @inout:
-   *   face ::
-   *     A handle to a target face object.
-   *
-   * @input:
-   *   char_width ::
-   *     The nominal width, in 26.6 fractional points.
-   *
-   *   char_height ::
-   *     The nominal height, in 26.6 fractional points.
-   *
-   *   horz_resolution ::
-   *     The horizontal resolution in dpi.
-   *
-   *   vert_resolution ::
-   *     The vertical resolution in dpi.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   While this function allows fractional points as input values, the
-   *   resulting ppem value for the given resolution is always rounded to the
-   *   nearest integer.
-   *
-   *   If either the character width or height is zero, it is set equal to
-   *   the other value.
-   *
-   *   If either the horizontal or vertical resolution is zero, it is set
-   *   equal to the other value.
-   *
-   *   A character width or height smaller than 1pt is set to 1pt; if both
-   *   resolution values are zero, they are set to 72dpi.
-   *
-   *   Don't use this function if you are using the FreeType cache API.
-    }
-function FT_Set_Char_Size(face:TFT_Face; char_width:TFT_F26Dot6; char_height:TFT_F26Dot6; horz_resolution:TFT_UInt; vert_resolution:TFT_UInt):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Set_Pixel_Sizes
-   *
-   * @description:
-   *   Call @FT_Request_Size to request the nominal size (in pixels).
-   *
-   * @inout:
-   *   face ::
-   *     A handle to the target face object.
-   *
-   * @input:
-   *   pixel_width ::
-   *     The nominal width, in pixels.
-   *
-   *   pixel_height ::
-   *     The nominal height, in pixels.
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   You should not rely on the resulting glyphs matching or being
-   *   constrained to this pixel size.  Refer to @FT_Request_Size to
-   *   understand how requested sizes relate to actual sizes.
-   *
-   *   Don't use this function if you are using the FreeType cache API.
-    }
-function FT_Set_Pixel_Sizes(face:TFT_Face; pixel_width:TFT_UInt; pixel_height:TFT_UInt):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @section:
-   *   glyph_retrieval
-   *
-    }
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Load_Glyph
-   *
-   * @description:
-   *   Load a glyph into the glyph slot of a face object.
-   *
-   * @inout:
-   *   face ::
-   *     A handle to the target face object where the glyph is loaded.
-   *
-   * @input:
-   *   glyph_index ::
-   *     The index of the glyph in the font file.  For CID-keyed fonts
-   *     (either in PS or in CFF format) this argument specifies the CID
-   *     value.
-   *
-   *   load_flags ::
-   *     A flag indicating what to load for this glyph.  The @FT_LOAD_XXX
-   *     flags can be used to control the glyph loading process (e.g.,
-   *     whether the outline should be scaled, whether to load bitmaps or
-   *     not, whether to hint the outline, etc).
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   For proper scaling and hinting, the active @FT_Size object owned by
-   *   the face has to be meaningfully initialized by calling
-   *   @FT_Set_Char_Size before this function, for example.  The loaded
-   *   glyph may be transformed.  See @FT_Set_Transform for the details.
-   *
-   *   For subsetted CID-keyed fonts, `FT_Err_Invalid_Argument` is returned
-   *   for invalid CID values (that is, for CID values that don't have a
-   *   corresponding glyph in the font).  See the discussion of the
-   *   @FT_FACE_FLAG_CID_KEYED flag for more details.
-   *
-   *   If you receive `FT_Err_Glyph_Too_Big`, try getting the glyph outline
-   *   at EM size, then scale it manually and fill it as a graphics
-   *   operation.
-    }
-function FT_Load_Glyph(face:TFT_Face; glyph_index:TFT_UInt; load_flags:TFT_Int32):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @section:
-   *   character_mapping
-   *
-    }
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Load_Char
-   *
-   * @description:
-   *   Load a glyph into the glyph slot of a face object, accessed by its
-   *   character code.
-   *
-   * @inout:
-   *   face ::
-   *     A handle to a target face object where the glyph is loaded.
-   *
-   * @input:
-   *   char_code ::
-   *     The glyph's character code, according to the current charmap used in
-   *     the face.
-   *
-   *   load_flags ::
-   *     A flag indicating what to load for this glyph.  The @FT_LOAD_XXX
-   *     constants can be used to control the glyph loading process (e.g.,
-   *     whether the outline should be scaled, whether to load bitmaps or
-   *     not, whether to hint the outline, etc).
-   *
-   * @return:
-   *   FreeType error code.  0~means success.
-   *
-   * @note:
-   *   This function simply calls @FT_Get_Char_Index and @FT_Load_Glyph.
-   *
-   *   Many fonts contain glyphs that can't be loaded by this function since
-   *   its glyph indices are not listed in any of the font's charmaps.
-   *
-   *   If no active cmap is set up (i.e., `face->charmap` is zero), the call
-   *   to @FT_Get_Char_Index is omitted, and the function behaves identically
-   *   to @FT_Load_Glyph.
-    }
-function FT_Load_Char(face:TFT_Face; char_code:TFT_ULong; load_flags:TFT_Int32):TFT_Error;cdecl;external;
-{*************************************************************************
-   *
-   * @section:
-   *   glyph_retrieval
-   *
-    }
-{*************************************************************************
-   *
-   * @enum:
-   *   FT_LOAD_XXX
-   *
-   * @description:
-   *   A list of bit field constants for @FT_Load_Glyph to indicate what kind
-   *   of operations to perform during glyph loading.
-   *
-   * @values:
-   *   FT_LOAD_DEFAULT ::
-   *     Corresponding to~0, this value is used as the default glyph load
-   *     operation.  In this case, the following happens:
-   *
-   *     1. FreeType looks for a bitmap for the glyph corresponding to the
-   *     face's current size.  If one is found, the function returns.  The
-   *     bitmap data can be accessed from the glyph slot (see note below).
-   *
-   *     2. If no embedded bitmap is searched for or found, FreeType looks
-   *     for a scalable outline.  If one is found, it is loaded from the font
-   *     file, scaled to device pixels, then 'hinted' to the pixel grid in
-   *     order to optimize it.  The outline data can be accessed from the
-   *     glyph slot (see note below).
-   *
-   *     Note that by default the glyph loader doesn't render outlines into
-   *     bitmaps.  The following flags are used to modify this default
-   *     behaviour to more specific and useful cases.
-   *
-   *   FT_LOAD_NO_SCALE ::
-   *     Don't scale the loaded outline glyph but keep it in font units.
-   *     This flag is also assumed if @FT_Size owned by the face was not
-   *     properly initialized.
-   *
-   *     This flag implies @FT_LOAD_NO_HINTING and @FT_LOAD_NO_BITMAP, and
-   *     unsets @FT_LOAD_RENDER.
-   *
-   *     If the font is 'tricky' (see @FT_FACE_FLAG_TRICKY for more), using
-   *     `FT_LOAD_NO_SCALE` usually yields meaningless outlines because the
-   *     subglyphs must be scaled and positioned with hinting instructions.
-   *     This can be solved by loading the font without `FT_LOAD_NO_SCALE`
-   *     and setting the character size to `font->units_per_EM`.
-   *
-   *   FT_LOAD_NO_HINTING ::
-   *     Disable hinting.  This generally generates 'blurrier' bitmap glyphs
-   *     when the glyphs are rendered in any of the anti-aliased modes.  See
-   *     also the note below.
-   *
-   *     This flag is implied by @FT_LOAD_NO_SCALE.
-   *
-   *   FT_LOAD_RENDER ::
-   *     Call @FT_Render_Glyph after the glyph is loaded.  By default, the
-   *     glyph is rendered in @FT_RENDER_MODE_NORMAL mode.  This can be
-   *     overridden by @FT_LOAD_TARGET_XXX or @FT_LOAD_MONOCHROME.
-   *
-   *     This flag is unset by @FT_LOAD_NO_SCALE.
-   *
-   *   FT_LOAD_NO_BITMAP ::
-   *     Ignore bitmap strikes when loading.  Bitmap-only fonts ignore this
-   *     flag.
-   *
-   *     @FT_LOAD_NO_SCALE always sets this flag.
-   *
-   *   FT_LOAD_SBITS_ONLY ::
-   *     [Since 2.12] This is the opposite of @FT_LOAD_NO_BITMAP, more or
-   *     less: @FT_Load_Glyph returns `FT_Err_Invalid_Argument` if the face
-   *     contains a bitmap strike for the given size (or the strike selected
-   *     by @FT_Select_Size) but there is no glyph in the strike.
-   *
-   *     Note that this load flag was part of FreeType since version 2.0.6
-   *     but previously tagged as internal.
-   *
-   *   FT_LOAD_VERTICAL_LAYOUT ::
-   *     Load the glyph for vertical text layout.  In particular, the
-   *     `advance` value in the @FT_GlyphSlotRec structure is set to the
-   *     `vertAdvance` value of the `metrics` field.
-   *
-   *     In case @FT_HAS_VERTICAL doesn't return true, you shouldn't use this
-   *     flag currently.  Reason is that in this case vertical metrics get
-   *     synthesized, and those values are not always consistent across
-   *     various font formats.
-   *
-   *   FT_LOAD_FORCE_AUTOHINT ::
-   *     Prefer the auto-hinter over the font's native hinter.  See also the
-   *     note below.
-   *
-   *   FT_LOAD_PEDANTIC ::
-   *     Make the font driver perform pedantic verifications during glyph
-   *     loading and hinting.  This is mostly used to detect broken glyphs in
-   *     fonts.  By default, FreeType tries to handle broken fonts also.
-   *
-   *     In particular, errors from the TrueType bytecode engine are not
-   *     passed to the application if this flag is not set; this might result
-   *     in partially hinted or distorted glyphs in case a glyph's bytecode
-   *     is buggy.
-   *
-   *   FT_LOAD_NO_RECURSE ::
-   *     Don't load composite glyphs recursively.  Instead, the font driver
-   *     fills the `num_subglyph` and `subglyphs` values of the glyph slot;
-   *     it also sets `glyph->format` to @FT_GLYPH_FORMAT_COMPOSITE.  The
-   *     description of subglyphs can then be accessed with
-   *     @FT_Get_SubGlyph_Info.
-   *
-   *     Don't use this flag for retrieving metrics information since some
-   *     font drivers only return rudimentary data.
-   *
-   *     This flag implies @FT_LOAD_NO_SCALE and @FT_LOAD_IGNORE_TRANSFORM.
-   *
-   *   FT_LOAD_IGNORE_TRANSFORM ::
-   *     Ignore the transform matrix set by @FT_Set_Transform.
-   *
-   *   FT_LOAD_MONOCHROME ::
-   *     This flag is used with @FT_LOAD_RENDER to indicate that you want to
-   *     render an outline glyph to a 1-bit monochrome bitmap glyph, with
-   *     8~pixels packed into each byte of the bitmap data.
-   *
-   *     Note that this has no effect on the hinting algorithm used.  You
-   *     should rather use @FT_LOAD_TARGET_MONO so that the
-   *     monochrome-optimized hinting algorithm is used.
-   *
-   *   FT_LOAD_LINEAR_DESIGN ::
-   *     Keep `linearHoriAdvance` and `linearVertAdvance` fields of
-   *     @FT_GlyphSlotRec in font units.  See @FT_GlyphSlotRec for details.
-   *
-   *   FT_LOAD_NO_AUTOHINT ::
-   *     Disable the auto-hinter.  See also the note below.
-   *
-   *   FT_LOAD_COLOR ::
-   *     Load colored glyphs.  FreeType searches in the following order;
-   *     there are slight differences depending on the font format.
-   *
-   *     [Since 2.5] Load embedded color bitmap images (provided
-   *     @FT_LOAD_NO_BITMAP is not set).  The resulting color bitmaps, if
-   *     available, have the @FT_PIXEL_MODE_BGRA format, with pre-multiplied
-   *     color channels.  If the flag is not set and color bitmaps are found,
-   *     they are converted to 256-level gray bitmaps, using the
-   *     @FT_PIXEL_MODE_GRAY format.
-   *
-   *     [Since 2.12] If the glyph index maps to an entry in the face's
-   *     'SVG~' table, load the associated SVG document from this table and
-   *     set the `format` field of @FT_GlyphSlotRec to @FT_GLYPH_FORMAT_SVG
-   *     ([since 2.13.1] provided @FT_LOAD_NO_SVG is not set).  Note that
-   *     FreeType itself can't render SVG documents; however, the library
-   *     provides hooks to seamlessly integrate an external renderer.  See
-   *     sections @ot_svg_driver and @svg_fonts for more.
-   *
-   *     [Since 2.10, experimental] If the glyph index maps to an entry in
-   *     the face's 'COLR' table with a 'CPAL' palette table (as defined in
-   *     the OpenType specification), make @FT_Render_Glyph provide a default
-   *     blending of the color glyph layers associated with the glyph index,
-   *     using the same bitmap format as embedded color bitmap images.  This
-   *     is mainly for convenience and works only for glyphs in 'COLR' v0
-   *     tables (or glyphs in 'COLR' v1 tables that exclusively use v0
-   *     features).  For full control of color layers use
-   *     @FT_Get_Color_Glyph_Layer and FreeType's color functions like
-   *     @FT_Palette_Select instead of setting @FT_LOAD_COLOR for rendering
-   *     so that the client application can handle blending by itself.
-   *
-   *   FT_LOAD_NO_SVG ::
-   *     [Since 2.13.1] Ignore SVG glyph data when loading.
-   *
-   *   FT_LOAD_COMPUTE_METRICS ::
-   *     [Since 2.6.1] Compute glyph metrics from the glyph data, without the
-   *     use of bundled metrics tables (for example, the 'hdmx' table in
-   *     TrueType fonts).  This flag is mainly used by font validating or
-   *     font editing applications, which need to ignore, verify, or edit
-   *     those tables.
-   *
-   *     Currently, this flag is only implemented for TrueType fonts.
-   *
-   *   FT_LOAD_BITMAP_METRICS_ONLY ::
-   *     [Since 2.7.1] Request loading of the metrics and bitmap image
-   *     information of a (possibly embedded) bitmap glyph without allocating
-   *     or copying the bitmap image data itself.  No effect if the target
-   *     glyph is not a bitmap image.
-   *
-   *     This flag unsets @FT_LOAD_RENDER.
-   *
-   *   FT_LOAD_CROP_BITMAP ::
-   *     Ignored.  Deprecated.
-   *
-   *   FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH ::
-   *     Ignored.  Deprecated.
-   *
-   * @note:
-   *   By default, hinting is enabled and the font's native hinter (see
-   *   @FT_FACE_FLAG_HINTER) is preferred over the auto-hinter.  You can
-   *   disable hinting by setting @FT_LOAD_NO_HINTING or change the
-   *   precedence by setting @FT_LOAD_FORCE_AUTOHINT.  You can also set
-   *   @FT_LOAD_NO_AUTOHINT in case you don't want the auto-hinter to be used
-   *   at all.
-   *
-   *   See the description of @FT_FACE_FLAG_TRICKY for a special exception
-   *   (affecting only a handful of Asian fonts).
-   *
-   *   Besides deciding which hinter to use, you can also decide which
-   *   hinting algorithm to use.  See @FT_LOAD_TARGET_XXX for details.
-   *
-   *   Note that the auto-hinter needs a valid Unicode cmap (either a native
-   *   one or synthesized by FreeType) for producing correct results.  If a
-   *   font provides an incorrect mapping (for example, assigning the
-   *   character code U+005A, LATIN CAPITAL LETTER~Z, to a glyph depicting a
-   *   mathematical integral sign), the auto-hinter might produce useless
-   *   results.
-   *
-    }
-const
-  FT_LOAD_DEFAULT = $0;  
-  FT_LOAD_NO_SCALE = 1 shl 0;  
-  FT_LOAD_NO_HINTING = 1 shl 1;  
-  FT_LOAD_RENDER = 1 shl 2;  
-  FT_LOAD_NO_BITMAP = 1 shl 3;  
-  FT_LOAD_VERTICAL_LAYOUT = 1 shl 4;  
-  FT_LOAD_FORCE_AUTOHINT = 1 shl 5;  
-  FT_LOAD_CROP_BITMAP = 1 shl 6;  
-  FT_LOAD_PEDANTIC = 1 shl 7;  
-  FT_LOAD_IGNORE_GLOBAL_ADVANCE_WIDTH = 1 shl 9;  
-  FT_LOAD_NO_RECURSE = 1 shl 10;  
-  FT_LOAD_IGNORE_TRANSFORM = 1 shl 11;  
-  FT_LOAD_MONOCHROME = 1 shl 12;  
-  FT_LOAD_LINEAR_DESIGN = 1 shl 13;  
-  FT_LOAD_SBITS_ONLY = 1 shl 14;  
-  FT_LOAD_NO_AUTOHINT = 1 shl 15;  
-{ Bits 16-19 are used by `FT_LOAD_TARGET_`  }
-  FT_LOAD_COLOR = 1 shl 20;  
-  FT_LOAD_COMPUTE_METRICS = 1 shl 21;  
-  FT_LOAD_BITMAP_METRICS_ONLY = 1 shl 22;  
-  FT_LOAD_NO_SVG = 1 shl 24;  
-{  }
-{ used internally only by certain font drivers  }
-  FT_LOAD_ADVANCE_ONLY = 1 shl 8;  
-  FT_LOAD_SVG_ONLY = 1 shl 23;  
-{*************************************************************************
-   *
-   * @enum:
-   *   FT_LOAD_TARGET_XXX
-   *
-   * @description:
-   *   A list of values to select a specific hinting algorithm for the
-   *   hinter.  You should OR one of these values to your `load_flags` when
-   *   calling @FT_Load_Glyph.
-   *
-   *   Note that a font's native hinters may ignore the hinting algorithm you
-   *   have specified (e.g., the TrueType bytecode interpreter).  You can set
-   *   @FT_LOAD_FORCE_AUTOHINT to ensure that the auto-hinter is used.
-   *
-   * @values:
-   *   FT_LOAD_TARGET_NORMAL ::
-   *     The default hinting algorithm, optimized for standard gray-level
-   *     rendering.  For monochrome output, use @FT_LOAD_TARGET_MONO instead.
-   *
-   *   FT_LOAD_TARGET_LIGHT ::
-   *     A lighter hinting algorithm for gray-level modes.  Many generated
-   *     glyphs are fuzzier but better resemble their original shape.  This
-   *     is achieved by snapping glyphs to the pixel grid only vertically
-   *     (Y-axis), as is done by FreeType's new CFF engine or Microsoft's
-   *     ClearType font renderer.  This preserves inter-glyph spacing in
-   *     horizontal text.  The snapping is done either by the native font
-   *     driver, if the driver itself and the font support it, or by the
-   *     auto-hinter.
-   *
-   *     Advance widths are rounded to integer values; however, using the
-   *     `lsb_delta` and `rsb_delta` fields of @FT_GlyphSlotRec, it is
-   *     possible to get fractional advance widths for subpixel positioning
-   *     (which is recommended to use).
-   *
-   *     If configuration option `AF_CONFIG_OPTION_TT_SIZE_METRICS` is
-   *     active, TrueType-like metrics are used to make this mode behave
-   *     similarly as in unpatched FreeType versions between 2.4.6 and 2.7.1
-   *     (inclusive).
-   *
-   *   FT_LOAD_TARGET_MONO ::
-   *     Strong hinting algorithm that should only be used for monochrome
-   *     output.  The result is probably unpleasant if the glyph is rendered
-   *     in non-monochrome modes.
-   *
-   *     Note that for outline fonts only the TrueType font driver has proper
-   *     monochrome hinting support, provided the TTFs contain hints for B/W
-   *     rendering (which most fonts no longer provide).  If these conditions
-   *     are not met it is very likely that you get ugly results at smaller
-   *     sizes.
-   *
-   *   FT_LOAD_TARGET_LCD ::
-   *     A variant of @FT_LOAD_TARGET_LIGHT optimized for horizontally
-   *     decimated LCD displays.
-   *
-   *   FT_LOAD_TARGET_LCD_V ::
-   *     A variant of @FT_LOAD_TARGET_NORMAL optimized for vertically
-   *     decimated LCD displays.
-   *
-   * @note:
-   *   You should use only _one_ of the `FT_LOAD_TARGET_XXX` values in your
-   *   `load_flags`.  They can't be ORed.
-   *
-   *   If @FT_LOAD_RENDER is also set, the glyph is rendered in the
-   *   corresponding mode (i.e., the mode that matches the used algorithm
-   *   best).  An exception is `FT_LOAD_TARGET_MONO` since it implies
-   *   @FT_LOAD_MONOCHROME.
-   *
-   *   You can use a hinting algorithm that doesn't correspond to the same
-   *   rendering mode.  As an example, it is possible to use the 'light'
-   *   hinting algorithm and have the results rendered in horizontal LCD
-   *   pixel mode, with code like
-   *
-   *   ```
-   *     FT_Load_Glyph( face, glyph_index,
-   *                    load_flags | FT_LOAD_TARGET_LIGHT );
-   *
-   *     FT_Render_Glyph( face->glyph, FT_RENDER_MODE_LCD );
-   *   ```
-   *
-   *   In general, you should stick with one rendering mode.  For example,
-   *   switching between @FT_LOAD_TARGET_NORMAL and @FT_LOAD_TARGET_MONO
-   *   enforces a lot of recomputation for TrueType fonts, which is slow.
-   *   Another reason is caching: Selecting a different mode usually causes
-   *   changes in both the outlines and the rasterized bitmaps; it is thus
-   *   necessary to empty the cache after a mode switch to avoid false hits.
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
@@ -18125,159 +16241,11 @@ function FT_LOAD_TARGET_LCD : longint; { return type might be wrong }
 { was #define dname def_expr }
 function FT_LOAD_TARGET_LCD_V : longint; { return type might be wrong }
 
-{*************************************************************************
-   *
-   * @macro:
-   *   FT_LOAD_TARGET_MODE
-   *
-   * @description:
-   *   Return the @FT_Render_Mode corresponding to a given
-   *   @FT_LOAD_TARGET_XXX value.
-   *
-    }
 { was #define dname(params) para_def_expr }
 { argument types are unknown }
 { return type might be wrong }   
 function FT_LOAD_TARGET_MODE(x : longint) : longint;
 
-{*************************************************************************
-   *
-   * @section:
-   *   sizing_and_scaling
-   *
-    }
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Set_Transform
-   *
-   * @description:
-   *   Set the transformation that is applied to glyph images when they are
-   *   loaded into a glyph slot through @FT_Load_Glyph.
-   *
-   * @inout:
-   *   face ::
-   *     A handle to the source face object.
-   *
-   * @input:
-   *   matrix ::
-   *     A pointer to the transformation's 2x2 matrix.  Use `NULL` for the
-   *     identity matrix.
-   *   delta ::
-   *     A pointer to the translation vector.  Use `NULL` for the null
-   *     vector.
-   *
-   * @note:
-   *   This function is provided as a convenience, but keep in mind that
-   *   @FT_Matrix coefficients are only 16.16 fixed-point values, which can
-   *   limit the accuracy of the results.  Using floating-point computations
-   *   to perform the transform directly in client code instead will always
-   *   yield better numbers.
-   *
-   *   The transformation is only applied to scalable image formats after the
-   *   glyph has been loaded.  It means that hinting is unaltered by the
-   *   transformation and is performed on the character size given in the
-   *   last call to @FT_Set_Char_Size or @FT_Set_Pixel_Sizes.
-   *
-   *   Note that this also transforms the `face.glyph.advance` field, but
-   *   **not** the values in `face.glyph.metrics`.
-    }
-procedure FT_Set_Transform(face:TFT_Face; matrix:PFT_Matrix; delta:PFT_Vector);cdecl;external;
-{*************************************************************************
-   *
-   * @function:
-   *   FT_Get_Transform
-   *
-   * @description:
-   *   Return the transformation that is applied to glyph images when they
-   *   are loaded into a glyph slot through @FT_Load_Glyph.  See
-   *   @FT_Set_Transform for more details.
-   *
-   * @input:
-   *   face ::
-   *     A handle to the source face object.
-   *
-   * @output:
-   *   matrix ::
-   *     A pointer to a transformation's 2x2 matrix.  Set this to NULL if you
-   *     are not interested in the value.
-   *
-   *   delta ::
-   *     A pointer to a translation vector.  Set this to NULL if you are not
-   *     interested in the value.
-   *
-   * @since:
-   *   2.11
-   *
-    }
-procedure FT_Get_Transform(face:TFT_Face; matrix:PFT_Matrix; delta:PFT_Vector);cdecl;external;
-{*************************************************************************
-   *
-   * @section:
-   *   glyph_retrieval
-   *
-    }
-{*************************************************************************
-   *
-   * @enum:
-   *   FT_Render_Mode
-   *
-   * @description:
-   *   Render modes supported by FreeType~2.  Each mode corresponds to a
-   *   specific type of scanline conversion performed on the outline.
-   *
-   *   For bitmap fonts and embedded bitmaps the `bitmap->pixel_mode` field
-   *   in the @FT_GlyphSlotRec structure gives the format of the returned
-   *   bitmap.
-   *
-   *   All modes except @FT_RENDER_MODE_MONO use 256 levels of opacity,
-   *   indicating pixel coverage.  Use linear alpha blending and gamma
-   *   correction to correctly render non-monochrome glyph bitmaps onto a
-   *   surface; see @FT_Render_Glyph.
-   *
-   *   The @FT_RENDER_MODE_SDF is a special render mode that uses up to 256
-   *   distance values, indicating the signed distance from the grid position
-   *   to the nearest outline.
-   *
-   * @values:
-   *   FT_RENDER_MODE_NORMAL ::
-   *     Default render mode; it corresponds to 8-bit anti-aliased bitmaps.
-   *
-   *   FT_RENDER_MODE_LIGHT ::
-   *     This is equivalent to @FT_RENDER_MODE_NORMAL.  It is only defined as
-   *     a separate value because render modes are also used indirectly to
-   *     define hinting algorithm selectors.  See @FT_LOAD_TARGET_XXX for
-   *     details.
-   *
-   *   FT_RENDER_MODE_MONO ::
-   *     This mode corresponds to 1-bit bitmaps (with 2~levels of opacity).
-   *
-   *   FT_RENDER_MODE_LCD ::
-   *     This mode corresponds to horizontal RGB and BGR subpixel displays
-   *     like LCD screens.  It produces 8-bit bitmaps that are 3~times the
-   *     width of the original glyph outline in pixels, and which use the
-   *     @FT_PIXEL_MODE_LCD mode.
-   *
-   *   FT_RENDER_MODE_LCD_V ::
-   *     This mode corresponds to vertical RGB and BGR subpixel displays
-   *     (like PDA screens, rotated LCD displays, etc.).  It produces 8-bit
-   *     bitmaps that are 3~times the height of the original glyph outline in
-   *     pixels and use the @FT_PIXEL_MODE_LCD_V mode.
-   *
-   *   FT_RENDER_MODE_SDF ::
-   *     The positive (unsigned) 8-bit bitmap values can be converted to the
-   *     single-channel signed distance field (SDF) by subtracting 128, with
-   *     the positive and negative results corresponding to the inside and
-   *     the outside of a glyph contour, respectively.  The distance units are
-   *     arbitrarily determined by an adjustable @spread property.
-   *
-   * @note:
-   *   The selected render mode only affects scalable vector glyphs of a font.
-   *   Embedded bitmaps often have a different pixel mode like
-   *   @FT_PIXEL_MODE_MONO.  You can use @FT_Bitmap_Convert to transform them
-   *   into 8-bit pixmaps.
-   *
-    }
 type
   PFT_Render_Mode_ = ^TFT_Render_Mode_;
   TFT_Render_Mode_ =  Longint;
@@ -18400,7 +16368,7 @@ type
    *   and so on for green and blue.
     }
 
-function FT_Render_Glyph(slot:TFT_GlyphSlot; render_mode:TFT_Render_Mode):TFT_Error;cdecl;external;
+function FT_Render_Glyph(slot:TFT_GlyphSlot; render_mode:TFT_Render_Mode):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @enum:
@@ -18503,7 +16471,7 @@ type
    *   extracted with `FT_Get_Kerning`.
     }
 
-function FT_Get_Kerning(face:TFT_Face; left_glyph:TFT_UInt; right_glyph:TFT_UInt; kern_mode:TFT_UInt; akerning:PFT_Vector):TFT_Error;cdecl;external;
+function FT_Get_Kerning(face:TFT_Face; left_glyph:TFT_UInt; right_glyph:TFT_UInt; kern_mode:TFT_UInt; akerning:PFT_Vector):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -18540,7 +16508,7 @@ function FT_Get_Kerning(face:TFT_Face; left_glyph:TFT_UInt; right_glyph:TFT_UInt
    *   Only very few AFM files come with track kerning data; please refer to
    *   Adobe's AFM specification for more details.
     }
-function FT_Get_Track_Kerning(face:TFT_Face; point_size:TFT_Fixed; degree:TFT_Int; akerning:PFT_Fixed):TFT_Error;cdecl;external;
+function FT_Get_Track_Kerning(face:TFT_Face; point_size:TFT_Fixed; degree:TFT_Int; akerning:PFT_Fixed):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @section:
@@ -18577,7 +16545,7 @@ function FT_Get_Track_Kerning(face:TFT_Face; point_size:TFT_Fixed; degree:TFT_In
    *   preferred to a UCS-2 cmap).  It is thus preferable to @FT_Set_Charmap
    *   in this case.
     }
-function FT_Select_Charmap(face:TFT_Face; encoding:TFT_Encoding):TFT_Error;cdecl;external;
+function FT_Select_Charmap(face:TFT_Face; encoding:TFT_Encoding):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -18604,7 +16572,7 @@ function FT_Select_Charmap(face:TFT_Face; encoding:TFT_Encoding):TFT_Error;cdecl
    *   It also fails if an OpenType type~14 charmap is selected (which
    *   doesn't map character codes to glyph indices at all).
     }
-function FT_Set_Charmap(face:TFT_Face; charmap:TFT_CharMap):TFT_Error;cdecl;external;
+function FT_Set_Charmap(face:TFT_Face; charmap:TFT_CharMap):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -18622,7 +16590,7 @@ function FT_Set_Charmap(face:TFT_Face; charmap:TFT_CharMap):TFT_Error;cdecl;exte
    *   `charmap` belongs.  If an error occurs, -1 is returned.
    *
     }
-function FT_Get_Charmap_Index(charmap:TFT_CharMap):TFT_Int;cdecl;external;
+function FT_Get_Charmap_Index(charmap:TFT_CharMap):TFT_Int;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -18654,7 +16622,7 @@ function FT_Get_Charmap_Index(charmap:TFT_CharMap):TFT_Int;cdecl;external;
    *   created at index~0 and whatever was there will be moved to the last
    *   index -- Type~42 fonts are considered invalid under this condition.
     }
-function FT_Get_Char_Index(face:TFT_Face; charcode:TFT_ULong):TFT_UInt;cdecl;external;
+function FT_Get_Char_Index(face:TFT_Face; charcode:TFT_ULong):TFT_UInt;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -18705,7 +16673,7 @@ function FT_Get_Char_Index(face:TFT_Face; charcode:TFT_ULong):TFT_UInt;cdecl;ext
    *   itself can be~0 in two cases: if the charmap is empty or if the
    *   value~0 is the first valid character code.
     }
-function FT_Get_First_Char(face:TFT_Face; agindex:PFT_UInt):TFT_ULong;cdecl;external;
+function FT_Get_First_Char(face:TFT_Face; agindex:PFT_UInt):TFT_ULong;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -18738,7 +16706,7 @@ function FT_Get_First_Char(face:TFT_Face; agindex:PFT_UInt):TFT_ULong;cdecl;exte
    *   Note that `*agindex` is set to~0 when there are no more codes in the
    *   charmap.
     }
-function FT_Get_Next_Char(face:TFT_Face; char_code:TFT_ULong; agindex:PFT_UInt):TFT_ULong;cdecl;external;
+function FT_Get_Next_Char(face:TFT_Face; char_code:TFT_ULong; agindex:PFT_UInt):TFT_ULong;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @section:
@@ -18837,7 +16805,7 @@ function FT_Get_Next_Char(face:TFT_Face; char_code:TFT_ULong; agindex:PFT_UInt):
    *   2.8
    *
     }
-function FT_Face_Properties(face:TFT_Face; num_properties:TFT_UInt; properties:PFT_Parameter):TFT_Error;cdecl;external;
+function FT_Face_Properties(face:TFT_Face; num_properties:TFT_UInt; properties:PFT_Parameter):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @section:
@@ -18874,7 +16842,7 @@ function FT_Face_Properties(face:TFT_Face; num_properties:TFT_UInt; properties:P
    *   many recent OpenType fonts do not).
     }
 (* Const before type ignored *)
-function FT_Get_Name_Index(face:TFT_Face; glyph_name:PFT_String):TFT_UInt;cdecl;external;
+function FT_Get_Name_Index(face:TFT_Face; glyph_name:PFT_String):TFT_UInt;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -18917,7 +16885,7 @@ function FT_Get_Name_Index(face:TFT_Face; glyph_name:PFT_String):TFT_UInt;cdecl;
    *   It then works only for fonts that actually embed glyph names (which
    *   many recent OpenType fonts do not).
     }
-function FT_Get_Glyph_Name(face:TFT_Face; glyph_index:TFT_UInt; buffer:TFT_Pointer; buffer_max:TFT_UInt):TFT_Error;cdecl;external;
+function FT_Get_Glyph_Name(face:TFT_Face; glyph_index:TFT_UInt; buffer:TFT_Pointer; buffer_max:TFT_UInt):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -18952,7 +16920,7 @@ function FT_Get_Glyph_Name(face:TFT_Face; glyph_index:TFT_UInt; buffer:TFT_Point
    *   special entries for named instances.
     }
 (* Const before type ignored *)
-function FT_Get_Postscript_Name(face:TFT_Face):Pchar;cdecl;external;
+function FT_Get_Postscript_Name(face:TFT_Face):Pchar;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @enum:
@@ -19030,7 +16998,7 @@ const
     }
 
 function FT_Get_SubGlyph_Info(glyph:TFT_GlyphSlot; sub_index:TFT_UInt; p_index:PFT_Int; p_flags:PFT_UInt; p_arg1:PFT_Int; 
-           p_arg2:PFT_Int; p_transform:PFT_Matrix):TFT_Error;cdecl;external;
+           p_arg2:PFT_Int; p_transform:PFT_Matrix):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @enum:
@@ -19116,7 +17084,7 @@ const
    *
     }
 
-function FT_Get_FSType_Flags(face:TFT_Face):TFT_UShort;cdecl;external;
+function FT_Get_FSType_Flags(face:TFT_Face):TFT_UShort;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @section:
@@ -19205,7 +17173,7 @@ function FT_Get_FSType_Flags(face:TFT_Face):TFT_UShort;cdecl;external;
    *   2.3.6
    *
     }
-function FT_Face_GetCharVariantIndex(face:TFT_Face; charcode:TFT_ULong; variantSelector:TFT_ULong):TFT_UInt;cdecl;external;
+function FT_Face_GetCharVariantIndex(face:TFT_Face; charcode:TFT_ULong; variantSelector:TFT_ULong):TFT_UInt;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19237,7 +17205,7 @@ function FT_Face_GetCharVariantIndex(face:TFT_Face; charcode:TFT_ULong; variantS
    *   2.3.6
    *
     }
-function FT_Face_GetCharVariantIsDefault(face:TFT_Face; charcode:TFT_ULong; variantSelector:TFT_ULong):TFT_Int;cdecl;external;
+function FT_Face_GetCharVariantIsDefault(face:TFT_Face; charcode:TFT_ULong; variantSelector:TFT_ULong):TFT_Int;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19264,7 +17232,7 @@ function FT_Face_GetCharVariantIsDefault(face:TFT_Face; charcode:TFT_ULong; vari
    *   2.3.6
    *
     }
-function FT_Face_GetVariantSelectors(face:TFT_Face):PFT_UInt32;cdecl;external;
+function FT_Face_GetVariantSelectors(face:TFT_Face):PFT_UInt32;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19295,7 +17263,7 @@ function FT_Face_GetVariantSelectors(face:TFT_Face):PFT_UInt32;cdecl;external;
    *   2.3.6
    *
     }
-function FT_Face_GetVariantsOfChar(face:TFT_Face; charcode:TFT_ULong):PFT_UInt32;cdecl;external;
+function FT_Face_GetVariantsOfChar(face:TFT_Face; charcode:TFT_ULong):PFT_UInt32;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19326,7 +17294,7 @@ function FT_Face_GetVariantsOfChar(face:TFT_Face; charcode:TFT_ULong):PFT_UInt32
    *   2.3.6
    *
     }
-function FT_Face_GetCharsOfVariant(face:TFT_Face; variantSelector:TFT_ULong):PFT_UInt32;cdecl;external;
+function FT_Face_GetCharsOfVariant(face:TFT_Face; variantSelector:TFT_ULong):PFT_UInt32;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @section:
@@ -19387,7 +17355,7 @@ function FT_Face_GetCharsOfVariant(face:TFT_Face; variantSelector:TFT_ULong):PFT
    *   divide by zero; it simply returns 'MaxInt' or 'MinInt' depending on
    *   the signs of `a` and `b`.
     }
-function FT_MulDiv(a:TFT_Long; b:TFT_Long; c:TFT_Long):TFT_Long;cdecl;external;
+function FT_MulDiv(a:TFT_Long; b:TFT_Long; c:TFT_Long):TFT_Long;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19418,7 +17386,7 @@ function FT_MulDiv(a:TFT_Long; b:TFT_Long; c:TFT_Long):TFT_Long;cdecl;external;
    *   As a conclusion, always try to place a 16.16 factor as the _second_
    *   argument of this function; this can make a great difference.
     }
-function FT_MulFix(a:TFT_Long; b:TFT_Long):TFT_Long;cdecl;external;
+function FT_MulFix(a:TFT_Long; b:TFT_Long):TFT_Long;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19438,7 +17406,7 @@ function FT_MulFix(a:TFT_Long; b:TFT_Long):TFT_Long;cdecl;external;
    * @return:
    *   The result of `(a*0x10000)/b`.
     }
-function FT_DivFix(a:TFT_Long; b:TFT_Long):TFT_Long;cdecl;external;
+function FT_DivFix(a:TFT_Long; b:TFT_Long):TFT_Long;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19458,7 +17426,7 @@ function FT_DivFix(a:TFT_Long; b:TFT_Long):TFT_Long;cdecl;external;
    * @note:
    *   The function uses wrap-around arithmetic.
     }
-function FT_RoundFix(a:TFT_Fixed):TFT_Fixed;cdecl;external;
+function FT_RoundFix(a:TFT_Fixed):TFT_Fixed;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19477,7 +17445,7 @@ function FT_RoundFix(a:TFT_Fixed):TFT_Fixed;cdecl;external;
    * @note:
    *   The function uses wrap-around arithmetic.
     }
-function FT_CeilFix(a:TFT_Fixed):TFT_Fixed;cdecl;external;
+function FT_CeilFix(a:TFT_Fixed):TFT_Fixed;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19493,7 +17461,7 @@ function FT_CeilFix(a:TFT_Fixed):TFT_Fixed;cdecl;external;
    * @return:
    *   `a` rounded towards minus infinity.
     }
-function FT_FloorFix(a:TFT_Fixed):TFT_Fixed;cdecl;external;
+function FT_FloorFix(a:TFT_Fixed):TFT_Fixed;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19514,7 +17482,7 @@ function FT_FloorFix(a:TFT_Fixed):TFT_Fixed;cdecl;external;
    *   The result is undefined if either `vector` or `matrix` is invalid.
     }
 (* Const before type ignored *)
-procedure FT_Vector_Transform(vector:PFT_Vector; matrix:PFT_Matrix);cdecl;external;
+procedure FT_Vector_Transform(vector:PFT_Vector; matrix:PFT_Matrix);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @section:
@@ -19580,7 +17548,7 @@ const
    *   library object has been created.
     }
 
-procedure FT_Library_Version(library:TFT_Library; amajor:PFT_Int; aminor:PFT_Int; apatch:PFT_Int);cdecl;external;
+procedure FT_Library_Version(library:TFT_Library; amajor:PFT_Int; aminor:PFT_Int; apatch:PFT_Int);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @section:
@@ -19609,7 +17577,7 @@ procedure FT_Library_Version(library:TFT_Library; amajor:PFT_Int; aminor:PFT_Int
    *   2.3.5
    *
     }
-function FT_Face_CheckTrueTypePatents(face:TFT_Face):TFT_Bool;cdecl;external;
+function FT_Face_CheckTrueTypePatents(face:TFT_Face):TFT_Bool;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19635,7 +17603,7 @@ function FT_Face_CheckTrueTypePatents(face:TFT_Face):TFT_Bool;cdecl;external;
    *   2.3.5
    *
     }
-function FT_Face_SetUnpatentedHinting(face:TFT_Face; value:TFT_Bool):TFT_Bool;cdecl;external;
+function FT_Face_SetUnpatentedHinting(face:TFT_Face; value:TFT_Bool):TFT_Bool;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FREETYPE_H_  }
@@ -19749,7 +17717,7 @@ const
    *
     }
 
-function FT_Sin(angle:TFT_Angle):TFT_Fixed;cdecl;external;
+function FT_Sin(angle:TFT_Angle):TFT_Fixed;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19770,7 +17738,7 @@ function FT_Sin(angle:TFT_Angle):TFT_Fixed;cdecl;external;
    *   function @FT_Vector_Unit.
    *
     }
-function FT_Cos(angle:TFT_Angle):TFT_Fixed;cdecl;external;
+function FT_Cos(angle:TFT_Angle):TFT_Fixed;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19787,7 +17755,7 @@ function FT_Cos(angle:TFT_Angle):TFT_Fixed;cdecl;external;
    *   The tangent value.
    *
     }
-function FT_Tan(angle:TFT_Angle):TFT_Fixed;cdecl;external;
+function FT_Tan(angle:TFT_Angle):TFT_Fixed;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19808,7 +17776,7 @@ function FT_Tan(angle:TFT_Angle):TFT_Fixed;cdecl;external;
    *   The arc-tangent value (i.e. angle).
    *
     }
-function FT_Atan2(x:TFT_Fixed; y:TFT_Fixed):TFT_Angle;cdecl;external;
+function FT_Atan2(x:TFT_Fixed; y:TFT_Fixed):TFT_Angle;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19829,7 +17797,7 @@ function FT_Atan2(x:TFT_Fixed; y:TFT_Fixed):TFT_Angle;cdecl;external;
    *   Constrained value of `angle2-angle1`.
    *
     }
-function FT_Angle_Diff(angle1:TFT_Angle; angle2:TFT_Angle):TFT_Angle;cdecl;external;
+function FT_Angle_Diff(angle1:TFT_Angle; angle2:TFT_Angle):TFT_Angle;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19852,7 +17820,7 @@ function FT_Angle_Diff(angle1:TFT_Angle; angle2:TFT_Angle):TFT_Angle;cdecl;exter
    *     The input angle.
    *
     }
-procedure FT_Vector_Unit(vec:PFT_Vector; angle:TFT_Angle);cdecl;external;
+procedure FT_Vector_Unit(vec:PFT_Vector; angle:TFT_Angle);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19870,7 +17838,7 @@ procedure FT_Vector_Unit(vec:PFT_Vector; angle:TFT_Angle);cdecl;external;
    *     The input angle.
    *
     }
-procedure FT_Vector_Rotate(vec:PFT_Vector; angle:TFT_Angle);cdecl;external;
+procedure FT_Vector_Rotate(vec:PFT_Vector; angle:TFT_Angle);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19888,7 +17856,7 @@ procedure FT_Vector_Rotate(vec:PFT_Vector; angle:TFT_Angle);cdecl;external;
    *   vector coordinates.
    *
     }
-function FT_Vector_Length(vec:PFT_Vector):TFT_Fixed;cdecl;external;
+function FT_Vector_Length(vec:PFT_Vector):TFT_Fixed;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19909,7 +17877,7 @@ function FT_Vector_Length(vec:PFT_Vector):TFT_Fixed;cdecl;external;
    *     The vector angle.
    *
     }
-procedure FT_Vector_Polarize(vec:PFT_Vector; length:PFT_Fixed; angle:PFT_Angle);cdecl;external;
+procedure FT_Vector_Polarize(vec:PFT_Vector; length:PFT_Fixed; angle:PFT_Angle);cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -19930,7 +17898,7 @@ procedure FT_Vector_Polarize(vec:PFT_Vector; length:PFT_Fixed; angle:PFT_Angle);
    *     The vector angle.
    *
     }
-procedure FT_Vector_From_Polar(vec:PFT_Vector; length:TFT_Fixed; angle:TFT_Angle);cdecl;external;
+procedure FT_Vector_From_Polar(vec:PFT_Vector; length:TFT_Fixed; angle:TFT_Angle);cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTTRIGON_H_  }
@@ -20510,7 +18478,7 @@ function FT_NOERRORDEF_(e,v,s : longint) : longint;
     }
 (* Const before type ignored *)
 
-function FT_Error_String(error_code:TFT_Error):Pchar;cdecl;external;
+function FT_Error_String(error_code:TFT_Error):Pchar;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FT_ERR_PROTOS_DEFINED  }
@@ -20602,7 +18570,7 @@ function FT_Error_String(error_code:TFT_Error):Pchar;cdecl;external;
    *   of FreeType was not compiled with zlib support.
     }
 
-function FT_Stream_OpenGzip(stream:TFT_Stream; source:TFT_Stream):TFT_Error;cdecl;external;
+function FT_Stream_OpenGzip(stream:TFT_Stream; source:TFT_Stream):TFT_Error;cdecl; external freetype_lib;
 {*************************************************************************
    *
    * @function:
@@ -20645,7 +18613,7 @@ function FT_Stream_OpenGzip(stream:TFT_Stream; source:TFT_Stream):TFT_Error;cdec
    *   2.5.1
     }
 (* Const before type ignored *)
-function FT_Gzip_Uncompress(memory:TFT_Memory; output:PFT_Byte; output_len:PFT_ULong; input:PFT_Byte; input_len:TFT_ULong):TFT_Error;cdecl;external;
+function FT_Gzip_Uncompress(memory:TFT_Memory; output:PFT_Byte; output_len:PFT_ULong; input:PFT_Byte; input_len:TFT_ULong):TFT_Error;cdecl; external freetype_lib;
 {  }
 {$endif}
 { FTGZIP_H_  }
