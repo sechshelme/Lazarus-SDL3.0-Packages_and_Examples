@@ -185,8 +185,8 @@ begin
     FT_Set_Transform(face, @matrix, @pen);
 
 
-    //    error := FT_Load_Char(face, TFT_ULong(HelloText[n]), FT_LOAD_RENDER);
-    error := FT_Load_Char(face, wc[n], FT_LOAD_RENDER);
+        error := FT_Load_Char(face, TFT_ULong(HelloText[n]), FT_LOAD_RENDER);
+    //error := FT_Load_Char(face, wc[n], FT_LOAD_RENDER);
     //error := FT_Load_Char(face, 65, FT_LOAD_RENDER);
     if error <> 0 then begin
       WriteLn('Fehler: Load_Char   ', error);
