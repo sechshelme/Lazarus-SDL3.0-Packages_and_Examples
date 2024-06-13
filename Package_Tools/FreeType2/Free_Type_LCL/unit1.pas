@@ -91,6 +91,8 @@ begin
     WriteLn('Fehler: Set_Char_Size   ', error);
   end;
 
+  WriteLn('num_glyphs: ', face^.num_glyphs);
+
   Timer1.Enabled := True;
 end;
 
@@ -189,7 +191,7 @@ begin
     //error := FT_Load_Char(face, wc[n], FT_LOAD_RENDER);
     //error := FT_Load_Char(face, 65, FT_LOAD_RENDER);
     if error <> 0 then begin
-  //    WriteLn('Fehler: Load_Char   ', error);
+      WriteLn('Fehler: Load_Char   ', error);
     end;
 
     draw_bitmap(slot^.bitmap, slot^.bitmap_left, OpenGLControl1.Height - slot^.bitmap_top);
