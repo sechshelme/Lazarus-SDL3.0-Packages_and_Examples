@@ -108,6 +108,10 @@ var
       end;
 
       SDL_RenderClear(renderer);
+
+      rSrc.items:=[0,0 ,1050,1000];
+      SDL_SetRenderViewport(renderer, @rSrc);
+
       //   SDL_RenderTexture(renderer, bitmapTex, nil, @distrect);
       rSrc.x := 0;
       rSrc.y := 0;
