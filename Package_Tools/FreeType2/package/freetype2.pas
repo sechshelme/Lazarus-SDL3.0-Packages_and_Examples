@@ -206,6 +206,16 @@ const
   // ====  ftimage.h
 
 type
+  PFT_Glyph_Format = ^TFT_Glyph_Format;
+  TFT_Glyph_Format = longint;
+const
+  FT_GLYPH_FORMAT_COMPOSITE = byte('c') shl 24 + byte('o') shl 16 + byte('m') shl 8 + byte('p');
+  FT_GLYPH_FORMAT_BITMAP = byte('b') shl 24 + byte('i') shl 16 + byte('t') shl 8 + byte('s');
+  FT_GLYPH_FORMAT_OUTLINE = byte('o') shl 24 + byte('u') shl 16 + byte('t') shl 8 + byte('l');
+  FT_GLYPH_FORMAT_PLOTTER = byte('p') shl 24 + byte('l') shl 16 + byte('o') shl 8 + byte('t');
+  FT_GLYPH_FORMAT_SVG = byte('S') shl 24 + byte('V') shl 16 + byte('G') shl 8 + byte('0');
+
+type
   PFT_Pixel_Mode = ^TFT_Pixel_Mode;
   TFT_Pixel_Mode = longint;
 
@@ -1458,7 +1468,6 @@ type
   // =====================
 
   TFT_Encoding = integer; // enum, ??????????????'
-  TFT_Glyph_Format = integer;
 
 
   PFT_Library = ^TFT_Library;

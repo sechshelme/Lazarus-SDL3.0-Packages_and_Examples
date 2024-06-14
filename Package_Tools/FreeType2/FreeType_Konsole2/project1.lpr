@@ -1,38 +1,13 @@
 program project1;
 
+//  #define FT_CONFIG_OPTION_ERROR_STRINGS
+
+{$define FT_CONFIG_OPTION_ERROR_STRINGS}
+
 uses
   ctypes,
+  sysutils,
   FreeType2;
-
-const
-  {$IFDEF Linux}
-  stdio_lib = 'c';
-  {$ENDIF}
-
-  {$IFDEF Windows}
-  stdio_lib = 'msvcrt';
-  {$ENDIF}
-
-
-  function printf(str: PChar): cint; varargs cdecl; external stdio_lib;
-
-
-(*
-FT_IMAGE_TAG( FT_GLYPH_FORMAT_NONE, 0, 0, 0, 0 ),
-
-FT_IMAGE_TAG( FT_GLYPH_FORMAT_COMPOSITE, 'c', 'o', 'm', 'p' ),
-FT_IMAGE_TAG( FT_GLYPH_FORMAT_BITMAP,    'b', 'i', 't', 's' ),
-FT_IMAGE_TAG( FT_GLYPH_FORMAT_OUTLINE,   'o', 'u', 't', 'l' ),
-FT_IMAGE_TAG( FT_GLYPH_FORMAT_PLOTTER,   'p', 'l', 'o', 't' ),
-FT_IMAGE_TAG( FT_GLYPH_FORMAT_SVG,       'S', 'V', 'G', ' ' )
-  *)
-
-
-
-const
-  FT_GLYPH_FORMAT_BITMAP = byte('b') shl 24 + byte('i') shl 16 + byte('t') shl 8 + byte('s');
-//  FT_GLYPH_FORMAT_BITMAP = byte(#0) shl 24 + byte(#0) shl 16 + byte(#0) shl 8 + byte(#0);
-
 
   procedure main;
   const
@@ -44,19 +19,26 @@ const
     cur_glyph: TFT_GlyphSlot;
     bitmap: TFT_Bitmap;
     glyph_metrics: TFT_Glyph_Metrics;
-    glyph_ind: integer;
+    glyph_ind, i: integer;
     char_name: array[0..255] of char;
+    fterror: TFT_Error;
 
   begin
-    if FT_Init_FreeType(@font_library) <> 0 then begin
-      WriteLn('Fehler: FT_Init');
+    fterror:= FT_Init_FreeType(@font_library);
+    if fterror <> 0 then begin
+      WriteLn('Fehler: FT_Init  ',fterror);
     end;
-    if FT_New_Face(font_library, fontfile, 0, @font_face) <> 0 then begin
-      WriteLn('Fehler: FT_New_Face');
+    fterror:=FT_New_Face(font_library, fontfile, 0, @font_face);
+    if fterror <> 0 then begin
+      WriteLn('Fehler: FT_New_Face  ',fterror);
     end;
-    if FT_Set_Char_Size(font_face, 0, 768, 300, 300) <> 0 then begin
-      WriteLn('Fehler: FT_Set_Char_Size');
+    fterror:=FT_Set_Char_Size(font_face  , 0, 768, 3000000, 300);
+    if fterror <> 0 then begin
+      WriteLn('Fehler: FT_Set_Char_Size  ',fterror,'   ', IntToHex(fterror));
     end;
+
+    for i:=0 to 20 do WriteLn(i:4,FT_Error_String(i));
+    halt;
 
     num_chars := font_face^.num_glyphs;
     WriteLn('num_chars: ', num_chars);
@@ -81,20 +63,11 @@ const
       bitmap := cur_glyph^.bitmap;
       glyph_metrics := cur_glyph^.metrics;
 
-      //printf('Glyph %d  name %s %ld %ld %ld %d %d'#10,
-      //  glyph_ind,
-      //  char_name,
-      //  glyph_metrics.horiBearingX div 64,
-      //  glyph_metrics.horiBearingY div 64,
-      //  glyph_metrics.horiAdvance div 64,
-      //  bitmap.Width,
-      //  bitmap.rows);
-
-      WriteLn('Glyph ', glyph_ind:4, '  name ', char_name:20, ' ',
-      glyph_metrics.horiBearingX div 64:6, ' ',
-      glyph_metrics.horiBearingY div 64:6, ' ',
-      glyph_metrics.horiAdvance div 64:6, ' ',
-      bitmap.Width:3, ' x ', bitmap.rows:3);
+      WriteLn('Glyph ', glyph_ind: 4, '  name ', char_name: 20, ' ',
+        glyph_metrics.horiBearingX div 64: 6, ' ',
+        glyph_metrics.horiBearingY div 64: 6, ' ',
+        glyph_metrics.horiAdvance div 64: 6, ' ',
+        bitmap.Width: 3, ' x ', bitmap.rows: 3);
 
     end;
   end;

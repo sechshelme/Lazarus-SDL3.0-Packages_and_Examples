@@ -5,6 +5,18 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+static const char *ftstrerror(FT_Error error)
+{
+#undef FTERRORS_H_
+#define FT_ERRORDEF(error_code, value, string) case error_code: return string;
+#define FT_ERROR_START_LIST switch(error) {
+#define FT_ERROR_END_LIST default: return "Unknown error"; }
+#include FT_ERRORS_H
+}
+
+#define FT_CONFIG_OPTION_ERROR_STRINGS
+
+
 
   int main( int    argc,
             char*  argv[] )
@@ -15,19 +27,24 @@
     FT_GlyphSlot     cur_glyph;
     FT_Glyph_Metrics glyph_metrics;
 
+    FT_Error error;
+
     int  glyph_ind;
     int  num_chars;
     char char_name[256];
 
 
-    if (argc != 2)
-      exit( 1 );
+
     if ( FT_Init_FreeType( &font_library ) )
       exit( 1 );
     if ( FT_New_Face( font_library, "/usr/share/fonts/truetype/ubuntu/Ubuntu-MI.ttf", 0 , &font_face ) )
       exit( 1 );
-    if ( FT_Set_Char_Size( font_face , 0 , 768 , 300 , 300 ) )
+    error = FT_Set_Char_Size( font_face , 0 , 768 , 30000000 , 300 );
+    if (error ) {
+      printf("error: (%i)   %s\n",error, FT_Error_String(error));
+      printf("error: (%i)   %s\n",error, ftstrerror(error));
       exit( 1 );
+    }
 
     num_chars = (int)font_face->num_glyphs;
     FT_Set_Transform( font_face , NULL , NULL );
