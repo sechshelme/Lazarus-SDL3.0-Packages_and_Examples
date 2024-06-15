@@ -14,7 +14,7 @@ static const char *ftstrerror(FT_Error error)
 #include FT_ERRORS_H
 }
 
-#define FT_CONFIG_OPTION_ERROR_STRINGS
+// #define FT_CONFIG_OPTION_ERROR_STRINGS
 
 
 

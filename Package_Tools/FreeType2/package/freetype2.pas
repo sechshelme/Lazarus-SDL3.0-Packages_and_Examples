@@ -151,8 +151,6 @@ const
   FT_ANGLE_PI4 = FT_ANGLE_PI div 4;
 
 
-
-
   // ===== ftmm.h
 
 const
@@ -199,8 +197,6 @@ const
   FT_ORIENTATION_FILL_RIGHT = FT_ORIENTATION_TRUETYPE;
   FT_ORIENTATION_FILL_LEFT = FT_ORIENTATION_POSTSCRIPT;
   FT_ORIENTATION_NONE = (FT_ORIENTATION_POSTSCRIPT) + 1;
-
-
 
 
   // ====  ftimage.h
@@ -1611,7 +1607,7 @@ type
 
   TFT_Alloc_Func = function(memory: TFT_Memory; size: longint): pointer; cdecl;
   TFT_Free_Func = procedure(memory: TFT_Memory; block: pointer); cdecl;
-  TFT_Realloc_Func = function(memory: TFT_Memory; cur_size: longint; new_size: longint; block: pointer): pointer; cdecl;
+  TFT_Realloc_Func = function(memory: TFT_Memory; cur_size: clong; new_size: clong; block: pointer): pointer; cdecl;
 
   TFT_MemoryRec = record
     user: pointer;//cdecl;
@@ -1624,19 +1620,19 @@ type
 
   TFT_StreamDesc = record
     case longint of
-      0: (Value: longint);
+      0: (Value: clong);
       1: (pointer_: pointer);
   end;
   PFT_StreamDesc = ^TFT_StreamDesc;
   PFT_Stream = ^TFT_Stream;
   TFT_Stream = ^TFT_StreamRec;
   TFT_Stream_CloseFunc = procedure(stream: TFT_Stream); cdecl;
-  TFT_Stream_IoFunc = function(stream: TFT_Stream; offset: dword; buffer: pbyte; Count: dword): dword; cdecl;
+  TFT_Stream_IoFunc = function(stream: TFT_Stream; offset: culong; buffer: pbyte; Count: culong): culong; cdecl;
 
   TFT_StreamRec = record
     base: pbyte;
-    size: dword;
-    pos: dword;
+    size: culong;
+    pos: culong;
     descriptor: TFT_StreamDesc;
     pathname: TFT_StreamDesc;
     Read: TFT_Stream_IoFunc;
@@ -1967,10 +1963,10 @@ type
   TFT_Raster_DoneFunc = procedure(raster: TFT_Raster); cdecl;
   FT_Raster_Done_Func = TFT_Raster_DoneFunc;
 
-  TFT_Raster_ResetFunc = procedure(raster: TFT_Raster; pool_base: pbyte; pool_size: dword); cdecl;
+  TFT_Raster_ResetFunc = procedure(raster: TFT_Raster; pool_base: pbyte; pool_size: culong); cdecl;
   FT_Raster_Reset_Func = TFT_Raster_ResetFunc;
 
-  TFT_Raster_SetModeFunc = function(raster: TFT_Raster; mode: dword; args: pointer): longint; cdecl;
+  TFT_Raster_SetModeFunc = function(raster: TFT_Raster; mode: culong; args: pointer): longint; cdecl;
   FT_Raster_Set_Mode_Func = TFT_Raster_SetModeFunc;
 
   TFT_Raster_RenderFunc = function(raster: TFT_Raster; params: PFT_Raster_Params): longint; cdecl;
