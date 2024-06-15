@@ -19,7 +19,8 @@ const
   {$ENDIF}
 
 
-  // ======= integer-types.h
+  // ==== integer-types.h
+
 const
   SHRT_MAX = 32767;   // limits.h
 
@@ -28,7 +29,38 @@ const
   FT_SIZEOF_LONG = Sizeof(clong);
   FT_SIZEOF_LONG_LONG = Sizeof(clonglong);
 
-  // ======== freetype.h
+  // === freetype.h
+
+type
+  PFT_Encoding = ^TFT_Encoding;
+  TFT_Encoding = longint;
+
+const
+  FT_ENCODING_NONE = 0;
+
+  FT_ENCODING_MS_SYMBOL = byte('s') shl 24 + byte('y') shl 16 + byte('m') shl 8 + byte('b');
+  FT_ENCODING_UNICODE = byte('u') shl 24 + byte('n') shl 16 + byte('i') shl 8 + byte('c');
+
+  FT_ENCODING_SJIS = byte('s') shl 24 + byte('j') shl 16 + byte('i') shl 8 + byte('s');
+  FT_ENCODING_PRC = byte('g') shl 24 + byte('b') shl 16 + byte(' ') shl 8 + byte(' ');
+  FT_ENCODING_BIG5 = byte('b') shl 24 + byte('i') shl 16 + byte('g') shl 8 + byte('5');
+  FT_ENCODING_WANSUNG = byte('w') shl 24 + byte('a') shl 16 + byte('n') shl 8 + byte('s');
+  FT_ENCODING_JOHAB = byte('j') shl 24 + byte('o') shl 16 + byte('h') shl 8 + byte('a');
+
+  FT_ENCODING_GB2312 = FT_ENCODING_PRC;
+  FT_ENCODING_MS_SJIS = FT_ENCODING_SJIS;
+  FT_ENCODING_MS_GB2312 = FT_ENCODING_PRC;
+  FT_ENCODING_MS_BIG5 = FT_ENCODING_BIG5;
+  FT_ENCODING_MS_WANSUNG = FT_ENCODING_WANSUNG;
+  FT_ENCODING_MS_JOHAB = FT_ENCODING_JOHAB;
+
+  FT_ENCODING_ADOBE_STANDARD = byte('A') shl 24 + byte('D') shl 16 + byte('O') shl 8 + byte('B');
+  FT_ENCODING_ADOBE_EXPERT = byte('A') shl 24 + byte('D') shl 16 + byte('B') shl 8 + byte('E');
+  FT_ENCODING_ADOBE_CUSTOM = byte('A') shl 24 + byte('D') shl 16 + byte('B') shl 8 + byte('C');
+  FT_ENCODING_ADOBE_LATIN_1 = byte('l') shl 24 + byte('a') shl 16 + byte('t') shl 8 + byte('1');
+  FT_ENCODING_OLD_LATIN_2 = byte('l') shl 24 + byte('a') shl 16 + byte('t') shl 8 + byte('2');
+  FT_ENCODING_APPLE_ROMAN = byte('a') shl 24 + byte('r') shl 16 + byte('m') shl 8 + byte('n');
+
 
 const
   FT_OPEN_MEMORY = $1;
@@ -120,8 +152,6 @@ const
   FT_KERNING_UNFITTED = 1;
   FT_KERNING_UNSCALED = 2;
 
-
-
 const
   FT_SUBGLYPH_FLAG_ARGS_ARE_WORDS = 1;
   FT_SUBGLYPH_FLAG_ARGS_ARE_XY_VALUES = 2;
@@ -204,6 +234,7 @@ const
 type
   PFT_Glyph_Format = ^TFT_Glyph_Format;
   TFT_Glyph_Format = longint;
+
 const
   FT_GLYPH_FORMAT_COMPOSITE = byte('c') shl 24 + byte('o') shl 16 + byte('m') shl 8 + byte('p');
   FT_GLYPH_FORMAT_BITMAP = byte('b') shl 24 + byte('i') shl 16 + byte('t') shl 8 + byte('s');
@@ -837,7 +868,6 @@ const
   TT_UCR_HANGUL_COMPATIBILITY_JAMO = 1 shl 20;
   TT_UCR_CJK_MISC = 1 shl 21;
   TT_UCR_KANBUN = TT_UCR_CJK_MISC;
-
   TT_UCR_ENCLOSED_CJK_LETTERS_MONTHS = 1 shl 22;
   TT_UCR_CJK_COMPATIBILITY = 1 shl 23;
   TT_UCR_HANGUL = 1 shl 24;
@@ -1024,6 +1054,7 @@ const
   FT_COLOR_ROOT_TRANSFORM_MAX = 2;
 
   // ====  ftadvanc.h
+
 const
   FT_ADVANCE_FLAG_FAST_ONLY = $20000000;
 
@@ -1041,7 +1072,6 @@ const
   FT_VALIDATE_prop_INDEX = 8;
   FT_VALIDATE_lcar_INDEX = 9;
   FT_VALIDATE_GX_LAST_INDEX = FT_VALIDATE_lcar_INDEX;
-
   FT_VALIDATE_GX_LENGTH = FT_VALIDATE_GX_LAST_INDEX + 1;
 
 const
@@ -1165,13 +1195,16 @@ const
   FT_AUTOHINTER_SCRIPT_CJK = 2;
   FT_AUTOHINTER_SCRIPT_INDIC = 3;
 
+
   // ====  ftgasp.h
+
 const
   FT_GASP_NO_TABLE = -(1);
   FT_GASP_DO_GRIDFIT = $01;
   FT_GASP_DO_GRAY = $02;
   FT_GASP_SYMMETRIC_GRIDFIT = $04;
   FT_GASP_SYMMETRIC_SMOOTHING = $08;
+
 
   // ====  ftwinfnt.h
 
@@ -1195,6 +1228,7 @@ const
   FT_WinFNT_ID_CP874 = 222;
   FT_WinFNT_ID_CP1250 = 238;
   FT_WinFNT_ID_OEM = 255;
+
 
   // ====  ftstroke.h
 
@@ -1226,6 +1260,7 @@ const
   FT_STROKER_BORDER_LEFT = 0;
   FT_STROKER_BORDER_RIGHT = 1;
 
+
   // ====  ftglyph.h
 
 type
@@ -1239,10 +1274,12 @@ const
   FT_GLYPH_BBOX_TRUNCATE = 2;
   FT_GLYPH_BBOX_PIXELS = 3;
 
+
   // ====  fterrors.h
 
 const
   FT_ERR_BASE = 0;
+
 
   // ====  ftoption.h
 
@@ -1268,6 +1305,7 @@ const
 
 type
   // ======= integer-types.h
+
   PFT_Int16 = ^TFT_Int16;
   TFT_Int16 = int16;
 
@@ -1291,6 +1329,7 @@ type
 
   PFT_UFast = ^TFT_UFast;
   TFT_UFast = dword;
+
 
   // ======== fttypes.h
 
@@ -1358,28 +1397,54 @@ type
   PFT_PtrDist = ^TFT_PtrDist;
   TFT_PtrDist = SizeUInt;
 
-  // ==== ftimage.h
 
-  TFT_Pos = cslong;
-  PFT_Pos = ^TFT_Pos;
-
-  TFT_Vector = record
-    x: TFT_Pos;
-    y: TFT_Pos;
+  TFT_UnitVector = record
+    x: TFT_F2Dot14;
+    y: TFT_F2Dot14;
   end;
-  PFT_Vector = ^TFT_Vector;
+  PFT_UnitVector = ^TFT_UnitVector;
 
-  TFT_BBox = record
-    xMin: TFT_Pos;
-    yMin: TFT_Pos;
-    xMax: TFT_Pos;
-    yMax: TFT_Pos;
+  TFT_Matrix = record
+    xx: TFT_Fixed;
+    xy: TFT_Fixed;
+    yx: TFT_Fixed;
+    yy: TFT_Fixed;
   end;
-  PFT_BBox = ^TFT_BBox;
+  PFT_Matrix = ^TFT_Matrix;
+
+  TFT_Data = record
+    pointer: PFT_Byte;
+    length: TFT_UInt;
+  end;
+  PFT_Data = ^TFT_Data;
+
+  TFT_Generic_Finalizer = procedure(object_: pointer); cdecl;
+
+  TFT_Generic = record
+    Data: pointer;
+    finalizer: TFT_Generic_Finalizer;
+  end;
+  PFT_Generic = ^TFT_Generic;
+
+  TFT_ListNodeRec = record
+    prev: ^TFT_ListNodeRec;
+    Next: ^TFT_ListNodeRec;
+    Data: pointer;
+  end;
+  PFT_ListNodeRec = ^TFT_ListNodeRec;
+  PFT_ListNode = ^TFT_ListNode;
+  TFT_ListNode = PFT_ListNodeRec;
+
+  TFT_ListRec = record
+    head: TFT_ListNode;
+    tail: TFT_ListNode;
+  end;
+  PFT_ListRec = ^TFT_ListRec;
+  PFT_List = ^TFT_List;
+  TFT_List = ^TFT_ListRec;
 
 
   // ===== ftmm.h
-
 
   TFT_MM_Axis = record
     Name: PFT_String;
@@ -1422,77 +1487,66 @@ type
   PFT_MM_Var = ^TFT_MM_Var;
   PPFT_MM_Var = ^PFT_MM_Var;
 
-  TFT_UnitVector = record
-    x: TFT_F2Dot14;
-    y: TFT_F2Dot14;
+  // ==== ftsystem.h
+
+  TFT_Memory = ^TFT_MemoryRec;
+  PFT_Memory = ^TFT_Memory;
+
+  TFT_Alloc_Func = function(memory: TFT_Memory; size: longint): pointer; cdecl;
+  TFT_Free_Func = procedure(memory: TFT_Memory; block: pointer); cdecl;
+  TFT_Realloc_Func = function(memory: TFT_Memory; cur_size: clong; new_size: clong; block: pointer): pointer; cdecl;
+
+  TFT_MemoryRec = record
+    user: pointer;//cdecl;
+    alloc: TFT_Alloc_Func;
+    Free: TFT_Free_Func;
+    realloc: TFT_Realloc_Func;
   end;
-  PFT_UnitVector = ^TFT_UnitVector;
+  PFT_MemoryRec = ^TFT_MemoryRec;
 
-  TFT_Matrix = record
-    xx: TFT_Fixed;
-    xy: TFT_Fixed;
-    yx: TFT_Fixed;
-    yy: TFT_Fixed;
+  TFT_StreamDesc = record
+    case longint of
+      0: (Value: clong);
+      1: (pointer_: pointer);
   end;
-  PFT_Matrix = ^TFT_Matrix;
+  PFT_StreamDesc = ^TFT_StreamDesc;
+  PFT_Stream = ^TFT_Stream;
+  TFT_Stream = ^TFT_StreamRec;
+  TFT_Stream_CloseFunc = procedure(stream: TFT_Stream); cdecl;
+  TFT_Stream_IoFunc = function(stream: TFT_Stream; offset: culong; buffer: pbyte; Count: culong): culong; cdecl;
 
-  TFT_Data = record
-    pointer: PFT_Byte;
-    length: TFT_UInt;
+  TFT_StreamRec = record
+    base: pbyte;
+    size: culong;
+    pos: culong;
+    descriptor: TFT_StreamDesc;
+    pathname: TFT_StreamDesc;
+    Read: TFT_Stream_IoFunc;
+    Close: TFT_Stream_CloseFunc;
+    memory: TFT_Memory;
+    cursor: pbyte;
+    limit: pbyte;
   end;
-  PFT_Data = ^TFT_Data;
+  PFT_StreamRec = ^TFT_StreamRec;
 
-  TFT_ListNodeRec = record
-    prev: ^TFT_ListNodeRec;
-    Next: ^TFT_ListNodeRec;
-    Data: pointer;
+  // ==== ftimage.h
+
+  TFT_Pos = cslong;
+  PFT_Pos = ^TFT_Pos;
+
+  TFT_Vector = record
+    x: TFT_Pos;
+    y: TFT_Pos;
   end;
-  PFT_ListNodeRec = ^TFT_ListNodeRec;
-  PFT_ListNode = ^TFT_ListNode;
-  TFT_ListNode = PFT_ListNodeRec;
+  PFT_Vector = ^TFT_Vector;
 
-  TFT_ListRec = record
-    head: TFT_ListNode;
-    tail: TFT_ListNode;
+  TFT_BBox = record
+    xMin: TFT_Pos;
+    yMin: TFT_Pos;
+    xMax: TFT_Pos;
+    yMax: TFT_Pos;
   end;
-  PFT_ListRec = ^TFT_ListRec;
-  PFT_List = ^TFT_List;
-  TFT_List = ^TFT_ListRec;
-
-  // ======= Diverse
-
-  // =====================
-
-  TFT_Encoding = integer; // enum, ??????????????'
-
-
-  PFT_Library = ^TFT_Library;
-  TFT_Library = Pointer;  // PFT_LibraryRec_
-
-  // =====================
-
-
-  TFT_Glyph_Metrics = record
-    Width: TFT_Pos;
-    Height: TFT_Pos;
-    horiBearingX: TFT_Pos;
-    horiBearingY: TFT_Pos;
-    horiAdvance: TFT_Pos;
-    vertBearingX: TFT_Pos;
-    vertBearingY: TFT_Pos;
-    vertAdvance: TFT_Pos;
-  end;
-  PFT_Glyph_Metrics = ^TFT_Glyph_Metrics;
-
-
-  TFT_Generic_Finalizer = procedure(object_: pointer); cdecl;
-
-  TFT_Generic = record
-    Data: pointer;
-    finalizer: TFT_Generic_Finalizer;
-  end;
-  PFT_Generic = ^TFT_Generic;
-
+  PFT_BBox = ^TFT_BBox;
 
   TFT_Bitmap = record
     rows: dword;
@@ -1506,44 +1560,6 @@ type
   end;
   PFT_Bitmap = ^TFT_Bitmap;
 
-
-  TFT_Size_Metrics = record
-    x_ppem: TFT_UShort;
-    y_ppem: TFT_UShort;
-    x_scale: TFT_Fixed;
-    y_scale: TFT_Fixed;
-    ascender: TFT_Pos;
-    descender: TFT_Pos;
-    Height: TFT_Pos;
-    max_advance: TFT_Pos;
-  end;
-  PFT_Size_Metrics = ^TFT_Size_Metrics;
-
-  PFT_Size_Internal = ^TFT_Size_Internal;
-  TFT_Size_Internal = Pointer; // PFT_Size_InternalRec_;
-
-
-
-  TFT_SizeRec = record
-    face: ^TFT_FaceRec;
-    generic_: TFT_Generic;
-    metrics: TFT_Size_Metrics;
-    internal: TFT_Size_Internal;
-  end;
-  PFT_SizeRec = ^TFT_SizeRec;
-  TFT_Size = PFT_SizeRec;
-  PFT_Size = ^TFT_Size;
-
-  TFT_Bitmap_Size = record
-    Height: TFT_Short;
-    Width: TFT_Short;
-    size: TFT_Pos;
-    x_ppem: TFT_Pos;
-    y_ppem: TFT_Pos;
-  end;
-  PFT_Bitmap_Size = ^TFT_Bitmap_Size;
-
-
   TFT_Outline = record
     n_contours: smallint;
     n_points: smallint;
@@ -1554,8 +1570,115 @@ type
   end;
   PFT_Outline = ^TFT_Outline;
 
+  TFT_Outline_MoveToFunc = function(to_: PFT_Vector; user: pointer): longint; cdecl;
+  FT_Outline_MoveTo_Func = TFT_Outline_MoveToFunc;
+  TFT_Outline_LineToFunc = function(to_: PFT_Vector; user: pointer): longint; cdecl;
+  FT_Outline_LineTo_Func = TFT_Outline_LineToFunc;
+  TFT_Outline_ConicToFunc = function(control: PFT_Vector; to_: PFT_Vector; user: pointer): longint; cdecl;
+  FT_Outline_ConicTo_Func = TFT_Outline_ConicToFunc;
+  TFT_Outline_CubicToFunc = function(control1: PFT_Vector; control2: PFT_Vector; to_: PFT_Vector; user: pointer): longint; cdecl;
+  FT_Outline_CubicTo_Func = TFT_Outline_CubicToFunc;
+
+  TFT_Outline_Funcs = record
+    move_to: TFT_Outline_MoveToFunc;
+    line_to: TFT_Outline_LineToFunc;
+    conic_to: TFT_Outline_ConicToFunc;
+    cubic_to: TFT_Outline_CubicToFunc;
+    shift: longint;
+    delta: TFT_Pos;
+  end;
+  PFT_Outline_Funcs = ^TFT_Outline_Funcs;
+
+  TFT_Span = record
+    x: smallint;
+    len: word;
+    coverage: byte;
+  end;
+  PFT_Span = ^TFT_Span;
+
+  TFT_SpanFunc = procedure(y: longint; Count: longint; spans: PFT_Span; user: pointer); cdecl;
+  FT_Raster_Span_Func = TFT_SpanFunc;
+  TFT_Raster_BitTest_Func = function(y: longint; x: longint; user: pointer): longint; cdecl;
+  TFT_Raster_BitSet_Func = procedure(y: longint; x: longint; user: pointer); cdecl;
+
+  TFT_Raster_Params = record
+    target: PFT_Bitmap;
+    Source: pointer;
+    flags: longint;
+    gray_spans: TFT_SpanFunc;
+    black_spans: TFT_SpanFunc;
+    bit_test: TFT_Raster_BitTest_Func;
+    bit_set: TFT_Raster_BitSet_Func;
+    user: pointer;
+    clip_box: TFT_BBox;
+  end;
+  PFT_Raster_Params = ^TFT_Raster_Params;
+
+  PFT_Raster = ^TFT_Raster;
+  TFT_Raster = Pointer; // PFT_RasterRec_;
+
+  TFT_Raster_NewFunc = function(memory: pointer; raster: PFT_Raster): longint; cdecl;
+  FT_Raster_New_Func = TFT_Raster_NewFunc;
+
+  TFT_Raster_DoneFunc = procedure(raster: TFT_Raster); cdecl;
+  FT_Raster_Done_Func = TFT_Raster_DoneFunc;
+
+  TFT_Raster_ResetFunc = procedure(raster: TFT_Raster; pool_base: pbyte; pool_size: culong); cdecl;
+  FT_Raster_Reset_Func = TFT_Raster_ResetFunc;
+
+  TFT_Raster_SetModeFunc = function(raster: TFT_Raster; mode: culong; args: pointer): longint; cdecl;
+  FT_Raster_Set_Mode_Func = TFT_Raster_SetModeFunc;
+
+  TFT_Raster_RenderFunc = function(raster: TFT_Raster; params: PFT_Raster_Params): longint; cdecl;
+  FT_Raster_Render_Func = TFT_Raster_RenderFunc;
+
+  TFT_Raster_Funcs = record
+    glyph_format: TFT_Glyph_Format;
+    raster_new: TFT_Raster_NewFunc;
+    raster_reset: TFT_Raster_ResetFunc;
+    raster_set_mode: TFT_Raster_SetModeFunc;
+    raster_render: TFT_Raster_RenderFunc;
+    raster_done: TFT_Raster_DoneFunc;
+  end;
+  PFT_Raster_Funcs = ^TFT_Raster_Funcs;
+
+  // ==== freetype.h
+
+  TFT_Glyph_Metrics = record
+    Width: TFT_Pos;
+    Height: TFT_Pos;
+    horiBearingX: TFT_Pos;
+    horiBearingY: TFT_Pos;
+    horiAdvance: TFT_Pos;
+    vertBearingX: TFT_Pos;
+    vertBearingY: TFT_Pos;
+    vertAdvance: TFT_Pos;
+  end;
+  PFT_Glyph_Metrics = ^TFT_Glyph_Metrics;
+
+  TFT_Bitmap_Size = record
+    Height: TFT_Short;
+    Width: TFT_Short;
+    size: TFT_Pos;
+    x_ppem: TFT_Pos;
+    y_ppem: TFT_Pos;
+  end;
+  PFT_Bitmap_Size = ^TFT_Bitmap_Size;
+
+  PFT_Library = ^TFT_Library;
+  TFT_Library = Pointer;  // PFT_LibraryRec_
+
+  PFT_Module = ^TFT_Module;
+  TFT_Module = Pointer; // PFT_ModuleRec_;
+
+  PFT_Driver = ^TFT_Driver;
+  TFT_Driver = Pointer; // PFT_DriverRec_;
+
+  PFT_Renderer = ^TFT_Renderer;
+  TFT_Renderer = Pointer; // PFT_RendererRec_;
+
   PFT_SubGlyph = ^TFT_SubGlyph;
-  TFT_SubGlyph = Pointer;
+  TFT_SubGlyph = Pointer; // PFT_SubGlyphRec_
 
   PFT_Slot_Internal = ^TFT_Slot_Internal;
   TFT_Slot_Internal = Pointer; // PFT_Slot_InternalRec_
@@ -1588,6 +1711,30 @@ type
   PFT_GlyphSlot = ^TFT_GlyphSlot;
   TFT_GlyphSlot = PFT_GlyphSlotRec;
 
+  TFT_Size_Metrics = record
+    x_ppem: TFT_UShort;
+    y_ppem: TFT_UShort;
+    x_scale: TFT_Fixed;
+    y_scale: TFT_Fixed;
+    ascender: TFT_Pos;
+    descender: TFT_Pos;
+    Height: TFT_Pos;
+    max_advance: TFT_Pos;
+  end;
+  PFT_Size_Metrics = ^TFT_Size_Metrics;
+
+  PFT_Size_Internal = ^TFT_Size_Internal;
+  TFT_Size_Internal = Pointer; // PFT_Size_InternalRec_;
+
+  TFT_SizeRec = record
+    face: ^TFT_FaceRec;
+    generic_: TFT_Generic;
+    metrics: TFT_Size_Metrics;
+    internal: TFT_Size_Internal;
+  end;
+  PFT_SizeRec = ^TFT_SizeRec;
+  TFT_Size = PFT_SizeRec;
+  PFT_Size = ^TFT_Size;
 
   TFT_CharMapRec = record
     face: ^TFT_FaceRec;
@@ -1599,53 +1746,8 @@ type
   PFT_CharMap = ^TFT_CharMap;
   TFT_CharMap = ^TFT_CharMapRec;
 
-  PFT_Driver = ^TFT_Driver;
-  TFT_Driver = Pointer; // PFT_DriverRec_;
-
-  PFT_Memory = ^TFT_Memory;
-  TFT_Memory = ^TFT_MemoryRec;
-
-  TFT_Alloc_Func = function(memory: TFT_Memory; size: longint): pointer; cdecl;
-  TFT_Free_Func = procedure(memory: TFT_Memory; block: pointer); cdecl;
-  TFT_Realloc_Func = function(memory: TFT_Memory; cur_size: clong; new_size: clong; block: pointer): pointer; cdecl;
-
-  TFT_MemoryRec = record
-    user: pointer;//cdecl;
-    alloc: TFT_Alloc_Func;
-    Free: TFT_Free_Func;
-    realloc: TFT_Realloc_Func;
-  end;
-  PFT_MemoryRec = ^TFT_MemoryRec;
-
-
-  TFT_StreamDesc = record
-    case longint of
-      0: (Value: clong);
-      1: (pointer_: pointer);
-  end;
-  PFT_StreamDesc = ^TFT_StreamDesc;
-  PFT_Stream = ^TFT_Stream;
-  TFT_Stream = ^TFT_StreamRec;
-  TFT_Stream_CloseFunc = procedure(stream: TFT_Stream); cdecl;
-  TFT_Stream_IoFunc = function(stream: TFT_Stream; offset: culong; buffer: pbyte; Count: culong): culong; cdecl;
-
-  TFT_StreamRec = record
-    base: pbyte;
-    size: culong;
-    pos: culong;
-    descriptor: TFT_StreamDesc;
-    pathname: TFT_StreamDesc;
-    Read: TFT_Stream_IoFunc;
-    Close: TFT_Stream_CloseFunc;
-    memory: TFT_Memory;
-    cursor: pbyte;
-    limit: pbyte;
-  end;
-  PFT_StreamRec = ^TFT_StreamRec;
-
   PFT_Face_Internal = ^TFT_Face_Internal;
   TFT_Face_Internal = Pointer; // PFT_Face_InternalRec_;
-
 
   TFT_FaceRec = record
     num_faces: TFT_Long;
@@ -1684,22 +1786,11 @@ type
   PFT_Face = ^TFT_Face;
   TFT_Face = ^TFT_FaceRec;
 
-  // ======== freetype.h
-
-  PFT_Module = ^TFT_Module;
-  TFT_Module = Pointer; // PFT_ModuleRec_;
-
-  PFT_Renderer = ^TFT_Renderer;
-  TFT_Renderer = Pointer; // PFT_RendererRec_;
-
-
-  PFT_Parameter = ^TFT_Parameter;
-
   TFT_Parameter = record
     tag: TFT_ULong;
     Data: TFT_Pointer;
   end;
-
+  PFT_Parameter = ^TFT_Parameter;
 
   TFT_Open_Args = record
     flags: TFT_UInt;
@@ -1712,7 +1803,6 @@ type
     params: PFT_Parameter;
   end;
   PFT_Open_Args = ^TFT_Open_Args;
-
 
   TFT_Size_RequestRec = record
     _type: TFT_Size_Request_Type;
@@ -1742,8 +1832,6 @@ type
   PFTC_Node = ^TFTC_Node;
   TFTC_Node = Pointer; // PFTC_NodeRec_;
 
-  PFTC_ScalerRec = ^TFTC_ScalerRec;
-
   TFTC_ScalerRec = record
     face_id: TFTC_FaceID;
     Width: TFT_UInt;
@@ -1752,13 +1840,12 @@ type
     x_res: TFT_UInt;
     y_res: TFT_UInt;
   end;
+  PFTC_ScalerRec = ^TFTC_ScalerRec;
   PFTC_Scaler = ^TFTC_Scaler;
   TFTC_Scaler = PFTC_ScalerRec;
 
   PFTC_CMapCache = ^TFTC_CMapCache;
   TFTC_CMapCache = Pointer; // PFTC_CMapCacheRec_;
-
-  PFTC_ImageTypeRec = ^TFTC_ImageTypeRec;
 
   TFTC_ImageTypeRec = record
     face_id: TFTC_FaceID;
@@ -1766,13 +1853,12 @@ type
     Height: TFT_UInt;
     flags: TFT_Int32;
   end;
+  PFTC_ImageTypeRec = ^TFTC_ImageTypeRec;
   PFTC_ImageType = ^TFTC_ImageType;
   TFTC_ImageType = PFTC_ImageTypeRec;
 
   PFTC_ImageCache = ^TFTC_ImageCache;
   TFTC_ImageCache = Pointer; // PFTC_ImageCacheRec_;
-
-
 
   TFTC_SBitRec = record
     Width: TFT_Byte;
@@ -1793,8 +1879,8 @@ type
   PFTC_SBitCache = ^TFTC_SBitCache;
   TFTC_SBitCache = Pointer; // PFTC_SBitCacheRec_;
 
-  // ====  ftglyph.h
 
+  // ====  ftglyph.h
 
   TFT_GlyphRec = record
     library_: TFT_Library;
@@ -1840,6 +1926,7 @@ type
   PFT_SvgGlyph = ^TFT_SvgGlyph;
   TFT_SvgGlyph = PFT_SvgGlyphRec;
 
+
   // ====  ftmodapi.h
 
   PFT_Module_Interface = ^TFT_Module_Interface;
@@ -1848,8 +1935,6 @@ type
   TFT_Module_Constructor = function(module: TFT_Module): TFT_Error; cdecl;
   TFT_Module_Destructor = procedure(module: TFT_Module); cdecl;
   TFT_Module_Requester = function(module: TFT_Module; Name: PChar): TFT_Module_Interface; cdecl;
-
-  PFT_Module_Class = ^TFT_Module_Class;
 
   TFT_Module_Class = record
     module_flags: TFT_ULong;
@@ -1862,6 +1947,7 @@ type
     module_done: TFT_Module_Destructor;
     get_interface: TFT_Module_Requester;
   end;
+  PFT_Module_Class = ^TFT_Module_Class;
 
   TFT_DebugHook_Func = function(arg: pointer): TFT_Error; cdecl;
 
@@ -1892,8 +1978,6 @@ type
   TFT_Renderer_GetCBoxFunc = procedure(renderer: TFT_Renderer; slot: TFT_GlyphSlot; cbox: PFT_BBox); cdecl;
   TFT_Renderer_SetModeFunc = function(renderer: TFT_Renderer; mode_tag: TFT_ULong; mode_ptr: TFT_Pointer): TFT_Error; cdecl;
 
-  PFT_Renderer_Class = ^TFT_Renderer_Class;
-
   TFT_Renderer_Class = record
     root: TFT_Module_Class;
     glyph_format: TFT_Glyph_Format;
@@ -1903,89 +1987,10 @@ type
     set_mode: TFT_Renderer_SetModeFunc;
     raster_class: ^TFT_Raster_Funcs;
   end;
+  PFT_Renderer_Class = ^TFT_Renderer_Class;
 
-  // ====  ftimage.h
-
-  TFT_Outline_MoveToFunc = function(to_: PFT_Vector; user: pointer): longint; cdecl;
-  FT_Outline_MoveTo_Func = TFT_Outline_MoveToFunc;
-  TFT_Outline_LineToFunc = function(to_: PFT_Vector; user: pointer): longint; cdecl;
-  FT_Outline_LineTo_Func = TFT_Outline_LineToFunc;
-  TFT_Outline_ConicToFunc = function(control: PFT_Vector; to_: PFT_Vector; user: pointer): longint; cdecl;
-  FT_Outline_ConicTo_Func = TFT_Outline_ConicToFunc;
-  TFT_Outline_CubicToFunc = function(control1: PFT_Vector; control2: PFT_Vector; to_: PFT_Vector; user: pointer): longint; cdecl;
-  FT_Outline_CubicTo_Func = TFT_Outline_CubicToFunc;
-
-  PFT_Outline_Funcs = ^TFT_Outline_Funcs;
-
-  TFT_Outline_Funcs = record
-    move_to: TFT_Outline_MoveToFunc;
-    line_to: TFT_Outline_LineToFunc;
-    conic_to: TFT_Outline_ConicToFunc;
-    cubic_to: TFT_Outline_CubicToFunc;
-    shift: longint;
-    delta: TFT_Pos;
-  end;
-
-  PFT_Span = ^TFT_Span;
-
-  TFT_Span = record
-    x: smallint;
-    len: word;
-    coverage: byte;
-  end;
-
-  TFT_SpanFunc = procedure(y: longint; Count: longint; spans: PFT_Span; user: pointer); cdecl;
-  FT_Raster_Span_Func = TFT_SpanFunc;
-
-  TFT_Raster_BitTest_Func = function(y: longint; x: longint; user: pointer): longint; cdecl;
-  TFT_Raster_BitSet_Func = procedure(y: longint; x: longint; user: pointer); cdecl;
-
-  PFT_Raster_Params = ^TFT_Raster_Params;
-
-  TFT_Raster_Params = record
-    target: PFT_Bitmap;
-    Source: pointer;
-    flags: longint;
-    gray_spans: TFT_SpanFunc;
-    black_spans: TFT_SpanFunc;
-    bit_test: TFT_Raster_BitTest_Func;
-    bit_set: TFT_Raster_BitSet_Func;
-    user: pointer;
-    clip_box: TFT_BBox;
-  end;
-
-  PFT_Raster = ^TFT_Raster;
-  TFT_Raster = Pointer; // PFT_RasterRec_;
-
-  TFT_Raster_NewFunc = function(memory: pointer; raster: PFT_Raster): longint; cdecl;
-  FT_Raster_New_Func = TFT_Raster_NewFunc;
-
-  TFT_Raster_DoneFunc = procedure(raster: TFT_Raster); cdecl;
-  FT_Raster_Done_Func = TFT_Raster_DoneFunc;
-
-  TFT_Raster_ResetFunc = procedure(raster: TFT_Raster; pool_base: pbyte; pool_size: culong); cdecl;
-  FT_Raster_Reset_Func = TFT_Raster_ResetFunc;
-
-  TFT_Raster_SetModeFunc = function(raster: TFT_Raster; mode: culong; args: pointer): longint; cdecl;
-  FT_Raster_Set_Mode_Func = TFT_Raster_SetModeFunc;
-
-  TFT_Raster_RenderFunc = function(raster: TFT_Raster; params: PFT_Raster_Params): longint; cdecl;
-  FT_Raster_Render_Func = TFT_Raster_RenderFunc;
-
-  PFT_Raster_Funcs = ^TFT_Raster_Funcs;
-
-  TFT_Raster_Funcs = record
-    glyph_format: TFT_Glyph_Format;
-    raster_new: TFT_Raster_NewFunc;
-    raster_reset: TFT_Raster_ResetFunc;
-    raster_set_mode: TFT_Raster_SetModeFunc;
-    raster_render: TFT_Raster_RenderFunc;
-    raster_done: TFT_Raster_DoneFunc;
-  end;
 
   // ====  ftsnames.h
-
-  PFT_SfntName = ^TFT_SfntName;
 
   TFT_SfntName = record
     platform_id: TFT_UShort;
@@ -1995,13 +2000,13 @@ type
     _string: PFT_Byte;
     string_len: TFT_UInt;
   end;
-
-  PFT_SfntLangTag = ^TFT_SfntLangTag;
+  PFT_SfntName = ^TFT_SfntName;
 
   TFT_SfntLangTag = record
     _string: PFT_Byte;
     string_len: TFT_UInt;
   end;
+  PFT_SfntLangTag = ^TFT_SfntLangTag;
 
   // ====  otsvg.h
 
@@ -2010,16 +2015,13 @@ type
   TSVG_Lib_Render_Func = function(slot: TFT_GlyphSlot; data_pointer: PFT_Pointer): TFT_Error; cdecl;
   TSVG_Lib_Preset_Slot_Func = function(slot: TFT_GlyphSlot; cache: TFT_Bool; state: PFT_Pointer): TFT_Error; cdecl;
 
-  PSVG_RendererHooks = ^TSVG_RendererHooks;
-
   TSVG_RendererHooks = record
     init_svg: TSVG_Lib_Init_Func;
     free_svg: TSVG_Lib_Free_Func;
     render_svg: TSVG_Lib_Render_Func;
     preset_slot: TSVG_Lib_Preset_Slot_Func;
   end;
-
-  PFT_SVG_DocumentRec = ^TFT_SVG_DocumentRec;
+  PSVG_RendererHooks = ^TSVG_RendererHooks;
 
   TFT_SVG_DocumentRec = record
     svg_document: PFT_Byte;
@@ -2031,17 +2033,18 @@ type
     transform: TFT_Matrix;
     delta: TFT_Vector;
   end;
+  PFT_SVG_DocumentRec = ^TFT_SVG_DocumentRec;
   PFT_SVG_Document = ^TFT_SVG_Document;
   TFT_SVG_Document = PFT_SVG_DocumentRec;
+
 
   // ====  ftlcdfil.h
 
   PFT_LcdFiveTapFilter = ^TFT_LcdFiveTapFilter;
   TFT_LcdFiveTapFilter = array[0..(FT_LCD_FILTER_FIVE_TAPS) - 1] of TFT_Byte;
 
-  // ====  ftbdf.h
 
-  PBDF_PropertyRec = ^TBDF_PropertyRec;
+  // ====  ftbdf.h
 
   TBDF_PropertyRec = record
     _type: TBDF_PropertyType;
@@ -2052,6 +2055,7 @@ type
         2: (cardinal: TFT_UInt32);
       end;
   end;
+  PBDF_PropertyRec = ^TBDF_PropertyRec;
   PBDF_Property = ^TBDF_Property;
   TBDF_Property = PBDF_PropertyRec;
 
@@ -2118,7 +2122,6 @@ type
     short_metrics: pointer;
   end;
   PTT_VertHeader = ^TTT_VertHeader;
-
 
   TTT_OS2 = record
     version: TFT_UShort;
@@ -2234,7 +2237,6 @@ type
   end;
   PFT_Palette_Data = ^TFT_Palette_Data;
 
-
   TFT_LayerIterator = record
     num_layers: TFT_UInt;
     layer: TFT_UInt;
@@ -2325,11 +2327,10 @@ type
   end;
   PFT_PaintGlyph = ^TFT_PaintGlyph;
 
-  PFT_PaintColrGlyph = ^TFT_PaintColrGlyph;
-
   TFT_PaintColrGlyph = record
     glyphID: TFT_UInt;
   end;
+  PFT_PaintColrGlyph = ^TFT_PaintColrGlyph;
 
   TFT_PaintTransform = record
     paint: TFT_OpaquePaint;
@@ -2479,8 +2480,6 @@ type
   PCID_FontDict = ^TCID_FontDict;
   TCID_FontDict = TCID_FaceDictRec;
 
-  PCID_FaceInfoRec = ^TCID_FaceInfoRec;
-
   TCID_FaceInfoRec = record
     cid_font_name: PFT_String;
     cid_version: TFT_Fixed;
@@ -2501,36 +2500,36 @@ type
     font_dicts: TCID_FaceDict;
     data_offset: TFT_ULong;
   end;
+  PCID_FaceInfoRec = ^TCID_FaceInfoRec;
   PCID_FaceInfo = ^TCID_FaceInfo;
   TCID_FaceInfo = ^TCID_FaceInfoRec;
 
   PCID_Info = ^TCID_Info;
   TCID_Info = TCID_FaceInfoRec;
 
+
   // ====  ftlist.h
 
   TFT_List_Iterator = function(node: TFT_ListNode; user: pointer): TFT_Error; cdecl;
   TFT_List_Destructor = procedure(memory: TFT_Memory; Data: pointer; user: pointer); cdecl;
 
-  // ====  ftdriver.h
 
-  PFT_Prop_GlyphToScriptMap = ^TFT_Prop_GlyphToScriptMap;
+  // ====  ftdriver.h
 
   TFT_Prop_GlyphToScriptMap = record
     face: TFT_Face;
     map: PFT_UShort;
   end;
-
-  PFT_Prop_IncreaseXHeight = ^TFT_Prop_IncreaseXHeight;
+  PFT_Prop_GlyphToScriptMap = ^TFT_Prop_GlyphToScriptMap;
 
   TFT_Prop_IncreaseXHeight = record
     face: TFT_Face;
     limit: TFT_UInt;
   end;
+  PFT_Prop_IncreaseXHeight = ^TFT_Prop_IncreaseXHeight;
+
 
   // ====  ftwinfnt.h
-
-  PFT_WinFNT_HeaderRec = ^TFT_WinFNT_HeaderRec;
 
   TFT_WinFNT_HeaderRec = record
     version: TFT_UShort;
@@ -2570,7 +2569,7 @@ type
     color_table_offset: TFT_UShort;
     reserved1: array[0..3] of TFT_ULong;
   end;
-
+  PFT_WinFNT_HeaderRec = ^TFT_WinFNT_HeaderRec;
   PFT_WinFNT_Header = ^TFT_WinFNT_Header;
   TFT_WinFNT_Header = PFT_WinFNT_HeaderRec;
 
@@ -2612,8 +2611,6 @@ type
   PFT_Incremental_InterfaceRec = ^TFT_Incremental_InterfaceRec;
   PFT_Incremental_Interface = ^TFT_Incremental_Interface;
   TFT_Incremental_Interface = PFT_Incremental_InterfaceRec;
-
-
 
 
   // =============== Externe Functionen ==========================
@@ -2717,10 +2714,12 @@ function FTC_SBitCache_New(manager: TFTC_Manager; acache: PFTC_SBitCache): TFT_E
 function FTC_SBitCache_Lookup(cache: TFTC_SBitCache; _type: TFTC_ImageType; gindex: TFT_UInt; sbit: PFTC_SBit; anode: PFTC_Node): TFT_Error; cdecl; external freetype_lib;
 function FTC_SBitCache_LookupScaler(cache: TFTC_SBitCache; scaler: TFTC_Scaler; load_flags: TFT_ULong; gindex: TFT_UInt; sbit: PFTC_SBit; anode: PFTC_Node): TFT_Error; cdecl; external freetype_lib;
 
+
 // ====  ftrender.h
 
 function FT_Get_Renderer(library_: TFT_Library; format: TFT_Glyph_Format): TFT_Renderer; cdecl; external freetype_lib;
 function FT_Set_Renderer(library_: TFT_Library; renderer: TFT_Renderer; num_params: TFT_UInt; parameters: PFT_Parameter): TFT_Error; cdecl; external freetype_lib;
+
 
 // ====  ftmodapi.h
 
@@ -2737,17 +2736,20 @@ procedure FT_Set_Debug_Hook(library_: TFT_Library; hook_index: TFT_UInt; debug_h
 procedure FT_Add_Default_Modules(library_: TFT_Library); cdecl; external freetype_lib;
 function FT_Get_TrueType_Engine_Type(library_: TFT_Library): TFT_TrueTypeEngineType; cdecl; external freetype_lib;
 
+
 // ====  ftpfr.h
 
 function FT_Get_PFR_Metrics(face: TFT_Face; aoutline_resolution: PFT_UInt; ametrics_resolution: PFT_UInt; ametrics_x_scale: PFT_Fixed; ametrics_y_scale: PFT_Fixed): TFT_Error; cdecl; external freetype_lib;
 function FT_Get_PFR_Kerning(face: TFT_Face; left: TFT_UInt; right: TFT_UInt; avector: PFT_Vector): TFT_Error; cdecl; external freetype_lib;
 function FT_Get_PFR_Advance(face: TFT_Face; gindex: TFT_UInt; aadvance: PFT_Pos): TFT_Error; cdecl; external freetype_lib;
 
+
 // ====  ftsnames.h
 
 function FT_Get_Sfnt_Name_Count(face: TFT_Face): TFT_UInt; cdecl; external freetype_lib;
 function FT_Get_Sfnt_Name(face: TFT_Face; idx: TFT_UInt; aname: PFT_SfntName): TFT_Error; cdecl; external freetype_lib;
 function FT_Get_Sfnt_LangTag(face: TFT_Face; langID: TFT_UInt; alangTag: PFT_SfntLangTag): TFT_Error; cdecl; external freetype_lib;
+
 
 // ====  ftlcdfil.h
 
@@ -2758,20 +2760,24 @@ function FT_Library_SetLcdFilter(library_: TFT_Library; filter: TFT_LcdFilter): 
 function FT_Library_SetLcdFilterWeights(library_: TFT_Library; weights: pbyte): TFT_Error; cdecl; external freetype_lib;
 function FT_Library_SetLcdGeometry(library_: TFT_Library; sub: Tsub02): TFT_Error; cdecl; external freetype_lib;
 
+
 // ====  ftbdf.h
 
 function FT_Get_BDF_Charset_ID(face: TFT_Face; acharset_encoding: PPchar; acharset_registry: PPchar): TFT_Error; cdecl; external freetype_lib;
 function FT_Get_BDF_Property(face: TFT_Face; prop_name: PChar; aproperty: PBDF_PropertyRec): TFT_Error; cdecl; external freetype_lib;
 
+
 // ====  ftlzw.h
 
 function FT_Stream_OpenLZW(stream: TFT_Stream; Source: TFT_Stream): TFT_Error; cdecl; external freetype_lib;
+
 
 // ====  ftcid.h
 
 function FT_Get_CID_Registry_Ordering_Supplement(face: TFT_Face; registry: PPchar; ordering: PPchar; supplement: PFT_Int): TFT_Error; cdecl; external freetype_lib;
 function FT_Get_CID_Is_Internally_CID_Keyed(face: TFT_Face; is_cid: PFT_Bool): TFT_Error; cdecl; external freetype_lib;
 function FT_Get_CID_From_Glyph_Index(face: TFT_Face; glyph_index: TFT_UInt; cid: PFT_UInt): TFT_Error; cdecl; external freetype_lib;
+
 
 // ====  ftcid.h
 
@@ -2781,14 +2787,17 @@ function FT_Sfnt_Table_Info(face: TFT_Face; table_index: TFT_UInt; tag: PFT_ULon
 function FT_Get_CMap_Language_ID(charmap: TFT_CharMap): TFT_ULong; cdecl; external freetype_lib;
 function FT_Get_CMap_Format(charmap: TFT_CharMap): TFT_Long; cdecl; external freetype_lib;
 
+
 // ====  ftgzip.h
 
 function FT_Stream_OpenGzip(stream: TFT_Stream; Source: TFT_Stream): TFT_Error; cdecl; external freetype_lib;
 function FT_Gzip_Uncompress(memory: TFT_Memory; output: PFT_Byte; output_len: PFT_ULong; input: PFT_Byte; input_len: TFT_ULong): TFT_Error; cdecl; external freetype_lib;
 
+
 // ====  ftbzip2.h
 
 function FT_Stream_OpenBzip2(stream: TFT_Stream; Source: TFT_Stream): TFT_Error; cdecl; external freetype_lib;
+
 
 // ====  ftbitmap.h
 
@@ -2800,6 +2809,7 @@ function FT_Bitmap_Convert(library_: TFT_Library; Source: PFT_Bitmap; target: PF
 function FT_Bitmap_Blend(library_: TFT_Library; Source: PFT_Bitmap; source_offset: TFT_Vector; target: PFT_Bitmap; atarget_offset: PFT_Vector; color: TFT_Color): TFT_Error; cdecl; external freetype_lib;
 function FT_GlyphSlot_Own_Bitmap(slot: TFT_GlyphSlot): TFT_Error; cdecl; external freetype_lib;
 function FT_Bitmap_Done(library_: TFT_Library; bitmap: PFT_Bitmap): TFT_Error; cdecl; external freetype_lib;
+
 
 // ====  ftcolor.h
 
@@ -2813,10 +2823,12 @@ function FT_Get_Paint_Layers(face: TFT_Face; iterator: PFT_LayerIterator; paint:
 function FT_Get_Colorline_Stops(face: TFT_Face; color_stop: PFT_ColorStop; iterator: PFT_ColorStopIterator): TFT_Bool; cdecl; external freetype_lib;
 function FT_Get_Paint(face: TFT_Face; opaque_paint: TFT_OpaquePaint; paint: PFT_COLR_Paint): TFT_Bool; cdecl; external freetype_lib;
 
+
 // ====  ftadvanc.h
 
 function FT_Get_Advance(face: TFT_Face; gindex: TFT_UInt; load_flags: TFT_Int32; padvance: PFT_Fixed): TFT_Error; cdecl; external freetype_lib;
 function FT_Get_Advances(face: TFT_Face; start: TFT_UInt; Count: TFT_UInt; load_flags: TFT_Int32; padvances: PFT_Fixed): TFT_Error; cdecl; external freetype_lib;
+
 
 // ====  ftgxval.h
 
@@ -2827,6 +2839,7 @@ function FT_TrueTypeGX_Validate(face: TFT_Face; validation_flags: TFT_UInt; tabl
 procedure FT_TrueTypeGX_Free(face: TFT_Face; table: TFT_Bytes); cdecl; external freetype_lib;
 function FT_ClassicKern_Validate(face: TFT_Face; validation_flags: TFT_UInt; ckern_table: PFT_Bytes): TFT_Error; cdecl; external freetype_lib;
 procedure FT_ClassicKern_Free(face: TFT_Face; table: TFT_Bytes); cdecl; external freetype_lib;
+
 
 // ====  ftoutln.h
 
@@ -2855,6 +2868,7 @@ function FT_Outline_Get_Orientation(outline: PFT_Outline): TFT_Orientation; cdec
 //function FT_New_Face_From_FSSpec(library_:TFT_Library; spec:PFSSpec; face_index:TFT_Long; aface:PFT_Face):TFT_Error;cdecl; external freetype_lib;
 //function FT_New_Face_From_FSRef(library_:TFT_Library; ref:PFSRef; face_index:TFT_Long; aface:PFT_Face):TFT_Error;cdecl; external freetype_lib;
 
+
 // ====  t1tables.h
 
 function FT_Has_PS_Glyph_Names(face: TFT_Face): TFT_Int; cdecl; external freetype_lib;
@@ -2862,10 +2876,13 @@ function FT_Get_PS_Font_Info(face: TFT_Face; afont_info: TPS_FontInfo): TFT_Erro
 function FT_Get_PS_Font_Private(face: TFT_Face; afont_private: TPS_Private): TFT_Error; cdecl; external freetype_lib;
 function FT_Get_PS_Font_Value(face: TFT_Face; key: TPS_Dict_Keys; idx: TFT_UInt; Value: pointer; value_len: TFT_Long): TFT_Long; cdecl; external freetype_lib;
 
+
 // ====  ftotval.h
+
 
 function FT_OpenType_Validate(face: TFT_Face; validation_flags: TFT_UInt; BASE_table: PFT_Bytes; GDEF_table: PFT_Bytes; GPOS_table: PFT_Bytes; GSUB_table: PFT_Bytes; JSTF_table: PFT_Bytes): TFT_Error; cdecl; external freetype_lib;
 procedure FT_OpenType_Free(face: TFT_Face; table: TFT_Bytes); cdecl; external freetype_lib;
+
 
 // ====  ftlist.h
 
@@ -2877,28 +2894,34 @@ procedure FT_List_Up(list: TFT_List; node: TFT_ListNode); cdecl; external freety
 procedure FT_List_Finalize(list: TFT_List; Destroy: TFT_List_Destructor; memory: TFT_Memory; user: pointer); cdecl; external freetype_lib;
 function FT_List_Iterate(list: TFT_List; iterator: TFT_List_Iterator; user: pointer): TFT_Error; cdecl; external freetype_lib;
 
+
 // ===  ftsizes.h
 
 function FT_New_Size(face: TFT_Face; size: PFT_Size): TFT_Error; cdecl; external freetype_lib;
 function FT_Done_Size(size: TFT_Size): TFT_Error; cdecl; external freetype_lib;
 function FT_Activate_Size(size: TFT_Size): TFT_Error; cdecl; external freetype_lib;
 
+
 // ====  ftgasp.h
 
 function FT_Get_Gasp(face: TFT_Face; ppem: TFT_UInt): TFT_Int; cdecl; external freetype_lib;
+
 
 // ====  ftfntfmt.h
 
 function FT_Get_Font_Format(face: TFT_Face): PChar; cdecl; external freetype_lib;
 function FT_Get_X11_Font_Format(face: TFT_Face): PChar; cdecl; external freetype_lib;
 
+
 // ====  ftwinfnt.h
 
 function FT_Get_WinFNT_Header(face: TFT_Face; aheader: PFT_WinFNT_HeaderRec): TFT_Error; cdecl; external freetype_lib;
 
+
 // ====  ftbbox.h
 
 function FT_Outline_Get_BBox(outline: PFT_Outline; abbox: PFT_BBox): TFT_Error; cdecl; external freetype_lib;
+
 
 // ====  ftstroke.h
 
@@ -2921,12 +2944,14 @@ procedure FT_Stroker_Done(stroker: TFT_Stroker); cdecl; external freetype_lib;
 function FT_Glyph_Stroke(pglyph: PFT_Glyph; stroker: TFT_Stroker; Destroy: TFT_Bool): TFT_Error; cdecl; external freetype_lib;
 function FT_Glyph_StrokeBorder(pglyph: PFT_Glyph; stroker: TFT_Stroker; inside: TFT_Bool; Destroy: TFT_Bool): TFT_Error; cdecl; external freetype_lib;
 
+
 // ====  ftsynth.h
 
 procedure FT_GlyphSlot_Embolden(slot: TFT_GlyphSlot); cdecl; external freetype_lib;
 procedure FT_GlyphSlot_AdjustWeight(slot: TFT_GlyphSlot; xdelta: TFT_Fixed; ydelta: TFT_Fixed); cdecl; external freetype_lib;
 procedure FT_GlyphSlot_Oblique(slot: TFT_GlyphSlot); cdecl; external freetype_lib;
 procedure FT_GlyphSlot_Slant(slot: TFT_GlyphSlot; xslant: TFT_Fixed; yslant: TFT_Fixed); cdecl; external freetype_lib;
+
 
 // ====  ftglyph.h
 
@@ -2941,14 +2966,142 @@ procedure FT_Done_Glyph(glyph: TFT_Glyph); cdecl; external freetype_lib;
 procedure FT_Matrix_Multiply(a: PFT_Matrix; b: PFT_Matrix); cdecl; external freetype_lib;
 function FT_Matrix_Invert(matrix: PFT_Matrix): TFT_Error; cdecl; external freetype_lib;
 
+
 // ====  fterrors.h
 
 
-function FT_Error_String(error_code: TFT_Error): PChar; cdecl; external freetype_lib;
+function FT_Error_String(error_code: TFT_Error): PChar;
 
-
-
+//function FT_Error_String(error_code: TFT_Error): PChar; cdecl; external freetype_lib;
 
 implementation
+
+const
+  ErrorCode: array of PChar = (
+    'no error',
+    'cannot open resource',
+    'unknown file format',
+    'broken file',
+    'invalid FreeType version',
+    'module version is too low',
+    'invalid argument',
+    'unimplemented feature',
+    'broken table',
+    'broken offset within table',
+    'array allocation size too large',
+    'missing module',
+    'missing property',
+    '', '', '',
+
+    'invalid glyph index',
+    'invalid character code',
+    'unsupported glyph image format',
+    'cannot render this glyph format',
+    'invalid outline',
+    'invalid composite glyph',
+    'too many hints',
+    'invalid pixel size',
+    'invalid SVG document',
+    '', '', '', '', '', '', '',
+
+    'invalid object handle',
+    'invalid library handle',
+    'invalid module handle',
+    'invalid face handle',
+    'invalid size handle',
+    'invalid glyph slot handle',
+    'invalid charmap handle',
+    'invalid cache manager handle',
+    'invalid stream handle',
+    '', '', '', '', '', '', '',
+
+    'too many modules',
+    'too many extensions',
+    '', '', '', '', '', '', '',
+    '', '', '', '', '', '', '',
+
+    'out of memory',
+    'unlisted object',
+    '', '', '', '', '', '', '', '', '', '', '', '', '', '', '',
+
+    'cannot open stream',
+    'invalid stream seek',
+    'invalid stream skip',
+    'invalid stream read',
+    'invalid stream operation',
+    'invalid frame operation',
+    'nested frame access',
+    'invalid frame read',
+    '', '', '', '', '', '', '', '',
+
+    'raster uninitialized',
+    'raster corrupted',
+    'raster overflow',
+    'negative height while rastering',
+    '', '', '', '', '', '', '', '', '', '', '', '',
+
+    'too many registered caches',
+    '', '', '', '', '', '', '', '', '', '', '', '', '', '',
+
+    'invalid opcode',
+    'too few arguments',
+    'stack overflow',
+    'code overflow',
+    'bad argument',
+    'division by zero',
+    'invalid reference',
+    'found debug opcode',
+    'found ENDF opcode in execution stream',
+    'nested DEFS',
+    'invalid code range',
+    'execution context too long',
+    'too many function definitions',
+    'too many instruction definitions',
+    'SFNT font table missing',
+    'horizontal header (hhea) table missing',
+    'locations (loca) table missing',
+    'name table missing',
+    'character map (cmap) table missing',
+    'horizontal metrics (hmtx) table missing',
+    'PostScript (post) table missing',
+    'invalid horizontal metrics',
+    'invalid character map (cmap) format',
+    'invalid ppem value',
+    'invalid vertical metrics',
+    'could not find context',
+    'invalid PostScript (post) table format',
+    'invalid PostScript (post) table',
+    'found FDEF or IDEF opcode in glyf bytecode',
+    'missing bitmap in strike',
+    'SVG hooks have not been set',
+    '',
+
+    'opcode syntax error',
+    'argument stack underflow',
+    'ignore',
+    'no Unicode glyph name found',
+    'glyph too big for hinting',
+    '', '', '', '', '', '', '', '', '', '', '',
+
+    '`STARTFONT'' field missing',
+    '`FONT'' field missing',
+    '`SIZE'' field missing',
+    '`FONTBOUNDINGBOX'' field missing',
+    '`CHARS'' field missing',
+    '`STARTCHAR'' field missing',
+    '`ENCODING'' field missing',
+    '`BBX'' field missing',
+    '`BBX'' too big',
+    'Font header corrupted or missing fields',
+    'Font glyphs corrupted or missing fields');
+
+function FT_Error_String(error_code: TFT_Error): PChar;
+begin
+  Result:='';
+  if (error_code >= 0) and (error_code < Length(ErrorCode)) then begin
+    Result := ErrorCode[error_code];
+  end ;
+  if Result = '' then Result:='<unknow>';
+end;
 
 end.

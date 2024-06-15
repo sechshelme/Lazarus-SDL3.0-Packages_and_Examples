@@ -32,13 +32,10 @@ uses
     if fterror <> 0 then begin
       WriteLn('Fehler: FT_New_Face  ',fterror);
     end;
-    fterror:=FT_Set_Char_Size(font_face  , 0, 768, 3000000, 300);
+    fterror:=FT_Set_Char_Size(font_face  , 0, 768, 300, 300);
     if fterror <> 0 then begin
-      WriteLn('Fehler: FT_Set_Char_Size  ',fterror,'   ', IntToHex(fterror));
+      WriteLn('Fehler: FT_Set_Char_Size  ',FT_Error_String(fterror));
     end;
-
-    for i:=0 to 20 do WriteLn(i:4,FT_Error_String(i));
-    halt;
 
     num_chars := font_face^.num_glyphs;
     WriteLn('num_chars: ', num_chars);
