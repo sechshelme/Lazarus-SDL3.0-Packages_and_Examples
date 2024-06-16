@@ -46,10 +46,10 @@ var
   end;
 
 begin
-  spec.freq := MIX_DEFAULT_FREQUENCY;
-  spec.format := MIX_DEFAULT_FORMAT;
-  spec.channels := MIX_DEFAULT_CHANNELS;
-
+  //spec.freq := MIX_DEFAULT_FREQUENCY;
+  //spec.format := MIX_DEFAULT_FORMAT;
+  //spec.channels := MIX_DEFAULT_CHANNELS;
+  //
   SDL_Init(SDL_INIT_VIDEO or SDL_INIT_AUDIO);
   if Mix_Init(MIX_INIT_WAVPACK) <> 0 then begin
     SDL_Log('Fehler: MixInit: %s', SDL_GetError());
@@ -62,31 +62,31 @@ begin
   end;
 
 
-  if Mix_OpenAudio(0, @spec) < 0 then  begin
+  if Mix_OpenAudio(0, nil) < 0 then  begin
     SDL_Log('Fehler: Kann Audio nicht öffnen: %s', SDL_GetError());
   end;
 
 
-  Mix_QuerySpec(@spec.freq, @spec.format, @spec.channels);
-  WriteLn(spec.freq);
-  WriteLn(spec.channels);
-  WriteLn(SDL_AUDIO_BITSIZE(spec.format));
+//  Mix_QuerySpec(@spec.freq, @spec.format, @spec.channels);
+//  WriteLn(spec.freq);
+  //WriteLn(spec.channels);
+//  WriteLn(SDL_AUDIO_BITSIZE(spec.format));
 
   //  Mix_VolumeMusic(MIX_MAX_VOLUME);
 
   //  Mix_SetMusicCMD(SDL_getenv('MUSIC_CMD'));
 
-  music := Mix_LoadMUS('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/10_-_SDL_LoadWav_2/Boing_1.wav');
+  music := Mix_LoadMUS('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_1.wav');
   //  music := Mix_LoadMUS('/home/tux/Schreibtisch/sound/dia.wav');
   if music = nil then begin
     WriteLn('WAV nicht gefunden !  ', Mix_GetError);
   end;
 
-  if Mix_GetMusicType(music) = MUS_WAV then begin
-    WriteLn('WAV');
-  end;
+//  if Mix_GetMusicType(music) = MUS_WAV then begin
+//    WriteLn('WAV');
+//  end;
 
-  WriteLn(Mix_MusicDuration(music): 4: 2);
+//  WriteLn(Mix_MusicDuration(music): 4: 2);
 
   //  Mix_FadeInMusic(music, 0, 2000);
 

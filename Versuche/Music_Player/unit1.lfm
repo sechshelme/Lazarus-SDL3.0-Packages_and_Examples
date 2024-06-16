@@ -1,0 +1,76 @@
+object Form1: TForm1
+  Left = 647
+  Height = 307
+  Top = 186
+  Width = 428
+  Caption = 'Form1'
+  ClientHeight = 307
+  ClientWidth = 428
+  LCLVersion = '3.99.0.0'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  object ListBox1: TListBox
+    Left = 16
+    Height = 275
+    Top = 16
+    Width = 306
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    ItemHeight = 0
+    TabOrder = 0
+    TopIndex = -1
+  end
+  object BitBtnAdd: TBitBtn
+    Left = 330
+    Height = 30
+    Top = 16
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Add'
+    TabOrder = 1
+    OnClick = BitBtnAddClick
+  end
+  object BitBtnRemove: TBitBtn
+    Left = 330
+    Height = 30
+    Top = 56
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Remove'
+    TabOrder = 2
+    OnClick = BitBtnRemoveClick
+  end
+  object BitBtnUp: TBitBtn
+    Left = 330
+    Height = 30
+    Top = 96
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Up'
+    TabOrder = 3
+    OnClick = BitBtnUpClick
+  end
+  object BitBtnDown: TBitBtn
+    Left = 330
+    Height = 30
+    Top = 136
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Down'
+    TabOrder = 4
+    OnClick = BitBtnDownClick
+  end
+  object BitBtnPlay: TBitBtn
+    Left = 330
+    Height = 30
+    Top = 256
+    Width = 75
+    Anchors = [akRight, akBottom]
+    Caption = 'Play'
+    TabOrder = 5
+    OnClick = BitBtnPlayClick
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 304
+    Top = 168
+  end
+end
