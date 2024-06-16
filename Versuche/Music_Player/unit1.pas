@@ -7,7 +7,7 @@ interface
 uses
   SDL3, SDL3_mixer,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls,
-  Buttons;
+  Buttons, ExtCtrls;
 
 type
 
@@ -19,8 +19,12 @@ type
     BitBtnRemove: TBitBtn;
     BitBtnUp: TBitBtn;
     BitBtnDown: TBitBtn;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
     ListBox1: TListBox;
     OpenDialog1: TOpenDialog;
+    Timer1: TTimer;
     procedure BitBtnAddClick(Sender: TObject);
     procedure BitBtnDownClick(Sender: TObject);
     procedure BitBtnPlayClick(Sender: TObject);
@@ -28,6 +32,7 @@ type
     procedure BitBtnUpClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
   private
     music: PMix_Music;
 
@@ -51,12 +56,7 @@ begin
   SDL_Init(SDL_INIT_AUDIO);
   Mix_OpenAudio(0, nil);
 
-
-
-  music := Mix_LoadMUS('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_1.wav');
-  if music = nil then begin
-    WriteLn('WAV nicht gefunden !  ', Mix_GetError);
-  end;
+  music := nil;
 
   ListBox1.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_1.wav');
   ListBox1.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_2.wav');
@@ -64,7 +64,9 @@ begin
   ListBox1.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_4.wav');
   ListBox1.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_5.wav');
   ListBox1.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_6.wav');
+  ListBox1.Items.Add('/n4800/Multimedia/Music/Disco/Boney M/1981 - Boonoonoonoos/01 - Boonoonoonoos.flac');
 
+  Timer1.Interval := 100;
   Width := 1024;
   OpenDialog1.Options := OpenDialog1.Options + [ofAllowMultiSelect];
 end;
@@ -74,6 +76,34 @@ begin
   Mix_FreeMusic(music);
   Mix_CloseAudio;
   SDL_Quit;
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+var
+  t_length, t_pos: double;
+  s: string;
+  index: Integer;
+
+begin
+  if ListBox1.Count>0 then
+  if music <> nil then begin
+    t_length := Mix_MusicDuration(music);
+    WriteStr(s, t_length: 6: 2);
+    Label1.Caption := s;
+    t_pos := Mix_GetMusicPosition(music);
+    WriteStr(s, t_pos: 6: 2);
+    Label3.Caption := s;
+    if t_pos >= t_length then begin
+      index:=ListBox1.ItemIndex;
+      Inc(index);
+      if index>=ListBox1.Items.Count then index:=0;
+      ListBox1.ItemIndex:=index;
+      Mix_FreeMusic(music);
+      s := ListBox1.Items[index];
+      music := Mix_LoadMUS(PChar(s));
+      Mix_PlayMusic(music, 1);
+    end;
+  end;
 end;
 
 procedure TForm1.BitBtnAddClick(Sender: TObject);
@@ -119,18 +149,18 @@ end;
 procedure TForm1.BitBtnPlayClick(Sender: TObject);
 var
   index: integer;
-  s: String;
+  s: string;
 begin
   if music <> nil then begin
     Mix_FreeMusic(music);
-    music:=nil;
+    music := nil;
   end;
   index := ListBox1.ItemIndex;
   if index >= 0 then  begin
-    s:=ListBox1.Items[index];
+    s := ListBox1.Items[index];
     music := Mix_LoadMUS(PChar(s));
   end;
-  Mix_PlayMusic(music, 2);
+  Mix_PlayMusic(music, 1);
 end;
 
 end.

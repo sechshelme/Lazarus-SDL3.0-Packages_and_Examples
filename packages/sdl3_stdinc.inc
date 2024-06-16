@@ -2,7 +2,7 @@
 //                                                         //
 //   WARNUNG, dies Datei wird automatisch durch            //
 //   das Program "Convert_Unit_to_pas_includes" erzeugt !  //
-//   Erzeugt am: 02-06-2024   16:12                        //
+//   Erzeugt am: 16-06-2024   19:23                        //
 //                                                         //
 /////////////////////////////////////////////////////////////
 
@@ -239,6 +239,10 @@ function SDL_asprintf(strp: PPchar; fmt: PChar): longint; varargs; cdecl; extern
 
 function SDL_vasprintf(strp: PPchar; fmt: PChar; va:array of const): longint; cdecl; external sdl3_lib;
 // ????????????
+
+procedure SDL_srand(seed:TUint64);cdecl;external sdl3_lib;
+function SDL_rand:TUint32;cdecl;external sdl3_lib;
+function SDL_rand_r(state:PUint64):TUint32;cdecl;external sdl3_lib;
 
 const
   SDL_PI_D = 3.141592653589793238462643383279502884;
