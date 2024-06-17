@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 647
+  Left = 668
   Height = 307
-  Top = 186
+  Top = 169
   Width = 428
   Caption = 'Form1'
   ClientHeight = 307
@@ -16,8 +16,10 @@ object Form1: TForm1
     Width = 306
     Anchors = [akTop, akLeft, akRight, akBottom]
     ItemHeight = 0
+    Style = lbOwnerDrawFixed
     TabOrder = 0
     TopIndex = -1
+    OnDrawItem = ListBox1DrawItem
   end
   object BitBtnAdd: TBitBtn
     Left = 330

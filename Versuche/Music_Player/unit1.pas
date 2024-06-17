@@ -6,8 +6,8 @@ interface
 
 uses
   SDL3, SDL3_mixer,
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls,
-  Buttons, ExtCtrls, ComCtrls;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls, LCLType,
+  Buttons, ExtCtrls, ComCtrls, Types;
 
 type
 
@@ -33,6 +33,8 @@ type
     procedure BitBtnUpClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure ListBox1DrawItem(Control: TWinControl; Index: integer;
+      ARect: TRect; State: TOwnerDrawState);
     procedure Timer1Timer(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
   private
@@ -69,6 +71,7 @@ begin
   ListBox1.Items.Add('/n4800/Multimedia/Music/Disco/Boney M/1981 - Boonoonoonoos/01 - Boonoonoonoos.flac');
 
   Timer1.Interval := 100;
+  TrackBar1.TickStyle:=tsNone;
   Width := 1024;
   OpenDialog1.Options := OpenDialog1.Options + [ofAllowMultiSelect];
 end;
@@ -80,12 +83,26 @@ begin
   SDL_Quit;
 end;
 
+procedure TForm1.ListBox1DrawItem(Control: TWinControl; Index: integer; ARect: TRect; State: TOwnerDrawState);
+begin
+  ListBox1.Canvas.Pen.Color := ListBox1.Canvas.Brush.Color;
+  ListBox1.Canvas.Rectangle(ARect);
+
+  if odSelected in State then  begin
+    ListBox1.Canvas.Font.Color := clRed;
+  end else begin
+    ListBox1.Canvas.Font.Color := clGreen;
+  end;
+  ListBox1.Canvas.TextOut(ARect.Left, ARect.Top, ListBox1.Items[Index]);
+end;
+
 procedure TForm1.LoadNewMusic(const titel: string);
 begin
   if music <> nil then begin
     Mix_FreeMusic(music);
   end;
   music := Mix_LoadMUS(PChar(titel));
+  if music=nil then SDL_Log('Konnte Musik nicht laden: %s',Mix_GetError) ;
   Mix_PlayMusic(music, 1);
   TrackBar1.Max := Trunc(Mix_MusicDuration(music) * 1000);
   TrackBar1.Position := 0;
@@ -94,6 +111,7 @@ end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   Mix_SetMusicPosition(TrackBar1.Position / 1000);
+  WriteLn('change');
 end;
 
 
@@ -113,10 +131,10 @@ begin
       t_pos := Mix_GetMusicPosition(music);
       WriteStr(s, t_pos: 6: 1);
       Label3.Caption := s;
-      ChangeProc:=TrackBar1.OnChange;
-      TrackBar1.OnChange:=nil;
+      ChangeProc := TrackBar1.OnChange;
+      TrackBar1.OnChange := nil;
       TrackBar1.Position := Trunc(Mix_GetMusicPosition(music) * 1000);
-      TrackBar1.OnChange:=ChangeProc;
+      TrackBar1.OnChange := ChangeProc;
 
       if t_pos >= t_length then begin
         index := ListBox1.ItemIndex;
@@ -124,9 +142,9 @@ begin
         if index >= ListBox1.Items.Count then begin
           index := 0;
         end;
-//        TOwnerDrawState;
-//        ListBox1.;
-//        if ListBox1.CanFocus then ListBox1.Focused;:=True;
+        //        TOwnerDrawState;
+        //        ListBox1.;
+        //        if ListBox1.CanFocus then ListBox1.Focused;:=True;
         ListBox1.ItemIndex := index;
         LoadNewMusic(ListBox1.Items[index]);
       end;
