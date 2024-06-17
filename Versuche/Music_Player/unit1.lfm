@@ -11,8 +11,8 @@ object Form1: TForm1
   OnDestroy = FormDestroy
   object ListBox1: TListBox
     Left = 16
-    Height = 275
-    Top = 16
+    Height = 235
+    Top = 56
     Width = 306
     Anchors = [akTop, akLeft, akRight, akBottom]
     ItemHeight = 0
@@ -21,8 +21,8 @@ object Form1: TForm1
   end
   object BitBtnAdd: TBitBtn
     Left = 330
-    Height = 30
-    Top = 16
+    Height = 25
+    Top = 56
     Width = 75
     Anchors = [akTop, akRight]
     Caption = 'Add'
@@ -31,8 +31,8 @@ object Form1: TForm1
   end
   object BitBtnRemove: TBitBtn
     Left = 330
-    Height = 30
-    Top = 56
+    Height = 25
+    Top = 91
     Width = 75
     Anchors = [akTop, akRight]
     Caption = 'Remove'
@@ -41,8 +41,8 @@ object Form1: TForm1
   end
   object BitBtnUp: TBitBtn
     Left = 330
-    Height = 30
-    Top = 96
+    Height = 25
+    Top = 124
     Width = 75
     Anchors = [akTop, akRight]
     Caption = 'Up'
@@ -51,8 +51,8 @@ object Form1: TForm1
   end
   object BitBtnDown: TBitBtn
     Left = 330
-    Height = 30
-    Top = 136
+    Height = 25
+    Top = 159
     Width = 75
     Anchors = [akTop, akRight]
     Caption = 'Down'
@@ -92,6 +92,16 @@ object Form1: TForm1
     Width = 41
     Anchors = [akRight, akBottom]
     Caption = 'Label3'
+  end
+  object TrackBar1: TTrackBar
+    Left = 16
+    Height = 37
+    Top = 8
+    Width = 389
+    Position = 0
+    OnChange = TrackBar1Change
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 6
   end
   object OpenDialog1: TOpenDialog
     Left = 96
