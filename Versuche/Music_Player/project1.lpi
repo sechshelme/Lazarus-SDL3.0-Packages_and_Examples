@@ -44,6 +44,11 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
       </Unit>
+      <Unit>
+        <Filename Value="soundlistbox.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="SoundListBox"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
