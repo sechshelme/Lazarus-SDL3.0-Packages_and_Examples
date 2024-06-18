@@ -26,6 +26,10 @@ https://github.com/libsdl-org/SDL/blob/main/docs/README-cmake.md
 ```bash
 sudo apt-get install gcc-mingw-w64
 sudo apt-get install mingw-w64-x86-64-dev 
+
+sudo apt install g++-mingw-w64-x86-64-posix 
+sudo apt install g++-mingw-w64-x86-64-win32 
+
 ```
 
 

@@ -71,7 +71,7 @@ begin
   ListBox1.Items.Add('/n4800/Multimedia/Music/Disco/Boney M/1981 - Boonoonoonoos/01 - Boonoonoonoos.flac');
 
   Timer1.Interval := 100;
-  TrackBar1.TickStyle:=tsNone;
+  TrackBar1.TickStyle := tsNone;
   Width := 1024;
   OpenDialog1.Options := OpenDialog1.Options + [ofAllowMultiSelect];
 end;
@@ -102,7 +102,9 @@ begin
     Mix_FreeMusic(music);
   end;
   music := Mix_LoadMUS(PChar(titel));
-  if music=nil then SDL_Log('Konnte Musik nicht laden: %s',Mix_GetError) ;
+  if music = nil then begin
+    SDL_Log('Konnte Musik nicht laden: %s', Mix_GetError);
+  end;
   Mix_PlayMusic(music, 1);
   TrackBar1.Max := Trunc(Mix_MusicDuration(music) * 1000);
   TrackBar1.Position := 0;
@@ -175,9 +177,13 @@ var
   index: integer;
 begin
   index := ListBox1.ItemIndex;
+  if index = -1 then begin
+    Exit;
+  end;
   if index > 0 then  begin
     ListBox1.Items.Move(index, index - 1);
     ListBox1.ItemIndex := index - 1;
+//    ListBox1.SetFocus;
   end;
 end;
 
@@ -186,9 +192,13 @@ var
   index: integer;
 begin
   index := ListBox1.ItemIndex;
+  if index = -1 then begin
+    Exit;
+  end;
   if index < ListBox1.Count - 1 then  begin
     ListBox1.Items.Move(index, index + 1);
     ListBox1.ItemIndex := index + 1;
+//    ListBox1.SetFocus;
   end;
 end;
 
