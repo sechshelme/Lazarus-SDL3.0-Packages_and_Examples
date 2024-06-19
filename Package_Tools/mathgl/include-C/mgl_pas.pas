@@ -1566,22 +1566,12 @@ function  mgl_istrue(ch: char): integer; cdecl; external libmgl;
 /// Locate next data block (block started by -----)
 
 
-{$IFDEF Linux}
-implementation
-{$ENDIF}
-
-
-
-{$IFDEF MSWINDOWS}
-//*****************************************************************************/
-// Delphi - specific
-//*****************************************************************************/
 procedure mgl_begin();
 procedure mgl_end();
 
-procedure mgl_draw_on_canvas(gr: HMGL; width, height: integer; canvas: TCanvas; switchXY: boolean = false);
-
+{$IFDEF Linux}
 implementation
+{$ENDIF}
 
 var _FPUCW: word;
 
@@ -1595,6 +1585,18 @@ procedure mgl_end();
  begin
   Set8087CW(_FPUCW);         // restore old FPU CW
  end;
+
+
+
+{$IFDEF MSWINDOWS}
+//*****************************************************************************/
+// Delphi - specific
+//*****************************************************************************/
+
+procedure mgl_draw_on_canvas(gr: HMGL; width, height: integer; canvas: TCanvas; switchXY: boolean = false);
+
+implementation
+
 
 procedure mgl_draw_on_canvas(gr: HMGL; width, height: integer; canvas: TCanvas; switchXY: boolean = false);
   var i, j: integer;

@@ -7,7 +7,7 @@ interface
 uses
   SDL3, SDL3_mixer,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls, LCLType,
-  Buttons, ExtCtrls, ComCtrls, Types,
+  Buttons, ExtCtrls, ComCtrls, Types,  FileUtil,
   SoundListBox;
 
 type
@@ -56,6 +56,8 @@ implementation
 { TForm1 }
 
 procedure TForm1.FormCreate(Sender: TObject);
+var
+  sl: TStringList;
 begin
   SDL_Init(SDL_INIT_AUDIO);
   Mix_OpenAudio(0, nil);
@@ -67,6 +69,9 @@ begin
   ListBox.Height := ClientHeight - 70;
   ListBox.Parent := self;
 
+  sl:=FindAllFiles('/n4800/Multimedia/Music/Disco/C.C. Catch/1986 - Catch The Catch', '*.flac');
+  ListBox.Items.AddStrings(sl);
+  sl.Free;
   ListBox.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_1.wav');
   ListBox.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_2.wav');
   ListBox.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_3.wav');
@@ -183,7 +188,7 @@ end;
 
 procedure TForm1.BitBtnPrevClick(Sender: TObject);
 begin
-
+   ListBox.Prev(music);
 end;
 
 end.

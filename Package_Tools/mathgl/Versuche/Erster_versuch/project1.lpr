@@ -13,7 +13,9 @@ uses
     mgl_write_frame(gr, 'test.bmp', '');
     mgl_write_frame(gr, 'test.svg', '');
     mgl_write_frame(gr, 'test.png', '');
+
     mgl_delete_graph(gr);
+
   end;
 
 begin

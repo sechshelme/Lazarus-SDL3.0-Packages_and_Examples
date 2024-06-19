@@ -15,7 +15,7 @@ var
   begin
     i1 := PDWord(para1)^;
     i2 := PDWord(para2)^;
-    Result := integer(i1 > i2);
+    Result := i1 - i2;
   end;
 
 begin

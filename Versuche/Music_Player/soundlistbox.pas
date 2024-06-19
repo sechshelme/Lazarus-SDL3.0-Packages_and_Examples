@@ -5,7 +5,8 @@ unit SoundListBox;
 interface
 
 uses
-  Classes, SysUtils, StdCtrls, Controls, Dialogs;
+  Classes, SysUtils, StdCtrls, Controls, Dialogs,
+  SDL3_mixer;
 
 type
 
@@ -19,7 +20,7 @@ type
     procedure Down;
     procedure Up;
     function Next: boolean;
-    function Prev: boolean;
+    function Prev(music: PMix_Music): boolean;
     function GetTitle: string;
   end;
 
@@ -89,6 +90,7 @@ var
 begin
   if Count <= 0 then begin
     Result := False;
+    Exit;
   end else begin
     Result := True;
   end;
@@ -100,9 +102,20 @@ begin
   ItemIndex := index;
 end;
 
-function TSoundListBox.Prev: boolean;
+function TSoundListBox.Prev(music: PMix_Music): boolean;
+var
+  musicPos: Double;
 begin
-
+  if Count <= 0 then begin
+    Result := False;
+    Exit;
+  end else begin
+    Result := True;
+  end;
+  musicPos:=  Mix_GetMusicPosition(music);
+  if musicPos > 1.0 then begin
+    Mix_SetMusicPosition(0.1);
+  end;
 end;
 
 function TSoundListBox.GetTitle: string;
