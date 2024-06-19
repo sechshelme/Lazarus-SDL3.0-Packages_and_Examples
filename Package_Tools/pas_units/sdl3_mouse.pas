@@ -15,6 +15,9 @@ type
   PSDL_MouseID = ^TSDL_MouseID;
   TSDL_MouseID = TUint32;
 
+  PSDL_Cursor = ^TSDL_Cursor;
+  TSDL_Cursor = Pointer;
+
   PSDL_SystemCursor = ^TSDL_SystemCursor;
   TSDL_SystemCursor = longint;
 

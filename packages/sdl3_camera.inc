@@ -2,7 +2,7 @@
 //                                                         //
 //   WARNUNG, dies Datei wird automatisch durch            //
 //   das Program "Convert_Unit_to_pas_includes" erzeugt !  //
-//   Erzeugt am: 16-06-2024   19:23                        //
+//   Erzeugt am: 19-06-2024   19:57                        //
 //                                                         //
 /////////////////////////////////////////////////////////////
 
@@ -18,10 +18,11 @@ type
   PSDL_CameraSpec = ^TSDL_CameraSpec;
   TSDL_CameraSpec = record
       format : TSDL_PixelFormatEnum;
+       colorspace:  TSDL_Colorspace;
       width : longint;
       height : longint;
-      interval_numerator : longint;
-      interval_denominator : longint;
+      framerate_numerator : cint;
+      framerate_denominator : cint;
     end;
 
   PSDL_CameraPosition = ^TSDL_CameraPosition;

@@ -3,7 +3,7 @@ unit SDL3_camera;
 interface
 
 uses
-  SDL3_properties, SDL3_surface, SDL3_pixels;
+  ctypes, SDL3_properties, SDL3_surface, SDL3_pixels;
 
 {$IFDEF FPC}
 {$PACKRECORDS C}
@@ -19,10 +19,11 @@ type
   PSDL_CameraSpec = ^TSDL_CameraSpec;
   TSDL_CameraSpec = record
       format : TSDL_PixelFormatEnum;
+       colorspace:  TSDL_Colorspace;
       width : longint;
       height : longint;
-      interval_numerator : longint;
-      interval_denominator : longint;
+      framerate_numerator : cint;
+      framerate_denominator : cint;
     end;
 
   PSDL_CameraPosition = ^TSDL_CameraPosition;

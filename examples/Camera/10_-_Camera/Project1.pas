@@ -94,7 +94,8 @@ var
 
   procedure Render;
   var
-    win_w, win_h, tw, th: cint;
+    tw,th:cfloat;
+    win_w, win_h: cint;
     rect: TSDL_FRect;
     timestampNS: TUint64;
     frame_next: PSDL_Surface;
@@ -124,7 +125,8 @@ var
         texture_updated := SDL_TRUE;
       end;
 
-      SDL_QueryTexture(texture, nil, nil, @tw, @th);
+      SDL_GetTextureSize(texture, @tw, @th);
+//      SDL_QueryTexture(texture, nil, nil, @tw, @th);
       SDL_GetRenderOutputSize(renderer, @win_w, @win_h);
 
       rect.x := (win_w - tw) / 2;

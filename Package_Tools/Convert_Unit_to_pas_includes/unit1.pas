@@ -11,7 +11,7 @@ uses
 //  SDL_filesystem,
 //    SDL_storage,
 //  SDL3,
-  SDL3_mouse,
+//  SDL3_mouse,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, FileUtil;
 
 type

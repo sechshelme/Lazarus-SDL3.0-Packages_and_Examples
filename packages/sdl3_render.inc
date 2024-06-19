@@ -2,7 +2,7 @@
 //                                                         //
 //   WARNUNG, dies Datei wird automatisch durch            //
 //   das Program "Convert_Unit_to_pas_includes" erzeugt !  //
-//   Erzeugt am: 16-06-2024   19:23                        //
+//   Erzeugt am: 19-06-2024   19:41                        //
 //                                                         //
 /////////////////////////////////////////////////////////////
 
@@ -172,7 +172,8 @@ const
   SDL_PROP_TEXTURE_VULKAN_TEXTURE_UV_POINTER = 'SDL.texture.vulkan.texture_uv';
 
 function SDL_GetRendererFromTexture(texture: PSDL_Texture): PSDL_Renderer; cdecl; external sdl3_lib;
-function SDL_QueryTexture(texture: PSDL_Texture; format: PUint32; access: Plongint; w: Plongint; h: Plongint): longint; cdecl; external sdl3_lib;
+//function SDL_QueryTexture(texture: PSDL_Texture; format: PUint32; access: Plongint; w: Plongint; h: Plongint): longint; cdecl; external sdl3_lib;
+function SDL_GetTextureSize(texture: PSDL_Texture; w: Pcfloat; h: Pcfloat): longint; cdecl; external sdl3_lib;
 function SDL_SetTextureColorMod(texture: PSDL_Texture; r: uint8; g: uint8; b: uint8): longint; cdecl; external sdl3_lib;
 function SDL_SetTextureColorModFloat(texture: PSDL_Texture; r: single; g: single; b: single): longint; cdecl; external sdl3_lib;
 function SDL_GetTextureColorMod(texture: PSDL_Texture; r: PUint8; g: PUint8; b: PUint8): longint; cdecl; external sdl3_lib;
