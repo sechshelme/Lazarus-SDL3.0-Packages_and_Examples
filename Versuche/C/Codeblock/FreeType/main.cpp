@@ -9,6 +9,7 @@
 #include <math.h>
 
 #include <ft2build.h>
+#include <freetype2/freetype/tttags.h>
 #include FT_FREETYPE_H
 
 
@@ -172,7 +173,11 @@ text = "Hello World";
   FT_Done_Face    ( face );
   FT_Done_FreeType( library );
 
-  printf("Ende 1234\n");
+  FT_MAKE_TAG
+
+  printf("Ende %i\n", FT_LOAD_TARGET_NORMAL);
+  printf("Ende %i\n", FT_LOAD_TARGET_LIGHT);
+  printf("Ende %i\n", FT_LOAD_TARGET_LCD_V);
 
   return 0;
 }

@@ -143,6 +143,13 @@ const
   FT_RENDER_MODE_SDF = 5;
   FT_RENDER_MODE_MAX = 6;
 
+  FT_LOAD_TARGET_NORMAL = (FT_RENDER_MODE_NORMAL and 15) shl 16;
+  FT_LOAD_TARGET_LIGHT = (FT_RENDER_MODE_LIGHT and 15) shl 16;
+  FT_LOAD_TARGET_MONO = (FT_RENDER_MODE_MONO and 15) shl 16;
+  FT_LOAD_TARGET_LCD = (FT_RENDER_MODE_LCD and 15) shl 16;
+  FT_LOAD_TARGET_LCD_V = (FT_RENDER_MODE_LCD_V and 15) shl 16;
+
+
 type
   PFT_Kerning_Mode = ^TFT_Kerning_Mode;
   TFT_Kerning_Mode = longint;
@@ -1300,6 +1307,103 @@ const
   CFF_CONFIG_OPTION_DARKENING_PARAMETER_Y3 = 275;
   CFF_CONFIG_OPTION_DARKENING_PARAMETER_X4 = 2333;
   CFF_CONFIG_OPTION_DARKENING_PARAMETER_Y4 = 0;
+
+  // ====  tttags.h
+
+  TTAG_avar = byte('a') shl 24 + byte('v') shl 16 + byte('a') shl 8 + byte('r');
+  TTAG_BASE = byte('B') shl 24 + byte('A') shl 16 + byte('S') shl 8 + byte('E');
+  TTAG_bdat = byte('b') shl 24 + byte('d') shl 16 + byte('a') shl 8 + byte('t');
+  TTAG_BDF = byte('B') shl 24 + byte('D') shl 16 + byte('F') shl 8 + byte(' ');
+  TTAG_bhed = byte('b') shl 24 + byte('h') shl 16 + byte('e') shl 8 + byte('d');
+  TTAG_bloc = byte('b') shl 24 + byte('l') shl 16 + byte('o') shl 8 + byte('c');
+  TTAG_bsln = byte('b') shl 24 + byte('s') shl 16 + byte('l') shl 8 + byte('n');
+  TTAG_CBDT = byte('C') shl 24 + byte('B') shl 16 + byte('D') shl 8 + byte('T');
+  TTAG_CBLC = byte('C') shl 24 + byte('B') shl 16 + byte('L') shl 8 + byte('C');
+  TTAG_CFF = byte('C') shl 24 + byte('F') shl 16 + byte('F') shl 8 + byte(' ');
+  TTAG_CFF2 = byte('C') shl 24 + byte('F') shl 16 + byte('F') shl 8 + byte('2');
+  TTAG_CID = byte('C') shl 24 + byte('I') shl 16 + byte('D') shl 8 + byte(' ');
+  TTAG_cmap = byte('c') shl 24 + byte('m') shl 16 + byte('a') shl 8 + byte('p');
+  TTAG_COLR = byte('C') shl 24 + byte('O') shl 16 + byte('L') shl 8 + byte('R');
+  TTAG_CPAL = byte('C') shl 24 + byte('P') shl 16 + byte('A') shl 8 + byte('L');
+  TTAG_cvar = byte('c') shl 24 + byte('v') shl 16 + byte('a') shl 8 + byte('r');
+  TTAG_cvt = byte('c') shl 24 + byte('v') shl 16 + byte('t') shl 8 + byte(' ');
+  TTAG_DSIG = byte('D') shl 24 + byte('S') shl 16 + byte('I') shl 8 + byte('G');
+  TTAG_EBDT = byte('E') shl 24 + byte('B') shl 16 + byte('D') shl 8 + byte('T');
+  TTAG_EBLC = byte('E') shl 24 + byte('B') shl 16 + byte('L') shl 8 + byte('C');
+  TTAG_EBSC = byte('E') shl 24 + byte('B') shl 16 + byte('S') shl 8 + byte('C');
+  TTAG_feat = byte('f') shl 24 + byte('e') shl 16 + byte('a') shl 8 + byte('t');
+  TTAG_FOND = byte('F') shl 24 + byte('O') shl 16 + byte('N') shl 8 + byte('D');
+  TTAG_fpgm = byte('f') shl 24 + byte('p') shl 16 + byte('g') shl 8 + byte('m');
+  TTAG_fvar = byte('f') shl 24 + byte('v') shl 16 + byte('a') shl 8 + byte('r');
+  TTAG_gasp = byte('g') shl 24 + byte('a') shl 16 + byte('s') shl 8 + byte('p');
+  TTAG_GDEF = byte('G') shl 24 + byte('D') shl 16 + byte('E') shl 8 + byte('F');
+  TTAG_glyf = byte('g') shl 24 + byte('l') shl 16 + byte('y') shl 8 + byte('f');
+  TTAG_GPOS = byte('G') shl 24 + byte('P') shl 16 + byte('O') shl 8 + byte('S');
+  TTAG_GSUB = byte('G') shl 24 + byte('S') shl 16 + byte('U') shl 8 + byte('B');
+  TTAG_gvar = byte('g') shl 24 + byte('v') shl 16 + byte('a') shl 8 + byte('r');
+  TTAG_HVAR = byte('H') shl 24 + byte('V') shl 16 + byte('A') shl 8 + byte('R');
+  TTAG_hdmx = byte('h') shl 24 + byte('d') shl 16 + byte('m') shl 8 + byte('x');
+  TTAG_head = byte('h') shl 24 + byte('e') shl 16 + byte('a') shl 8 + byte('d');
+  TTAG_hhea = byte('h') shl 24 + byte('h') shl 16 + byte('e') shl 8 + byte('a');
+  TTAG_hmtx = byte('h') shl 24 + byte('m') shl 16 + byte('t') shl 8 + byte('x');
+  TTAG_JSTF = byte('J') shl 24 + byte('S') shl 16 + byte('T') shl 8 + byte('F');
+  TTAG_just = byte('j') shl 24 + byte('u') shl 16 + byte('s') shl 8 + byte('t');
+  TTAG_kern = byte('k') shl 24 + byte('e') shl 16 + byte('r') shl 8 + byte('n');
+  TTAG_lcar = byte('l') shl 24 + byte('c') shl 16 + byte('a') shl 8 + byte('r');
+  TTAG_loca = byte('l') shl 24 + byte('o') shl 16 + byte('c') shl 8 + byte('a');
+  TTAG_LTSH = byte('L') shl 24 + byte('T') shl 16 + byte('S') shl 8 + byte('H');
+  TTAG_LWFN = byte('L') shl 24 + byte('W') shl 16 + byte('F') shl 8 + byte('N');
+  TTAG_MATH = byte('M') shl 24 + byte('A') shl 16 + byte('T') shl 8 + byte('H');
+  TTAG_maxp = byte('m') shl 24 + byte('a') shl 16 + byte('x') shl 8 + byte('p');
+  TTAG_META = byte('M') shl 24 + byte('E') shl 16 + byte('T') shl 8 + byte('A');
+  TTAG_MMFX = byte('M') shl 24 + byte('M') shl 16 + byte('F') shl 8 + byte('X');
+  TTAG_MMSD = byte('M') shl 24 + byte('M') shl 16 + byte('S') shl 8 + byte('D');
+  TTAG_mort = byte('m') shl 24 + byte('o') shl 16 + byte('r') shl 8 + byte('t');
+  TTAG_morx = byte('m') shl 24 + byte('o') shl 16 + byte('r') shl 8 + byte('x');
+  TTAG_MVAR = byte('M') shl 24 + byte('V') shl 16 + byte('A') shl 8 + byte('R');
+  TTAG_name = byte('n') shl 24 + byte('a') shl 16 + byte('m') shl 8 + byte('e');
+  TTAG_opbd = byte('o') shl 24 + byte('p') shl 16 + byte('b') shl 8 + byte('d');
+  TTAG_OS2 = byte('O') shl 24 + byte('S') shl 16 + byte('/') shl 8 + byte('2');
+  TTAG_OTTO = byte('O') shl 24 + byte('T') shl 16 + byte('T') shl 8 + byte('O');
+  TTAG_PCLT = byte('P') shl 24 + byte('C') shl 16 + byte('L') shl 8 + byte('T');
+  TTAG_POST = byte('P') shl 24 + byte('O') shl 16 + byte('S') shl 8 + byte('T');
+  TTAG_post_ = byte('p') shl 24 + byte('o') shl 16 + byte('s') shl 8 + byte('t');
+  TTAG_prep = byte('p') shl 24 + byte('r') shl 16 + byte('e') shl 8 + byte('p');
+  TTAG_prop = byte('p') shl 24 + byte('r') shl 16 + byte('o') shl 8 + byte('p');
+  TTAG_sbix = byte('s') shl 24 + byte('b') shl 16 + byte('i') shl 8 + byte('x');
+  TTAG_sfnt = byte('s') shl 24 + byte('f') shl 16 + byte('n') shl 8 + byte('t');
+  TTAG_SING = byte('S') shl 24 + byte('I') shl 16 + byte('N') shl 8 + byte('G');
+  TTAG_SVG = byte('S') shl 24 + byte('V') shl 16 + byte('G') shl 8 + byte(' ');
+  TTAG_trak = byte('t') shl 24 + byte('r') shl 16 + byte('a') shl 8 + byte('k');
+  TTAG_true = byte('t') shl 24 + byte('r') shl 16 + byte('u') shl 8 + byte('e');
+  TTAG_ttc = byte('t') shl 24 + byte('t') shl 16 + byte('c') shl 8 + byte(' ');
+  TTAG_ttcf = byte('t') shl 24 + byte('t') shl 16 + byte('c') shl 8 + byte('f');
+  TTAG_TYP1 = byte('T') shl 24 + byte('Y') shl 16 + byte('P') shl 8 + byte('1');
+  TTAG_typ1_ = byte('t') shl 24 + byte('y') shl 16 + byte('p') shl 8 + byte('1');
+  TTAG_VDMX = byte('V') shl 24 + byte('D') shl 16 + byte('M') shl 8 + byte('X');
+  TTAG_vhea = byte('v') shl 24 + byte('h') shl 16 + byte('e') shl 8 + byte('a');
+  TTAG_vmtx = byte('v') shl 24 + byte('m') shl 16 + byte('t') shl 8 + byte('x');
+  TTAG_VVAR = byte('V') shl 24 + byte('V') shl 16 + byte('A') shl 8 + byte('R');
+  TTAG_wOFF = byte('w') shl 24 + byte('O') shl 16 + byte('F') shl 8 + byte('F');
+  TTAG_wOF2 = byte('w') shl 24 + byte('O') shl 16 + byte('F') shl 8 + byte('2');
+
+
+  TTAG_0xA5kbd = $A5 shl 24 + byte('k') shl 16 + byte('b') shl 8 + byte('d');
+  TTAG_0xA5lst = $A5 shl 24 + byte('l') shl 16 + byte('s') shl 8 + byte('t');
+
+  // ====  ftparams
+
+  FT_PARAM_TAG_IGNORE_TYPOGRAPHIC_FAMILY = byte('i') shl 24 + byte('g') shl 16 + byte('p') shl 8 + byte('f');
+  FT_PARAM_TAG_IGNORE_PREFERRED_FAMILY = FT_PARAM_TAG_IGNORE_TYPOGRAPHIC_FAMILY;
+  FT_PARAM_TAG_IGNORE_TYPOGRAPHIC_SUBFAMILY = byte('i') shl 24 + byte('g') shl 16 + byte('p') shl 8 + byte('s');
+  FT_PARAM_TAG_IGNORE_PREFERRED_SUBFAMILY = FT_PARAM_TAG_IGNORE_TYPOGRAPHIC_SUBFAMILY;
+  FT_PARAM_TAG_INCREMENTAL = byte('i') shl 24 + byte('n') shl 16 + byte('c') shl 8 + byte('r');
+  FT_PARAM_TAG_IGNORE_SBIX = byte('i') shl 24 + byte('s') shl 16 + byte('b') shl 8 + byte('x');
+  FT_PARAM_TAG_LCD_FILTER_WEIGHTS = byte('l') shl 24 + byte('c') shl 16 + byte('d') shl 8 + byte('f');
+  FT_PARAM_TAG_RANDOM_SEED = byte('s') shl 24 + byte('e') shl 16 + byte('e') shl 8 + byte('d');
+  FT_PARAM_TAG_STEM_DARKENING = byte('d') shl 24 + byte('a') shl 16 + byte('r') shl 8 + byte('k');
+  FT_PARAM_TAG_UNPATENTED_HINTING = byte('u') shl 24 + byte('n') shl 16 + byte('p') shl 8 + byte('a');
+
 
   // =================== Typen ============================
 
@@ -2676,6 +2780,26 @@ function FT_Vector_Length(vec: PFT_Vector): TFT_Fixed; cdecl; external freetype_
 procedure FT_Vector_Polarize(vec: PFT_Vector; length: PFT_Fixed; angle: PFT_Angle); cdecl; external freetype_lib;
 procedure FT_Vector_From_Polar(vec: PFT_Vector; length: TFT_Fixed; angle: TFT_Angle); cdecl; external freetype_lib;
 
+function FT_HAS_HORIZONTAL(face: TFT_Face): TFT_bool;
+function FT_HAS_VERTICAL(face: TFT_Face): TFT_bool;
+function FT_HAS_KERNING(face: TFT_Face): TFT_bool;
+function FT_IS_SCALABLE(face: TFT_Face): TFT_bool;
+function FT_IS_SFNT(face: TFT_Face): TFT_bool;
+function FT_IS_FIXED_WIDTH(face: TFT_Face): TFT_bool;
+function FT_HAS_FIXED_SIZES(face: TFT_Face): TFT_bool;
+function FT_HAS_FAST_GLYPHS(face: TFT_Face): TFT_bool;
+function FT_HAS_GLYPH_NAMES(face: TFT_Face): TFT_bool;
+function FT_HAS_MULTIPLE_MASTERS(face: TFT_Face): TFT_bool;
+function FT_IS_NAMED_INSTANCE(face: TFT_Face): TFT_bool;
+function FT_IS_VARIATION(face: TFT_Face): TFT_bool;
+function FT_IS_CID_KEYED(face: TFT_Face): TFT_bool;
+function FT_IS_TRICKY(face: TFT_Face): TFT_bool;
+function FT_HAS_COLOR(face: TFT_Face): TFT_bool;
+function FT_HAS_SVG(face: TFT_Face): TFT_bool;
+function FT_HAS_SBIX(face: TFT_Face): TFT_bool;
+function FT_HAS_SBIX_OVERLAY(face: TFT_Face): TFT_bool;
+
+
 
 // ===== ftmm.h
 
@@ -2976,6 +3100,7 @@ function FT_Error_String(error_code: TFT_Error): PChar;
 
 implementation
 
+function FT_Error_String(error_code: TFT_Error): PChar;
 const
   ErrorCode: array of PChar = (
     'no error',
@@ -3095,13 +3220,108 @@ const
     'Font header corrupted or missing fields',
     'Font glyphs corrupted or missing fields');
 
-function FT_Error_String(error_code: TFT_Error): PChar;
 begin
-  Result:='';
+  Result := '';
   if (error_code >= 0) and (error_code < Length(ErrorCode)) then begin
     Result := ErrorCode[error_code];
-  end ;
-  if Result = '' then Result:='<unknow>';
+  end;
+  if Result = '' then begin
+    Result := '<unknow>';
+  end;
+end;
+
+
+// ======== freetype.h
+
+function FT_HAS_HORIZONTAL(face: TFT_Face): TFT_bool;
+begin
+  FT_HAS_HORIZONTAL := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_HORIZONTAL)));
+
+end;
+
+function FT_HAS_VERTICAL(face: TFT_Face): TFT_bool;
+begin
+  FT_HAS_VERTICAL := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_VERTICAL)));
+end;
+
+function FT_HAS_KERNING(face: TFT_Face): TFT_bool;
+begin
+  FT_HAS_KERNING := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_KERNING)));
+end;
+
+function FT_IS_SCALABLE(face: TFT_Face): TFT_bool;
+begin
+  FT_IS_SCALABLE := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_SCALABLE)));
+end;
+
+function FT_IS_SFNT(face: TFT_Face): TFT_bool;
+begin
+  FT_IS_SFNT := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_SFNT)));
+end;
+
+function FT_IS_FIXED_WIDTH(face: TFT_Face): TFT_bool;
+begin
+  FT_IS_FIXED_WIDTH := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_FIXED_WIDTH)));
+end;
+
+function FT_HAS_FIXED_SIZES(face: TFT_Face): TFT_bool;
+begin
+  FT_HAS_FIXED_SIZES := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_FIXED_SIZES)));
+end;
+
+function FT_HAS_FAST_GLYPHS(face: TFT_Face): TFT_bool;
+begin
+  Result := TFT_Bool(False);
+end;
+
+function FT_HAS_GLYPH_NAMES(face: TFT_Face): TFT_bool;
+begin
+  FT_HAS_GLYPH_NAMES := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_GLYPH_NAMES)));
+end;
+
+function FT_HAS_MULTIPLE_MASTERS(face: TFT_Face): TFT_bool;
+begin
+  FT_HAS_MULTIPLE_MASTERS := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_MULTIPLE_MASTERS)));
+end;
+
+function FT_IS_NAMED_INSTANCE(face: TFT_Face): TFT_bool;
+begin
+  FT_IS_NAMED_INSTANCE := TFT_Bool(not (not ((face^.face_index) and $7FFF0000)));
+end;
+
+function FT_IS_VARIATION(face: TFT_Face): TFT_bool;
+begin
+  FT_IS_VARIATION := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_VARIATION)));
+end;
+
+function FT_IS_CID_KEYED(face: TFT_Face): TFT_bool;
+begin
+  FT_IS_CID_KEYED := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_CID_KEYED)));
+end;
+
+function FT_IS_TRICKY(face: TFT_Face): TFT_bool;
+begin
+  FT_IS_TRICKY := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_TRICKY)));
+end;
+
+function FT_HAS_COLOR(face: TFT_Face): TFT_bool;
+begin
+  FT_HAS_COLOR := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_COLOR)));
+end;
+
+function FT_HAS_SVG(face: TFT_Face): TFT_bool;
+begin
+  FT_HAS_SVG := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_SVG)));
+end;
+
+function FT_HAS_SBIX(face: TFT_Face): TFT_bool;
+begin
+  FT_HAS_SBIX := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_SBIX)));
+end;
+
+function FT_HAS_SBIX_OVERLAY(face: TFT_Face): TFT_bool;
+begin
+  FT_HAS_SBIX_OVERLAY := TFT_Bool(not (not ((face^.face_flags) and FT_FACE_FLAG_SBIX_OVERLAY)));
 end;
 
 end.

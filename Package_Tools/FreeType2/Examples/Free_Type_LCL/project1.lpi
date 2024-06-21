@@ -25,6 +25,9 @@
     </RunParams>
     <RequiredPackages>
       <Item>
+        <PackageName Value="FreeType2_Package"/>
+      </Item>
+      <Item>
         <PackageName Value="LazOpenGLContext"/>
       </Item>
       <Item>
@@ -44,11 +47,6 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Unit1"/>
       </Unit>
-      <Unit>
-        <Filename Value="../package/freetype2.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="FreeType2"/>
-      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -58,7 +56,6 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="../package"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>
