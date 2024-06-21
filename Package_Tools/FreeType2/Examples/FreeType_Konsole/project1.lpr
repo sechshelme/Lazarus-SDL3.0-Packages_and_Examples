@@ -5,18 +5,9 @@ program project1;
 
 // https://freetype.org/freetype2/docs/tutorial/example2.cpp
 
-
-//{$linklib freetype.so}
-// {$linklib /usr/local/lib/x86_64-linux-gnu/libfreetype.so.6.20.1}
-{$linklib libfreetype.so}
-
-
 uses
-  crt,
   ctypes,
-  freetype,
-  ftimage,
-  fttypes;
+  FreeType2;
 
 const
   Width = 160;
@@ -27,11 +18,9 @@ var
   procedure draw_bitmap(bitmap: PFT_Bitmap; x: TFT_Int; y: TFT_Int);
   var
     x_max, y_max, i, j, p, q: TFT_Int;
-    ch: char;
   begin
     x_max := x + bitmap^.Width;
     y_max := y + bitmap^.rows;
-
 
     i := x;
     p := 0;
@@ -50,10 +39,6 @@ var
         end;
 
         image[j, i] := char(bitmap^.buffer[q * bitmap^.Width + p]);
-//        Write(byte(image[j, i]), ' - ');
-        //  GotoXY(10,10);
-        //  TextAttr:=ch;
-
       end;
     end;
   end;
@@ -81,7 +66,7 @@ var
     //    fileName2 = '/usr/share/wine/fonts/courier.ttf';
     Text: PChar = 'Hello World';
   var
-    library_: TFT_Library;
+    lib: TFT_Library;
     face: TFT_Face;
     slot: TFT_GlyphSlot;
 
@@ -94,15 +79,15 @@ var
     target_height, n: integer;
 
   begin
-    angle := (120.0 / 360) * 3.14159 * 2;
+    angle := (120.0 / 360) * Pi * 2;
     target_height := Height;
 
-    error := FT_Init_FreeType(@library_);
+    error := FT_Init_FreeType(@lib);
     if error <> 0 then begin
       WriteLn('Fehler: ', error);
     end;
 
-    error := FT_New_Face(library_, fileName, 0, @face);
+    error := FT_New_Face(lib, fileName, 0, @face);
     if error <> 0 then begin
       WriteLn('Fehler: ', error);
     end;
@@ -123,16 +108,6 @@ var
     pen.x := 100 * 64;
     pen.y := (target_height - 150) * 64;
 
-    //WriteLn('angle:', angle:10:4);
-    //WriteLn('size: matrix: ', SizeOf(matrix));
-    //WriteLn('size: pen:    ', SizeOf(pen));
-    //WriteLn('pen.x:    ', pen.x);
-    //WriteLn('pen.y:    ', pen.y);
-    //WriteLn('matrix.xx:    ', matrix.xx);
-    //WriteLn('matrix.xy:    ', matrix.xy);
-    //WriteLn('matrix.yx:    ', matrix.yx);
-    //WriteLn('matrix.yy:    ', matrix.yy);
-
     for n := 0 to Length(Text) - 1 do begin
       FT_Set_Transform(face, @matrix, @pen);
 
@@ -141,7 +116,6 @@ var
         WriteLn('Fehler: Load_Char   ', error);
       end;
 
-      //      Write('n: ',n,'   ');
       draw_bitmap(@slot^.bitmap, slot^.bitmap_left, target_height - slot^.bitmap_top);
 
       pen.x += slot^.advance.x;
@@ -151,11 +125,10 @@ var
     show_image;
 
     FT_Done_Face(face);
-    FT_Done_FreeType(library_);
+    FT_Done_FreeType(lib);
   end;
 
 
 begin
   main;
-
 end.

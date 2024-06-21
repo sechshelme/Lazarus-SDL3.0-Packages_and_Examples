@@ -91,10 +91,6 @@ begin
     WriteLn('Fehler: Set_Char_Size   ', error);
   end;
 
-  WriteLn(FT_LOAD_TARGET_NORMAL);
-  WriteLn(FT_LOAD_TARGET_LIGHT);
-  WriteLn(FT_LOAD_TARGET_LCD_V);
-
   Timer1.Enabled := True;
 end;
 

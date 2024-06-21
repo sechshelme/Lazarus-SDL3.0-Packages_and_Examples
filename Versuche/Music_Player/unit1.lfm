@@ -1,16 +1,16 @@
 object Form1: TForm1
   Left = 668
-  Height = 407
+  Height = 435
   Top = 169
-  Width = 487
+  Width = 501
   Caption = 'Form1'
-  ClientHeight = 407
-  ClientWidth = 487
+  ClientHeight = 435
+  ClientWidth = 501
   LCLVersion = '3.99.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   object BitBtnAdd: TBitBtn
-    Left = 389
+    Left = 403
     Height = 25
     Top = 56
     Width = 75
@@ -20,7 +20,7 @@ object Form1: TForm1
     OnClick = BitBtnAddClick
   end
   object BitBtnRemove: TBitBtn
-    Left = 389
+    Left = 403
     Height = 25
     Top = 91
     Width = 75
@@ -30,7 +30,7 @@ object Form1: TForm1
     OnClick = BitBtnRemoveClick
   end
   object BitBtnUp: TBitBtn
-    Left = 389
+    Left = 403
     Height = 25
     Top = 124
     Width = 75
@@ -40,7 +40,7 @@ object Form1: TForm1
     OnClick = BitBtnUpClick
   end
   object BitBtnDown: TBitBtn
-    Left = 389
+    Left = 403
     Height = 25
     Top = 159
     Width = 75
@@ -50,9 +50,9 @@ object Form1: TForm1
     OnClick = BitBtnDownClick
   end
   object BitBtnPlay: TBitBtn
-    Left = 389
+    Left = 403
     Height = 25
-    Top = 272
+    Top = 300
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = 'Play'
@@ -60,25 +60,25 @@ object Form1: TForm1
     OnClick = BitBtnPlayClick
   end
   object Label1: TLabel
-    Left = 395
+    Left = 409
     Height = 16
-    Top = 208
+    Top = 236
     Width = 41
     Anchors = [akRight, akBottom]
     Caption = 'Label1'
   end
   object Label2: TLabel
-    Left = 395
+    Left = 409
     Height = 16
-    Top = 224
+    Top = 252
     Width = 41
     Anchors = [akRight, akBottom]
     Caption = 'Label2'
   end
   object Label3: TLabel
-    Left = 395
+    Left = 409
     Height = 16
-    Top = 240
+    Top = 268
     Width = 41
     Anchors = [akRight, akBottom]
     Caption = 'Label3'
@@ -87,16 +87,16 @@ object Form1: TForm1
     Left = 16
     Height = 37
     Top = 8
-    Width = 448
+    Width = 462
     Position = 0
     OnChange = TrackBar1Change
     Anchors = [akTop, akLeft, akRight]
     TabOrder = 5
   end
   object BitBtnNext: TBitBtn
-    Left = 389
+    Left = 403
     Height = 25
-    Top = 304
+    Top = 332
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = 'Next'
@@ -104,9 +104,9 @@ object Form1: TForm1
     OnClick = BitBtnNextClick
   end
   object BitBtnPrev: TBitBtn
-    Left = 389
+    Left = 403
     Height = 25
-    Top = 336
+    Top = 364
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = 'Prev'

@@ -104,7 +104,7 @@ end;
 
 function TSoundListBox.Prev(music: PMix_Music): boolean;
 var
-  musicPos: Double;
+  musicPos: double;
 begin
   if Count <= 0 then begin
     Result := False;
@@ -112,9 +112,16 @@ begin
   end else begin
     Result := True;
   end;
-  musicPos:=  Mix_GetMusicPosition(music);
+  musicPos := Mix_GetMusicPosition(music);
   if musicPos > 1.0 then begin
     Mix_SetMusicPosition(0.1);
+    Result := False;
+  end else begin
+    if ItemIndex = 0 then begin
+      ItemIndex := Count - 1;
+    end else begin
+      ItemIndex := ItemIndex - 1;
+    end;
   end;
 end;
 

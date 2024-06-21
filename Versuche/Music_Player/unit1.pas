@@ -7,7 +7,7 @@ interface
 uses
   SDL3, SDL3_mixer,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls, LCLType,
-  Buttons, ExtCtrls, ComCtrls, Types,  FileUtil,
+  Buttons, ExtCtrls, ComCtrls, Types, FileUtil,
   SoundListBox;
 
 type
@@ -69,7 +69,7 @@ begin
   ListBox.Height := ClientHeight - 70;
   ListBox.Parent := self;
 
-  sl:=FindAllFiles('/n4800/Multimedia/Music/Disco/C.C. Catch/1986 - Catch The Catch', '*.flac');
+  sl := FindAllFiles('/n4800/Multimedia/Music/Disco/C.C. Catch/1986 - Catch The Catch', '*.flac');
   ListBox.Items.AddStrings(sl);
   sl.Free;
   ListBox.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_1.wav');
@@ -101,7 +101,10 @@ begin
   if music = nil then begin
     SDL_Log('Konnte Musik nicht laden: %s', Mix_GetError);
   end;
-  Mix_PlayMusic(music, 1);
+
+
+//  Mix_PlayMusic(music, 1);
+  Mix_FadeInMusic(music,1,3000);
   TrackBar1.Max := Trunc(Mix_MusicDuration(music) * 1000);
   TrackBar1.Position := 0;
 end;
@@ -188,7 +191,9 @@ end;
 
 procedure TForm1.BitBtnPrevClick(Sender: TObject);
 begin
-   ListBox.Prev(music);
+  if ListBox.Prev(music) then begin
+    LoadNewMusic(ListBox.GetTitle);
+  end;
 end;
 
 end.
