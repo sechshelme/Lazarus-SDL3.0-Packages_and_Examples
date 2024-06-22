@@ -7,15 +7,16 @@ uses
   ctypes;
 
 var
+  win: PSDL_Window;
   renderer: PSDL_Renderer;
-  customBWCursor,  customColorCursor: PSDL_Cursor;
+  customBWCursor, customColorCursor: PSDL_Cursor;
   cursors: array of PSDL_Cursor;
 
   procedure LoadCursors;
   const
     size = 132;
   var
-    Data, mask: array[0..size*size * 4 - 1] of TUint8;
+    Data, mask: array[0..size * size * 4 - 1] of TUint8;
     i: integer;
   begin
     for i := 0 to Length(Data) - 1 do begin
@@ -23,7 +24,7 @@ var
       mask[i] := $bF;
     end;
     customBWCursor := SDL_CreateCursor(Data, mask, size, size, 0, 0);
-customColorCursor:=    SDL_CreateColorCursor(nil,0,0);
+    customColorCursor := SDL_CreateColorCursor(nil, 0, 0);
 
     SetLength(cursors, SDL_NUM_SYSTEM_CURSORS);
     for i := 0 to Length(cursors) - 1 do begin
@@ -32,9 +33,6 @@ customColorCursor:=    SDL_CreateColorCursor(nil,0,0);
   end;
 
   procedure Init;
-  var
-    win: PSDL_Window;
-
   begin
     SDL_Init(SDL_INIT_VIDEO);
     win := SDL_CreateWindow('Cursor', 640, 480, SDL_WINDOW_RESIZABLE);
@@ -69,7 +67,7 @@ customColorCursor:=    SDL_CreateColorCursor(nil,0,0);
   begin
     while not quit do begin
       while SDL_PollEvent(@e) do begin
-        case e.type_ of
+        case e._type of
           SDL_EVENT_MOUSE_BUTTON_DOWN: begin
             case e.button.button of
               SDL_BUTTON_LEFT: begin
@@ -86,7 +84,7 @@ customColorCursor:=    SDL_CreateColorCursor(nil,0,0);
             end;
           end;
           SDL_EVENT_KEY_DOWN: begin
-            sym := e.key.keysym.sym;
+            sym := e.key.key;
             case sym of
               SDLK_ESCAPE, SDLK_AC_BACK: begin
                 quit := True;
@@ -112,6 +110,8 @@ customColorCursor:=    SDL_CreateColorCursor(nil,0,0);
     end;
     SDL_DestroyCursor(customBWCursor);
     SDL_DestroyCursor(customColorCursor);
+    SDL_DestroyWindow(win);
+    SDL_DestroyRenderer(renderer);
     SDL_Quit;
   end;
 

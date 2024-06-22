@@ -4,7 +4,7 @@ program Project1;
 
 uses
   ctypes,
-  SDL3, SDL_image;
+  SDL3, SDL3_image;
 
 var
   window: PSDL_Window;
@@ -37,11 +37,11 @@ var
       end;
 
       while SDL_PollEvent(@event) do begin
-        case event.type_ of
+        case event._type of
           SDL_EVENT_KEY_DOWN: begin
-            SDL_Log('key: %i', event.key.keysym.sym); // neu
+            SDL_Log('key: %i', event.key.key);
 
-            case event.key.keysym.sym of
+            case event.key.key of
               SDLK_ESCAPE: begin
                 quit := True;
               end;
@@ -91,15 +91,6 @@ var
       SDLFail('Kann Sahbe nicht laden !');
     end;
 
- //   shapeSurface:=SDL_CreateSurface(800,600,SDL_PIXELFORMAT_RGBA8888);
-    //r.x:=0;
-    //r.y:=0;
-    //r.w:=400;
-    //r.h:=300;
-    //SDL_FillSurfaceRect(shapeSurface, @r, $FFFFFFFF);
-    //r.x:=400;
-    //r.y:=300;
-    //SDL_FillSurfaceRect(shapeSurface, @r, $FFFFFFFF);
 
     windowFlags:=SDL_WINDOW_HIDDEN or SDL_WINDOW_TRANSPARENT or SDL_WINDOW_BORDERLESS;
     window := SDL_CreateWindow('SDL3 Window', shapeSurface^.w, shapeSurface^.h, windowFlags);
@@ -107,8 +98,7 @@ var
       SDLFail('Kann kein SDL-Fenster erzeugen !');
     end;
 
-    renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_PRESENTVSYNC);
-//    renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_SOFTWARE);
+    renderer := SDL_CreateRenderer(window, nil);
     if renderer = nil then begin
       SDLFail('Kann kein SDL-Renderer erzeugen !');
     end;

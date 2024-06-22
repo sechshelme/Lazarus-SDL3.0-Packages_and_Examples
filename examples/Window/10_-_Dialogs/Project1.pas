@@ -39,7 +39,7 @@ var
       WriteLn('Could not create window: ', SDL_GetError);
       Halt(1);
     end;
-    renderer := SDL_CreateRenderer(win, nil, SDL_RENDERER_PRESENTVSYNC);
+    renderer := SDL_CreateRenderer(win, nil);
     if renderer = nil then begin
       WriteLn('Could not create renderer: ', SDL_GetError);
       Halt(1);
@@ -47,9 +47,9 @@ var
 
     while not quit do begin
       while SDL_PollEvent(@e) do begin
-        case e.type_ of
+        case e._type of
           SDL_EVENT_KEY_DOWN: begin
-            case e.key.keysym.sym of
+            case e.key.key of
               SDLK_ESCAPE: begin
                 quit := True;
               end;

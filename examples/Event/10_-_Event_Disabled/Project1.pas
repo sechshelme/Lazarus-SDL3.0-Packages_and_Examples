@@ -67,11 +67,11 @@ IsEnabled:=not IsEnabled;
       end;
 
       while SDL_PollEvent(@event) do begin
-        case event.type_ of
+        case event._type of
           SDL_EVENT_KEY_DOWN: begin
-            SDL_Log('key: %i', event.key.keysym.sym); // neu
+            SDL_Log('key: %i', event.key.key);
 
-            case event.key.keysym.sym of
+            case event.key.key of
               SDLK_ESCAPE: begin
                 quit := True;
               end;
@@ -109,7 +109,7 @@ begin
   if window = nil then begin
     SDLFail('Kann kein SDL-Fenster erzeugen !');
   end;
-  renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_ACCELERATED);
+  renderer := SDL_CreateRenderer(window, nil);
 //  renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_PRESENTVSYNC);
   if renderer = nil then begin
     SDLFail('Kann kein SDL-Renderer erzeugen !');

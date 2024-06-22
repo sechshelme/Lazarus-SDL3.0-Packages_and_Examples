@@ -78,7 +78,7 @@ var
       Halt(-1);
     end;
 
-    renderer := SDL_CreateRenderer(win, nil, SDL_RENDERER_ACCELERATED);
+    renderer := SDL_CreateRenderer(win, nil);
     if renderer = nil then begin
       SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Kann kein SDL-Renderer erzeugen !');
       Halt(-1);
@@ -107,7 +107,7 @@ var
   begin
     while not quit do begin
       while SDL_PollEvent(@e) do begin
-        case e.type_ of
+        case e._type of
           SDL_EVENT_MOUSE_BUTTON_DOWN: begin
             case e.button.button of
               SDL_BUTTON_LEFT: begin
@@ -117,7 +117,7 @@ var
             end;
           end;
           SDL_EVENT_KEY_DOWN: begin
-            sym := e.key.keysym.sym;
+            sym := e.key.key;
             case sym of
               SDLK_ESCAPE, SDLK_AC_BACK: begin
                 quit := True;

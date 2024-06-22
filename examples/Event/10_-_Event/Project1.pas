@@ -38,11 +38,11 @@ var
       end;
 
       while SDL_PollEvent(@event) do begin
-        case event.type_ of
+        case event._type of
           SDL_EVENT_KEY_DOWN: begin
-            SDL_Log('key: %i', event.key.keysym.sym); // neu
+            SDL_Log('key: %i', event.key.key);
 
-            case event.key.keysym.sym of
+            case event.key.key of
               SDLK_ESCAPE: begin
                 quit := True;
               end;

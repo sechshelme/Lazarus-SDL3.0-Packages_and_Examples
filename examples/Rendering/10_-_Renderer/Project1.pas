@@ -109,9 +109,9 @@ var
       end;
 
       while SDL_PollEvent(@e) do begin
-        case e.type_ of
+        case e._type of
           SDL_EVENT_KEY_DOWN: begin
-            case e.key.keysym.sym of
+            case e.key.key of
 
               SDLK_ESCAPE: begin
                 quit := True;

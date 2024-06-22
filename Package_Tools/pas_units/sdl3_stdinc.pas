@@ -242,7 +242,7 @@ function SDL_vasprintf(strp: PPchar; fmt: PChar; va:array of const): longint; cd
 // ????????????
 
 procedure SDL_srand(seed:TUint64);cdecl;external sdl3_lib;
-function SDL_rand:TUint32;cdecl;external sdl3_lib;
+function SDL_rand_n:TUint32;cdecl;external sdl3_lib;
 function SDL_rand_r(state:PUint64):TUint32;cdecl;external sdl3_lib;
 
 const

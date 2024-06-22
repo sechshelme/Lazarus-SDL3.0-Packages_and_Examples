@@ -36,9 +36,9 @@ var
   begin
     while not quit do begin
       while SDL_PollEvent(@e) do begin
-        case e.type_ of
+        case e._type of
           SDL_EVENT_KEY_DOWN: begin
-            case e.key.keysym.sym of
+            case e.key.key of
 
               SDLK_ESCAPE: begin
                 quit := True;
@@ -79,8 +79,11 @@ var
   var
     event: TSDL_Event;
     userevent: TSDL_UserEvent;
-    rect: PPointrect absolute param;
+//    rect: PPointrect absolute param;
+    rect: PPointrect;
   begin
+    rect:=PPointrect(param);
+
     rect^.rect.x += rect^.stepx;
     if rect^.rect.x > Width then begin
       rect^.rect.x := -RectSize;
@@ -102,7 +105,7 @@ var
     userevent.data1 := param;
     userevent.data2 := nil;
 
-    event.type_ := SDL_EVENT_USER;
+    event._type := SDL_EVENT_USER;
     event.user := userevent;
 
     SDL_PushEvent(@event);
@@ -113,12 +116,10 @@ var
   var
     Pointrect: array [0..TimerCount - 1] of TPointrect;
     i: integer;
-    //    Pointrect: TPointrect;
   begin
     SDL_init(SDL_INIT_VIDEO or SDL_INIT_TIMER);
 
     for i := 0 to TimerCount - 1 do begin
-
       Pointrect[i].rect.x := Random(RectSize) + RectSize;
       Pointrect[i].rect.y := Random(RectSize) + RectSize;
       Pointrect[i].rect.w := Random(RectSize) + RectSize;

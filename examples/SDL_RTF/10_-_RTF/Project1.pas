@@ -76,9 +76,9 @@ var
       end;
 
       while SDL_PollEvent(@e) do begin
-        case e.type_ of
+        case e._type of
           SDL_EVENT_KEY_DOWN: begin
-            case e.key.keysym.sym of
+            case e.key.key of
 
               SDLK_ESCAPE: begin
                 quit := True;
@@ -91,7 +91,7 @@ var
         end;
       end;
 
-      SDL_Log('rand: %i', SDL_rand);
+      SDL_Log('rand: %i', SDL_rand_n);
 
       time := SDL_GetTicks / 1000;
       red := Trunc((SDL_sinf(time) + 1) / 2.0 * 255);
