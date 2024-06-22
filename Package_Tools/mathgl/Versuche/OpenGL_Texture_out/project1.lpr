@@ -30,8 +30,20 @@ var
 
   // https://mathgl.sourceforge.net/doc_en/OpenGL-output.html#OpenGL-output
 
+
+// https://mathgl.sourceforge.net/doc_en/indirect-sample.html
+procedure plot2(gr: HMGL);
+begin
+  mgl_subplot(gr,1,1,0,'');
+  mgl_title(gr,'SubData vs Evaluate','',-1);
+
+
+  mgl_finish(gr);
+  end;
+
   procedure plot(gr: HMGL);
   begin
+
     mgl_subplot(gr, 1, 1, 0, '');
     mgl_rotate(gr, 40, 60, 0);
     mgl_set_light(gr, 1);
@@ -49,8 +61,13 @@ var
   var
     gr: HMGL;
   begin
-    gr := mgl_create_graph(Width, Height);
+//    gr := mgl_create_graph(Width, Height);
+
+//    gr:=    mgl_create_graph_fltk(nil, 'Titel',nil);
+//    gr:=    mgl_create_graph_glut(nil, 'Titel',nil);
+    gr:=    mgl_create_graph_qt(nil, 'Titel',nil);
     plot(gr);
+//    plot2(gr);
     rgb := mgl_get_rgba(gr);
 
     glutInit(@argc, argv);

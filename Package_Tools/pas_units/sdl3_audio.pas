@@ -53,8 +53,12 @@ type
   PSDL_AudioDeviceID = ^TSDL_AudioDeviceID;
   TSDL_AudioDeviceID = Uint32;
 
-function SDL_AUDIO_DEVICE_DEFAULT_OUTPUT : TSDL_AudioDeviceID;
-function SDL_AUDIO_DEVICE_DEFAULT_CAPTURE : TSDL_AudioDeviceID;
+const
+  SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK = TSDL_AudioDeviceID($FFFFFFFF);
+  SDL_AUDIO_DEVICE_DEFAULT_RECORDING =TSDL_AudioDeviceID($FFFFFFFE);
+
+//function SDL_AUDIO_DEVICE_DEFAULT_OUTPUT : TSDL_AudioDeviceID;
+//function SDL_AUDIO_DEVICE_DEFAULT_CAPTURE : TSDL_AudioDeviceID;
 type
   PSDL_AudioSpec = ^TSDL_AudioSpec;
   TSDL_AudioSpec = record
@@ -162,15 +166,15 @@ begin
   SDL_AUDIO_ISUNSIGNED:= not (SDL_AUDIO_ISSIGNED(x));
 end;
 
-function SDL_AUDIO_DEVICE_DEFAULT_OUTPUT : TSDL_AudioDeviceID;
-  begin
-    SDL_AUDIO_DEVICE_DEFAULT_OUTPUT:=TSDL_AudioDeviceID($FFFFFFFF);
-  end;
+///function SDL_AUDIO_DEVICE_DEFAULT_OUTPUT : TSDL_AudioDeviceID;
+//  begin
+//    SDL_AUDIO_DEVICE_DEFAULT_OUTPUT:=TSDL_AudioDeviceID($FFFFFFFF);
+//  end;
 
-function SDL_AUDIO_DEVICE_DEFAULT_CAPTURE : TSDL_AudioDeviceID;
-  begin
-    SDL_AUDIO_DEVICE_DEFAULT_CAPTURE:=TSDL_AudioDeviceID($FFFFFFFE);
-  end;
+//function SDL_AUDIO_DEVICE_DEFAULT_CAPTURE : TSDL_AudioDeviceID;
+//  begin
+//    SDL_AUDIO_DEVICE_DEFAULT_CAPTURE:=TSDL_AudioDeviceID($FFFFFFFE);
+//  end;
 
 function SDL_AUDIO_FRAMESIZE(x : TSDL_AudioSpec) : longint;
 begin

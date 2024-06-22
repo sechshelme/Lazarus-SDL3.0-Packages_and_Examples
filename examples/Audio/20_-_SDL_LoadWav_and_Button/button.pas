@@ -126,9 +126,10 @@ end;
 procedure TButton.Paint;
 var
   srcrect: TSDL_FRect;
-  w, h: longint;
+  w, h: Single;
 begin
-  SDL_QueryTexture(tex, nil, nil, @w, @h);
+  SDL_GetTextureSize(tex, @w, @h);
+//  SDL_QueryTexture(tex, nil, nil, @w, @h);
 
   srcrect.x := 0;
   srcrect.w := w;
@@ -169,7 +170,7 @@ var
   mp: TSDL_FPoint;
   IsInRegion: TSDL_bool;
 begin
-  case Event.type_ of
+  case Event._type of
     SDL_EVENT_MOUSE_BUTTON_DOWN: begin
       mp.x := event.button.x;
       mp.y := event.button.y;

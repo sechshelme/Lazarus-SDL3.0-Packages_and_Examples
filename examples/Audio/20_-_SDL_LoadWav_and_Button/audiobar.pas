@@ -154,7 +154,7 @@ begin
 
   SDL_Log('Using audio driver: %s', SDL_GetCurrentAudioDriver());
 
-  Result.stream := SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_OUTPUT, @Result.wave.spec, @AudioStreamCallback, @sound);
+  Result.stream := SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, @Result.wave.spec, @AudioStreamCallback, @sound);
   if Result.stream = nil then  begin
     SDL_LogError(0, 'Konnte Stream nicht öffnen !   %s', SDL_GetError);
   end;

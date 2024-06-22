@@ -69,7 +69,7 @@ var
 
     SDL_Log('Using audio driver: %s', SDL_GetCurrentAudioDriver());
 
-    Result.stream := SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_OUTPUT, @Result.wave.spec, @AudioStreamCallback, nil);
+    Result.stream := SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, @Result.wave.spec, @AudioStreamCallback, nil);
     if Result.stream = nil then  begin
       SDL_LogError(0, 'Konnte Stream nicht öffnen !   %s', SDL_GetError);
     end;
@@ -136,12 +136,12 @@ var
     while not quit do begin
 
       while SDL_PollEvent(@event) do begin
-        case event.type_ of
+        case event._type of
           SDL_EVENT_WINDOW_RESIZED: begin
             SetRect(event.window.data1, event.window.data2);
           end;
           SDL_EVENT_KEY_DOWN: begin
-            case event.key.keysym.sym of
+            case event.key.key of
               SDLK_ESCAPE: begin
                 quit := True;
               end;

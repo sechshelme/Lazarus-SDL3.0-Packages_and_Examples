@@ -148,9 +148,9 @@ var
   begin
     while not quit do begin
       while SDL_PollEvent(@e) do begin
-        case e.type_ of
+        case e._type of
           SDL_EVENT_KEY_DOWN: begin
-            sym := e.key.keysym.sym;
+            sym := e.key.key;
             case sym of
               SDLK_ESCAPE, SDLK_AC_BACK: begin
                 quit := True;

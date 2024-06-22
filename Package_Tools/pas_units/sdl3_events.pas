@@ -33,9 +33,8 @@ const
   SDL_EVENT_DISPLAY_REMOVED = 339;
   SDL_EVENT_DISPLAY_MOVED = 340;
   SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED = 341;
-  SDL_EVENT_DISPLAY_HDR_STATE_CHANGED = 342;
   SDL_EVENT_DISPLAY_FIRST = SDL_EVENT_DISPLAY_ORIENTATION;
-  SDL_EVENT_DISPLAY_LAST = SDL_EVENT_DISPLAY_HDR_STATE_CHANGED;
+  SDL_EVENT_DISPLAY_LAST = SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED;
   SDL_EVENT_WINDOW_SHOWN = $202;
   SDL_EVENT_WINDOW_HIDDEN = 515;
   SDL_EVENT_WINDOW_EXPOSED = 516;
@@ -61,6 +60,7 @@ const
   SDL_EVENT_WINDOW_DESTROYED = 536;
   SDL_EVENT_WINDOW_PEN_ENTER = 537;
   SDL_EVENT_WINDOW_PEN_LEAVE = 538;
+  SDL_EVENT_WINDOW_HDR_STATE_CHANGED = 539;
   SDL_EVENT_WINDOW_FIRST = SDL_EVENT_WINDOW_SHOWN;
   SDL_EVENT_WINDOW_LAST = SDL_EVENT_WINDOW_PEN_LEAVE;
   SDL_EVENT_KEY_DOWN = $300;
@@ -68,12 +68,17 @@ const
   SDL_EVENT_TEXT_EDITING = 770;
   SDL_EVENT_TEXT_INPUT = 771;
   SDL_EVENT_KEYMAP_CHANGED = 772;
+  SDL_EVENT_KEYBOARD_ADDED = 773;
+  SDL_EVENT_KEYBOARD_REMOVED = 774;
   SDL_EVENT_MOUSE_MOTION = $400;
   SDL_EVENT_MOUSE_BUTTON_DOWN = 1025;
   SDL_EVENT_MOUSE_BUTTON_UP = 1026;
   SDL_EVENT_MOUSE_WHEEL = 1027;
+  SDL_EVENT_MOUSE_ADDED = 1028;
+  SDL_EVENT_MOUSE_REMOVED = 1029;
   SDL_EVENT_JOYSTICK_AXIS_MOTION = $600;
-  SDL_EVENT_JOYSTICK_HAT_MOTION = $602;
+  SDL_EVENT_JOYSTICK_BALL_MOTION = 1537;
+  SDL_EVENT_JOYSTICK_HAT_MOTION = 1538;
   SDL_EVENT_JOYSTICK_BUTTON_DOWN = 1539;
   SDL_EVENT_JOYSTICK_BUTTON_UP = 1540;
   SDL_EVENT_JOYSTICK_ADDED = 1541;
@@ -119,91 +124,103 @@ const
   SDL_EVENT_POLL_SENTINEL = $7F00;
   SDL_EVENT_USER = $8000;
   SDL_EVENT_LAST = $FFFF;
+  SDL_EVENT_ENUM_PADDING = $7FFFFFFF;
 
 type
   PSDL_CommonEvent = ^TSDL_CommonEvent;
 
   TSDL_CommonEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TUint32;
+    reserved: TUint32;
+    timestamp: TUint64;
   end;
 
   PSDL_DisplayEvent = ^TSDL_DisplayEvent;
 
   TSDL_DisplayEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     displayID: TSDL_DisplayID;
-    data1: int32;
+    data1: TSint32;
   end;
 
   PSDL_WindowEvent = ^TSDL_WindowEvent;
 
   TSDL_WindowEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     windowID: TSDL_WindowID;
-    data1: int32;
-    data2: int32;
+    data1: TSint32;
+    data2: TSint32;
+  end;
+
+  PSDL_KeyboardDeviceEvent = ^TSDL_KeyboardDeviceEvent;
+
+  TSDL_KeyboardDeviceEvent = record
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
+    which: TSDL_KeyboardID;
   end;
 
   PSDL_KeyboardEvent = ^TSDL_KeyboardEvent;
 
   TSDL_KeyboardEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     windowID: TSDL_WindowID;
-    which: TSDL_KeyboardID;  // neu
-    state: uint8;
-    _repeat: uint8;
-    padding2: uint8;
-    padding3: uint8;
-    keysym: TSDL_Keysym;
+    which: TSDL_KeyboardID;
+    scancode: TSDL_Scancode;
+    key: TSDL_Keycode;
+    mod_: TSDL_Keymod;
+    raw: TUint16;
+    state: TUint8;
+    _repeat: TUint8;
   end;
 
-const
-  SDL_TEXTEDITINGEVENT_TEXT_SIZE = 64;
-
-type
   PSDL_TextEditingEvent = ^TSDL_TextEditingEvent;
 
   TSDL_TextEditingEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     windowID: TSDL_WindowID;
     Text: PChar;
-    start: int32;
-    length: int32;
+    start: TSint32;
+    length: TSint32;
   end;
 
-const
-  SDL_TEXTINPUTEVENT_TEXT_SIZE = 64;
-
-type
   PSDL_TextInputEvent = ^TSDL_TextInputEvent;
 
   TSDL_TextInputEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     windowID: TSDL_WindowID;
     Text: PChar;
+  end;
+
+  PSDL_MouseDeviceEvent = ^TSDL_MouseDeviceEvent;
+
+  TSDL_MouseDeviceEvent = record
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
+    which: TSDL_MouseID;
   end;
 
   PSDL_MouseMotionEvent = ^TSDL_MouseMotionEvent;
 
   TSDL_MouseMotionEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     windowID: TSDL_WindowID;
     which: TSDL_MouseID;
-    state: uint32;
+    state: TSDL_MouseButtonFlags;
     x: single;
     y: single;
     xrel: single;
@@ -213,15 +230,15 @@ type
   PSDL_MouseButtonEvent = ^TSDL_MouseButtonEvent;
 
   TSDL_MouseButtonEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     windowID: TSDL_WindowID;
     which: TSDL_MouseID;
-    button: uint8;
-    state: uint8;
-    clicks: uint8;
-    padding: uint8;
+    button: TUint8;
+    state: TUint8;
+    clicks: TUint8;
+    padding: TUint8;
     x: single;
     y: single;
   end;
@@ -229,14 +246,14 @@ type
   PSDL_MouseWheelEvent = ^TSDL_MouseWheelEvent;
 
   TSDL_MouseWheelEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     windowID: TSDL_WindowID;
     which: TSDL_MouseID;
     x: single;
     y: single;
-    direction: uint32;
+    direction: TSDL_MouseWheelDirection;
     mouse_x: single;
     mouse_y: single;
   end;
@@ -244,108 +261,125 @@ type
   PSDL_JoyAxisEvent = ^TSDL_JoyAxisEvent;
 
   TSDL_JoyAxisEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_JoystickID;
-    axis: uint8;
-    padding1: uint8;
-    padding2: uint8;
-    padding3: uint8;
-    Value: int16;
-    padding4: uint16;
+    axis: TUint8;
+    padding1: TUint8;
+    padding2: TUint8;
+    padding3: TUint8;
+    Value: TSint16;
+    padding4: TUint16;
+  end;
+
+  PSDL_JoyBallEvent = ^TSDL_JoyBallEvent;
+
+  TSDL_JoyBallEvent = record
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
+    which: TSDL_JoystickID;
+    ball: TUint8;
+    padding1: TUint8;
+    padding2: TUint8;
+    padding3: TUint8;
+    xrel: TSint16;
+    yrel: TSint16;
   end;
 
   PSDL_JoyHatEvent = ^TSDL_JoyHatEvent;
 
   TSDL_JoyHatEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_JoystickID;
-    hat: uint8;
-    Value: uint8;
-    padding1: uint8;
-    padding2: uint8;
+    hat: TUint8;
+    Value: TUint8;
+    padding1: TUint8;
+    padding2: TUint8;
   end;
 
   PSDL_JoyButtonEvent = ^TSDL_JoyButtonEvent;
 
   TSDL_JoyButtonEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_JoystickID;
-    button: uint8;
-    state: uint8;
-    padding1: uint8;
-    padding2: uint8;
+    button: TUint8;
+    state: TUint8;
+    padding1: TUint8;
+    padding2: TUint8;
   end;
 
   PSDL_JoyDeviceEvent = ^TSDL_JoyDeviceEvent;
 
   TSDL_JoyDeviceEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_JoystickID;
   end;
 
   PSDL_JoyBatteryEvent = ^TSDL_JoyBatteryEvent;
 
   TSDL_JoyBatteryEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_JoystickID;
-    level: TSDL_JoystickPowerLevel;
+    state: TSDL_PowerState;
+    percent: longint;
   end;
 
   PSDL_GamepadAxisEvent = ^TSDL_GamepadAxisEvent;
 
   TSDL_GamepadAxisEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_JoystickID;
-    axis: uint8;
-    padding1: uint8;
-    padding2: uint8;
-    padding3: uint8;
-    Value: int16;
-    padding4: uint16;
+    axis: TUint8;
+    padding1: TUint8;
+    padding2: TUint8;
+    padding3: TUint8;
+    Value: TSint16;
+    padding4: TUint16;
   end;
 
   PSDL_GamepadButtonEvent = ^TSDL_GamepadButtonEvent;
 
   TSDL_GamepadButtonEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_JoystickID;
-    button: uint8;
-    state: uint8;
-    padding1: uint8;
-    padding2: uint8;
+    button: TUint8;
+    state: TUint8;
+    padding1: TUint8;
+    padding2: TUint8;
   end;
+
   PSDL_GamepadDeviceEvent = ^TSDL_GamepadDeviceEvent;
 
   TSDL_GamepadDeviceEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_JoystickID;
   end;
 
   PSDL_GamepadTouchpadEvent = ^TSDL_GamepadTouchpadEvent;
 
   TSDL_GamepadTouchpadEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_JoystickID;
-    touchpad: int32;
-    finger: int32;
+    touchpad: TSint32;
+    finger: TSint32;
     x: single;
     y: single;
     pressure: single;
@@ -354,45 +388,43 @@ type
   PSDL_GamepadSensorEvent = ^TSDL_GamepadSensorEvent;
 
   TSDL_GamepadSensorEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_JoystickID;
-    sensor: int32;
+    sensor: TSint32;
     Data: array[0..2] of single;
-    sensor_timestamp: uint64;
+    sensor_timestamp: TUint64;
   end;
 
   PSDL_AudioDeviceEvent = ^TSDL_AudioDeviceEvent;
 
   TSDL_AudioDeviceEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_AudioDeviceID;
-    iscapture: uint8;
-    padding1: uint8;
-    padding2: uint8;
-    padding3: uint8;
+    recording: TUint8;
+    padding1: TUint8;
+    padding2: TUint8;
+    padding3: TUint8;
   end;
 
   PSDL_CameraDeviceEvent = ^TSDL_CameraDeviceEvent;
 
   TSDL_CameraDeviceEvent = record
-    _type: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_CameraDeviceID;
-    padding1: uint8;
-    padding2: uint8;
-    padding3: uint8;
   end;
 
   PSDL_TouchFingerEvent = ^TSDL_TouchFingerEvent;
 
   TSDL_TouchFingerEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     touchID: TSDL_TouchID;
     fingerID: TSDL_FingerID;
     x: single;
@@ -403,102 +435,102 @@ type
     windowID: TSDL_WindowID;
   end;
 
-const
-  SDL_DROPEVENT_DATA_SIZE = 64;
-
-type
   PSDL_PenTipEvent = ^TSDL_PenTipEvent;
 
   TSDL_PenTipEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
-    windowID: uint32;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
+    windowID: TSDL_WindowID;
     which: TSDL_PenID;
-    tip: uint8;
-    state: uint8;
-    pen_state: uint16;
+    tip: TUint8;
+    state: TUint8;
+    pen_state: TUint16;
     x: single;
     y: single;
     axes: array[0..(SDL_PEN_NUM_AXES) - 1] of single;
   end;
+
   PSDL_PenMotionEvent = ^TSDL_PenMotionEvent;
 
   TSDL_PenMotionEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
-    windowID: uint32;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
+    windowID: TSDL_WindowID;
     which: TSDL_PenID;
-    padding1: uint8;
-    padding2: uint8;
-    pen_state: uint16;
+    padding1: TUint8;
+    padding2: TUint8;
+    pen_state: TUint16;
     x: single;
     y: single;
     axes: array[0..(SDL_PEN_NUM_AXES) - 1] of single;
   end;
+
   PSDL_PenButtonEvent = ^TSDL_PenButtonEvent;
 
   TSDL_PenButtonEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
-    windowID: uint32;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
+    windowID: TSDL_WindowID;
     which: TSDL_PenID;
-    button: uint8;
-    state: uint8;
-    pen_state: uint16;
+    button: TUint8;
+    state: TUint8;
+    pen_state: TUint16;
     x: single;
     y: single;
     axes: array[0..(SDL_PEN_NUM_AXES) - 1] of single;
   end;
+
   PSDL_DropEvent = ^TSDL_DropEvent;
 
   TSDL_DropEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     windowID: TSDL_WindowID;
     x: single;
     y: single;
     Source: PChar;
     Data: PChar;
   end;
+
   PSDL_ClipboardEvent = ^TSDL_ClipboardEvent;
 
   TSDL_ClipboardEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
   end;
 
   PSDL_SensorEvent = ^TSDL_SensorEvent;
 
   TSDL_SensorEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
     which: TSDL_SensorID;
     Data: array[0..5] of single;
-    sensor_timestamp: uint64;
+    sensor_timestamp: TUint64;
   end;
 
   PSDL_QuitEvent = ^TSDL_QuitEvent;
 
   TSDL_QuitEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
   end;
 
   PSDL_UserEvent = ^TSDL_UserEvent;
 
   TSDL_UserEvent = record
-    _type: uint32;
-    reserved: uint32;
-    timestamp: uint64;
+    _type: TUint32;
+    reserved: TUint32;
+    timestamp: TUint64;
     windowID: TSDL_WindowID;
-    code: int32;
+    code: TSint32;
     data1: pointer;
     data2: pointer;
   end;
@@ -506,73 +538,77 @@ type
   PSDL_Event = ^TSDL_Event;
   TSDL_Event = record
     case longint of
-      0: (type_: uint32);
+      0: (_type: TUint32);
       1: (common: TSDL_CommonEvent);
       2: (display: TSDL_DisplayEvent);
       3: (window: TSDL_WindowEvent);
-      4: (key: TSDL_KeyboardEvent);
-      5: (edit: TSDL_TextEditingEvent);
-      6: (Text: TSDL_TextInputEvent);
-      7: (motion: TSDL_MouseMotionEvent);
-      8: (button: TSDL_MouseButtonEvent);
-      9: (wheel: TSDL_MouseWheelEvent);
-      10: (jaxis: TSDL_JoyAxisEvent);
-      11: (jhat: TSDL_JoyHatEvent);
-      12: (jbutton: TSDL_JoyButtonEvent);
-      13: (jdevice: TSDL_JoyDeviceEvent);
-      14: (jbattery: TSDL_JoyBatteryEvent);
-      15: (gaxis: TSDL_GamepadAxisEvent);
-      16: (gbutton: TSDL_GamepadButtonEvent);
-      17: (gdevice: TSDL_GamepadDeviceEvent);
-      18: (gtouchpad: TSDL_GamepadTouchpadEvent);
-      19: (gsensor: TSDL_GamepadSensorEvent);
-      20: (adevice: TSDL_AudioDeviceEvent);
-      21: (cdevice: TSDL_CameraDeviceEvent);
-      22: (sensor: TSDL_SensorEvent);
-      23: (quit: TSDL_QuitEvent);
-      24: (user: TSDL_UserEvent);
-      25: (tfinger: TSDL_TouchFingerEvent);
-      26: (ptip: TSDL_PenTipEvent);
-      27: (pmotion: TSDL_PenMotionEvent);
-      28: (pbutton: TSDL_PenButtonEvent);
-      29: (drop: TSDL_DropEvent);
-      30: (clipboard: TSDL_ClipboardEvent);
-      31: (padding: array[0..127] of uint8);
+      4: (kdevice: TSDL_KeyboardDeviceEvent);
+      5: (key: TSDL_KeyboardEvent);
+      6: (edit: TSDL_TextEditingEvent);
+      7: (Text: TSDL_TextInputEvent);
+      8: (mdevice: TSDL_MouseDeviceEvent);
+      9: (motion: TSDL_MouseMotionEvent);
+      10: (button: TSDL_MouseButtonEvent);
+      11: (wheel: TSDL_MouseWheelEvent);
+      12: (jdevice: TSDL_JoyDeviceEvent);
+      13: (jaxis: TSDL_JoyAxisEvent);
+      14: (jball: TSDL_JoyBallEvent);
+      15: (jhat: TSDL_JoyHatEvent);
+      16: (jbutton: TSDL_JoyButtonEvent);
+      17: (jbattery: TSDL_JoyBatteryEvent);
+      18: (gdevice: TSDL_GamepadDeviceEvent);
+      19: (gaxis: TSDL_GamepadAxisEvent);
+      20: (gbutton: TSDL_GamepadButtonEvent);
+      21: (gtouchpad: TSDL_GamepadTouchpadEvent);
+      22: (gsensor: TSDL_GamepadSensorEvent);
+      23: (adevice: TSDL_AudioDeviceEvent);
+      24: (cdevice: TSDL_CameraDeviceEvent);
+      25: (sensor: TSDL_SensorEvent);
+      26: (quit: TSDL_QuitEvent);
+      27: (user: TSDL_UserEvent);
+      28: (tfinger: TSDL_TouchFingerEvent);
+      29: (ptip: TSDL_PenTipEvent);
+      30: (pmotion: TSDL_PenMotionEvent);
+      31: (pbutton: TSDL_PenButtonEvent);
+      32: (drop: TSDL_DropEvent);
+      33: (clipboard: TSDL_ClipboardEvent);
+      34: (padding: array[0..127] of TUint8);
   end;
 
 procedure SDL_PumpEvents; cdecl; external sdl3_lib;
 
 type
-  PSDL_eventaction = ^TSDL_eventaction;
-  TSDL_eventaction = longint;
+  PSDL_EventAction = ^TSDL_EventAction;
+  TSDL_EventAction = longint;
 
 const
   SDL_ADDEVENT = 0;
   SDL_PEEKEVENT = 1;
   SDL_GETEVENT = 2;
 
-function SDL_PeepEvents(events: PSDL_Event; numevents: longint; action: TSDL_eventaction; minType: uint32; maxType: uint32): longint; cdecl; external sdl3_lib;
-function SDL_HasEvent(_type: uint32): TSDL_bool; cdecl; external sdl3_lib;
-function SDL_HasEvents(minType: Uint32; maxType: Uint32): TSDL_bool; cdecl; external sdl3_lib;
-procedure SDL_FlushEvent(_type: Uint32); cdecl; external sdl3_lib;
-procedure SDL_FlushEvents(minType: Uint32; maxType: Uint32); cdecl; external sdl3_lib;
+
+function SDL_PeepEvents(events: PSDL_Event; numevents: longint; action: TSDL_EventAction; minType: TUint32; maxType: TUint32): longint; cdecl; external sdl3_lib;
+function SDL_HasEvent(_type: TUint32): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_HasEvents(minType: TUint32; maxType: TUint32): TSDL_bool; cdecl; external sdl3_lib;
+procedure SDL_FlushEvent(_type: TUint32); cdecl; external sdl3_lib;
+procedure SDL_FlushEvents(minType: TUint32; maxType: TUint32); cdecl; external sdl3_lib;
 function SDL_PollEvent(event: PSDL_Event): TSDL_bool; cdecl; external sdl3_lib;
 function SDL_WaitEvent(event: PSDL_Event): TSDL_bool; cdecl; external sdl3_lib;
-function SDL_WaitEventTimeout(event: PSDL_Event; timeoutMS: int32): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_WaitEventTimeout(event: PSDL_Event; timeoutMS: TSint32): TSDL_bool; cdecl; external sdl3_lib;
 function SDL_PushEvent(event: PSDL_Event): longint; cdecl; external sdl3_lib;
 
 type
-  PSDL_EventFilter = ^TSDL_EventFilter;
   TSDL_EventFilter = function(userdata: pointer; event: PSDL_Event): longint; cdecl;
+  PSDL_EventFilter = ^TSDL_EventFilter;
 
 procedure SDL_SetEventFilter(filter: TSDL_EventFilter; userdata: pointer); cdecl; external sdl3_lib;
 function SDL_GetEventFilter(filter: PSDL_EventFilter; userdata: Ppointer): TSDL_bool; cdecl; external sdl3_lib;
 function SDL_AddEventWatch(filter: TSDL_EventFilter; userdata: pointer): longint; cdecl; external sdl3_lib;
 procedure SDL_DelEventWatch(filter: TSDL_EventFilter; userdata: pointer); cdecl; external sdl3_lib;
 procedure SDL_FilterEvents(filter: TSDL_EventFilter; userdata: pointer); cdecl; external sdl3_lib;
-procedure SDL_SetEventEnabled(_type: Uint32; Enabled: TSDL_bool); cdecl; external sdl3_lib;
-function SDL_EventEnabled(_type: Uint32): TSDL_bool; cdecl; external sdl3_lib;
-function SDL_RegisterEvents(numevents: longint): Uint32; cdecl; external sdl3_lib;
+procedure SDL_SetEventEnabled(_type: TUint32; Enabled: TSDL_bool); cdecl; external sdl3_lib;
+function SDL_EventEnabled(_type: TUint32): TSDL_bool; cdecl; external sdl3_lib;
+function SDL_RegisterEvents(numevents: longint): TUint32; cdecl; external sdl3_lib;
 function SDL_AllocateEventMemory(size: Tsize_t): pointer; cdecl; external sdl3_lib;
 
 implementation

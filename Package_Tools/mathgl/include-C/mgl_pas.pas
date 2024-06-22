@@ -122,12 +122,12 @@ type PGSLVector = ^TGSLVector;
 type PGSLMatrix = ^TGSLMatrix;
 
 type TMglDrawFunction = function (gr: HMGL; p: pointer): integer; cdecl;
-//function mgl_create_graph_gl(): HMGL; cdecl; external libmgl;
-//function mgl_create_graph_glut(draw: TMglDrawFunction; const title: PChar; par: pointer): HMGL; cdecl; external libmglglut;
-//function mgl_create_graph_fltk(draw: TMglDrawFunction; const title: PChar; par: pointer): HMGL; cdecl; external libmglfltk;
-//procedure mgl_fltk_run(); cdecl; external libmglfltk;
-//function mgl_create_graph_qt(draw: TMglDrawFunction; const title: PChar; par: pointer): HMGL; cdecl; external libmglqt;
-//procedure mgl_qt_run(); cdecl; external libmglqt;
+function mgl_create_graph_gl(): HMGL; cdecl; external libmgl;
+function mgl_create_graph_glut(draw: TMglDrawFunction; const title: PChar; par: pointer): HMGL; cdecl; external libmglglut;
+function mgl_create_graph_fltk(draw: TMglDrawFunction; const title: PChar; par: pointer): HMGL; cdecl; external libmglfltk;
+procedure mgl_fltk_run(); cdecl; external libmglfltk;
+function mgl_create_graph_qt(draw: TMglDrawFunction; const title: PChar; par: pointer): HMGL; cdecl; external libmglqt;
+procedure mgl_qt_run(); cdecl; external libmglqt;
 
 {== ../../include/mgl2/abstract.h ==}
 //-----------------------------------------------------------------------------

@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
   SDL_Window *win = SDL_CreateWindow("Hello World", 640, 480, 0);
 
   SDL_LoadWAV("tataa.wav", &wave.spec, &wave.sound, &wave.soundlen);
-  stream = SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_OUTPUT, &wave.spec, AdioStreamCallback, nullptr);
+  stream = SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, &wave.spec, AdioStreamCallback, nullptr);
   SDL_PutAudioStreamData(stream, wave.sound, wave.soundlen);
   SDL_ResumeAudioDevice(SDL_GetAudioStreamDevice(stream));
 
