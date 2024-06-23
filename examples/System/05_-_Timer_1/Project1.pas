@@ -8,11 +8,17 @@ uses
 var
   timer_id1, timer_id2: TSDL_TimerID;
 
-  function my_callbackfunc(interval: uint32; param: pointer): uint32; cdecl;
-  begin
-    SDL_Log('Timer    Name: %s', param);
-    Result := interval;
-  end;
+function my_callbackfunc(userdata: pointer; timerID: TSDL_TimerID;  interval: TUint32): TUint32; cdecl;
+begin
+  SDL_Log('Timer    Name: %s', userdata);
+  Result := interval;
+end;
+
+function my_callbackfunc2(userdata: pointer; timerID: TSDL_TimerID;
+  interval: TUint32): TUint32; cdecl;
+begin
+
+end;
 
 begin
   SDL_Init(SDL_INIT_TIMER);

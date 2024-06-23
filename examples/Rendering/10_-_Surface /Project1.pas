@@ -46,7 +46,7 @@ type
   TTriByte = bitpacked record
     rgb: 0..$FFFFFF;
   end;
-  PTriByte=^TTriByte;
+  PTriByte = ^TTriByte;
 
   function CreateSurface3: PSDL_Surface;
   const
@@ -87,6 +87,7 @@ type
       SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
     end;
   end;
+
 
   procedure main;
   const
@@ -130,6 +131,9 @@ type
     for i := 0 to Length(Surface) - 1 do begin
       printSurface(Surface[i]);
     end;
+
+    SDL_SetWindowIcon(win, Surface[Length(Surface) - 1]);
+
 
     while not quit do begin
       while SDL_PollEvent(@event) do begin

@@ -13,6 +13,7 @@ uses
 //  SDL3,
 //  SDL3_mouse,
 //  SDL3_events,
+//  SDL3_dialog,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, FileUtil;
 
 type

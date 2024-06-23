@@ -6,8 +6,8 @@ uses
   SDL3;
 
 var
-  window: PSDL_Window;
-  renderer: PSDL_Renderer;
+  window, window2: PSDL_Window;
+  renderer, renderer2: PSDL_Renderer;
   bitmapTex: PSDL_Texture;
 
   function CreateTexture: PSDL_Texture;
@@ -26,14 +26,48 @@ var
     SDL_DestroySurface(bitmapSurface);
   end;
 
+  procedure Window2Pos(ofs: integer);
+  var
+    x, y: longint;
+  begin
+    SDL_GetWindowPosition(window2, @x, @y);
+    Inc(x, ofs);
+    SDL_SetWindowPosition(window2, x, y);
+  end;
+
+  procedure Window2Resize(ofs: integer);
+  var
+    w, h: longint;
+  begin
+    SDL_GetWindowSize(window2, @w, @h);
+    Inc(w, ofs);
+    SDL_SetWindowSize(window2, w, h);
+  end;
+
+  procedure Windows2ShowPos(const ev: TSDL_Event);
+  var
+    win: PSDL_Window;
+    x, y, w, h: longint;
+  begin
+    win := SDL_GetWindowFromID(ev.window.windowID);
+    SDL_GetWindowPosition(win, @x, @y);
+    SDL_GetWindowSize(win, @w, @h);
+    SDL_Log('Left: %i  Right: %i,  Width: %i  Height: %i', x, y, w, h);
+    SDL_RenderClear(renderer2);
+    SDL_RenderPresent(renderer2);
+
+  end;
+
   procedure SDLMain;
   var
-    step: single;
+    step, red, green, blue: single;
     e: TSDL_Event;
     quit: boolean = False;
-    rSrc, rDest: TSDL_FRect;
-    keyStat: PUInt8;
-    IsCtrl: TSDL_bool;
+    rSrc, rDest, r: TSDL_FRect;
+    keyStat: PUInt8 = nil;
+    IsShift, IsCtrl: TSDL_bool;
+    time: extended;
+
   begin
     rDest.x := 0;
     rDest.y := 0;
@@ -41,13 +75,14 @@ var
     rDest.h := 100;
     while not quit do begin
       keyStat := SDL_GetKeyboardState(nil);
-      if (keyStat[SDL_SCANCODE_LSHIFT] <> 0) or (keyStat[SDL_SCANCODE_RSHIFT] <> 0) then begin
+      IsShift := (keyStat[SDL_SCANCODE_LSHIFT] <> 0) or (keyStat[SDL_SCANCODE_RSHIFT] <> 0);
+      IsCtrl := (keyStat[SDL_SCANCODE_LCTRL] <> 0) or (keyStat[SDL_SCANCODE_RCTRL] <> 0);
+
+      if IsShift then begin
         step := 0.1;
       end else begin
         step := 0.01;
       end;
-
-      IsCtrl := (keyStat[SDL_SCANCODE_LCTRL] <> 0) or (keyStat[SDL_SCANCODE_RCTRL] <> 0);
 
       if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
         if IsCtrl then begin
@@ -90,16 +125,32 @@ var
         rDest.h := 1;
       end;
 
-
       while SDL_PollEvent(@e) do begin
         case e._type of
           SDL_EVENT_KEY_DOWN: begin
             case e.key.key of
-
               SDLK_ESCAPE: begin
                 quit := True;
               end;
+              SDLK_r: begin
+                if IsCtrl then begin
+                  Window2Resize(1);
+                end else begin
+                  Window2Pos(3);
+                end;
+              end;
+              SDLK_l: begin
+                if IsCtrl then begin
+                  Window2Resize(-1);
+                end else begin
+                  Window2Pos(-3);
+                end;
+              end;
             end;
+          end;
+          SDL_EVENT_WINDOW_MOVED,
+          SDL_EVENT_WINDOW_RESIZED: begin
+            Windows2ShowPos(e);
           end;
           SDL_EVENT_QUIT: begin
             quit := True;
@@ -107,26 +158,19 @@ var
         end;
       end;
 
+      time := SDL_GetTicks / 1000;
+      red := (SDL_sinf(time) + 1) / 2.0;
+      green := (SDL_sinf(time / 2) + 1) / 2.0;
+      blue := (SDL_sinf(time / 3) + 1) / 2.0;
+      SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
       SDL_RenderClear(renderer);
 
-      rSrc.items:=[0,0 ,1050,1000];
-      SDL_SetRenderViewport(renderer, @rSrc);
-
-      //   SDL_RenderTexture(renderer, bitmapTex, nil, @distrect);
-      rSrc.x := 0;
-      rSrc.y := 0;
-      rSrc.w := 400;
-      rSrc.h := 400;
-
-      //WriteLn(SDL_QueryTexture(bitmapTex, @format, access, @x, @y));
-      //WriteLn(x,'   ',y,'    ',format);
-      //if access = nil then WriteLn('nil');
-      //access[0] := $FFFFFFFF;
-      // access[1] := $FFFFFFFF;
-      // access[2] := $FFFFFFFF;
-      // access[3] := $FFFFFFFF;
-
+      rSrc.items := [0, 0, 400, 400];
       SDL_RenderTexture(renderer, bitmapTex, @rSrc, @rDest);
+
+      r.items := [200, 200, 64, 64];
+      SDL_RenderTexture(renderer, bitmapTex, @rSrc, @r);
+
       SDL_RenderPresent(renderer);
     end;
   end;
@@ -146,11 +190,16 @@ begin
 
   bitmapTex := CreateTexture;
 
+  SDL_CreateWindowAndRenderer('Window 2', 320, 200, SDL_WINDOW_RESIZABLE, @window2, @renderer2);
+  SDL_SetWindowPosition(window2, 50, 50);
+
   SDLMain;
 
   SDL_DestroyTexture(bitmapTex);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
+  SDL_DestroyRenderer(renderer2);
+  SDL_DestroyWindow(window2);
 
   SDL_Quit;
 end.

@@ -51,10 +51,7 @@ var
 
   function LoadWave: TSound;
   const
-    SoundFile = 'Boing_1.wav';
-    //        SoundFile='/home/tux/Schreibtisch/sound/test.wav';
-    //    SoundFile = 'tataa.wav';
-    //    SoundFile='/home/tux/Schreibtisch/sound/test2.wav';
+    SoundFile = '../Boing_1.wav';
   var
     i: integer;
   begin

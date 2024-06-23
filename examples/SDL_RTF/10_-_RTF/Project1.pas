@@ -91,8 +91,6 @@ var
         end;
       end;
 
-      SDL_Log('rand: %i', SDL_rand_n);
-
       time := SDL_GetTicks / 1000;
       red := Trunc((SDL_sinf(time) + 1) / 2.0 * 255);
       green := Trunc((SDL_sinf(time / 2) + 1) / 2.0 * 255);

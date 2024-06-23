@@ -84,7 +84,7 @@ var
     //camera := SDL_OpenCameraDevice(devid, @pspec);
 
     camera := SDL_OpenCameraDevice(devid, nil);
-    SDL_Log('w: %i   h: %i', pspec.Width, pspec.Height);
+//    SDL_Log('w: %i   h: %i', pspec.Width, pspec.Height);
 
     if camera = nil then begin
       SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Failed to open camera device: %s', SDL_GetError());

@@ -1,6 +1,8 @@
 program Project1;
 
-// https://github.com/libsdl-org/SDL/issues/9631
+// https://wiki.libsdl.org/SDL3/SDL_ShowOpenFileDialog
+// https://wiki.libsdl.org/SDL3/SDL_DialogFileCallback
+// https://wiki.libsdl.org/SDL3/SDL_ShowMessageBox
 
 uses
   SDL3;
@@ -10,7 +12,12 @@ var
 
   procedure loadFile(userdata: pointer; filelist: PPchar; filter: longint); cdecl;
   begin
-    WriteLn('loadfile');
+    if filelist <> nil then begin
+      while filelist^ <> nil do begin
+        SDL_Log('Datei: %s', filelist^);
+        Inc(filelist);
+      end;
+    end;
   end;
 
   procedure FileOpen;
@@ -18,12 +25,39 @@ var
     filters: array of TSDL_DialogFileFilter = (
       (Name: 'Alle Dateien'; pattern: '*'),
       (Name: 'JPG Bilder'; pattern: 'jpg;jpeg'),
-      (Name: 'PNG Bilder'; pattern: 'png'),
-      (Name: nil; pattern: nil));
-
+      (Name: 'PNG Bilder'; pattern: 'png'));
   begin
-    WriteLn('open');
-    SDL_ShowOpenFileDialog(@loadFile, nil, win, PSDL_DialogFileFilter(filters), 'test.txt', SDL_FALSE);
+    SDL_ShowOpenFileDialog(@loadFile, nil, win, PSDL_DialogFileFilter(filters), Length(filters), 'test.txt', SDL_TRUE);
+  end;
+
+  procedure ShowMessageBox;
+  const
+    Buttons: array [0..3] of TSDL_MessageBoxButtonData = (
+      (flags: 0; buttonID: 0; Text: 'Nein'),
+      (flags: SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT; buttonID: 1; Text: 'Ja'),
+      (flags: SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT; buttonID: 2; Text: 'Abbruch'),
+      (flags: 0; buttonID: 3; Text: 'Hilfe'));
+
+    colorSchema: TSDL_MessageBoxColorScheme = (colors: (
+      (r: 255; g: 0; b: 0),
+      (r: 0; g: 255; b: 0),
+      (r: 255; g: 255; b: 0),
+      (r: 0; g: 0; b: 255),
+      (r: 255; g: 0; b: 255)));
+
+    messageboxdata: TSDL_MessageBoxData = (
+      flags: SDL_MESSAGEBOX_INFORMATION;
+      window: nil;
+      title: 'Beispiel MessageBox';
+      message: 'Drücke einen Knopf';
+      numbuttons: length(Buttons);
+      Buttons: @Buttons;
+      colorScheme: @colorSchema);
+  var
+    buttonid: longint;
+  begin
+    SDL_ShowMessageBox(@messageboxdata, @buttonid);
+    SDL_Log('Es wurde Button %i gedrückt !', buttonid);
   end;
 
 
@@ -34,7 +68,7 @@ var
     e: TSDL_Event;
   begin
     SDL_init(SDL_INIT_VIDEO);
-    win := SDL_CreateWindow('SDL3 Window', 640, 480, SDL_WINDOW_RESIZABLE);
+    win := SDL_CreateWindow('SDL3 Dialog Example', 640, 480, SDL_WINDOW_RESIZABLE);
     if win = nil then begin
       WriteLn('Could not create window: ', SDL_GetError);
       Halt(1);
@@ -56,8 +90,11 @@ var
               SDLK_o: begin
                 FileOpen;
               end;
-              SDLK_SPACE: begin
+              SDLK_s: begin
                 SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, 'Info', 'Es wurde [SPACE] gedrückt !', nil);
+              end;
+              SDLK_m: begin
+                ShowMessageBox;
               end;
             end;
           end;

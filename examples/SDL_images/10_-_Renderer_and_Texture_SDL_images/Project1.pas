@@ -12,7 +12,6 @@ var
   bitmapSurface: PSDL_Surface;
   renderer: PSDL_Renderer;
   bitmapTex: PSDL_Texture;
-  imgFlags: longint=0;
 
   function CreateSurface: PSDL_Surface;
   var
@@ -110,7 +109,6 @@ var
       end;
 
       SDL_RenderClear(renderer);
-      //   SDL_RenderTexture(renderer, bitmapTex, nil, @distrect);
       rSrc.x := 0;
       rSrc.y := 0;
       rSrc.w := 400;
@@ -123,10 +121,7 @@ var
 
 begin
   SDL_init(SDL_INIT_VIDEO);
-  WriteLn('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
   IMG_Init(IMG_INIT_JPG);
-  WriteLn('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx');
-  WriteLn(imgFlags);
 
   window := SDL_CreateWindow('SDL3 Window', 800, 600, SDL_WINDOW_RESIZABLE);
   if window = nil then begin

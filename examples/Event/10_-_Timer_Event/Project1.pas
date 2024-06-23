@@ -75,15 +75,12 @@ var
     end;
   end;
 
-  function PointMoveProc(interval: uint32; param: pointer): uint32; cdecl;
+  function PointMoveProc(userdata: pointer; timerID: TSDL_TimerID; interval: TUint32): TUint32; cdecl;
   var
     event: TSDL_Event;
     userevent: TSDL_UserEvent;
-//    rect: PPointrect absolute param;
-    rect: PPointrect;
+    rect: PPointrect absolute userdata;
   begin
-    rect:=PPointrect(param);
-
     rect^.rect.x += rect^.stepx;
     if rect^.rect.x > Width then begin
       rect^.rect.x := -RectSize;
@@ -102,7 +99,7 @@ var
 
     userevent._type := SDL_EVENT_USER;
     userevent.code := 0;
-    userevent.data1 := param;
+    userevent.data1 := userdata;
     userevent.data2 := nil;
 
     event._type := SDL_EVENT_USER;

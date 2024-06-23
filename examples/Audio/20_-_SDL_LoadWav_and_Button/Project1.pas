@@ -48,7 +48,7 @@ type
     end;
 
     for i := 0 to Length(SoundBar) - 1 do begin
-      WriteStr(s, 'Boing_', i + 1, '.wav');
+      WriteStr(s, '../Boing_', i + 1, '.wav');
       SoundBar[i] := TSoundBar.Create(renderer, s, 0, i);
     end;
   end;

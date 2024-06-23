@@ -19,10 +19,14 @@ type
 
   TSDL_DialogFileCallback = procedure(userdata: pointer; filelist: PPchar; filter: longint); cdecl;
 
-procedure SDL_ShowOpenFileDialog(callback: TSDL_DialogFileCallback; userdata: pointer; window: PSDL_Window; filters: PSDL_DialogFileFilter; default_location: PChar;
-  allow_many: TSDL_bool); cdecl; external sdl3_lib;
-procedure SDL_ShowSaveFileDialog(callback: TSDL_DialogFileCallback; userdata: pointer; window: PSDL_Window; filters: PSDL_DialogFileFilter; default_location: PChar); cdecl; external sdl3_lib;
+//procedure SDL_ShowOpenFileDialog(callback: TSDL_DialogFileCallback; userdata: pointer; window: PSDL_Window; filters: PSDL_DialogFileFilter; default_location: PChar; allow_many: TSDL_bool); cdecl; external sdl3_lib;
+//procedure SDL_ShowSaveFileDialog(callback: TSDL_DialogFileCallback; userdata: pointer; window: PSDL_Window; filters: PSDL_DialogFileFilter; default_location: PChar); cdecl; external sdl3_lib;
+//procedure SDL_ShowOpenFolderDialog(callback: TSDL_DialogFileCallback; userdata: pointer; window: PSDL_Window; default_location: PChar; allow_many: TSDL_bool); cdecl; external sdl3_lib;
+
+procedure SDL_ShowOpenFileDialog(callback: TSDL_DialogFileCallback; userdata: pointer; window: PSDL_Window; filters: PSDL_DialogFileFilter; nfilters: longint; default_location: PChar; allow_many: TSDL_bool); cdecl; external sdl3_lib;
+procedure SDL_ShowSaveFileDialog(callback: TSDL_DialogFileCallback; userdata: pointer; window: PSDL_Window; filters: PSDL_DialogFileFilter; nfilters: longint; default_location: PChar); cdecl; external sdl3_lib;
 procedure SDL_ShowOpenFolderDialog(callback: TSDL_DialogFileCallback; userdata: pointer; window: PSDL_Window; default_location: PChar; allow_many: TSDL_bool); cdecl; external sdl3_lib;
+
 
 implementation
 

@@ -5,10 +5,9 @@ program Project1;
 uses
   ctypes,
   SDL3;
+
 var
   window: PSDL_Window;
-  bitmapSurface: PSDL_Surface;
-  dstrect: TSDL_Rect = (x: 100; y: 100; w: 200; h: 200);
   renderer: PSDL_Renderer;
   Width, Height, bbwidth, bbheight: longint;
 
@@ -18,31 +17,16 @@ var
     Halt(1);
   end;
 
-procedure SwitchMouseButton;
-var
-  IsEnabled: TSDL_bool;
+  procedure SwitchMouseButton;
+  var
+    IsEnabled: TSDL_bool;
 
-  // https://wiki.libsdl.org/SDL3/SDL_SetEventEnabled
-begin
-  WriteLn(SDL_FALSE);
-  WriteLn(SDL_TRUE);
-  WriteLn(not SDL_FALSE);
-  WriteLn(not SDL_TRUE);
-  WriteLn();
-  WriteLn(Integer( True));
-  WriteLn(Integer( False));
-  WriteLn(Integer(not True));
-  WriteLn(Integer(not False));
-  WriteLn(#10);
+    // https://wiki.libsdl.org/SDL3/SDL_SetEventEnabled
+  begin
+    IsEnabled := SDL_EventEnabled(SDL_EVENT_MOUSE_BUTTON_DOWN);
+    IsEnabled := not IsEnabled;
 
-  IsEnabled :=  SDL_EventEnabled(SDL_EVENT_MOUSE_BUTTON_DOWN);
-  WriteLn(IsEnabled);
-//  IsEnabled :=SDL_IsEventEnabled;
-IsEnabled:=not IsEnabled;
- // IsEnabled:=IsEnabled and 1;
-  WriteLn('IsEnabled: ',IsEnabled);
-
-  SDL_SetEventEnabled(SDL_EVENT_MOUSE_BUTTON_DOWN,IsEnabled);
+    SDL_SetEventEnabled(SDL_EVENT_MOUSE_BUTTON_DOWN, IsEnabled);
   end;
 
   procedure Run;
@@ -58,12 +42,12 @@ IsEnabled:=not IsEnabled;
     while not quit do begin
       keyStat := SDL_GetKeyboardState(nil);
       if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
-        SDL_Log('Space is pressed   %i',cnt);
-        inc( cnt);
+        SDL_Log('Space is pressed   %i', cnt);
+        Inc(cnt);
       end;
       if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
-        SDL_Log('Left is pressed   %i',cnt);
-        inc( cnt);
+        SDL_Log('Left is pressed   %i', cnt);
+        Inc(cnt);
       end;
 
       while SDL_PollEvent(@event) do begin
@@ -81,8 +65,12 @@ IsEnabled:=not IsEnabled;
 
             end;
           end;
-          SDL_EVENT_MOUSE_BUTTON_DOWN:SDL_Log('Mouse down');
-          SDL_EVENT_MOUSE_BUTTON_UP:SDL_Log('Mouse up');
+          SDL_EVENT_MOUSE_BUTTON_DOWN: begin
+            SDL_Log('Mouse down');
+          end;
+          SDL_EVENT_MOUSE_BUTTON_UP: begin
+            SDL_Log('Mouse up');
+          end;
           SDL_EVENT_QUIT: begin
             quit := True;
           end;
@@ -110,7 +98,6 @@ begin
     SDLFail('Kann kein SDL-Fenster erzeugen !');
   end;
   renderer := SDL_CreateRenderer(window, nil);
-//  renderer := SDL_CreateRenderer(window, nil, SDL_RENDERER_PRESENTVSYNC);
   if renderer = nil then begin
     SDLFail('Kann kein SDL-Renderer erzeugen !');
   end;
