@@ -3,12 +3,14 @@ program Project1;
 // https://github.com/Ravbug/sdl3-sample/blob/main/src/main.cpp
 
 uses
-  SDL3;
+  SDL3, SurfaceWindow;
 
 var
   window, window2: PSDL_Window;
   renderer, renderer2: PSDL_Renderer;
   bitmapTex: PSDL_Texture;
+
+  surWin:TSurfaceWindow;
 
   function CreateTexture: PSDL_Texture;
   var
@@ -16,7 +18,7 @@ var
   begin
     bitmapSurface := SDL_LoadBMP('mauer.bmp');
     if bitmapSurface = nil then  begin
-      SDL_Log('Kann keine textur erzeugen !');
+      SDL_Log('Kann keine Textur erzeugen !');
     end;
 
     Result := SDL_CreateTextureFromSurface(renderer, bitmapSurface);
@@ -126,6 +128,8 @@ var
       end;
 
       while SDL_PollEvent(@e) do begin
+        surWin.EventHandle(e);
+
         case e._type of
           SDL_EVENT_KEY_DOWN: begin
             case e.key.key of
@@ -178,6 +182,8 @@ var
 begin
   SDL_init(SDL_INIT_VIDEO);
 
+  surWin:=TSurfaceWindow.Create;;
+
   window := SDL_CreateWindow('SDL3 Window', 800, 600, SDL_WINDOW_RESIZABLE);
   if window = nil then begin
     SDL_Log('Kann kein SDL-Fenster erzeugen !');
@@ -194,6 +200,8 @@ begin
   SDL_SetWindowPosition(window2, 50, 50);
 
   SDLMain;
+
+  surWin.Free;
 
   SDL_DestroyTexture(bitmapTex);
   SDL_DestroyRenderer(renderer);

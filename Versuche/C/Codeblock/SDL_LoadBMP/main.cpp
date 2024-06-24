@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
             switch (event.type)
             {
                 case SDL_EVENT_KEY_DOWN:
-                    switch (event.key.keysym.sym)
+                    switch (event.key.key)
                     {
                        case SDLK_ESCAPE:
                        loopShouldStop = SDL_TRUE;
@@ -45,6 +45,15 @@ int main(int argc, char *argv[])
                     break;
                 case SDL_EVENT_QUIT:
                     loopShouldStop = SDL_TRUE;
+                    break;
+
+                case SDL_EVENT_WINDOW_RESIZED:
+                    if (winSurface) {
+                  //    SDL_DestroySurface(winSurface);
+                    }
+                    winSurface = SDL_GetWindowSurface(win);
+                    SDL_FillSurfaceRect(winSurface, nullptr, 0);
+
                     break;
             }
         }

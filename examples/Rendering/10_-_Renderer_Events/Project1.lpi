@@ -33,6 +33,11 @@
         <Filename Value="Project1.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit>
+      <Unit>
+        <Filename Value="surfacewindow.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="SurfaceWindow"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
