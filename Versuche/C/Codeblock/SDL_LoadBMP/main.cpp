@@ -49,11 +49,10 @@ int main(int argc, char *argv[])
 
                 case SDL_EVENT_WINDOW_RESIZED:
                     if (winSurface) {
-                  //    SDL_DestroySurface(winSurface);
+                      SDL_DestroySurface(winSurface);
                     }
                     winSurface = SDL_GetWindowSurface(win);
                     SDL_FillSurfaceRect(winSurface, nullptr, 0);
-
                     break;
             }
         }

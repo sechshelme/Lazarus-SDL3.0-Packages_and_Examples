@@ -38,11 +38,6 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="SurfaceWindow"/>
       </Unit>
-      <Unit>
-        <Filename Value="renderwindow.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="RenderWindow"/>
-      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
