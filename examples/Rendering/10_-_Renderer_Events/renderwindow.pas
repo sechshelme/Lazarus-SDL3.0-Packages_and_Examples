@@ -6,10 +6,14 @@ uses
   SDL3;
 
 type
+
+  { TRenderWindow }
+
   TRenderWindow = class(TObject)
     constructor Create;
     destructor Destroy; override;
     procedure EventHandle(var ev: TSDL_Event);
+    procedure LoopHandle;
     procedure paint;
   private
     win: PSDL_Window;
@@ -89,6 +93,10 @@ begin
 end;
 
 procedure TRenderWindow.EventHandle(var ev: TSDL_Event);
+begin
+end;
+
+procedure TRenderWindow.LoopHandle;
 var
   IsShift, IsCtrl: boolean;
   step: single;
@@ -98,9 +106,9 @@ begin
     IsCtrl := (keyStat[SDL_SCANCODE_LCTRL] <> 0) or (keyStat[SDL_SCANCODE_RCTRL] <> 0);
 
     if IsShift then begin
-      step := 10.0;
+      step := 0.1;
     end else begin
-      step := 1.0;
+      step := 0.01;
     end;
 
     if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin

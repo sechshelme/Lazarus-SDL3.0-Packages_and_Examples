@@ -13,6 +13,8 @@ var
     quit: boolean = False;
   begin
     while not quit do begin
+      surWin.LoopHandle;
+      rendWin.LoopHandle;
       while SDL_PollEvent(@e) do begin
         surWin.EventHandle(e);
         rendWin.EventHandle(e);
@@ -25,7 +27,7 @@ var
               end;
             end;
           end;
-          SDL_EVENT_QUIT: begin
+          SDL_EVENT_WINDOW_CLOSE_REQUESTED: begin
             quit := True;
             WriteLn('quit');
           end;

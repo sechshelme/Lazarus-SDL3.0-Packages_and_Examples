@@ -6,17 +6,22 @@ uses
   SDL3;
 
 type
+
+  { TSurfaceWindow }
+
   TSurfaceWindow = class(TObject)
     constructor Create;
     destructor Destroy; override;
     procedure EventHandle(var ev: TSDL_Event);
+    procedure LoopHandle;
     procedure paint;
   private
     win: PSDL_Window;
     winSurface: PSDL_Surface;
     keyStat: PUInt8;
-    procedure WinPos(ofs: integer);
-    procedure WinResize(ofs: integer);
+    //    procedure WinPos(ofsx, ofsy: integer);
+    //    procedure WinResize(ofsx, ofsy: integer);
+    procedure WinTransform(const ofs: TSDL_Rect);
     procedure ShowWinPos(const ev: TSDL_Event);
   end;
 
@@ -53,21 +58,38 @@ begin
   SDL_UpdateWindowSurface(win);
 end;
 
-procedure TSurfaceWindow.WinPos(ofs: integer);
+//procedure TSurfaceWindow.WinPos(ofsx, ofsy: integer);
+//var
+//  x, y: longint;
+//begin
+//  SDL_GetWindowPosition(win, @x, @y);
+//  Inc(x, ofsx);
+//  Inc(y, ofsy);
+//  SDL_SetWindowPosition(win, x, y);
+//end;
+//
+//procedure TSurfaceWindow.WinResize(ofsx, ofsy: integer);
+//var
+//  w, h: longint;
+//begin
+//  SDL_GetWindowSize(win, @w, @h);
+//  Inc(w, ofsx);
+//  Inc(h, ofsy);
+//  SDL_SetWindowSize(win, w, h);
+//end;
+
+procedure TSurfaceWindow.WinTransform(const ofs: TSDL_Rect);
 var
-  x, y: longint;
+  x, y, w, h: longint;
 begin
   SDL_GetWindowPosition(win, @x, @y);
-  Inc(x, ofs);
+  Inc(x, ofs.x);
+  Inc(y, ofs.y);
   SDL_SetWindowPosition(win, x, y);
-end;
 
-procedure TSurfaceWindow.WinResize(ofs: integer);
-var
-  w, h: longint;
-begin
   SDL_GetWindowSize(win, @w, @h);
-  Inc(w, ofs);
+  Inc(w, ofs.w);
+  Inc(h, ofs.h);
   SDL_SetWindowSize(win, w, h);
 end;
 
@@ -86,35 +108,66 @@ end;
 
 
 procedure TSurfaceWindow.EventHandle(var ev: TSDL_Event);
-var
-  IsShift, IsCtrl: boolean;
 begin
-  if (SDL_GetWindowFlags(win) and SDL_WINDOW_INPUT_FOCUS) = SDL_WINDOW_INPUT_FOCUS then begin
-    IsShift := (keyStat[SDL_SCANCODE_LSHIFT] <> 0) or (keyStat[SDL_SCANCODE_RSHIFT] <> 0);
-    IsCtrl := (keyStat[SDL_SCANCODE_LCTRL] <> 0) or (keyStat[SDL_SCANCODE_RCTRL] <> 0);
-
-    if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
-      if IsCtrl then begin
-        WinResize(1);
-      end else begin
-        WinPos(3);
-      end;
-    end;
-
-    if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
-      if IsCtrl then begin
-        WinResize(-1);
-      end else begin
-        WinPos(-3);
-      end;
-    end;
-  end;
-
   case ev._type of
     SDL_EVENT_WINDOW_MOVED,
     SDL_EVENT_WINDOW_RESIZED: begin
       ShowWinPos(ev);
     end;
+  end;
+end;
+
+procedure TSurfaceWindow.LoopHandle;
+var
+  IsShift, IsCtrl: boolean;
+  step: integer;
+  mov: TSDL_Rect = (x: 0; y: 0; w: 0; h: 0);
+begin
+  if (SDL_GetWindowFlags(win) and SDL_WINDOW_INPUT_FOCUS) = SDL_WINDOW_INPUT_FOCUS then begin
+    IsShift := (keyStat[SDL_SCANCODE_LSHIFT] <> 0) or (keyStat[SDL_SCANCODE_RSHIFT] <> 0);
+    IsCtrl := (keyStat[SDL_SCANCODE_LCTRL] <> 0) or (keyStat[SDL_SCANCODE_RCTRL] <> 0);
+
+  if IsCtrl then WriteLn('Ctrl')else WriteLn('no Ctrl');
+
+    if IsShift then begin
+      step := 2;
+    end else begin
+      step := 1;
+    end;
+
+    if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
+      if IsCtrl then begin
+        Inc(mov.w, step);
+      end else begin
+        Inc(mov.x, step);
+      end;
+    end;
+
+    if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
+      if IsCtrl then begin
+        Dec(mov.w, step);
+      end else begin
+        Dec(mov.x, step);
+      end;
+    end;
+
+    if keyStat[SDL_SCANCODE_DOWN] <> 0 then begin
+      if IsCtrl then begin
+        Inc(mov.h, step);
+      end else begin
+        Inc(mov.y, step);
+      end;
+    end;
+
+    if keyStat[SDL_SCANCODE_UP] <> 0 then begin
+      if IsCtrl then begin
+        Dec(mov.h, step);
+      end else begin
+        Dec(mov.y, step);
+      end;
+    end;
+
+    WinTransform(mov);
   end;
 end;
 

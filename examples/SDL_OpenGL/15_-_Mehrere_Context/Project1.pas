@@ -145,7 +145,7 @@ const
               end;
             end;
           end;
-          SDL_EVENT_QUIT: begin
+          SDL_EVENT_WINDOW_CLOSE_REQUESTED: begin
             quit := True;
           end;
         end;
