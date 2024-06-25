@@ -58,38 +58,17 @@ begin
   SDL_UpdateWindowSurface(win);
 end;
 
-//procedure TSurfaceWindow.WinPos(ofsx, ofsy: integer);
-//var
-//  x, y: longint;
-//begin
-//  SDL_GetWindowPosition(win, @x, @y);
-//  Inc(x, ofsx);
-//  Inc(y, ofsy);
-//  SDL_SetWindowPosition(win, x, y);
-//end;
-//
-//procedure TSurfaceWindow.WinResize(ofsx, ofsy: integer);
-//var
-//  w, h: longint;
-//begin
-//  SDL_GetWindowSize(win, @w, @h);
-//  Inc(w, ofsx);
-//  Inc(h, ofsy);
-//  SDL_SetWindowSize(win, w, h);
-//end;
-
 procedure TSurfaceWindow.WinTransform(const ofs: TSDL_Rect);
 var
   x, y, w, h: longint;
 begin
   SDL_GetWindowPosition(win, @x, @y);
+  SDL_GetWindowSize(win, @w, @h);
   Inc(x, ofs.x);
   Inc(y, ofs.y);
-  SDL_SetWindowPosition(win, x, y);
-
-  SDL_GetWindowSize(win, @w, @h);
   Inc(w, ofs.w);
   Inc(h, ofs.h);
+  SDL_SetWindowPosition(win, x, y);
   SDL_SetWindowSize(win, w, h);
 end;
 
@@ -121,7 +100,7 @@ procedure TSurfaceWindow.LoopHandle;
 var
   IsShift, IsCtrl: boolean;
   step: integer;
-  mov: TSDL_Rect = (x: 0; y: 0; w: 0; h: 0);
+  trans: TSDL_Rect = (x: 0; y: 0; w: 0; h: 0);
 begin
   if (SDL_GetWindowFlags(win) and SDL_WINDOW_INPUT_FOCUS) = SDL_WINDOW_INPUT_FOCUS then begin
     IsShift := (keyStat[SDL_SCANCODE_LSHIFT] <> 0) or (keyStat[SDL_SCANCODE_RSHIFT] <> 0);
@@ -137,37 +116,37 @@ begin
 
     if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
       if IsCtrl then begin
-        Inc(mov.w, step);
+        Inc(trans.w, step);
       end else begin
-        Inc(mov.x, step);
+        Inc(trans.x, step);
       end;
     end;
 
     if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
       if IsCtrl then begin
-        Dec(mov.w, step);
+        Dec(trans.w, step);
       end else begin
-        Dec(mov.x, step);
+        Dec(trans.x, step);
       end;
     end;
 
     if keyStat[SDL_SCANCODE_DOWN] <> 0 then begin
       if IsCtrl then begin
-        Inc(mov.h, step);
+        Inc(trans.h, step);
       end else begin
-        Inc(mov.y, step);
+        Inc(trans.y, step);
       end;
     end;
 
     if keyStat[SDL_SCANCODE_UP] <> 0 then begin
       if IsCtrl then begin
-        Dec(mov.h, step);
+        Dec(trans.h, step);
       end else begin
-        Dec(mov.y, step);
+        Dec(trans.y, step);
       end;
     end;
 
-    WinTransform(mov);
+    WinTransform(trans);
   end;
 end;
 

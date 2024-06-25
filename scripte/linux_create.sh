@@ -1,4 +1,4 @@
-echo =========================== Windows 64bit DLL ========
+echo =========================== Linux 64bit *.so ========
 mkdir SDL
 cd SDL
 
