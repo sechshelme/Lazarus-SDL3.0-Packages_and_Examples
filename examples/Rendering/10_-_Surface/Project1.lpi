@@ -32,11 +32,17 @@
       <Unit>
         <Filename Value="Project1.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="project1"/>
       </Unit>
       <Unit>
         <Filename Value="surfacewindow.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="SurfaceWindow"/>
+      </Unit>
+      <Unit>
+        <Filename Value="renderwindow.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="RenderWindow"/>
       </Unit>
     </Units>
   </ProjectOptions>
@@ -51,6 +57,8 @@
     </SearchPaths>
     <Linking>
       <Debugging>
+        <GenerateDebugInfo Value="False"/>
+        <RunWithoutDebug Value="True"/>
         <DebugInfoType Value="dsDwarf3"/>
       </Debugging>
     </Linking>

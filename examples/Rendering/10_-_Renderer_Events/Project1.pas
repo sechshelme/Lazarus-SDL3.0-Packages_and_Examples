@@ -27,7 +27,8 @@ var
               end;
             end;
           end;
-          SDL_EVENT_WINDOW_CLOSE_REQUESTED: begin
+         SDL_EVENT_WINDOW_CLOSE_REQUESTED: begin
+    //      SDL_EVENT_QUIT: begin
             quit := True;
             WriteLn('quit');
           end;

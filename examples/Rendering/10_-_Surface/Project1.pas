@@ -1,4 +1,4 @@
-program Project1;
+program project1;
 
 {$modeswitch ArrayOperators}
 
@@ -20,9 +20,9 @@ uses
   end;
 
 
-  function CreateSurface1: PSDL_Surface;
+  function CreateBMPSurface( path:PChar): PSDL_Surface;
   begin
-    Result := SDL_LoadBMP('mauer.bmp');
+    Result := SDL_LoadBMP(path);
     if Result = nil then begin
       SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
     end;
@@ -84,7 +84,7 @@ type
 
     Result := SDL_CreateSurfaceFrom(PTriByte(Data), 4, 4, 12, SDL_PIXELFORMAT_RGB24);
     if Result = nil then begin
-      SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
+      SDL_Log('Konnte Surface nicht laden!:  %s', SDL_GetError);
     end;
   end;
 
@@ -118,9 +118,9 @@ type
     Surface += [SDL_CreateSurface(1, 1, SDL_PIXELFORMAT_RGBA8888)];
     SDL_memcpy(Surface[2]^.pixels, @pixels_2, sizeof(pixels_2));
 
-    Surface += [SDL_LoadBMP('mauer.bmp')];
-    Surface += [SDL_LoadBMP('autos4bit.bmp')];
-    Surface += [SDL_LoadBMP('autos8bit.bmp')];
+    Surface += [CreateBMPSurface('mauer.bmp')];
+    Surface += [CreateBMPSurface('autos4bit.bmp')];
+    Surface += [CreateBMPSurface('autos8bit.bmp')];
 
     Surface += [SDL_ConvertSurfaceFormat(Surface[4], SDL_PIXELFORMAT_RGBA32)];
 
@@ -129,7 +129,7 @@ type
     Surface += [CreateSurface4];
 
     for i := 0 to Length(Surface) - 1 do begin
-      printSurface(Surface[i]);
+  printSurface(Surface[i]);
     end;
 
     SDL_SetWindowIcon(win, Surface[Length(Surface) - 1]);

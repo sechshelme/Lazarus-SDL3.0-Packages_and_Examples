@@ -106,9 +106,9 @@ begin
     IsCtrl := (keyStat[SDL_SCANCODE_LCTRL] <> 0) or (keyStat[SDL_SCANCODE_RCTRL] <> 0);
 
     if IsShift then begin
-      step := 0.1;
+      step := 0.5;
     end else begin
-      step := 0.01;
+      step := 0.05;
     end;
 
     if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
