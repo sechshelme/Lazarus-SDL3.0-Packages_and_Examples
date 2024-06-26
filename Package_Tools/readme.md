@@ -9,64 +9,6 @@ h2pas -p -T -d -c -e xxx.h
 Die *.pp mit folgendem Tool bearbeiten "convert_SDL_pixels.pp", wegen den Makros.
 
 ## nach h2pas
-### .../pas_units/sdl3_pixels.pas
-Folgendes ersetzen:
-```pascal
-type
-  PSDL_Color = ^TSDL_Color;
-  TSDL_Color = record
-    case byte of
-      1: (r, r, b, a: uint8);
-      2: (items: array[0..3] of uint8);
-  end;   
-
-  PSDL_FColor = ^TSDL_FColor;
-  TSDL_FColor = record
-    case byte of
-      1: (r, r, b, a: single);
-      2: (items: array[0..3] of single);
-    end;
-```
-
-### .../pas_units/sdl3_rect.pas
-Folgendes ersetzen:
-```pascal
-type
-  PSDL_Point = ^TSDL_Point;
-  TSDL_Point = record
-    case byte of
-      1: (x, y: longint);
-      2: (items: array[0..1] of longint);
-  end;
-
-  PSDL_FPoint = ^TSDL_FPoint;
-  TSDL_FPoint = record
-    case byte of
-      1: (x, y: single);
-      2: (items: array[0..1] of single);
-  end;
-
-  PSDL_Rect = ^TSDL_Rect;
-  TSDL_Rect = record
-    case byte of
-      1: (x, y, w, h: longint);
-      2: (items: array[0..3] of longint);
-  end;
-
-  PSDL_FRect = ^TSDL_FRect;
-  TSDL_FRect = record
-    case byte of
-      1: (x, y, w, h: single);
-      2: (items: array[0..3] of single);
-  end;
-```
-
-### .../pas_units/sdl3_log.pas
-Folgendes ergänzen:
-```pascal
-procedure SDL_Log(fmt: PChar); varargs; cdecl; external name 'SDL_Log';
-```
-
 ### .../pas_units/sdl3_stdinc.pas
 Folgendes ergänzen:
 ```pascal
@@ -128,6 +70,139 @@ type
 // modifizieren
 function SDL_log(x: cdouble): cdouble; cdecl; external name 'SDL_log';
 ```
+
+### Makros
+```pascal
+function SDL_min(x, y: Longint): Longint; inline;
+begin
+  if x < y then begin
+    Result := x;
+  end else begin
+    Result := y;
+  end;
+end;
+
+function SDL_min(x, y: Single): Single; inline;
+begin
+  if x < y then begin
+    Result := x;
+  end else begin
+    Result := y;
+  end;
+end;
+
+function SDL_max(x, y: Longint): Longint; inline;
+begin
+  if x > y then begin
+    Result := x;
+  end else begin
+    Result := y;
+  end;
+end;
+
+function SDL_max(x, y: Single): Single; inline;
+begin
+  if x > y then begin
+    Result := x;
+  end else begin
+    Result := y;
+  end;
+end;
+
+function SDL_clamp(x, a, b: Longint): Longint; inline;
+var
+  if_local1: Longint;
+begin
+  if x > b then begin
+    if_local1 := b;
+  end else begin
+    if_local1 := x;
+  end;
+  if x < a then begin
+    Result := a;
+  end else begin
+    Result := if_local1;
+  end;
+end;
+
+function SDL_clamp(x, a, b: Single): Single; inline;
+var
+  if_local1: Single;
+begin
+  if x > b then begin
+    if_local1 := b;
+  end else begin
+    if_local1 := x;
+  end;
+  if x < a then begin
+    Result := a;
+  end else begin
+    Result := if_local1;
+  end;
+end;
+```
+
+
+
+
+### .../pas_units/sdl3_pixels.pas
+Folgendes ersetzen:
+```pascal
+type
+  PSDL_Color = ^TSDL_Color;
+  TSDL_Color = record
+    case byte of
+      1: (r, r, b, a: uint8);
+      2: (items: array[0..3] of uint8);
+  end;   
+
+  PSDL_FColor = ^TSDL_FColor;
+  TSDL_FColor = record
+    case byte of
+      1: (r, r, b, a: single);
+      2: (items: array[0..3] of single);
+    end;
+```
+
+### .../pas_units/sdl3_rect.pas
+Folgendes ersetzen:
+```pascal
+type
+  PSDL_Point = ^TSDL_Point;
+  TSDL_Point = record
+    case byte of
+      1: (x, y: longint);
+      2: (items: array[0..1] of longint);
+  end;
+
+  PSDL_FPoint = ^TSDL_FPoint;
+  TSDL_FPoint = record
+    case byte of
+      1: (x, y: single);
+      2: (items: array[0..1] of single);
+  end;
+
+  PSDL_Rect = ^TSDL_Rect;
+  TSDL_Rect = record
+    case byte of
+      1: (x, y, w, h: longint);
+      2: (items: array[0..3] of longint);
+  end;
+
+  PSDL_FRect = ^TSDL_FRect;
+  TSDL_FRect = record
+    case byte of
+      1: (x, y, w, h: single);
+      2: (items: array[0..3] of single);
+  end;
+```
+
+### .../pas_units/sdl3_log.pas
+Folgendes ergänzen:
+```pascal
+procedure SDL_Log(fmt: PChar); varargs; cdecl; external name 'SDL_Log';
+```
+
 
 
 

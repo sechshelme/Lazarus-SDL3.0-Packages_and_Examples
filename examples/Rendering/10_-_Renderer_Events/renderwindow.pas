@@ -17,6 +17,7 @@ type
     procedure paint;
   private
     win: PSDL_Window;
+    FWidth, FHeight: longint;
     renderer: PSDL_Renderer;
     bitmapTex: PSDL_Texture;
     keyStat: PUInt8;
@@ -45,7 +46,9 @@ end;
 constructor TRenderWindow.Create;
 begin
   inherited Create;
-  win := SDL_CreateWindow('Surface Window', 640, 480, SDL_WINDOW_RESIZABLE);
+  FWidth := 640;
+  FHeight := 480;
+  win := SDL_CreateWindow('Surface Window', FWidth, FHeight, SDL_WINDOW_RESIZABLE);
   if win = nil then begin
     SDL_Log('Kann Surface Window nicht erzeugen !');
   end;
@@ -94,6 +97,11 @@ end;
 
 procedure TRenderWindow.EventHandle(var ev: TSDL_Event);
 begin
+  case ev._type of
+    SDL_EVENT_WINDOW_RESIZED: begin
+      SDL_GetWindowSize(win, @FWidth, @FHeight);
+    end;
+  end;
 end;
 
 procedure TRenderWindow.LoopHandle;
@@ -148,9 +156,11 @@ begin
       end;
     end;
 
-    if rDest.h < 1 then begin
-      rDest.h := 1;
-    end;
+    rDest.w := SDL_clamp(rDest.w, 1, FWidth);
+    rDest.h := SDL_clamp(rDest.h, 1, FHeight);
+
+    rDest.x := SDL_clamp(rDest.x, 0, FWidth - rDest.w);
+    rDest.y := SDL_clamp(rDest.y, 0, FHeight - rDest.h);
   end;
 end;
 

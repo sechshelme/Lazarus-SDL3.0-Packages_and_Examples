@@ -2,7 +2,7 @@
 //                                                         //
 //   WARNUNG, dies Datei wird automatisch durch            //
 //   das Program "Convert_Unit_to_pas_includes" erzeugt !  //
-//   Erzeugt am: 23-06-2024   11:02                        //
+//   Erzeugt am: 26-06-2024   19:19                        //
 //                                                         //
 /////////////////////////////////////////////////////////////
 
@@ -73,7 +73,7 @@ const
   // Entspricht Lenght()
   //function SDL_arraysize(array : longint) : longint;
 
-function SDL_FOURCC(A, B, C, D: byte): longint;
+function SDL_FOURCC(A, B, C, D: byte): uint32;
 
 const
   SDL_MAX_SINT8 = int8(127);
@@ -156,8 +156,11 @@ function SDL_bsearch(key: pointer; base: pointer; nmemb: Tsize_t; size: Tsize_t;
 function SDL_abs(x: longint): longint; cdecl; external sdl3_lib;
 
 function SDL_min(x, y: longint): longint;
+function SDL_min(x, y: Single): Single;
 function SDL_max(x, y: longint): longint;
+function SDL_max(x, y: Single): Single;
 function SDL_clamp(x, a, b: longint): longint;
+function SDL_clamp(x, a, b: Single): Single;
 
 function SDL_isalpha(x: longint): longint; cdecl; external sdl3_lib;
 function SDL_isalnum(x: longint): longint; cdecl; external sdl3_lib;
@@ -379,39 +382,50 @@ type
 
 {$IFDEF read_implementation}
 
-function SDL_FOURCC(A, B, C, D: byte): longint;
+function SDL_FOURCC(A, B, C, D: byte): uint32;
 begin
   Result := A shl 0 + B shl 8 + C shl 16 + D shl 24;
 end;
 
-
-function SDL_min(x, y: longint): longint;
-var
-  if_local1: longint;
+function SDL_min(x, y: Longint): Longint; inline;
 begin
   if x < y then begin
-    if_local1 := x;
+    Result := x;
   end else begin
-    if_local1 := y;
+    Result := y;
   end;
-  SDL_min := if_local1;
 end;
 
-function SDL_max(x, y: longint): longint;
-var
-  if_local1: longint;
+function SDL_min(x, y: Single): Single; inline;
+begin
+  if x < y then begin
+    Result := x;
+  end else begin
+    Result := y;
+  end;
+end;
+
+function SDL_max(x, y: Longint): Longint; inline;
 begin
   if x > y then begin
-    if_local1 := x;
+    Result := x;
   end else begin
-    if_local1 := y;
+    Result := y;
   end;
-  SDL_max := if_local1;
 end;
 
-function SDL_clamp(x, a, b: longint): longint;
+function SDL_max(x, y: Single): Single; inline;
+begin
+  if x > y then begin
+    Result := x;
+  end else begin
+    Result := y;
+  end;
+end;
+
+function SDL_clamp(x, a, b: Longint): Longint; inline;
 var
-  if_local1, if_local2: longint;
+  if_local1: Longint;
 begin
   if x > b then begin
     if_local1 := b;
@@ -419,11 +433,26 @@ begin
     if_local1 := x;
   end;
   if x < a then begin
-    if_local2 := a;
+    Result := a;
   end else begin
-    if_local2 := if_local1;
+    Result := if_local1;
   end;
-  SDL_clamp := if_local2;
+end;
+
+function SDL_clamp(x, a, b: Single): Single; inline;
+var
+  if_local1: Single;
+begin
+  if x > b then begin
+    if_local1 := b;
+  end else begin
+    if_local1 := x;
+  end;
+  if x < a then begin
+    Result := a;
+  end else begin
+    Result := if_local1;
+  end;
 end;
 
 function SDL_iconv_utf8_locale(S: PChar): PChar;

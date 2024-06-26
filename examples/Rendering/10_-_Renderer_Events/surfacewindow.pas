@@ -193,6 +193,12 @@ begin
   Inc(w, ofs.w);
   Inc(h, ofs.h);
   SDL_SetWindowPosition(win, x, y);
+  if w < 10 then begin
+    w := 10;
+  end;
+  if h < 10 then begin
+    h := 10;
+  end;
   SDL_SetWindowSize(win, w, h);
 end;
 
