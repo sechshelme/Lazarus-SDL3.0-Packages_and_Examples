@@ -43,6 +43,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="RenderWindow"/>
       </Unit>
+      <Unit>
+        <Filename Value="rendergeometriewindow.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="RenderGeometrieWindow"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

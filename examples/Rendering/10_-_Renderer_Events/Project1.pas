@@ -1,11 +1,12 @@
 program Project1;
 
 uses
-  SDL3, SurfaceWindow, RenderWindow;
+  SDL3, SurfaceWindow, RenderWindow, RenderGeometrieWindow;
 
 var
   surWin:TSurfaceWindow;
   rendWin:TRenderWindow;
+  GeometrieWin:TRenderGeometrieWindow;
 
   procedure SDLMain;
   var
@@ -15,9 +16,11 @@ var
     while not quit do begin
       surWin.LoopHandle;
       rendWin.LoopHandle;
+      GeometrieWin.LoopHandle;
       while SDL_PollEvent(@e) do begin
         surWin.EventHandle(e);
         rendWin.EventHandle(e);
+        GeometrieWin.EventHandle(e);
 
         case e._type of
           SDL_EVENT_KEY_DOWN: begin
@@ -37,6 +40,7 @@ var
 
       surWin.paint;
       rendWin.paint;
+      GeometrieWin.paint;
     end;
   end;
 
@@ -45,11 +49,13 @@ begin
 
   surWin:=TSurfaceWindow.Create;
   rendWin:=TRenderWindow.Create;
+  GeometrieWin:=TRenderGeometrieWindow.Create;
 
   SDLMain;
 
   surWin.Free;
   rendWin.Free;
+  GeometrieWin.Free;
 
   SDL_Quit;
 end.
