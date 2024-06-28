@@ -255,7 +255,7 @@ begin
 end;
 
 function TSurfaceWindow.CreateSurfaceFromTriBuffer: PSDL_Surface;
-var
+const
   Data: array of TTriByte = nil;
 begin
   Data := [

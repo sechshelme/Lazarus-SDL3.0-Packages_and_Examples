@@ -13,24 +13,24 @@ int main(int argc, char *argv[])
   SDL_Vertex vert[vertLen];
 
   // center
-  vert[0].position.x = 400;
-  vert[0].position.y = 150;
+  vert[0].position.x = 200;
+  vert[0].position.y = 75;
   vert[0].color.r = 1.0;
   vert[0].color.g = 0.0;
   vert[0].color.b = 0.0;
   vert[0].color.a = 1.0;
 
   // left
-  vert[1].position.x = 200;
-  vert[1].position.y = 450;
+  vert[1].position.x = 100;
+  vert[1].position.y = 225;
   vert[1].color.r = 0.0;
   vert[1].color.g = 0.0;
   vert[1].color.b = 1.0;
   vert[1].color.a = 1.0;
 
   // right
-  vert[2].position.x = 600;
-  vert[2].position.y = 450;
+  vert[2].position.x = 300;
+  vert[2].position.y = 225;
   vert[2].color.r = 0.0;
   vert[2].color.g = 1.0;
   vert[2].color.b = 0.0;
@@ -58,6 +58,12 @@ int main(int argc, char *argv[])
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
+    SDL_Rect r = {0, 0, 400, 300};
+    SDL_SetRenderViewport(renderer, &r);
+    SDL_RenderGeometry(renderer, NULL, vert, vertLen, NULL, 0);
+
+    r = {400, 0, 400, 300};
+    SDL_SetRenderViewport(renderer, &r);
     SDL_RenderGeometry(renderer, NULL, vert, vertLen, NULL, 0);
 
     SDL_RenderPresent(renderer);

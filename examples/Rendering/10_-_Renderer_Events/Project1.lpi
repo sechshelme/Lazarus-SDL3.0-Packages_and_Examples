@@ -48,6 +48,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="RenderGeometrieWindow"/>
       </Unit>
+      <Unit>
+        <Filename Value="targettexturewindow.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TargetTextureWindow"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
