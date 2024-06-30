@@ -54,6 +54,11 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="MenuBar"/>
       </Unit>
+      <Unit>
+        <Filename Value="playbox.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="PlayBox"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

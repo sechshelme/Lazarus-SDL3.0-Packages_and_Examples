@@ -2,20 +2,22 @@ unit MenuBar;
 
 interface
 
-uses   Classes,
-Menus;
+uses  Classes,
+  Menus;
 
 type
 
-  TMenuBarEvent = procedure(AName:String) of object;
+  TMenuBarEvent = procedure(AName: string) of object;
   { TMenuBar }
 
-  TMenuBar=class(TMainMenu)
-     constructor Create(AOwner: TComponent); override;
+  TMenuBar = class(TMainMenu)
+
   private
     FOnMenuBarEvent: TMenuBarEvent;
     procedure MenuBarClick(Sender: TObject);
-    public     property OnMenuBarEvent: TMenuBarEvent read FOnMenuBarEvent write FOnMenuBarEvent;
+  public
+    property OnMenuBarEvent: TMenuBarEvent read FOnMenuBarEvent write FOnMenuBarEvent;
+    constructor Create(AOwner: TComponent); override;
   end;
 
 
@@ -92,8 +94,9 @@ end;
 
 procedure TMenuBar.MenuBarClick(Sender: TObject);
 begin
-   OnMenuBarEvent(TMainMenu(Sender).Name);
+  if OnMenuBarEvent <> nil then  begin
+    OnMenuBarEvent(TMainMenu(Sender).Name);
+  end;
 end;
 
 end.
-

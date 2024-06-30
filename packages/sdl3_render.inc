@@ -2,7 +2,7 @@
 //                                                         //
 //   WARNUNG, dies Datei wird automatisch durch            //
 //   das Program "Convert_Unit_to_pas_includes" erzeugt !  //
-//   Erzeugt am: 26-06-2024   19:19                        //
+//   Erzeugt am: 30-06-2024   17:37                        //
 //                                                         //
 /////////////////////////////////////////////////////////////
 
@@ -12,10 +12,14 @@ type
   PSDL_RendererFlags = ^TSDL_RendererFlags;
   TSDL_RendererFlags = longint;
 
+
 const
-  SDL_RENDERER_SOFTWARE = $00000001;
-  SDL_RENDERER_ACCELERATED = $00000002;
-  SDL_RENDERER_PRESENTVSYNC = $00000004;
+  SDL_SOFTWARE_RENDERER = 'software';
+
+//const
+//  SDL_RENDERER_SOFTWARE = $00000001;
+//  SDL_RENDERER_ACCELERATED = $00000002;
+//  SDL_RENDERER_PRESENTVSYNC = $00000004;
 
 type
   PSDL_RendererInfo = ^TSDL_RendererInfo;
@@ -76,7 +80,8 @@ const
   SDL_PROP_RENDERER_CREATE_WINDOW_POINTER = 'window';
   SDL_PROP_RENDERER_CREATE_SURFACE_POINTER = 'surface';
   SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER = 'output_colorspace';
-  SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_BOOLEAN = 'present_vsync';
+//  SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_BOOLEAN = 'present_vsync';
+  SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER = 'present_vsync';
   SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER = 'vulkan.instance';
   SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER = 'vulkan.surface';
   SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER = 'vulkan.physical_device';

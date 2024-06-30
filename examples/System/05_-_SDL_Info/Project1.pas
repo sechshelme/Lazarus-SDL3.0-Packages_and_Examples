@@ -9,22 +9,25 @@ uses
   procedure ShowVideo;
   var
     display: TSDL_DisplayID;
-    num_modes: longint;
+    count: longint;
     modes: PPSDL_DisplayMode;
     mode: PSDL_DisplayMode;
     i: integer;
     s: string;
   begin
     display := SDL_GetPrimaryDisplay;
-    modes := SDL_GetFullscreenDisplayModes(display, @num_modes);
-    WriteLn(num_modes);
+    modes := SDL_GetFullscreenDisplayModes(display, @count);
     if modes <> nil then begin
-      for i := 0 to num_modes - 1 do begin
+      for i := 0 to count - 1 do begin
         mode := modes[i];
         WriteStr(s, 'Display: ', display: 3, ' mode: ', i: 4, '     ', mode^.w: 4, ' x ', mode^.h: 4, '   ', mode^.refresh_rate: 5: 1);
         SDL_Log(PChar(s));
       end;
       SDL_free(modes);
+    end;
+    count:=SDL_GetNumRenderDrivers;
+    for i := 0 to count - 1 do begin
+      SDL_Log('%s', SDL_GetRenderDriver(i));
     end;
   end;
 

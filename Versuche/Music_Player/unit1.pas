@@ -8,7 +8,7 @@ uses
   SDL3, SDL3_mixer,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls, LCLType,
   Buttons, ExtCtrls, ComCtrls, Menus, Types, FileUtil,
-MenuBar,  SoundListBox;
+  MenuBar, SoundListBox, PlayBox;
 
 type
 
@@ -39,11 +39,13 @@ type
     procedure Timer1Timer(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
   private
-    MainMenu:TMenuBar;
+    MainMenu: TMenuBar;
+    PlayBox: TPlayBox;
     ListBox: TSoundListBox;
     music: PMix_Music;
     procedure LoadNewMusic(const titel: string);
-    procedure MainMenuMenuBarEvent(AName: String);
+    procedure MainMenuMenuBarEvent(AName: string);
+    procedure PlayBoxPlayBoxEvent(AName: string);
   end;
 
 var
@@ -53,7 +55,7 @@ implementation
 
 {$R *.lfm}
 
-procedure TForm1.MainMenuMenuBarEvent(AName: String);
+procedure TForm1.MainMenuMenuBarEvent(AName: string);
 begin
   case AName of
     'beenden': begin
@@ -69,6 +71,18 @@ begin
   end;
 end;
 
+procedure TForm1.PlayBoxPlayBoxEvent(AName: string);
+begin
+  case AName of
+    'play': begin
+      BitBtnPlayClick(nil);
+    end;
+    'next': begin
+      BitBtnNextClick(nil);
+    end;
+  end;
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 var
   sl: TStringList;
@@ -78,7 +92,7 @@ begin
   music := nil;
 
   MainMenu := TMenuBar.Create(Self);
-  MainMenu.OnMenuBarEvent:=@MainMenuMenuBarEvent;
+  MainMenu.OnMenuBarEvent := @MainMenuMenuBarEvent;
   Menu := MainMenu;
 
   ListBox := TSoundListBox.Create(self);
@@ -86,6 +100,10 @@ begin
   ListBox.Width := ClientWidth - 150;
   ListBox.Height := ClientHeight - 70;
   ListBox.Parent := self;
+
+  PlayBox := TPlayBox.Create(Self);
+  PlayBox.Parent := Self;
+  PlayBox.OnPlayBoxEvent := @PlayBoxPlayBoxEvent;
 
   sl := FindAllFiles('/n4800/Multimedia/Music/Disco/C.C. Catch/1986 - Catch The Catch', '*.flac');
   ListBox.Items.AddStrings(sl);
@@ -130,10 +148,7 @@ end;
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
   Mix_SetMusicPosition(TrackBar1.Position / 1000);
-  WriteLn('change');
 end;
-
-
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 var
@@ -193,7 +208,11 @@ begin
     music := nil;
   end;
   index := ListBox.ItemIndex;
-  if index >= 0 then  begin
+  if ListBox.Count > 0 then begin
+    if index < 0 then begin
+      index := 0;
+      ListBox.ItemIndex := index;
+    end;
     s := ListBox.Items[index];
     LoadNewMusic(s);
   end;
