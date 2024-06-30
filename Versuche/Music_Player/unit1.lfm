@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 668
-  Height = 435
-  Top = 169
+  Left = 2173
+  Height = 411
+  Top = 146
   Width = 501
   Caption = 'Form1'
-  ClientHeight = 435
+  ClientHeight = 411
   ClientWidth = 501
   LCLVersion = '3.99.0.0'
   OnCreate = FormCreate
@@ -52,7 +52,7 @@ object Form1: TForm1
   object BitBtnPlay: TBitBtn
     Left = 403
     Height = 25
-    Top = 300
+    Top = 276
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = 'Play'
@@ -62,7 +62,7 @@ object Form1: TForm1
   object Label1: TLabel
     Left = 409
     Height = 16
-    Top = 236
+    Top = 212
     Width = 41
     Anchors = [akRight, akBottom]
     Caption = 'Label1'
@@ -70,7 +70,7 @@ object Form1: TForm1
   object Label2: TLabel
     Left = 409
     Height = 16
-    Top = 252
+    Top = 228
     Width = 41
     Anchors = [akRight, akBottom]
     Caption = 'Label2'
@@ -78,7 +78,7 @@ object Form1: TForm1
   object Label3: TLabel
     Left = 409
     Height = 16
-    Top = 268
+    Top = 244
     Width = 41
     Anchors = [akRight, akBottom]
     Caption = 'Label3'
@@ -96,7 +96,7 @@ object Form1: TForm1
   object BitBtnNext: TBitBtn
     Left = 403
     Height = 25
-    Top = 332
+    Top = 308
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = 'Next'
@@ -106,7 +106,7 @@ object Form1: TForm1
   object BitBtnPrev: TBitBtn
     Left = 403
     Height = 25
-    Top = 364
+    Top = 340
     Width = 75
     Anchors = [akRight, akBottom]
     Caption = 'Prev'

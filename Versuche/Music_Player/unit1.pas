@@ -7,8 +7,8 @@ interface
 uses
   SDL3, SDL3_mixer,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls, LCLType,
-  Buttons, ExtCtrls, ComCtrls, Types, FileUtil,
-  SoundListBox;
+  Buttons, ExtCtrls, ComCtrls, Menus, Types, FileUtil,
+MenuBar,  SoundListBox;
 
 type
 
@@ -39,11 +39,11 @@ type
     procedure Timer1Timer(Sender: TObject);
     procedure TrackBar1Change(Sender: TObject);
   private
+    MainMenu:TMenuBar;
     ListBox: TSoundListBox;
     music: PMix_Music;
     procedure LoadNewMusic(const titel: string);
-  public
-
+    procedure MainMenuMenuBarEvent(AName: String);
   end;
 
 var
@@ -53,7 +53,21 @@ implementation
 
 {$R *.lfm}
 
-{ TForm1 }
+procedure TForm1.MainMenuMenuBarEvent(AName: String);
+begin
+  case AName of
+    'beenden': begin
+      Close;
+    end;
+    'play': begin
+      BitBtnPlayClick(nil);
+    end;
+
+    'about': begin
+      ShowMessage('About');
+    end;
+  end;
+end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 var
@@ -62,6 +76,10 @@ begin
   SDL_Init(SDL_INIT_AUDIO);
   Mix_OpenAudio(0, nil);
   music := nil;
+
+  MainMenu := TMenuBar.Create(Self);
+  MainMenu.OnMenuBarEvent:=@MainMenuMenuBarEvent;
+  Menu := MainMenu;
 
   ListBox := TSoundListBox.Create(self);
   ListBox.Anchors := [akTop, akLeft, akBottom, akRight];
@@ -103,8 +121,8 @@ begin
   end;
 
 
-//  Mix_PlayMusic(music, 1);
-  Mix_FadeInMusic(music,1,3000);
+  //  Mix_PlayMusic(music, 1);
+  Mix_FadeInMusic(music, 1, 3000);
   TrackBar1.Max := Trunc(Mix_MusicDuration(music) * 1000);
   TrackBar1.Position := 0;
 end;
@@ -120,7 +138,6 @@ end;
 procedure TForm1.Timer1Timer(Sender: TObject);
 var
   t_length, t_pos: double;
-  index: integer;
   s: string;
   ChangeProc: TNotifyEvent;
 begin
