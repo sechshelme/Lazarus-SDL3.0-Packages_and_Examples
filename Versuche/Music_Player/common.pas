@@ -3,19 +3,25 @@ unit Common;
 interface
 
 type
-  Tcommand = (cmPlay := 1000, cmNext, cmPrev);
+  Tcommand = (cmAdd, cmRemove, cmUp, cmDown, cmPlay, cmNext, cmPrev);
 
-  tcmdProb = record
+  TcmdProb = record
     cmd: Tcommand;
     Caption: string;
   end;
-  tcmdProps = array of tcmdProb;
+  TcmdProps = array of TcmdProb;
 
 const
-  PlayCmdProp: tcmdProps = (
+  PlayCmdProp: TcmdProps = (
     (cmd: cmPlay; Caption: '▶️'),
     (cmd: cmNext; Caption: '⏭️'),
-    (cmd: cmPrev; Caption: '⏮' ));
+    (cmd: cmPrev; Caption: '⏮'));
+
+  EditCmdProb: TcmdProps = (
+    (cmd: cmAdd; Caption: 'Add'),
+    (cmd: cmRemove; Caption: 'Remove'),
+    (cmd: cmUp; Caption: 'Up'),
+    (cmd: cmDown; Caption: 'Down'));
 
 implementation
 

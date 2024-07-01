@@ -15,13 +15,6 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
-    BitBtnAdd: TBitBtn;
-    BitBtnPlay: TBitBtn;
-    BitBtnNext: TBitBtn;
-    BitBtnPrev: TBitBtn;
-    BitBtnRemove: TBitBtn;
-    BitBtnUp: TBitBtn;
-    BitBtnDown: TBitBtn;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -40,12 +33,13 @@ type
     procedure TrackBar1Change(Sender: TObject);
   private
     MainMenu: TMenuBar;
+    EditBox:TEditBox;
     PlayBox: TPlayBox;
     ListBox: TSoundListBox;
     music: PMix_Music;
     procedure LoadNewMusic(const titel: string);
     procedure MainMenuMenuBarEvent(AName: string);
-    procedure PlayBoxPlayBoxEvent(cmd:Tcommand);
+    procedure BoxEventProc(cmd:Tcommand);
   end;
 
 var
@@ -71,17 +65,49 @@ begin
   end;
 end;
 
-procedure TForm1.PlayBoxPlayBoxEvent(cmd: Tcommand);
+procedure TForm1.BoxEventProc(cmd: Tcommand);
+var
+  index: Integer;
+  s: String;
 begin
   case cmd of
+    cmAdd: begin
+      ListBox.Add;
+    end;
+    cmRemove: begin
+      ListBox.Remove;
+    end;
+    cmUp: begin
+      ListBox.Up;
+    end;
+    cmDown: begin
+      ListBox.Down;
+    end;
+
     cmPlay: begin
-      BitBtnPlayClick(nil);
+      if music <> nil then begin
+        Mix_FreeMusic(music);
+        music := nil;
+      end;
+      index := ListBox.ItemIndex;
+      if ListBox.Count > 0 then begin
+        if index < 0 then begin
+          index := 0;
+          ListBox.ItemIndex := index;
+        end;
+        s := ListBox.Items[index];
+        LoadNewMusic(s);
+      end;
     end;
     cmNext: begin
-      BitBtnNextClick(nil);
+      if ListBox.Next then  begin
+        LoadNewMusic(ListBox.GetTitle);
+      end;
     end;
     cmPrev: begin
-      BitBtnPrevClick(nil);
+      if ListBox.Prev(music) then begin
+        LoadNewMusic(ListBox.GetTitle);
+      end;
     end;
   end;
 end;
@@ -104,9 +130,13 @@ begin
   ListBox.Height := ClientHeight - 70;
   ListBox.Parent := self;
 
+  EditBox := TEditBox.Create(Self);
+  EditBox.Parent := Self;
+  EditBox.OnPlayBoxEvent := @BoxEventProc;
+
   PlayBox := TPlayBox.Create(Self);
   PlayBox.Parent := Self;
-  PlayBox.OnPlayBoxEvent := @PlayBoxPlayBoxEvent;
+  PlayBox.OnPlayBoxEvent := @BoxEventProc;
 
   sl := FindAllFiles('/n4800/Multimedia/Music/Disco/C.C. Catch/1986 - Catch The Catch', '*.flac');
   ListBox.Items.AddStrings(sl);
@@ -183,22 +213,18 @@ end;
 
 procedure TForm1.BitBtnAddClick(Sender: TObject);
 begin
-  ListBox.Add;
 end;
 
 procedure TForm1.BitBtnRemoveClick(Sender: TObject);
 begin
-  ListBox.Remove;
 end;
 
 procedure TForm1.BitBtnUpClick(Sender: TObject);
 begin
-  ListBox.Up;
 end;
 
 procedure TForm1.BitBtnDownClick(Sender: TObject);
 begin
-  ListBox.Down;
 end;
 
 procedure TForm1.BitBtnPlayClick(Sender: TObject);
@@ -206,33 +232,14 @@ var
   index: integer;
   s: string;
 begin
-  if music <> nil then begin
-    Mix_FreeMusic(music);
-    music := nil;
-  end;
-  index := ListBox.ItemIndex;
-  if ListBox.Count > 0 then begin
-    if index < 0 then begin
-      index := 0;
-      ListBox.ItemIndex := index;
-    end;
-    s := ListBox.Items[index];
-    LoadNewMusic(s);
-  end;
 end;
 
 procedure TForm1.BitBtnNextClick(Sender: TObject);
 begin
-  if ListBox.Next then  begin
-    LoadNewMusic(ListBox.GetTitle);
-  end;
 end;
 
 procedure TForm1.BitBtnPrevClick(Sender: TObject);
 begin
-  if ListBox.Prev(music) then begin
-    LoadNewMusic(ListBox.GetTitle);
-  end;
 end;
 
 end.

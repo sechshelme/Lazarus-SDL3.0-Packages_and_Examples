@@ -11,9 +11,9 @@ uses
 type
   TPlayBoxEvent = procedure(cmd: Tcommand) of object;
 
-  { TPlayBox }
+  { TBox }
 
-  TPlayBox = class(TPanel)
+  TBox = class(TPanel)
   private
     FOnPlayBoxEvent: TPlayBoxEvent;
     procedure BtnClick(Sender: TObject);
@@ -21,14 +21,26 @@ type
     constructor Create(AOwner: TComponent); override;
     property OnPlayBoxEvent: TPlayBoxEvent read FOnPlayBoxEvent write FOnPlayBoxEvent;
   private
-    BtnPlay, BtnNext: TBitBtn;
+    procedure LoadButtons(const props: TcmdProps);
+  end;
+
+  { TPlayBox }
+
+  { TEditBox }
+
+  TEditBox=class(TBox)
+    constructor Create(AOwner: TComponent); override;
+  end;
+
+  TPlayBox=class(TBox)
+    constructor Create(AOwner: TComponent); override;
   end;
 
 implementation
 
-{ TPlayBox }
+{ TBox }
 
-procedure TPlayBox.BtnClick(Sender: TObject);
+procedure TBox.BtnClick(Sender: TObject);
 begin
   if OnPlayBoxEvent <> nil then  begin
     OnPlayBoxEvent(Tcommand(TBitBtn(Sender).Tag));
@@ -37,38 +49,52 @@ end;
 
 // ▶️ ⏸⏯ ⏹⏺ ⏭   ⏮   ⏩⏪
 
-constructor TPlayBox.Create(AOwner: TComponent);
+constructor TBox.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+end;
+
+procedure TBox.LoadButtons(const props: TcmdProps);
 var
   i: Integer;
   Btn: TBitBtn;
+  propsCount: SizeInt;
 begin
-  inherited Create(AOwner);
+  propsCount:=Length(props);
 
-  Width := 200;
-  Height := 290;
+  Width := 100;
+  Height :=  propsCount*30+20;
+  Left:=-100;
+  Left:=TControl( Owner).Width-Width;
 
-  for i := 0 to Length(PlayCmdProp) - 1 do begin
+  for i := 0 to propsCount - 1 do begin
     Btn := TBitBtn.Create(Self);
-    Btn.Caption := PlayCmdProp[i].Caption;
-    Btn.Tag := PtrInt(PlayCmdProp[i].cmd);
+    Btn.Caption := props[i].Caption;
+    Btn.Tag := PtrInt(props[i].cmd);
     Btn.OnClick := @BtnClick;
-    Btn.Top:=i*30;
-
+    Btn.Left:=10;
+    Btn.Top:=i*30+10;
     Btn.Parent := Self;
   end;
+end;
 
-  //BtnPlay := TBitBtn.Create(Self);
-  //BtnPlay.Parent := Self;
-  //BtnPlay.Caption := '▶️';
-  //BtnPlay.Tag := PtrInt(cmPlay);
-  //BtnPlay.OnClick := @BtnClick;
-  //
-  //BtnNext := TBitBtn.Create(Self);
-  //BtnNext.Top := 30;
-  //BtnNext.Parent := Self;
-  //BtnNext.Caption := '⏭️';
-  //BtnNext.Tag := PtrInt(cmNext);
-  //BtnNext.OnClick := @BtnClick;
+{ TEditBox }
+
+constructor TEditBox.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  Anchors:=[akTop,akRight];
+  LoadButtons(EditCmdProb);
+end;
+
+{ TPlayBox }
+
+constructor TPlayBox.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  Anchors:=[akBottom,akRight];
+  LoadButtons(PlayCmdProp);
+  Top:=TControl(Owner).Height-Height;
 end;
 
 end.
