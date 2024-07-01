@@ -8,7 +8,7 @@ uses
   SDL3, SDL3_mixer,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls, LCLType,
   Buttons, ExtCtrls, ComCtrls, Menus, Types, FileUtil,
-  MenuBar, SoundListBox, PlayBox;
+Common,  MenuBar, SoundListBox, PlayBox;
 
 type
 
@@ -45,7 +45,7 @@ type
     music: PMix_Music;
     procedure LoadNewMusic(const titel: string);
     procedure MainMenuMenuBarEvent(AName: string);
-    procedure PlayBoxPlayBoxEvent(AName: string);
+    procedure PlayBoxPlayBoxEvent(cmd:Tcommand);
   end;
 
 var
@@ -71,14 +71,17 @@ begin
   end;
 end;
 
-procedure TForm1.PlayBoxPlayBoxEvent(AName: string);
+procedure TForm1.PlayBoxPlayBoxEvent(cmd: Tcommand);
 begin
-  case AName of
-    'play': begin
+  case cmd of
+    cmPlay: begin
       BitBtnPlayClick(nil);
     end;
-    'next': begin
+    cmNext: begin
       BitBtnNextClick(nil);
+    end;
+    cmPrev: begin
+      BitBtnPrevClick(nil);
     end;
   end;
 end;
