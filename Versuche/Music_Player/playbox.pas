@@ -10,9 +10,6 @@ uses
 
 type
   TPlayBoxEvent = procedure(cmd: Tcommand) of object;
-
-  { TBox }
-
   TBox = class(TPanel)
   private
     FOnPlayBoxEvent: TPlayBoxEvent;
@@ -24,9 +21,6 @@ type
     procedure LoadButtons(const props: TcmdProps);
   end;
 
-  { TPlayBox }
-
-  { TEditBox }
 
   TEditBox=class(TBox)
     constructor Create(AOwner: TComponent); override;

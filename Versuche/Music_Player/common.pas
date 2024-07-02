@@ -5,11 +5,11 @@ interface
 type
   Tcommand = (cmAdd, cmRemove, cmUp, cmDown, cmPlay,cmStop, cmNext, cmPrev);
 
-  TcmdProb = record
+  TcmdProp = record
     cmd: Tcommand;
     Caption: string;
   end;
-  TcmdProps = array of TcmdProb;
+  TcmdProps = array of TcmdProp;
 
 const
   PlayCmdProp: TcmdProps = (

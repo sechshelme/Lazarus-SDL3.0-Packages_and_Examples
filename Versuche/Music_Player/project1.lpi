@@ -100,6 +100,9 @@
       <Item>
         <Name Value="RunError(200)"/>
       </Item>
+      <Item>
+        <Name Value="EComponentError"/>
+      </Item>
     </Exceptions>
   </Debugging>
 </CONFIG>

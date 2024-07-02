@@ -2,19 +2,20 @@ unit MenuBar;
 
 interface
 
-uses  Classes,
-  Menus;
+uses  Classes, Menus,
+  Common;
 
 type
+//  TMenuBarEvent = procedure(AName: string) of object;
+  TMenuBarEvent = procedure(cmd: Tcommand) of object;
 
-  TMenuBarEvent = procedure(AName: string) of object;
   { TMenuBar }
 
   TMenuBar = class(TMainMenu)
-
   private
     FOnMenuBarEvent: TMenuBarEvent;
     procedure MenuBarClick(Sender: TObject);
+    procedure AddMenuFromProps(ACaption: string; props: TcmdProps);
   public
     property OnMenuBarEvent: TMenuBarEvent read FOnMenuBarEvent write FOnMenuBarEvent;
     constructor Create(AOwner: TComponent); override;
@@ -62,16 +63,11 @@ begin
   smi.OnClick := @MenuBarClick;
   mmi.Add(smi);
 
-  // --- Play
-  mmi := TMenuItem.Create(self);
-  mmi.Caption := 'Play';
-  Items.Add(mmi);
+  // --- Edit
+  AddMenuFromProps('Edit', EditCmdProb);
 
-  smi := TMenuItem.Create(self);
-  smi.Caption := 'Play';
-  smi.Name := 'play';
-  smi.OnClick := @MenuBarClick;
-  mmi.Add(smi);
+  // --- Play
+  AddMenuFromProps('Play', PlayCmdProp);
 
 
   // --- Optionen
@@ -95,7 +91,25 @@ end;
 procedure TMenuBar.MenuBarClick(Sender: TObject);
 begin
   if OnMenuBarEvent <> nil then  begin
-    OnMenuBarEvent(TMainMenu(Sender).Name);
+    OnMenuBarEvent(Tcommand(TMainMenu(Sender).Tag));
+  end;
+end;
+
+procedure TMenuBar.AddMenuFromProps(ACaption: string; props: TcmdProps);
+var
+  mmi, smi: TMenuItem;
+  i: Integer;
+begin
+  mmi := TMenuItem.Create(Self);
+  mmi.Caption := ACaption;
+  Items.Add(mmi);
+
+  for i := 0 to Length(props) - 1 do begin
+    smi := TMenuItem.Create(self);
+    smi.Caption := props[i].Caption;
+    smi.Tag:=PtrInt(props[i].cmd);
+    smi.OnClick := @MenuBarClick;
+    mmi.Add(smi);
   end;
 end;
 

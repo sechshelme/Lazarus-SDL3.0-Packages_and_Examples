@@ -31,7 +31,6 @@ type
     ListBox: TSoundListBox;
     music: PMix_Music;
     procedure LoadNewMusic(const titel: string);
-    procedure MainMenuMenuBarEvent(AName: string);
     procedure BoxEventProc(cmd: Tcommand);
   end;
 
@@ -41,22 +40,6 @@ var
 implementation
 
 {$R *.lfm}
-
-procedure TForm1.MainMenuMenuBarEvent(AName: string);
-begin
-  case AName of
-    'beenden': begin
-      Close;
-    end;
-    'play': begin
-      //      BitBtnPlayClick(nil);
-    end;
-
-    'about': begin
-      ShowMessage('About');
-    end;
-  end;
-end;
 
 procedure TForm1.BoxEventProc(cmd: Tcommand);
 var
@@ -98,9 +81,13 @@ begin
     end;
     cmStop: begin
       Mix_FreeMusic(music);
-      music:=nil;
+      music := nil;
     end;
     cmNext: begin
+      if Mix_PausedMusic = 1 then begin
+        Mix_FreeMusic(music);
+        music := nil;
+      end;
       if ListBox.Next then  begin
         if (music <> nil) and (Mix_PausedMusic = 0) then begin
           LoadNewMusic(ListBox.GetTitle);
@@ -108,6 +95,10 @@ begin
       end;
     end;
     cmPrev: begin
+      if Mix_PausedMusic = 1 then begin
+        Mix_FreeMusic(music);
+        music := nil;
+      end;
       if ListBox.Prev(music) then begin
         LoadNewMusic(ListBox.GetTitle);
       end;
@@ -124,7 +115,8 @@ begin
   music := nil;
 
   MainMenu := TMenuBar.Create(Self);
-  MainMenu.OnMenuBarEvent := @MainMenuMenuBarEvent;
+//  MainMenu.OnMenuBarEvent := @MainMenuMenuBarEvent;
+  MainMenu.OnMenuBarEvent := @BoxEventProc;
   Menu := MainMenu;
 
   ListBox := TSoundListBox.Create(self);

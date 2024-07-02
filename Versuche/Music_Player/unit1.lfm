@@ -1,35 +1,35 @@
 object Form1: TForm1
-  Left = 2173
-  Height = 411
-  Top = 146
-  Width = 501
+  Left = 2088
+  Height = 441
+  Top = 73
+  Width = 569
   Caption = 'Form1'
-  ClientHeight = 411
-  ClientWidth = 501
+  ClientHeight = 441
+  ClientWidth = 569
   Position = poDefault
   LCLVersion = '3.99.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   object Label1: TLabel
-    Left = 409
+    Left = 477
     Height = 16
-    Top = 160
+    Top = 190
     Width = 41
     Anchors = [akRight, akBottom]
     Caption = 'Label1'
   end
   object Label2: TLabel
-    Left = 409
+    Left = 477
     Height = 16
-    Top = 176
+    Top = 206
     Width = 41
     Anchors = [akRight, akBottom]
     Caption = 'Label2'
   end
   object Label3: TLabel
-    Left = 409
+    Left = 477
     Height = 16
-    Top = 192
+    Top = 222
     Width = 41
     Anchors = [akRight, akBottom]
     Caption = 'Label3'
@@ -38,7 +38,7 @@ object Form1: TForm1
     Left = 16
     Height = 37
     Top = 8
-    Width = 376
+    Width = 444
     Position = 0
     OnChange = TrackBar1Change
     Anchors = [akTop, akLeft, akRight]
