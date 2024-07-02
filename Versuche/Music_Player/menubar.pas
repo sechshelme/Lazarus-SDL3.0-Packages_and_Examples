@@ -33,35 +33,7 @@ begin
   inherited Create(AOwner);
 
   // --- Datei
-  mmi := TMenuItem.Create(self);
-  mmi.Caption := 'Datei';
-  Items.Add(mmi);
-
-  smi := TMenuItem.Create(self);
-  smi.Caption := 'Neu';
-  mmi.Add(smi);
-
-  smi := TMenuItem.Create(self);
-  smi.Caption := '-';
-  mmi.Add(smi);
-
-  smi := TMenuItem.Create(self);
-  smi.Caption := 'Speichern';
-  mmi.Add(smi);
-
-  smi := TMenuItem.Create(self);
-  smi.Caption := 'Öffnen';
-  mmi.Add(smi);
-
-  smi := TMenuItem.Create(self);
-  smi.Caption := '-';
-  mmi.Add(smi);
-
-  smi := TMenuItem.Create(self);
-  smi.Caption := 'Beenden';
-  smi.Name := 'beenden';
-  smi.OnClick := @MenuBarClick;
-  mmi.Add(smi);
+  AddMenuFromProps('Datei',FileCmdProb);
 
   // --- Edit
   AddMenuFromProps('Edit', EditCmdProb);

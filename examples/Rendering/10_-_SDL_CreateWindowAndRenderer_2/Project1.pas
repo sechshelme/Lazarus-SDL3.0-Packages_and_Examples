@@ -20,7 +20,7 @@ var
     quit: boolean = False;
     rDest: TSDL_FRect;
     i: integer;
-    timeStart: UInt64;
+    timeStart: uint64;
   begin
     rDest.items := [150, 150, 256, 256];
     while not quit do begin
@@ -45,7 +45,7 @@ var
         rDest.x := 0;
       end;
 
-      timeStart:=SDL_GetTicksNS;
+      timeStart := SDL_GetTicksNS;
       for i := 0 to winCount - 1 do begin
         SDL_SetRenderDrawColorFloat(renderer[i], 0.5, 1.0, 1.0, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer[i]);
@@ -55,7 +55,7 @@ var
 
         SDL_RenderPresent(renderer[i]);
       end;
-      SDL_Log('Time: %i', (SDL_GetTicksNS-timeStart) div 1000);
+      SDL_Log('Time: %i', (SDL_GetTicksNS - timeStart) div 1000);
     end;
   end;
 
@@ -63,7 +63,7 @@ begin
   SDL_init(SDL_INIT_VIDEO);
 
   for i := 0 to winCount - 1 do begin
-    window[i]:=SDL_CreateWindow('Fenster',320,200,0);
+    window[i] := SDL_CreateWindow('Fenster', 320, 200, 0);
 
     //props:=SDL_CreateProperties;
     //SDL_SetProperty(props, SDL_PROP_RENDERER_CREATE_WINDOW_POINTER, window[i]);
@@ -72,12 +72,17 @@ begin
     //SDL_DestroyProperties(props);
 
 
-    renderer[i]:=SDL_CreateRenderer(window[i], SDL_SOFTWARE_RENDERER);
-    SDL_SetWindowPosition(window[i], i mod 4 * 350,i div 4 * 250);
+    //    renderer[i]:=SDL_CreateRenderer(window[i], SDL_SOFTWARE_RENDERER);
+    renderer[i] := SDL_CreateRenderer(window[i], 'vulkan');
+    if renderer[i] = nil then begin
+      SDL_Log('Renderer Error: %s', SDL_GetError);
+      Halt;
+    end;
+    SDL_SetWindowPosition(window[i], i mod 4 * 350, i div 4 * 250);
 
 
 
- // SDL_SetRenderVSync(renderer[i], 1);
+    // SDL_SetRenderVSync(renderer[i], 1);
   end;
 
   SDLMain;

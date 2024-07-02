@@ -47,6 +47,20 @@ var
   s: string;
 begin
   case cmd of
+    cmNew: begin
+//      ListBox.Add;
+    end;
+    cmSave: begin
+      ListBox.SaveToXML;
+    end;
+    cmOpen: begin
+      ListBox.LoadToXML;
+    end;
+    cmClose: begin
+      Close;
+    end;
+
+
     cmAdd: begin
       ListBox.Add;
     end;

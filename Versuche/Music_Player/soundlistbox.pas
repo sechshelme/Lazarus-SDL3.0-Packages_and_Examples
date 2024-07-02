@@ -6,6 +6,7 @@ interface
 
 uses
   Classes, SysUtils, StdCtrls, Controls, Dialogs,
+  Laz2_XMLCfg,
   SDL3_mixer;
 
 type
@@ -22,6 +23,8 @@ type
     function Next: boolean;
     function Prev(music: PMix_Music): boolean;
     function GetTitle: string;
+    procedure SaveToXML;
+    procedure LoadToXML;
   end;
 
 implementation
@@ -132,6 +135,42 @@ begin
   end else begin
     Result := '';
   end;
+end;
+
+procedure TSoundListBox.SaveToXML;
+var
+  xml: TXMLConfig;
+  i: Integer;
+begin
+  xml := TXMLConfig.Create(nil);
+  xml.Filename := 'test.xml';
+  xml.Clear;
+  for i := 1 to Count do begin
+       xml.SetValue('songs/items['+IntToStr(i)+']/song', Items[i-1]);
+  end;
+
+  xml.Free;
+
+end;
+
+procedure TSoundListBox.LoadToXML;
+var
+  i, cnt: Integer;
+  xml: TXMLConfig;
+  s: String;
+begin
+  xml := TXMLConfig.Create(nil);
+  xml.Filename := 'test.xml';
+
+  cnt:=xml.GetChildCount('songs');
+  WriteLn('count: ',cnt);
+  for i := 1 to cnt do begin
+      s:=xml.GetValue('songs/items['+IntToStr(i)+']/song','');
+      WriteLn(s);
+  end;
+  xml.Free;
+
+
 end;
 
 end.
