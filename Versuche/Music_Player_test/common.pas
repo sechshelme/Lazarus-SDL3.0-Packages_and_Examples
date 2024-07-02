@@ -3,7 +3,7 @@ unit Common;
 interface
 
 type
-  Tcommand = (cmAdd, cmRemove, cmUp, cmDown, cmPlay,cmStop, cmNext, cmPrev);
+  Tcommand = (cmAdd, cmRemove, cmUp, cmDown, cmPlay, cmNext, cmPrev);
 
   TcmdProb = record
     cmd: Tcommand;
@@ -14,7 +14,6 @@ type
 const
   PlayCmdProp: TcmdProps = (
     (cmd: cmPlay; Caption: '▶️'),
-    (cmd: cmStop; Caption: '⏹️'),
     (cmd: cmNext; Caption: '⏭️'),
     (cmd: cmPrev; Caption: '⏮'));
 

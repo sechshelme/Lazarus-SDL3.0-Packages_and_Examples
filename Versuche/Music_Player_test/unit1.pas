@@ -6,9 +6,9 @@ interface
 
 uses
   SDL3, SDL3_mixer,
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, LCLType,
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, StdCtrls, LCLType,
   Buttons, ExtCtrls, ComCtrls, Menus, Types, FileUtil,
-  Common, MenuBar, SoundListBox, PlayBox;
+Common,  MenuBar, SoundListBox, PlayBox;
 
 type
 
@@ -26,13 +26,11 @@ type
     procedure TrackBar1Change(Sender: TObject);
   private
     MainMenu: TMenuBar;
-    EditBox: TEditBox;
+    EditBox:TEditBox;
     PlayBox: TPlayBox;
     ListBox: TSoundListBox;
-    music: PMix_Music;
-    procedure LoadNewMusic(const titel: string);
     procedure MainMenuMenuBarEvent(AName: string);
-    procedure BoxEventProc(cmd: Tcommand);
+    procedure BoxEventProc(cmd:Tcommand);
   end;
 
 var
@@ -49,7 +47,6 @@ begin
       Close;
     end;
     'play': begin
-      //      BitBtnPlayClick(nil);
     end;
 
     'about': begin
@@ -60,8 +57,8 @@ end;
 
 procedure TForm1.BoxEventProc(cmd: Tcommand);
 var
-  index: integer;
-  s: string;
+  index: Integer;
+  s: String;
 begin
   case cmd of
     cmAdd: begin
@@ -78,38 +75,17 @@ begin
     end;
 
     cmPlay: begin
-      if music = nil then begin
-        index := ListBox.ItemIndex;
-        if ListBox.Count > 0 then begin
-          if index < 0 then begin
-            index := 0;
-            ListBox.ItemIndex := index;
-          end;
-          s := ListBox.Items[index];
-          LoadNewMusic(s);
-        end;
-      end else begin
-        if Mix_PausedMusic = 1 then begin
-          Mix_ResumeMusic;
-        end else begin
-          Mix_PauseMusic;
-        end;
-      end;
-    end;
-    cmStop: begin
-      Mix_FreeMusic(music);
-      music:=nil;
+      ListBox.Play;
     end;
     cmNext: begin
       if ListBox.Next then  begin
-        if (music <> nil) and (Mix_PausedMusic = 0) then begin
-          LoadNewMusic(ListBox.GetTitle);
-        end;
+//        LoadNewMusic(ListBox.GetTitle);
       end;
     end;
     cmPrev: begin
-      if ListBox.Prev(music) then begin
-        LoadNewMusic(ListBox.GetTitle);
+//      if ListBox.Prev(music) then begin
+        if ListBox.Prev then begin
+//        LoadNewMusic(ListBox.GetTitle);
       end;
     end;
   end;
@@ -121,7 +97,7 @@ var
 begin
   SDL_Init(SDL_INIT_AUDIO);
   Mix_OpenAudio(0, nil);
-  music := nil;
+//  music := nil;
 
   MainMenu := TMenuBar.Create(Self);
   MainMenu.OnMenuBarEvent := @MainMenuMenuBarEvent;
@@ -132,6 +108,7 @@ begin
   ListBox.Width := ClientWidth - 150;
   ListBox.Height := ClientHeight - 70;
   ListBox.Parent := self;
+  ListBox.SetTrackBar(TrackBar1);
 
   EditBox := TEditBox.Create(Self);
   EditBox.Parent := Self;
@@ -159,27 +136,29 @@ end;
 
 procedure TForm1.FormDestroy(Sender: TObject);
 begin
-  Mix_FreeMusic(music);
+  ListBox.Free;
+
+//  Mix_FreeMusic(music);
   Mix_CloseAudio;
   SDL_Quit;
 end;
 
-procedure TForm1.LoadNewMusic(const titel: string);
-begin
-  if music <> nil then begin
-    Mix_FreeMusic(music);
-  end;
-  music := Mix_LoadMUS(PChar(titel));
-  if music = nil then begin
-    SDL_Log('Konnte Musik nicht laden: %s', Mix_GetError);
-  end;
-
-
-  //  Mix_PlayMusic(music, 1);
-  Mix_FadeInMusic(music, 1, 3000);
-  TrackBar1.Max := Trunc(Mix_MusicDuration(music) * 1000);
-  TrackBar1.Position := 0;
-end;
+//procedure TForm1.LoadNewMusic(const titel: string);
+//begin
+//  if music <> nil then begin
+//    Mix_FreeMusic(music);
+//  end;
+//  music := Mix_LoadMUS(PChar(titel));
+//  if music = nil then begin
+//    SDL_Log('Konnte Musik nicht laden: %s', Mix_GetError);
+//  end;
+//
+//
+//  //  Mix_PlayMusic(music, 1);
+//  Mix_FadeInMusic(music, 1, 3000);
+//  TrackBar1.Max := Trunc(Mix_MusicDuration(music) * 1000);
+//  TrackBar1.Position := 0;
+//end;
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
@@ -191,7 +170,10 @@ var
   t_length, t_pos: double;
   s: string;
   ChangeProc: TNotifyEvent;
+  music: PMix_Music;
 begin
+  music:=ListBox.getMusic;
+
   if ListBox.Count > 0 then begin
     if music <> nil then begin
       t_length := Mix_MusicDuration(music);
@@ -207,7 +189,7 @@ begin
 
       if t_pos >= t_length then begin
         if ListBox.Next then  begin
-          LoadNewMusic(ListBox.GetTitle);
+          ListBox.LoadNewMusic(ListBox.GetTitle);
         end;
       end;
     end;
