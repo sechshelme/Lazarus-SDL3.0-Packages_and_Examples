@@ -6,10 +6,7 @@ uses  Classes, Menus,
   Common;
 
 type
-//  TMenuBarEvent = procedure(AName: string) of object;
   TMenuBarEvent = procedure(cmd: Tcommand) of object;
-
-  { TMenuBar }
 
   TMenuBar = class(TMainMenu)
   private
@@ -24,8 +21,6 @@ type
 
 implementation
 
-{ TMenuBar }
-
 constructor TMenuBar.Create(AOwner: TComponent);
 var
   mmi, smi: TMenuItem;
@@ -33,7 +28,7 @@ begin
   inherited Create(AOwner);
 
   // --- Datei
-  AddMenuFromProps('Datei',FileCmdProb);
+  AddMenuFromProps('Datei', FileCmdProb);
 
   // --- Edit
   AddMenuFromProps('Edit', EditCmdProb);
@@ -70,7 +65,7 @@ end;
 procedure TMenuBar.AddMenuFromProps(ACaption: string; props: TcmdProps);
 var
   mmi, smi: TMenuItem;
-  i: Integer;
+  i: integer;
 begin
   mmi := TMenuItem.Create(Self);
   mmi.Caption := ACaption;
@@ -79,7 +74,7 @@ begin
   for i := 0 to Length(props) - 1 do begin
     smi := TMenuItem.Create(self);
     smi.Caption := props[i].Caption;
-    smi.Tag:=PtrInt(props[i].cmd);
+    smi.Tag := PtrInt(props[i].cmd);
     smi.OnClick := @MenuBarClick;
     mmi.Add(smi);
   end;

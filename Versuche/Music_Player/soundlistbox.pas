@@ -1,7 +1,5 @@
 unit SoundListBox;
 
-{$mode ObjFPC}{$H+}
-
 interface
 
 uses

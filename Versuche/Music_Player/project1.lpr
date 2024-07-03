@@ -20,7 +20,7 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TAddSoundForm, AddSoundForm);
+  Application.CreateForm(TAddSoundForm, SoundAddForm);
   Application.Run;
 end.
 

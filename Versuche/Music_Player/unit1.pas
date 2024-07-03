@@ -8,7 +8,7 @@ uses
   SDL3, SDL3_mixer,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, LCLType,
   Buttons, ExtCtrls, ComCtrls, Menus, Types, FileUtil,
-  Common, MenuBar, SoundListBox, PlayBox,AddSongs;
+  Common, MenuBar, SoundListBox, PlayBox, AddSongs;
 
 type
 
@@ -31,7 +31,8 @@ type
     music: PMix_Music;
     procedure LoadNewMusic(const titel: string);
     procedure BoxEventProc(cmd: Tcommand);
-    public     ListBoxSongs: TSoundListBox;
+  public
+    ListBoxSongs: TSoundListBox;
   end;
 
 var
@@ -48,7 +49,7 @@ var
 begin
   case cmd of
     cmNew: begin
-//      ListBoxSongs.Add;
+      //      ListBoxSongs.Add;
     end;
     cmSave: begin
       ListBoxSongs.SaveToXML;
@@ -62,9 +63,10 @@ begin
 
 
     cmAdd: begin
-      AddSoundForm.ShowModal;
+      SoundAddForm.SongListBox := ListBoxSongs;
+      SoundAddForm.ShowModal;
 
-//      ListBoxSongs.Add;
+      //      ListBoxSongs.Add;
     end;
     cmRemove: begin
       ListBoxSongs.Remove;
@@ -131,7 +133,7 @@ begin
   music := nil;
 
   MainMenu := TMenuBar.Create(Self);
-//  MainMenu.OnMenuBarEvent := @MainMenuMenuBarEvent;
+  //  MainMenu.OnMenuBarEvent := @MainMenuMenuBarEvent;
   MainMenu.OnMenuBarEvent := @BoxEventProc;
   Menu := MainMenu;
 
@@ -150,7 +152,7 @@ begin
   PlayBox.OnPlayBoxEvent := @BoxEventProc;
 
   sl := FindAllFiles('/n4800/Multimedia/Music/Disco/C.C. Catch/1986 - Catch The Catch', '*.flac');
-//  WriteLn(sl.Text);
+  //  WriteLn(sl.Text);
   ListBoxSongs.Items.AddStrings(sl);
   sl.Free;
   ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_1.wav');
