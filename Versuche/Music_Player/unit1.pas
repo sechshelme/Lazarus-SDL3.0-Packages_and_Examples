@@ -8,7 +8,7 @@ uses
   SDL3, SDL3_mixer,
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, LCLType,
   Buttons, ExtCtrls, ComCtrls, Menus, Types, FileUtil,
-  Common, MenuBar, SoundListBox, PlayBox;
+  Common, MenuBar, SoundListBox, PlayBox,AddSongs;
 
 type
 
@@ -62,7 +62,9 @@ begin
 
 
     cmAdd: begin
-      ListBox.Add;
+      AddSoundForm.ShowModal;
+
+//      ListBox.Add;
     end;
     cmRemove: begin
       ListBox.Remove;
@@ -148,6 +150,7 @@ begin
   PlayBox.OnPlayBoxEvent := @BoxEventProc;
 
   sl := FindAllFiles('/n4800/Multimedia/Music/Disco/C.C. Catch/1986 - Catch The Catch', '*.flac');
+//  WriteLn(sl.Text);
   ListBox.Items.AddStrings(sl);
   sl.Free;
   ListBox.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_1.wav');

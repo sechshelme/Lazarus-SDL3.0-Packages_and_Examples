@@ -1,0 +1,9 @@
+object AddSoundForm: TAddSoundForm
+  Left = 1478
+  Height = 240
+  Top = 348
+  Width = 320
+  Caption = 'AddSoundForm'
+  LCLVersion = '3.99.0.0'
+  OnCreate = FormCreate
+end

@@ -163,7 +163,7 @@ begin
   xml.Filename := 'test.xml';
 
   cnt:=xml.GetChildCount('songs');
-  WriteLn('count: ',cnt);
+  WriteLn('count:  ',cnt);
   for i := 1 to cnt do begin
       s:=xml.GetValue('songs/items['+IntToStr(i)+']/song','');
       WriteLn(s);

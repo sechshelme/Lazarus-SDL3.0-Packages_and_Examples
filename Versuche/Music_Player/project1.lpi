@@ -64,6 +64,13 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="Common"/>
       </Unit>
+      <Unit>
+        <Filename Value="addsongs.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AddSoundForm"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="AddSongs"/>
+      </Unit>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
