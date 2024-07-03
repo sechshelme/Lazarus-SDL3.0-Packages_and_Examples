@@ -138,37 +138,32 @@ end;
 procedure TSoundListBox.SaveToXML;
 var
   xml: TXMLConfig;
-  i: Integer;
+  i: integer;
 begin
   xml := TXMLConfig.Create(nil);
   xml.Filename := 'test.xml';
   xml.Clear;
   for i := 1 to Count do begin
-       xml.SetValue('songs/items['+IntToStr(i)+']/song', Items[i-1]);
+    xml.SetValue('songs/items[' + IntToStr(i) + ']/song', Items[i - 1]);
   end;
-
   xml.Free;
-
 end;
 
 procedure TSoundListBox.LoadToXML;
 var
-  i, cnt: Integer;
+  i, cnt: integer;
   xml: TXMLConfig;
-  s: String;
+  s: string;
 begin
   xml := TXMLConfig.Create(nil);
   xml.Filename := 'test.xml';
 
-  cnt:=xml.GetChildCount('songs');
-  WriteLn('count:  ',cnt);
+  cnt := xml.GetChildCount('songs');
   for i := 1 to cnt do begin
-      s:=xml.GetValue('songs/items['+IntToStr(i)+']/song','');
-      WriteLn(s);
+    s := xml.GetValue('songs/items[' + IntToStr(i) + ']/song', '');
+    WriteLn(s);
   end;
   xml.Free;
-
-
 end;
 
 end.

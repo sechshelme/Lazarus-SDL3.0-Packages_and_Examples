@@ -60,12 +60,13 @@ begin
   spliter := TSplitter.Create(panel);
   spliter.Parent := panel;
   spliter.Align := alLeft;
-  spliter.MinSize := 1;
+  spliter.MinSize := 50;
 
   ListBoxDirectory := TListBox.Create(panel);
   ListBoxDirectory.Parent := panel;
   ListBoxDirectory.Width := panel.Width div 2;
   ListBoxDirectory.Align := alLeft;
+  ListBoxDirectory.Constraints.MinWidth:=50;
 
   ListBoxMusic := TListBox.Create(panel);
   ListBoxMusic.Parent := panel;
