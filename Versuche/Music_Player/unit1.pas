@@ -28,10 +28,10 @@ type
     MainMenu: TMenuBar;
     EditBox: TEditBox;
     PlayBox: TPlayBox;
-    ListBox: TSoundListBox;
     music: PMix_Music;
     procedure LoadNewMusic(const titel: string);
     procedure BoxEventProc(cmd: Tcommand);
+    public     ListBoxSongs: TSoundListBox;
   end;
 
 var
@@ -48,13 +48,13 @@ var
 begin
   case cmd of
     cmNew: begin
-//      ListBox.Add;
+//      ListBoxSongs.Add;
     end;
     cmSave: begin
-      ListBox.SaveToXML;
+      ListBoxSongs.SaveToXML;
     end;
     cmOpen: begin
-      ListBox.LoadToXML;
+      ListBoxSongs.LoadToXML;
     end;
     cmClose: begin
       Close;
@@ -64,27 +64,27 @@ begin
     cmAdd: begin
       AddSoundForm.ShowModal;
 
-//      ListBox.Add;
+//      ListBoxSongs.Add;
     end;
     cmRemove: begin
-      ListBox.Remove;
+      ListBoxSongs.Remove;
     end;
     cmUp: begin
-      ListBox.Up;
+      ListBoxSongs.Up;
     end;
     cmDown: begin
-      ListBox.Down;
+      ListBoxSongs.Down;
     end;
 
     cmPlay: begin
       if music = nil then begin
-        index := ListBox.ItemIndex;
-        if ListBox.Count > 0 then begin
+        index := ListBoxSongs.ItemIndex;
+        if ListBoxSongs.Count > 0 then begin
           if index < 0 then begin
             index := 0;
-            ListBox.ItemIndex := index;
+            ListBoxSongs.ItemIndex := index;
           end;
-          s := ListBox.Items[index];
+          s := ListBoxSongs.Items[index];
           LoadNewMusic(s);
         end;
       end else begin
@@ -104,9 +104,9 @@ begin
         Mix_FreeMusic(music);
         music := nil;
       end;
-      if ListBox.Next then  begin
+      if ListBoxSongs.Next then  begin
         if (music <> nil) and (Mix_PausedMusic = 0) then begin
-          LoadNewMusic(ListBox.GetTitle);
+          LoadNewMusic(ListBoxSongs.GetTitle);
         end;
       end;
     end;
@@ -115,8 +115,8 @@ begin
         Mix_FreeMusic(music);
         music := nil;
       end;
-      if ListBox.Prev(music) then begin
-        LoadNewMusic(ListBox.GetTitle);
+      if ListBoxSongs.Prev(music) then begin
+        LoadNewMusic(ListBoxSongs.GetTitle);
       end;
     end;
   end;
@@ -135,11 +135,11 @@ begin
   MainMenu.OnMenuBarEvent := @BoxEventProc;
   Menu := MainMenu;
 
-  ListBox := TSoundListBox.Create(self);
-  ListBox.Anchors := [akTop, akLeft, akBottom, akRight];
-  ListBox.Width := ClientWidth - 150;
-  ListBox.Height := ClientHeight - 70;
-  ListBox.Parent := self;
+  ListBoxSongs := TSoundListBox.Create(self);
+  ListBoxSongs.Anchors := [akTop, akLeft, akBottom, akRight];
+  ListBoxSongs.Width := ClientWidth - 150;
+  ListBoxSongs.Height := ClientHeight - 70;
+  ListBoxSongs.Parent := self;
 
   EditBox := TEditBox.Create(Self);
   EditBox.Parent := Self;
@@ -151,15 +151,15 @@ begin
 
   sl := FindAllFiles('/n4800/Multimedia/Music/Disco/C.C. Catch/1986 - Catch The Catch', '*.flac');
 //  WriteLn(sl.Text);
-  ListBox.Items.AddStrings(sl);
+  ListBoxSongs.Items.AddStrings(sl);
   sl.Free;
-  ListBox.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_1.wav');
-  ListBox.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_2.wav');
-  ListBox.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_3.wav');
-  ListBox.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_4.wav');
-  ListBox.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_5.wav');
-  ListBox.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_6.wav');
-  ListBox.Items.Add('/n4800/Multimedia/Music/Disco/Boney M/1981 - Boonoonoonoos/01 - Boonoonoonoos.flac');
+  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_1.wav');
+  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_2.wav');
+  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_3.wav');
+  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_4.wav');
+  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_5.wav');
+  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_6.wav');
+  ListBoxSongs.Items.Add('/n4800/Multimedia/Music/Disco/Boney M/1981 - Boonoonoonoos/01 - Boonoonoonoos.flac');
 
   Timer1.Interval := 100;
   TrackBar1.TickStyle := tsNone;
@@ -201,7 +201,7 @@ var
   s: string;
   ChangeProc: TNotifyEvent;
 begin
-  if ListBox.Count > 0 then begin
+  if ListBoxSongs.Count > 0 then begin
     if music <> nil then begin
       t_length := Mix_MusicDuration(music);
       WriteStr(s, t_length: 6: 1);
@@ -215,8 +215,8 @@ begin
       TrackBar1.OnChange := ChangeProc;
 
       if t_pos >= t_length then begin
-        if ListBox.Next then  begin
-          LoadNewMusic(ListBox.GetTitle);
+        if ListBoxSongs.Next then  begin
+          LoadNewMusic(ListBoxSongs.GetTitle);
         end;
       end;
     end;
