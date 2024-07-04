@@ -19,6 +19,7 @@ type
     ListBoxDirectory, ListBoxMusic: TListBox;
     procedure btnClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
+    procedure DownDirProc(Sender: TObject);
     procedure OpenDirProc(Sender: TObject);
   public
     property SongListBox: TSoundListBox write FSongListBox;
@@ -92,7 +93,7 @@ begin
   btn.Anchors := [akBottom, akLeft];
   btn.Left := 5+80;
   btn.Top := ClientHeight - 35;
-  btn.OnClick := @OpenDirProc;
+  btn.OnClick := @DownDirProc;
   btn.Caption := 'Up';
 
   FindNewFile('/n4800/Multimedia/Music/Disco/Boney M');
@@ -117,6 +118,43 @@ begin
    index:=ListBoxDirectory.ItemIndex;
    if index>=0 then FindNewFile(ListBoxDirectory.Items[index]);
 end;
+
+procedure TAddSoundForm.DownDirProc(Sender: TObject);
+
+
+function ExtractParentPath(const fullPath: string): string;
+var
+  lastSlashPos: Integer;
+begin
+  lastSlashPos := LastDelimiter('/', fullPath);
+  Result := Copy(fullPath, 1, lastSlashPos - 1);
+  lastSlashPos := LastDelimiter('/', Result);
+  Result := Copy(Result, 1, lastSlashPos);
+end;
+
+var
+  s:String='/n4800/Multimedia/Music/Disco/Boney M';
+begin
+  WriteLn(s);
+  s:=ExtractParentPath(s);
+  WriteLn(s);
+  s:=ExtractParentPath(s);
+  WriteLn(s);
+  s:=ExtractParentPath(s);
+  WriteLn(s);
+  s:=ExtractParentPath(s);
+  WriteLn(s);
+  s:=ExtractParentPath(s);
+  WriteLn(s);
+  s:=ExtractParentPath(s);
+  WriteLn(s);
+  s:=ExtractParentPath(s);
+  WriteLn(s);
+
+
+end;
+
+
 
 procedure TAddSoundForm.FindNewFile(const path: String);
 var

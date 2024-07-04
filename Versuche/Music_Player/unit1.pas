@@ -128,12 +128,12 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   sl: TStringList;
 begin
+
   SDL_Init(SDL_INIT_AUDIO);
   Mix_OpenAudio(0, nil);
   music := nil;
 
   MainMenu := TMenuBar.Create(Self);
-  //  MainMenu.OnMenuBarEvent := @MainMenuMenuBarEvent;
   MainMenu.OnMenuBarEvent := @BoxEventProc;
   Menu := MainMenu;
 

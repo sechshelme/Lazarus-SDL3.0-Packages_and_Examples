@@ -7,8 +7,7 @@ int main(int argc, char *argv[])
   SDL_bool quit = SDL_FALSE;
   SDL_Window *window = SDL_CreateWindow("Triangle Example", 800, 600, 0);
 
-//  SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL, SDL_RENDERER_PRESENTVSYNC);
-  SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL, SDL_RENDERER_ACCELERATED);
+  SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
 
   SDL_Vertex vert[3]= {{400, 150, 1.0, 0.0, 0.0, 1.0}, {200, 450, 0.0, 0.0, 1.0, 1.0}, {600 ,450, 0.0, 1.0, 0.0, 1.0}};
 
@@ -18,7 +17,12 @@ int main(int argc, char *argv[])
     while (SDL_PollEvent(&ev) != 0) {
       switch(ev.type) {
         case SDL_EVENT_QUIT:
-        quit = SDL_TRUE;
+          quit = SDL_TRUE;
+        break;
+        case SDL_EVENT_KEY_DOWN:
+          if (ev.key.scancode == SDL_SCANCODE_T) {
+            SDL_Log("press T");
+          }
         break;
       }
     }
@@ -29,7 +33,7 @@ int main(int argc, char *argv[])
 
     SDL_RenderPresent(renderer);
     //int tickEnd = SDL_GetTicks();
-    SDL_Log("Tick: %i", (SDL_GetTicksNS() - startTick) / 10000);
+    //SDL_Log("Tick: %i", (SDL_GetTicksNS() - startTick) / 10000);
 
   }
 
