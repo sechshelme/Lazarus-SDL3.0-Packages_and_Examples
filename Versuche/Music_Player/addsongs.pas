@@ -4,7 +4,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ShellCtrls, StdCtrls,
-  Buttons, ComCtrls, ExtCtrls, FileUtil,
+  Buttons, ComCtrls, ExtCtrls, FileUtil, StrUtils,
   SoundListBox;
 
 type
@@ -23,7 +23,7 @@ type
     procedure OpenDirProc(Sender: TObject);
   public
     property SongListBox: TSoundListBox write FSongListBox;
-    procedure FindNewFile(const path:String);
+    procedure FindNewFile(const path: string);
   end;
 
 var
@@ -38,8 +38,8 @@ var
   panel: TPanel;
   spliter: TSplitter;
 begin
-  Width:=Screen.Width * 2 div 3;
-  Height:=Screen.Height * 2 div 3;
+  Width := Screen.Width * 2 div 3;
+  Height := Screen.Height * 2 div 3;
 
   btn := TBitBtn.Create(self);
   btn.Parent := Self;
@@ -74,7 +74,7 @@ begin
   ListBoxDirectory.Parent := panel;
   ListBoxDirectory.Width := panel.Width div 2;
   ListBoxDirectory.Align := alLeft;
-  ListBoxDirectory.Constraints.MinWidth:=50;
+  ListBoxDirectory.Constraints.MinWidth := 50;
 
   ListBoxMusic := TListBox.Create(panel);
   ListBoxMusic.Parent := panel;
@@ -91,7 +91,7 @@ begin
   btn := TBitBtn.Create(self);
   btn.Parent := Self;
   btn.Anchors := [akBottom, akLeft];
-  btn.Left := 5+80;
+  btn.Left := 5 + 80;
   btn.Top := ClientHeight - 35;
   btn.OnClick := @DownDirProc;
   btn.Caption := 'Up';
@@ -102,7 +102,7 @@ end;
 procedure TAddSoundForm.btnClick(Sender: TObject);
 begin
   if FSongListBox <> nil then begin
-    FSongListBox.Items.AddStrings( ListBoxMusic.Items);
+    FSongListBox.Items.AddStrings(ListBoxMusic.Items);
   end;
 end;
 
@@ -113,60 +113,69 @@ end;
 
 procedure TAddSoundForm.OpenDirProc(Sender: TObject);
 var
-  index: Integer;
+  index: integer;
 begin
-   index:=ListBoxDirectory.ItemIndex;
-   if index>=0 then FindNewFile(ListBoxDirectory.Items[index]);
+  index := ListBoxDirectory.ItemIndex;
+  if index >= 0 then begin
+    FindNewFile(ListBoxDirectory.Items[index]);
+  end;
 end;
 
 procedure TAddSoundForm.DownDirProc(Sender: TObject);
 
 
-function ExtractParentPath(const fullPath: string): string;
-var
-  lastSlashPos: Integer;
-begin
-  lastSlashPos := LastDelimiter('/', fullPath);
-  Result := Copy(fullPath, 1, lastSlashPos - 1);
-  lastSlashPos := LastDelimiter('/', Result);
-  Result := Copy(Result, 1, lastSlashPos);
-end;
+  function ParentPath(const Path: string): string;
+  begin
+    Result := ExtractFilePath(ExcludeTrailingPathDelimiter(Path));
+    if Result = '' then begin
+      Result := Path;
+    end;
+  end;
 
 var
-  s:String='/n4800/Multimedia/Music/Disco/Boney M';
+  //  s: string = '/n4800/Multimedia/Music/Disco/Boney M/';
+//  s: string = 'c:\n4800\Multimedia\Music\Disco\Boney M\';
+  //  s: string = '/Music/Disco/Boney M/';
+  s: string = 'c:\Music\Disco\Boney M\';
 begin
   WriteLn(s);
-  s:=ExtractParentPath(s);
+  s := ParentPath(s);
   WriteLn(s);
-  s:=ExtractParentPath(s);
+  s := ParentPath(s);
   WriteLn(s);
-  s:=ExtractParentPath(s);
+  s := ParentPath(s);
   WriteLn(s);
-  s:=ExtractParentPath(s);
+  s := ParentPath(s);
   WriteLn(s);
-  s:=ExtractParentPath(s);
+  s := ParentPath(s);
   WriteLn(s);
-  s:=ExtractParentPath(s);
+  s := ParentPath(s);
   WriteLn(s);
-  s:=ExtractParentPath(s);
+  s := ParentPath(s);
   WriteLn(s);
-
+  s := ParentPath(s);
+  WriteLn(s);
+  s := ParentPath(s);
+  WriteLn(s);
+  s := ParentPath(s);
+  WriteLn(s);
+  WriteLn('-------------------------');
 
 end;
 
 
 
-procedure TAddSoundForm.FindNewFile(const path: String);
+procedure TAddSoundForm.FindNewFile(const path: string);
 var
   sl: TStringList;
 begin
-//  sl := FindAllDirectories('/n4800/Multimedia/Music/Disco/Boney M', False);
+  //  sl := FindAllDirectories('/n4800/Multimedia/Music/Disco/Boney M', False);
   sl := FindAllDirectories(path, False);
   ListBoxDirectory.Clear;
   ListBoxDirectory.Items.AddStrings(sl);
   sl.Free;
 
-//  sl := FindAllFiles('/n4800/Multimedia/Music/Disco/Boney M/1981 - Boonoonoonoos', '*.flac', False);
+  //  sl := FindAllFiles('/n4800/Multimedia/Music/Disco/Boney M/1981 - Boonoonoonoos', '*.flac', False);
   sl := FindAllFiles(path, '*.flac', False);
   ListBoxMusic.Clear;
   ListBoxMusic.Items.AddStrings(sl);
