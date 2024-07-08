@@ -14,8 +14,9 @@ type
   TSoundListBox = class(TListBox)
   public
     constructor Create(TheOwner: TComponent); override;
-    procedure Add;
+    procedure Add(const song: string);
     procedure Remove;
+    procedure RemoveAll;
     procedure Down;
     procedure Up;
     function Next: boolean;
@@ -35,16 +36,9 @@ begin
   Left := 16;
 end;
 
-procedure TSoundListBox.Add;
-var
-  OpenDialog: TOpenDialog;
+procedure TSoundListBox.Add(const song: string);
 begin
-  OpenDialog := TOpenDialog.Create(nil);
-  OpenDialog.Options := OpenDialog.Options + [ofAllowMultiSelect];
-  if OpenDialog.Execute then begin
-    Items.AddStrings(OpenDialog.Files);
-  end;
-  OpenDialog.Free;
+  Items.AddStrings(song);
 end;
 
 procedure TSoundListBox.Remove;
@@ -55,6 +49,11 @@ begin
   if (index > 0) and (index < Count) then  begin
     Items.Delete(index);
   end;
+end;
+
+procedure TSoundListBox.RemoveAll;
+begin
+  Clear;
 end;
 
 procedure TSoundListBox.Down;

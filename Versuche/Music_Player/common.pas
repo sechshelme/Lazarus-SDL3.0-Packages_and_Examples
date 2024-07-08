@@ -2,8 +2,12 @@ unit Common;
 
 interface
 
+const
+TrackBarDivider=1000;
+  MusicDir:String = '/n4800/Multimedia/Music/Disco/Boney M';
+
 type
-  Tcommand = (cmNone, cmNew, cmSave, cmOpen, cmClose, cmAdd, cmRemove, cmUp, cmDown, cmPlay, cmStop, cmNext, cmPrev);
+  Tcommand = (cmNone, cmNew, cmSave, cmOpen, cmClose, cmAdd, cmRemove,cmRemoveAll, cmUp, cmDown, cmPlay, cmStop, cmNext, cmPrev);
 
   TcmdProp = record
     cmd: Tcommand;
@@ -23,6 +27,7 @@ const
   EditCmdProb: TcmdProps = (
     (cmd: cmAdd; Caption: 'Add'),
     (cmd: cmRemove; Caption: 'Remove'),
+    (cmd: cmRemoveAll; Caption: 'Remove All'),
     (cmd: cmUp; Caption: 'Up'),
     (cmd: cmDown; Caption: 'Down'));
 

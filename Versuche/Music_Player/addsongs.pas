@@ -5,6 +5,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ShellCtrls, StdCtrls,
   Buttons, ComCtrls, ExtCtrls, FileUtil, StrUtils,
+  Common,
   SoundListBox;
 
 type
@@ -14,13 +15,14 @@ type
   TAddSoundForm = class(TForm)
     procedure FormCreate(Sender: TObject);
   private
-    btn: TBitBtn;
+    TitelLabel: TLabel;
     FSongListBox: TSoundListBox;
     ListBoxDirectory, ListBoxMusic: TListBox;
-    procedure btnClick(Sender: TObject);
+    procedure AddSongsProc(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure DownDirProc(Sender: TObject);
     procedure OpenDirProc(Sender: TObject);
+    procedure SelectAllProc(Sender: TObject);
   public
     property SongListBox: TSoundListBox write FSongListBox;
     procedure FindNewFile(const path: string);
@@ -35,6 +37,7 @@ implementation
 
 procedure TAddSoundForm.FormCreate(Sender: TObject);
 var
+  btn: TBitBtn;
   panel: TPanel;
   spliter: TSplitter;
 begin
@@ -45,8 +48,16 @@ begin
   btn.Parent := Self;
   btn.Anchors := [akBottom, akRight];
   btn.Left := ClientWidth - 90;
+  btn.Top := ClientHeight - 150;
+  btn.OnClick := @SelectAllProc;
+  btn.Caption := 'Select All';
+
+  btn := TBitBtn.Create(self);
+  btn.Parent := Self;
+  btn.Anchors := [akBottom, akRight];
+  btn.Left := ClientWidth - 90;
   btn.Top := ClientHeight - 100;
-  btn.OnClick := @btnClick;
+  btn.OnClick := @AddSongsProc;
   btn.Caption := 'Add';
 
   btn := TBitBtn.Create(self);
@@ -57,11 +68,15 @@ begin
   btn.OnClick := @btnCloseClick;
   btn.Caption := 'Close';
 
+  TitelLabel:=TLabel.Create(Self);
+  TitelLabel.Parent:=Self;
+  TitelLabel.Caption:='titel';
+
   panel := TPanel.Create(self);
   panel.Parent := Self;
   panel.Left := 10;
-  panel.Top := 10;
-  panel.Height := ClientHeight - 60;
+  panel.Top := TitelLabel.Height+10;
+  panel.Height := ClientHeight - TitelLabel.Height - 60;
   panel.Width := ClientWidth - 110;
   panel.Anchors := [akLeft, akTop, akBottom, akRight];
 
@@ -75,9 +90,13 @@ begin
   ListBoxDirectory.Width := panel.Width div 2;
   ListBoxDirectory.Align := alLeft;
   ListBoxDirectory.Constraints.MinWidth := 50;
+  ListBoxDirectory.OnDblClick := @OpenDirProc;
+//  ListBoxDirectory.Sorted:=True;
 
   ListBoxMusic := TListBox.Create(panel);
   ListBoxMusic.Parent := panel;
+  ListBoxMusic.MultiSelect := True;
+  ListBoxMusic.Sorted:=True;
   ListBoxMusic.Align := alClient;
 
   btn := TBitBtn.Create(self);
@@ -96,13 +115,17 @@ begin
   btn.OnClick := @DownDirProc;
   btn.Caption := 'Up';
 
-  FindNewFile('/n4800/Multimedia/Music/Disco/Boney M');
+  FindNewFile(MusicDir);
 end;
 
-procedure TAddSoundForm.btnClick(Sender: TObject);
+procedure TAddSoundForm.AddSongsProc(Sender: TObject);
+var
+  i: integer;
 begin
-  if FSongListBox <> nil then begin
-    FSongListBox.Items.AddStrings(ListBoxMusic.Items);
+  for i := 0 to ListBoxMusic.Count - 1 do begin
+    if ListBoxMusic.Selected[i] then begin
+      FSongListBox.Add(ListBoxMusic.Items[i]);
+    end;
   end;
 end;
 
@@ -114,11 +137,23 @@ end;
 procedure TAddSoundForm.OpenDirProc(Sender: TObject);
 var
   index: integer;
+  Dir: string;
 begin
   index := ListBoxDirectory.ItemIndex;
   if index >= 0 then begin
-    FindNewFile(ListBoxDirectory.Items[index]);
+    Dir := ListBoxDirectory.Items[index];
+    if Dir = '..' then begin
+      DownDirProc(Sender);
+    end else begin
+      MusicDir:=Dir;
+      FindNewFile(MusicDir);
+    end;
   end;
+end;
+
+procedure TAddSoundForm.SelectAllProc(Sender: TObject);
+begin
+  ListBoxMusic.SelectAll;
 end;
 
 procedure TAddSoundForm.DownDirProc(Sender: TObject);
@@ -126,41 +161,17 @@ procedure TAddSoundForm.DownDirProc(Sender: TObject);
 
   function ParentPath(const Path: string): string;
   begin
-    Result := ExtractFilePath(ExcludeTrailingPathDelimiter(Path));
-    if Result = '' then begin
-      Result := Path;
-    end;
+    Result := ExpandFileName(IncludeTrailingPathDelimiter(Path) + '..');
+
+    //Result := ExtractFilePath(ExcludeTrailingPathDelimiter(Path));
+    //if Result = '' then begin
+    //  Result := Path;
+    //end;
   end;
 
-var
-  //  s: string = '/n4800/Multimedia/Music/Disco/Boney M/';
-//  s: string = 'c:\n4800\Multimedia\Music\Disco\Boney M\';
-  //  s: string = '/Music/Disco/Boney M/';
-  s: string = 'c:\Music\Disco\Boney M\';
 begin
-  WriteLn(s);
-  s := ParentPath(s);
-  WriteLn(s);
-  s := ParentPath(s);
-  WriteLn(s);
-  s := ParentPath(s);
-  WriteLn(s);
-  s := ParentPath(s);
-  WriteLn(s);
-  s := ParentPath(s);
-  WriteLn(s);
-  s := ParentPath(s);
-  WriteLn(s);
-  s := ParentPath(s);
-  WriteLn(s);
-  s := ParentPath(s);
-  WriteLn(s);
-  s := ParentPath(s);
-  WriteLn(s);
-  s := ParentPath(s);
-  WriteLn(s);
-  WriteLn('-------------------------');
-
+  MusicDir := ParentPath(MusicDir);
+  FindNewFile(MusicDir);
 end;
 
 
@@ -169,10 +180,13 @@ procedure TAddSoundForm.FindNewFile(const path: string);
 var
   sl: TStringList;
 begin
+  TitelLabel.Caption:=MusicDir;
+
   //  sl := FindAllDirectories('/n4800/Multimedia/Music/Disco/Boney M', False);
   sl := FindAllDirectories(path, False);
   ListBoxDirectory.Clear;
   ListBoxDirectory.Items.AddStrings(sl);
+  ListBoxDirectory.Items.Insert(0, '..');
   sl.Free;
 
   //  sl := FindAllFiles('/n4800/Multimedia/Music/Disco/Boney M/1981 - Boonoonoonoos', '*.flac', False);

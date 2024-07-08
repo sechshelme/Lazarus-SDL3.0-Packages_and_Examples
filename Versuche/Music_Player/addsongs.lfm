@@ -1,7 +1,7 @@
 object AddSoundForm: TAddSoundForm
-  Left = 1478
+  Left = 1239
   Height = 240
-  Top = 348
+  Top = 395
   Width = 320
   Caption = 'AddSoundForm'
   LCLVersion = '3.99.0.0'

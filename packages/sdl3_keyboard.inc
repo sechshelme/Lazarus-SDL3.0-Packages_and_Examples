@@ -2,7 +2,7 @@
 //                                                         //
 //   WARNUNG, dies Datei wird automatisch durch            //
 //   das Program "Convert_Unit_to_pas_includes" erzeugt !  //
-//   Erzeugt am: 30-06-2024   17:37                        //
+//   Erzeugt am: 06-07-2024   17:47                        //
 //                                                         //
 /////////////////////////////////////////////////////////////
 
@@ -36,8 +36,17 @@ procedure SDL_StartTextInput; cdecl; external sdl3_lib;
 function SDL_TextInputActive: TSDL_bool; cdecl; external sdl3_lib;
 procedure SDL_StopTextInput; cdecl; external sdl3_lib;
 procedure SDL_ClearComposition; cdecl; external sdl3_lib;
-function SDL_TextInputShown: TSDL_bool; cdecl; external sdl3_lib;
-function SDL_SetTextInputRect(rect: PSDL_Rect): longint; cdecl; external sdl3_lib;
+//function SDL_TextInputShown: TSDL_bool; cdecl; external sdl3_lib;
+//function SDL_SetTextInputRect(rect: PSDL_Rect): longint; cdecl; external sdl3_lib;
+
+function SDL_SetTextInputArea(window : PSDL_Window; rect: PSDL_Rect; cursor :longint): longint; cdecl; external sdl3_lib;
+function SDL_GetTextInputArea(window : PSDL_Window; rect: PSDL_Rect; cursor :Plongint): longint; cdecl; external sdl3_lib;
+
+//extern SDL_DECLSPEC int SDLCALL SDL_SetTextInputArea(SDL_Window *window, const SDL_Rect *rect, int cursor);
+//extern SDL_DECLSPEC int SDLCALL SDL_GetTextInputArea(SDL_Window *window, SDL_Rect *rect, int *cursor);
+
+
+
 function SDL_HasScreenKeyboardSupport: TSDL_bool; cdecl; external sdl3_lib;
 function SDL_ScreenKeyboardShown(window: PSDL_Window): TSDL_bool; cdecl; external sdl3_lib;
 

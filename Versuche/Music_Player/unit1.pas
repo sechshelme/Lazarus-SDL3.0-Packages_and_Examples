@@ -29,7 +29,7 @@ type
     EditBox: TEditBox;
     PlayBox: TPlayBox;
     music: PMix_Music;
-    procedure LoadNewMusic(const titel: string);
+    procedure LoadNewMusic(const titel: string; TrackPos: integer);
     procedure BoxEventProc(cmd: Tcommand);
   public
     ListBoxSongs: TSoundListBox;
@@ -48,6 +48,7 @@ var
   s: string;
 begin
   case cmd of
+    cmNone:;
     cmNew: begin
       //      ListBoxSongs.Add;
     end;
@@ -61,15 +62,17 @@ begin
       Close;
     end;
 
-
     cmAdd: begin
       SoundAddForm.SongListBox := ListBoxSongs;
       SoundAddForm.ShowModal;
-
-      //      ListBoxSongs.Add;
     end;
     cmRemove: begin
       ListBoxSongs.Remove;
+    end;
+    cmRemoveAll: begin
+      if MessageDlg('Songs Löschen', 'Alle Einträge entfernen ?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then begin
+        ListBoxSongs.RemoveAll;
+      end;
     end;
     cmUp: begin
       ListBoxSongs.Up;
@@ -87,7 +90,7 @@ begin
             ListBoxSongs.ItemIndex := index;
           end;
           s := ListBoxSongs.Items[index];
-          LoadNewMusic(s);
+          LoadNewMusic(s, TrackBar1.Position);
         end;
       end else begin
         if Mix_PausedMusic = 1 then begin
@@ -100,6 +103,8 @@ begin
     cmStop: begin
       Mix_FreeMusic(music);
       music := nil;
+      TrackBar1.Position := 0;
+      TrackBar1.Max := TrackBarDivider;
     end;
     cmNext: begin
       if Mix_PausedMusic = 1 then begin
@@ -108,7 +113,7 @@ begin
       end;
       if ListBoxSongs.Next then  begin
         if (music <> nil) and (Mix_PausedMusic = 0) then begin
-          LoadNewMusic(ListBoxSongs.GetTitle);
+          LoadNewMusic(ListBoxSongs.GetTitle, 0);
         end;
       end;
     end;
@@ -118,17 +123,14 @@ begin
         music := nil;
       end;
       if ListBoxSongs.Prev(music) then begin
-        LoadNewMusic(ListBoxSongs.GetTitle);
+        LoadNewMusic(ListBoxSongs.GetTitle, 0);
       end;
     end;
   end;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
-var
-  sl: TStringList;
 begin
-
   SDL_Init(SDL_INIT_AUDIO);
   Mix_OpenAudio(0, nil);
   music := nil;
@@ -151,20 +153,11 @@ begin
   PlayBox.Parent := Self;
   PlayBox.OnPlayBoxEvent := @BoxEventProc;
 
-  sl := FindAllFiles('/n4800/Multimedia/Music/Disco/C.C. Catch/1986 - Catch The Catch', '*.flac');
-  //  WriteLn(sl.Text);
-  ListBoxSongs.Items.AddStrings(sl);
-  sl.Free;
-  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/Boing_1.wav');
-  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/Boing_2.wav');
-  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/Boing_3.wav');
-  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/Boing_4.wav');
-  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/Boing_6.wav');
-  ListBoxSongs.Items.Add('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/Boing_7.wav');
   ListBoxSongs.Items.Add('/n4800/Multimedia/Music/Disco/Boney M/1981 - Boonoonoonoos/01 - Boonoonoonoos.flac');
 
   Timer1.Interval := 100;
   TrackBar1.TickStyle := tsNone;
+  TrackBar1.Max := TrackBarDivider;
   Width := 1024;
 end;
 
@@ -175,7 +168,7 @@ begin
   SDL_Quit;
 end;
 
-procedure TForm1.LoadNewMusic(const titel: string);
+procedure TForm1.LoadNewMusic(const titel: string; TrackPos: integer);
 begin
   if music <> nil then begin
     Mix_FreeMusic(music);
@@ -185,16 +178,17 @@ begin
     SDL_Log('Konnte Musik nicht laden: %s', Mix_GetError);
   end;
 
+  TrackBar1.Max := Trunc(Mix_MusicDuration(music) * TrackBarDivider);
+  TrackBar1.Position := TrackPos;
 
   //  Mix_PlayMusic(music, 1);
   Mix_FadeInMusic(music, 1, 3000);
-  TrackBar1.Max := Trunc(Mix_MusicDuration(music) * 1000);
-  TrackBar1.Position := 0;
+  Mix_SetMusicPosition(Mix_MusicDuration(music) / TrackBarDivider * TrackPos);
 end;
 
 procedure TForm1.TrackBar1Change(Sender: TObject);
 begin
-  Mix_SetMusicPosition(TrackBar1.Position / 1000);
+  Mix_SetMusicPosition(TrackBar1.Position / TrackBarDivider);
 end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
@@ -213,12 +207,12 @@ begin
       Label3.Caption := s;
       ChangeProc := TrackBar1.OnChange;
       TrackBar1.OnChange := nil;
-      TrackBar1.Position := Trunc(Mix_GetMusicPosition(music) * 1000);
+      TrackBar1.Position := Trunc(Mix_GetMusicPosition(music) * TrackBarDivider);
       TrackBar1.OnChange := ChangeProc;
 
       if t_pos >= t_length then begin
         if ListBoxSongs.Next then  begin
-          LoadNewMusic(ListBoxSongs.GetTitle);
+          LoadNewMusic(ListBoxSongs.GetTitle, 0);
         end;
       end;
     end;
