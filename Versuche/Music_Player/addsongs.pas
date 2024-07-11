@@ -91,12 +91,10 @@ begin
   ListBoxDirectory.Align := alLeft;
   ListBoxDirectory.Constraints.MinWidth := 50;
   ListBoxDirectory.OnDblClick := @OpenDirProc;
-//  ListBoxDirectory.Sorted:=True;
 
   ListBoxMusic := TListBox.Create(panel);
   ListBoxMusic.Parent := panel;
   ListBoxMusic.MultiSelect := True;
-  ListBoxMusic.Sorted:=True;
   ListBoxMusic.Align := alClient;
 
   btn := TBitBtn.Create(self);
@@ -187,12 +185,14 @@ begin
   ListBoxDirectory.Clear;
   ListBoxDirectory.Items.AddStrings(sl);
   ListBoxDirectory.Items.Insert(0, '..');
+  ListBoxDirectory.Sorted:=True;
   sl.Free;
 
   //  sl := FindAllFiles('/n4800/Multimedia/Music/Disco/Boney M/1981 - Boonoonoonoos', '*.flac', False);
   sl := FindAllFiles(path, '*.flac', False);
   ListBoxMusic.Clear;
   ListBoxMusic.Items.AddStrings(sl);
+  ListBoxMusic.Sorted:=True;
   sl.Free;
 end;
 
