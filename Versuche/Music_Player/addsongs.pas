@@ -189,7 +189,7 @@ begin
   sl.Free;
 
   //  sl := FindAllFiles('/n4800/Multimedia/Music/Disco/Boney M/1981 - Boonoonoonoos', '*.flac', False);
-  sl := FindAllFiles(path, '*.flac', False);
+  sl := FindAllFiles(path, '*.flac;*.wav;*.mp3', False);
   ListBoxMusic.Clear;
   ListBoxMusic.Items.AddStrings(sl);
   ListBoxMusic.Sorted:=True;

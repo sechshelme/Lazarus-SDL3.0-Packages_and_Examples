@@ -11,5 +11,10 @@ SDL3 für Lazarus
 - [Examples](examples)
 
 
+Eventuell muss folgends installiert werden:
+- `sudo apt install fluidsynth`
+
+
+
 
 

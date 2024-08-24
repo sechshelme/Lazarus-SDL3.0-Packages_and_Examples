@@ -29,7 +29,7 @@ type
   private
     music1: PMix_Music;
     music2: PMix_Music;
-    chunk1, chunk2,chunk3: PMix_Chunk;
+    chunk1, chunk2, chunk3: PMix_Chunk;
   public
 
   end;
@@ -43,31 +43,45 @@ implementation
 
 { TForm1 }
 
+function GetChunkLength(chunk: PMix_Chunk): double;
+var
+  numSamples: longint;
+begin
+  numSamples := chunk^.allocated div (SizeOf(uint16) + chunk^.volume);
+  WriteLn(chunk^.allocated);
+  WriteLn(chunk^.volume);
+  WriteLn('sam: ',numSamples);
+  Result := numSamples / 44100;
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   SDL_Init(SDL_INIT_AUDIO);
-  Mix_OpenAudio(0, nil);
+WriteLn(  Mix_OpenAudio(0, nil));
   music1 := Mix_LoadMUS('/n4800/Multimedia/Music/Disco/Various/Dance Classics/CD 1/11 - I''m on fire - 5000 volts.flac');
   if music1 = nil then begin
-    WriteLn('error music1');
+    WriteLn('error music1: ', Mix_GetError);
   end;
   music2 := Mix_LoadMUS('/n4800/Multimedia/Music/Disco/Various/Dance Classics/CD 1/10 - Fly Robin fly - Silver convention.flac');
   if music2 = nil then begin
-    WriteLn('error music2');
+    WriteLn('error music2', Mix_GetError);
   end;
 
   chunk1 := Mix_LoadWAV('/n4800/Multimedia/Music/Disco/Various/Dance Classics/CD 1/11 - I''m on fire - 5000 volts.flac');
   if chunk1 = nil then begin
-    WriteLn('error music1');
+    WriteLn('error music1', Mix_GetError);
   end;
   chunk2 := Mix_LoadWAV('/n4800/Multimedia/Music/Disco/Various/Dance Classics/CD 1/10 - Fly Robin fly - Silver convention.flac');
   if chunk2 = nil then begin
-    WriteLn('error music2');
+    WriteLn('error music2', Mix_GetError);
   end;
   chunk3 := Mix_LoadWAV('/n4800/Multimedia/Music/Diverses/Test CDs/The High-end Test Record/Swiss HiFi Show/01 - Testsignale - The High-end Test Record.flac');
   if chunk3 = nil then begin
-    WriteLn('error music3');
+    WriteLn('error music3', Mix_GetError);
   end;
+  WriteLn(GetChunkLength(chunk1): 10: 5);
+  WriteLn(GetChunkLength(chunk2): 10: 5);
+  WriteLn(GetChunkLength(chunk3): 10: 5);
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -85,6 +99,7 @@ procedure TForm1.Button3Click(Sender: TObject);
 begin
   Mix_FadeInChannel(1, chunk1, 1, 3000);
   Mix_FadeOutChannel(1, 3000);
+  WriteLn(GetChunkLength(chunk1): 10: 5);
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -101,7 +116,7 @@ end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 begin
-    Mix_SetPosition(1, 180, 255);
+  Mix_SetPosition(1, 180, 255);
 
 end;
 
