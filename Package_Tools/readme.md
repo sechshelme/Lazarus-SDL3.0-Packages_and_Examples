@@ -206,22 +206,22 @@ procedure SDL_Log(fmt: PChar); varargs; cdecl; external name 'SDL_Log';
 
 ## Ohne Abhängigkeit:
 
-- `unit SDL3_stdinc;
-- `unit SDL3_guid;
-- `unit SDL3_scancode;
-- `unit SDL3_mutex;
-- `unit SDL3_touch;
-- `unit SDL3_blendmode;
-- `unit SDL3_init;
-- `unit SDL3_assert;
-- `unit SDL3_locale;
-- `unit SDL3_thread;
-- `unit SDL3_error;
-- `unit SDL3_filesystem;
-- `unit SDL3_log;
-- `unit SDL3_platform;
-- `unit SDL3_misc;
-- `unit SDL3_power;
+- `unit SDL3_stdinc;`
+- `unit SDL3_guid;`
+- `unit SDL3_scancode;`
+- `unit SDL3_mutex;`
+- `unit SDL3_touch;`
+- `unit SDL3_blendmode;`
+- `unit SDL3_init;`
+- `unit SDL3_assert;`
+- `unit SDL3_locale;`
+- `unit SDL3_thread;`
+- `unit SDL3_error;`
+- `unit SDL3_filesystem`;
+- `unit SDL3_log;`
+- `unit SDL3_platform;`
+- `unit SDL3_misc;`
+- `unit SDL3_power;`
 
 ## Mit Abhängigkeit:
 
