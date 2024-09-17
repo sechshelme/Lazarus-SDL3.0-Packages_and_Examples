@@ -123,7 +123,7 @@ const
 
     MyShader.Free;
 
-    SDL_GL_DeleteContext(glcontext);
+//    SDL_GL_DeleteContext(glcontext);
     SDL_DestroyWindow(gWindow);
     SDL_Quit();
   end;
