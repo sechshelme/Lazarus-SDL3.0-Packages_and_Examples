@@ -261,7 +261,7 @@ procedure SDL_Log(fmt: PChar); varargs; cdecl; external name 'SDL_Log';
 - `unit SDL3_system;      SDL3_stdinc, SDL3_video, SDL3_events;`
 
 ## Spezeielles 
-- `unit SDL3_revision;
+- `unit SDL3_revision;`
 - `unit SDL3_main;        SDL3_events;`
 - `unit SDL3_vulkan;      SDL3_stdinc, SDL3_video;`
 - `unit SDL3_opengl;`
