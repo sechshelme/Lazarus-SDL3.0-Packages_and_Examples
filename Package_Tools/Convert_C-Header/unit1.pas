@@ -45,7 +45,7 @@ begin
     slHeader.LoadFromFile(slFile[i]);
     for j := 0 to slHeader.Count - 1 do begin
       slHeader[j] := StringReplace(slHeader[j], 'SDLCALL', '', [rfReplaceAll]);
-      //      slHeader[j] := StringReplace(slHeader[j], 'DECLSPEC', '', [rfReplaceAll]);
+      slHeader[j] := StringReplace(slHeader[j], 'SDL_MALLOC', '', [rfReplaceAll]);
       slHeader[j] := StringReplace(slHeader[j], 'SDL_DECLSPEC', '', [rfReplaceAll]);
     end;
     slHeader.SaveToFile(slFile[i]);
