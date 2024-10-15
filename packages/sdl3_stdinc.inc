@@ -24,20 +24,20 @@ type
   TSUint32 = uint32;
   TSUint64 = uint64;
 
-  TSint8 = uint8;
-  TSint16 = uint16;
-  TSint32 = uint32;
-  TSint64 = uint64;
+  TSint8 = int8;
+  TSint16 = int16;
+  TSint32 = int32;
+  TSint64 = int64;
 
   PSUint8 = ^uint8;
   PSUint16 = ^uint16;
   PSUint32 = ^uint32;
   PSUint64 = ^uint64;
 
-  PSint8 = ^uint8;
-  PSint16 = ^uint16;
-  PSint32 = ^uint32;
-  PSint64 = ^uint64;
+  PSint8 = ^int8;
+  PSint16 = ^int16;
+  PSint32 = ^int32;
+  PSint64 = ^int64;
 
   Tsize_t = SizeInt;
   //  Tsize_t = SizeUInt;

@@ -4,7 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-  SDL_bool quit = SDL_FALSE;
+  bool quit = false;
   SDL_Window *window = SDL_CreateWindow("Triangle Example", 800, 600, 0);
 
   SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     while (SDL_PollEvent(&ev) != 0) {
       switch(ev.type) {
         case SDL_EVENT_QUIT:
-          quit = SDL_TRUE;
+          quit = true;
         break;
         case SDL_EVENT_KEY_DOWN:
           if (ev.key.scancode == SDL_SCANCODE_T) {
@@ -41,4 +41,10 @@ int main(int argc, char *argv[])
   SDL_DestroyWindow(window);
   SDL_Quit();
   return 0;
+
+  bool b =0;
 }
+
+//SDL_bool
+//SDL_HAS_BUILTIN
+//SDL_SetMemoryFunctions
