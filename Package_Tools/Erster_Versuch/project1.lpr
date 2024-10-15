@@ -9,8 +9,12 @@ uses
   SDL_mutex,         // SDL_atomic, SDL_thread
 
   SDL_blendmode,
+  SDL_keycode,
+  SDL_keyboard,
+  SDL_events,
   SDL_init,
   SDL_pixels,
+  SDL_iostream,
   SDL_surface,
   SDL_rect,            // inline !!!!!!!!!!!!!!!!
   SDL_video,

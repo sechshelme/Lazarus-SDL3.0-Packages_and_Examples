@@ -33,6 +33,7 @@ type
     pressure: single;
   end;
   PSDL_Finger = ^TSDL_Finger;
+  PPSDL_Finger = ^PSDL_Finger;
 
 const
   SDL_TOUCH_MOUSEID = TSDL_MouseID(-(1));
@@ -41,7 +42,7 @@ const
 function SDL_GetTouchDevices(Count: Plongint): PSDL_TouchID; cdecl; external libSDL3;
 function SDL_GetTouchDeviceName(touchID: TSDL_TouchID): pansichar; cdecl; external libSDL3;
 function SDL_GetTouchDeviceType(touchID: TSDL_TouchID): TSDL_TouchDeviceType; cdecl; external libSDL3;
-function SDL_GetTouchFingers(touchID: TSDL_TouchID; Count: Plongint): ^PSDL_Finger; cdecl; external libSDL3;
+function SDL_GetTouchFingers(touchID: TSDL_TouchID; Count: Plongint): PPSDL_Finger; cdecl; external libSDL3;
 
 implementation
 
