@@ -1,4 +1,30 @@
-/*
+
+unit SDL_mutex;
+interface
+
+{
+  Automatically converted by H2Pas 0.99.16 from SDL_mutex.h
+  The following command line parameters were used:
+    -p
+    -T
+    -d
+    -c
+    -e
+    SDL_mutex.h
+}
+
+Type
+PSDL_Condition = ^TSDL_Condition;
+PSDL_Mutex = ^TSDL_Mutex;
+PSDL_RWLock = ^TSDL_RWLock;
+PSDL_Semaphore = ^TSDL_Semaphore;
+
+{$IFDEF FPC}
+{$PACKRECORDS C}
+{$ENDIF}
+
+
+{
   Simple DirectMedia Layer
   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
 
@@ -17,112 +43,131 @@
   2. Altered source versions must be plainly marked as such, and must not be
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
-*/
-
-#ifndef SDL_mutex_h_
-#define SDL_mutex_h_
-
-/**
+ }
+{$ifndef SDL_mutex_h_}
+{$define SDL_mutex_h_}
+{*
  * # CategoryMutex
  *
  * Functions to provide thread synchronization primitives.
- */
-
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_atomic.h>
-#include <SDL3/SDL_error.h>
-#include <SDL3/SDL_thread.h>
-
-/******************************************************************************/
-/* Enable thread safety attributes only with clang.
+  }
+{$include <SDL3/SDL_stdinc.h>}
+{$include <SDL3/SDL_atomic.h>}
+{$include <SDL3/SDL_error.h>}
+{$include <SDL3/SDL_thread.h>}
+{**************************************************************************** }
+{ Enable thread safety attributes only with clang.
  * The attributes can be safely erased when compiling with other compilers.
  *
  * To enable analysis, set these environment variables before running cmake:
  *      export CC=clang
  *      export CFLAGS="-DSDL_THREAD_SAFETY_ANALYSIS -Wthread-safety"
- */
-#if defined(SDL_THREAD_SAFETY_ANALYSIS) && \
-    defined(__clang__) && (!defined(SWIG))
-#define SDL_THREAD_ANNOTATION_ATTRIBUTE__(x)   __attribute__((x))
-#else
-#define SDL_THREAD_ANNOTATION_ATTRIBUTE__(x)   /* no-op */
-#endif
+  }
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
 
-#define SDL_CAPABILITY(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(capability(x))
+function SDL_CAPABILITY(x : longint) : longint;
 
-#define SDL_SCOPED_CAPABILITY \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(scoped_lockable)
+const
+  SDL_SCOPED_CAPABILITY = scoped_lockable;  
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
 
-#define SDL_GUARDED_BY(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(guarded_by(x))
+function SDL_GUARDED_BY(x : longint) : longint;
 
-#define SDL_PT_GUARDED_BY(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(pt_guarded_by(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_PT_GUARDED_BY(x : longint) : longint;
 
-#define SDL_ACQUIRED_BEFORE(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(acquired_before(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ACQUIRED_BEFORE(x : longint) : longint;
 
-#define SDL_ACQUIRED_AFTER(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(acquired_after(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ACQUIRED_AFTER(x : longint) : longint;
 
-#define SDL_REQUIRES(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(requires_capability(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_REQUIRES(x : longint) : longint;
 
-#define SDL_REQUIRES_SHARED(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(requires_shared_capability(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_REQUIRES_SHARED(x : longint) : longint;
 
-#define SDL_ACQUIRE(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(acquire_capability(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ACQUIRE(x : longint) : longint;
 
-#define SDL_ACQUIRE_SHARED(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(acquire_shared_capability(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ACQUIRE_SHARED(x : longint) : longint;
 
-#define SDL_RELEASE(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(release_capability(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_RELEASE(x : longint) : longint;
 
-#define SDL_RELEASE_SHARED(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(release_shared_capability(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_RELEASE_SHARED(x : longint) : longint;
 
-#define SDL_RELEASE_GENERIC(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(release_generic_capability(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_RELEASE_GENERIC(x : longint) : longint;
 
-#define SDL_TRY_ACQUIRE(x, y) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(try_acquire_capability(x, y))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_TRY_ACQUIRE(x,y : longint) : longint;
 
-#define SDL_TRY_ACQUIRE_SHARED(x, y) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(try_acquire_shared_capability(x, y))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_TRY_ACQUIRE_SHARED(x,y : longint) : longint;
 
-#define SDL_EXCLUDES(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(locks_excluded(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_EXCLUDES(x : longint) : longint;
 
-#define SDL_ASSERT_CAPABILITY(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(assert_capability(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ASSERT_CAPABILITY(x : longint) : longint;
 
-#define SDL_ASSERT_SHARED_CAPABILITY(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(assert_shared_capability(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ASSERT_SHARED_CAPABILITY(x : longint) : longint;
 
-#define SDL_RETURN_CAPABILITY(x) \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(lock_returned(x))
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_RETURN_CAPABILITY(x : longint) : longint;
 
-#define SDL_NO_THREAD_SAFETY_ANALYSIS \
-  SDL_THREAD_ANNOTATION_ATTRIBUTE__(no_thread_safety_analysis)
-
-/******************************************************************************/
-
-
-#include <SDL3/SDL_begin_code.h>
-/* Set up for C function definitions, even when using C++ */
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
+const
+  SDL_NO_THREAD_SAFETY_ANALYSIS = no_thread_safety_analysis;  
+{**************************************************************************** }
+{$include <SDL3/SDL_begin_code.h>}
+{ Set up for C function definitions, even when using C++  }
+{ C++ extern C conditionnal removed }
+{*
  *  \name Mutex functions
- */
-/* @{ */
-
-/**
+  }
+{ @  }
+{*
  * A means to serialize access to a resource between threads.
  *
  * Mutexes (short for "mutual exclusion") are a synchronization primitive that
@@ -133,10 +178,9 @@ extern "C" {
  * https://en.wikipedia.org/wiki/Mutex
  *
  * \since This struct is available since SDL 3.0.0.
- */
-typedef struct SDL_Mutex SDL_Mutex;
-
-/**
+  }
+type
+{*
  * Create a new mutex.
  *
  * All newly-created mutexes begin in the _unlocked_ state.
@@ -155,10 +199,10 @@ typedef struct SDL_Mutex SDL_Mutex;
  * \sa SDL_LockMutex
  * \sa SDL_TryLockMutex
  * \sa SDL_UnlockMutex
- */
-extern  SDL_Mutex *  SDL_CreateMutex(void);
+  }
 
-/**
+function SDL_CreateMutex:PSDL_Mutex;cdecl;external;
+{*
  * Lock the mutex.
  *
  * This will block until the mutex is available, which is to say it is in the
@@ -179,10 +223,9 @@ extern  SDL_Mutex *  SDL_CreateMutex(void);
  *
  * \sa SDL_TryLockMutex
  * \sa SDL_UnlockMutex
- */
-extern  void  SDL_LockMutex(SDL_Mutex *mutex) SDL_ACQUIRE(mutex);
-
-/**
+  }
+procedure SDL_LockMutex(mutex:PSDL_Mutex);cdecl;external;
+{*
  * Try to lock a mutex without blocking.
  *
  * This works just like SDL_LockMutex(), but if the mutex is not available,
@@ -200,10 +243,9 @@ extern  void  SDL_LockMutex(SDL_Mutex *mutex) SDL_ACQUIRE(mutex);
  *
  * \sa SDL_LockMutex
  * \sa SDL_UnlockMutex
- */
-extern  bool  SDL_TryLockMutex(SDL_Mutex *mutex) SDL_TRY_ACQUIRE(0, mutex);
-
-/**
+  }
+function SDL_TryLockMutex(mutex:PSDL_Mutex):Tbool;cdecl;external;
+{*
  * Unlock the mutex.
  *
  * It is legal for the owning thread to lock an already-locked mutex. It must
@@ -219,10 +261,9 @@ extern  bool  SDL_TryLockMutex(SDL_Mutex *mutex) SDL_TRY_ACQUIRE(0, mutex);
  *
  * \sa SDL_LockMutex
  * \sa SDL_TryLockMutex
- */
-extern  void  SDL_UnlockMutex(SDL_Mutex *mutex) SDL_RELEASE(mutex);
-
-/**
+  }
+procedure SDL_UnlockMutex(mutex:PSDL_Mutex);cdecl;external;
+{*
  * Destroy a mutex created with SDL_CreateMutex().
  *
  * This function must be called on any mutex that is no longer needed. Failure
@@ -236,18 +277,14 @@ extern  void  SDL_UnlockMutex(SDL_Mutex *mutex) SDL_RELEASE(mutex);
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_CreateMutex
- */
-extern  void  SDL_DestroyMutex(SDL_Mutex *mutex);
-
-/* @} *//* Mutex functions */
-
-
-/**
+  }
+procedure SDL_DestroyMutex(mutex:PSDL_Mutex);cdecl;external;
+{ @  }{ Mutex functions  }
+{*
  *  \name Read/write lock functions
- */
-/* @{ */
-
-/**
+  }
+{ @  }
+{*
  * A mutex that allows read-only threads to run in parallel.
  *
  * A rwlock is roughly the same concept as SDL_Mutex, but allows threads that
@@ -264,10 +301,9 @@ extern  void  SDL_DestroyMutex(SDL_Mutex *mutex);
  * These are documented in the other rwlock functions.
  *
  * \since This struct is available since SDL 3.0.0.
- */
-typedef struct SDL_RWLock SDL_RWLock;
-
-/**
+  }
+type
+{*
  * Create a new read/write lock.
  *
  * A read/write lock is useful for situations where you have multiple threads
@@ -306,10 +342,10 @@ typedef struct SDL_RWLock SDL_RWLock;
  * \sa SDL_TryLockRWLockForReading
  * \sa SDL_TryLockRWLockForWriting
  * \sa SDL_UnlockRWLock
- */
-extern  SDL_RWLock *  SDL_CreateRWLock(void);
+  }
 
-/**
+function SDL_CreateRWLock:PSDL_RWLock;cdecl;external;
+{*
  * Lock the read/write lock for _read only_ operations.
  *
  * This will block until the rwlock is available, which is to say it is not
@@ -343,10 +379,9 @@ extern  SDL_RWLock *  SDL_CreateRWLock(void);
  * \sa SDL_LockRWLockForWriting
  * \sa SDL_TryLockRWLockForReading
  * \sa SDL_UnlockRWLock
- */
-extern  void  SDL_LockRWLockForReading(SDL_RWLock *rwlock) SDL_ACQUIRE_SHARED(rwlock);
-
-/**
+  }
+procedure SDL_LockRWLockForReading(rwlock:PSDL_RWLock);cdecl;external;
+{*
  * Lock the read/write lock for _write_ operations.
  *
  * This will block until the rwlock is available, which is to say it is not
@@ -374,10 +409,9 @@ extern  void  SDL_LockRWLockForReading(SDL_RWLock *rwlock) SDL_ACQUIRE_SHARED(rw
  * \sa SDL_LockRWLockForReading
  * \sa SDL_TryLockRWLockForWriting
  * \sa SDL_UnlockRWLock
- */
-extern  void  SDL_LockRWLockForWriting(SDL_RWLock *rwlock) SDL_ACQUIRE(rwlock);
-
-/**
+  }
+procedure SDL_LockRWLockForWriting(rwlock:PSDL_RWLock);cdecl;external;
+{*
  * Try to lock a read/write lock _for reading_ without blocking.
  *
  * This works just like SDL_LockRWLockForReading(), but if the rwlock is not
@@ -399,10 +433,9 @@ extern  void  SDL_LockRWLockForWriting(SDL_RWLock *rwlock) SDL_ACQUIRE(rwlock);
  * \sa SDL_LockRWLockForReading
  * \sa SDL_TryLockRWLockForWriting
  * \sa SDL_UnlockRWLock
- */
-extern  bool  SDL_TryLockRWLockForReading(SDL_RWLock *rwlock) SDL_TRY_ACQUIRE_SHARED(0, rwlock);
-
-/**
+  }
+function SDL_TryLockRWLockForReading(rwlock:PSDL_RWLock):Tbool;cdecl;external;
+{*
  * Try to lock a read/write lock _for writing_ without blocking.
  *
  * This works just like SDL_LockRWLockForWriting(), but if the rwlock is not
@@ -429,10 +462,9 @@ extern  bool  SDL_TryLockRWLockForReading(SDL_RWLock *rwlock) SDL_TRY_ACQUIRE_SH
  * \sa SDL_LockRWLockForWriting
  * \sa SDL_TryLockRWLockForReading
  * \sa SDL_UnlockRWLock
- */
-extern  bool  SDL_TryLockRWLockForWriting(SDL_RWLock *rwlock) SDL_TRY_ACQUIRE(0, rwlock);
-
-/**
+  }
+function SDL_TryLockRWLockForWriting(rwlock:PSDL_RWLock):Tbool;cdecl;external;
+{*
  * Unlock the read/write lock.
  *
  * Use this function to unlock the rwlock, whether it was locked for read-only
@@ -454,10 +486,9 @@ extern  bool  SDL_TryLockRWLockForWriting(SDL_RWLock *rwlock) SDL_TRY_ACQUIRE(0,
  * \sa SDL_LockRWLockForWriting
  * \sa SDL_TryLockRWLockForReading
  * \sa SDL_TryLockRWLockForWriting
- */
-extern  void  SDL_UnlockRWLock(SDL_RWLock *rwlock) SDL_RELEASE_GENERIC(rwlock);
-
-/**
+  }
+procedure SDL_UnlockRWLock(rwlock:PSDL_RWLock);cdecl;external;
+{*
  * Destroy a read/write lock created with SDL_CreateRWLock().
  *
  * This function must be called on any read/write lock that is no longer
@@ -471,18 +502,14 @@ extern  void  SDL_UnlockRWLock(SDL_RWLock *rwlock) SDL_RELEASE_GENERIC(rwlock);
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_CreateRWLock
- */
-extern  void  SDL_DestroyRWLock(SDL_RWLock *rwlock);
-
-/* @} *//* Read/write lock functions */
-
-
-/**
+  }
+procedure SDL_DestroyRWLock(rwlock:PSDL_RWLock);cdecl;external;
+{ @  }{ Read/write lock functions  }
+{*
  *  \name Semaphore functions
- */
-/* @{ */
-
-/**
+  }
+{ @  }
+{*
  * A means to manage access to a resource, by count, between threads.
  *
  * Semaphores (specifically, "counting semaphores"), let X number of threads
@@ -495,10 +522,9 @@ extern  void  SDL_DestroyRWLock(SDL_RWLock *rwlock);
  * https://en.wikipedia.org/wiki/Semaphore_(programming)
  *
  * \since This struct is available since SDL 3.0.0.
- */
-typedef struct SDL_Semaphore SDL_Semaphore;
-
-/**
+  }
+type
+{*
  * Create a semaphore.
  *
  * This function creates a new semaphore and initializes it with the value
@@ -519,10 +545,10 @@ typedef struct SDL_Semaphore SDL_Semaphore;
  * \sa SDL_GetSemaphoreValue
  * \sa SDL_WaitSemaphore
  * \sa SDL_WaitSemaphoreTimeout
- */
-extern  SDL_Semaphore *  SDL_CreateSemaphore(Uint32 initial_value);
+  }
 
-/**
+function SDL_CreateSemaphore(initial_value:TUint32):PSDL_Semaphore;cdecl;external;
+{*
  * Destroy a semaphore.
  *
  * It is not safe to destroy a semaphore if there are threads currently
@@ -533,10 +559,9 @@ extern  SDL_Semaphore *  SDL_CreateSemaphore(Uint32 initial_value);
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_CreateSemaphore
- */
-extern  void  SDL_DestroySemaphore(SDL_Semaphore *sem);
-
-/**
+  }
+procedure SDL_DestroySemaphore(sem:PSDL_Semaphore);cdecl;external;
+{*
  * Wait until a semaphore has a positive value and then decrements it.
  *
  * This function suspends the calling thread until the semaphore pointed to by
@@ -553,10 +578,9 @@ extern  void  SDL_DestroySemaphore(SDL_Semaphore *sem);
  * \sa SDL_SignalSemaphore
  * \sa SDL_TryWaitSemaphore
  * \sa SDL_WaitSemaphoreTimeout
- */
-extern  void  SDL_WaitSemaphore(SDL_Semaphore *sem);
-
-/**
+  }
+procedure SDL_WaitSemaphore(sem:PSDL_Semaphore);cdecl;external;
+{*
  * See if a semaphore has a positive value and decrement it if it does.
  *
  * This function checks to see if the semaphore pointed to by `sem` has a
@@ -572,10 +596,9 @@ extern  void  SDL_WaitSemaphore(SDL_Semaphore *sem);
  * \sa SDL_SignalSemaphore
  * \sa SDL_WaitSemaphore
  * \sa SDL_WaitSemaphoreTimeout
- */
-extern  bool  SDL_TryWaitSemaphore(SDL_Semaphore *sem);
-
-/**
+  }
+function SDL_TryWaitSemaphore(sem:PSDL_Semaphore):Tbool;cdecl;external;
+{*
  * Wait until a semaphore has a positive value and then decrements it.
  *
  * This function suspends the calling thread until either the semaphore
@@ -592,10 +615,9 @@ extern  bool  SDL_TryWaitSemaphore(SDL_Semaphore *sem);
  * \sa SDL_SignalSemaphore
  * \sa SDL_TryWaitSemaphore
  * \sa SDL_WaitSemaphore
- */
-extern  bool  SDL_WaitSemaphoreTimeout(SDL_Semaphore *sem, Sint32 timeoutMS);
-
-/**
+  }
+function SDL_WaitSemaphoreTimeout(sem:PSDL_Semaphore; timeoutMS:TSint32):Tbool;cdecl;external;
+{*
  * Atomically increment a semaphore's value and wake waiting threads.
  *
  * \param sem the semaphore to increment.
@@ -605,28 +627,23 @@ extern  bool  SDL_WaitSemaphoreTimeout(SDL_Semaphore *sem, Sint32 timeoutMS);
  * \sa SDL_TryWaitSemaphore
  * \sa SDL_WaitSemaphore
  * \sa SDL_WaitSemaphoreTimeout
- */
-extern  void  SDL_SignalSemaphore(SDL_Semaphore *sem);
-
-/**
+  }
+procedure SDL_SignalSemaphore(sem:PSDL_Semaphore);cdecl;external;
+{*
  * Get the current value of a semaphore.
  *
  * \param sem the semaphore to query.
  * \returns the current value of the semaphore.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  Uint32  SDL_GetSemaphoreValue(SDL_Semaphore *sem);
-
-/* @} *//* Semaphore functions */
-
-
-/**
+  }
+function SDL_GetSemaphoreValue(sem:PSDL_Semaphore):TUint32;cdecl;external;
+{ @  }{ Semaphore functions  }
+{*
  *  \name Condition variable functions
- */
-/* @{ */
-
-/**
+  }
+{ @  }
+{*
  * A means to block multiple threads until a condition is satisfied.
  *
  * Condition variables, paired with an SDL_Mutex, let an app halt multiple
@@ -638,10 +655,9 @@ extern  Uint32  SDL_GetSemaphoreValue(SDL_Semaphore *sem);
  * https://en.wikipedia.org/wiki/Condition_variable
  *
  * \since This struct is available since SDL 3.0.0.
- */
-typedef struct SDL_Condition SDL_Condition;
-
-/**
+  }
+type
+{*
  * Create a condition variable.
  *
  * \returns a new condition variable or NULL on failure; call SDL_GetError()
@@ -654,10 +670,10 @@ typedef struct SDL_Condition SDL_Condition;
  * \sa SDL_WaitCondition
  * \sa SDL_WaitConditionTimeout
  * \sa SDL_DestroyCondition
- */
-extern  SDL_Condition *  SDL_CreateCondition(void);
+  }
 
-/**
+function SDL_CreateCondition:PSDL_Condition;cdecl;external;
+{*
  * Destroy a condition variable.
  *
  * \param cond the condition variable to destroy.
@@ -665,10 +681,9 @@ extern  SDL_Condition *  SDL_CreateCondition(void);
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_CreateCondition
- */
-extern  void  SDL_DestroyCondition(SDL_Condition *cond);
-
-/**
+  }
+procedure SDL_DestroyCondition(cond:PSDL_Condition);cdecl;external;
+{*
  * Restart one of the threads that are waiting on the condition variable.
  *
  * \param cond the condition variable to signal.
@@ -680,10 +695,9 @@ extern  void  SDL_DestroyCondition(SDL_Condition *cond);
  * \sa SDL_BroadcastCondition
  * \sa SDL_WaitCondition
  * \sa SDL_WaitConditionTimeout
- */
-extern  void  SDL_SignalCondition(SDL_Condition *cond);
-
-/**
+  }
+procedure SDL_SignalCondition(cond:PSDL_Condition);cdecl;external;
+{*
  * Restart all threads that are waiting on the condition variable.
  *
  * \param cond the condition variable to signal.
@@ -695,10 +709,9 @@ extern  void  SDL_SignalCondition(SDL_Condition *cond);
  * \sa SDL_SignalCondition
  * \sa SDL_WaitCondition
  * \sa SDL_WaitConditionTimeout
- */
-extern  void  SDL_BroadcastCondition(SDL_Condition *cond);
-
-/**
+  }
+procedure SDL_BroadcastCondition(cond:PSDL_Condition);cdecl;external;
+{*
  * Wait until a condition variable is signaled.
  *
  * This function unlocks the specified `mutex` and waits for another thread to
@@ -723,10 +736,9 @@ extern  void  SDL_BroadcastCondition(SDL_Condition *cond);
  * \sa SDL_BroadcastCondition
  * \sa SDL_SignalCondition
  * \sa SDL_WaitConditionTimeout
- */
-extern  void  SDL_WaitCondition(SDL_Condition *cond, SDL_Mutex *mutex);
-
-/**
+  }
+procedure SDL_WaitCondition(cond:PSDL_Condition; mutex:PSDL_Mutex);cdecl;external;
+{*
  * Wait until a condition variable is signaled or a certain time has passed.
  *
  * This function unlocks the specified `mutex` and waits for another thread to
@@ -753,31 +765,28 @@ extern  void  SDL_WaitCondition(SDL_Condition *cond, SDL_Mutex *mutex);
  * \sa SDL_BroadcastCondition
  * \sa SDL_SignalCondition
  * \sa SDL_WaitCondition
- */
-extern  bool  SDL_WaitConditionTimeout(SDL_Condition *cond,
-                                                SDL_Mutex *mutex, Sint32 timeoutMS);
-
-/* @} *//* Condition variable functions */
-
-/**
+  }
+function SDL_WaitConditionTimeout(cond:PSDL_Condition; mutex:PSDL_Mutex; timeoutMS:TSint32):Tbool;cdecl;external;
+{ @  }{ Condition variable functions  }
+{*
  *  \name Thread-safe initialization state functions
- */
-/* @{ */
-
-/**
+  }
+{ @  }
+{*
  * The current status of an SDL_InitState structure.
  *
  * \since This enum is available since SDL 3.0.0.
- */
-typedef enum SDL_InitStatus
-{
-    SDL_INIT_STATUS_UNINITIALIZED,
-    SDL_INIT_STATUS_INITIALIZING,
-    SDL_INIT_STATUS_INITIALIZED,
-    SDL_INIT_STATUS_UNINITIALIZING
-} SDL_InitStatus;
-
-/**
+  }
+type
+  PSDL_InitStatus = ^TSDL_InitStatus;
+  TSDL_InitStatus =  Longint;
+  Const
+    SDL_INIT_STATUS_UNINITIALIZED = 0;
+    SDL_INIT_STATUS_INITIALIZING = 1;
+    SDL_INIT_STATUS_INITIALIZED = 2;
+    SDL_INIT_STATUS_UNINITIALIZING = 3;
+;
+{*
  * A structure used for thread-safe initialization and shutdown.
  *
  * Here is an example of using this:
@@ -786,44 +795,44 @@ typedef enum SDL_InitStatus
  *    static SDL_AtomicInitState init;
  *
  *    bool InitSystem(void)
- *    {
- *        if (!SDL_ShouldInit(&init)) {
+ *    
+ *        if (!SDL_ShouldInit(&init)) 
  *            // The system is initialized
  *            return true;
- *        }
+ *        
  *
  *        // At this point, you should not leave this function without calling SDL_SetInitialized()
  *
  *        bool initialized = DoInitTasks();
  *        SDL_SetInitialized(&init, initialized);
  *        return initialized;
- *    }
+ *    
  *
  *    bool UseSubsystem(void)
- *    {
- *        if (SDL_ShouldInit(&init)) {
+ *    
+ *        if (SDL_ShouldInit(&init)) 
  *            // Error, the subsystem isn't initialized
  *            SDL_SetInitialized(&init, false);
  *            return false;
- *        }
+ *        
  *
  *        // Do work using the initialized subsystem
  *
  *        return true;
- *    }
+ *    
  *
  *    void QuitSystem(void)
- *    {
- *        if (!SDL_ShouldQuit(&init)) {
+ *    
+ *        if (!SDL_ShouldQuit(&init)) 
  *            // The system is not initialized
  *            return true;
- *        }
+ *        
  *
  *        // At this point, you should not leave this function without calling SDL_SetInitialized()
  *
  *        DoQuitTasks();
  *        SDL_SetInitialized(&init, false);
- *    }
+ *    
  * ```
  *
  * Note that this doesn't protect any resources created during initialization,
@@ -832,15 +841,15 @@ typedef enum SDL_InitStatus
  * code.
  *
  * \since This struct is available since SDL 3.0.0.
- */
-typedef struct SDL_InitState
-{
-    SDL_AtomicInt status;
-    SDL_ThreadID thread;
-    void *reserved;
-} SDL_InitState;
-
-/**
+  }
+type
+  PSDL_InitState = ^TSDL_InitState;
+  TSDL_InitState = record
+      status : TSDL_AtomicInt;
+      thread : TSDL_ThreadID;
+      reserved : pointer;
+    end;
+{*
  * Return whether initialization should be done.
  *
  * This function checks the passed in state and if initialization should be
@@ -860,10 +869,10 @@ typedef struct SDL_InitState
  *
  * \sa SDL_SetInitialized
  * \sa SDL_ShouldQuit
- */
-extern  bool  SDL_ShouldInit(SDL_InitState *state);
+  }
 
-/**
+function SDL_ShouldInit(state:PSDL_InitState):Tbool;cdecl;external;
+{*
  * Return whether cleanup should be done.
  *
  * This function checks the passed in state and if cleanup should be done,
@@ -881,10 +890,9 @@ extern  bool  SDL_ShouldInit(SDL_InitState *state);
  *
  * \sa SDL_SetInitialized
  * \sa SDL_ShouldInit
- */
-extern  bool  SDL_ShouldQuit(SDL_InitState *state);
-
-/**
+  }
+function SDL_ShouldQuit(state:PSDL_InitState):Tbool;cdecl;external;
+{*
  * Finish an initialization state transition.
  *
  * This function sets the status of the passed in state to
@@ -900,15 +908,160 @@ extern  bool  SDL_ShouldQuit(SDL_InitState *state);
  *
  * \sa SDL_ShouldInit
  * \sa SDL_ShouldQuit
- */
-extern  void  SDL_SetInitialized(SDL_InitState *state, bool initialized);
+  }
+procedure SDL_SetInitialized(state:PSDL_InitState; initialized:Tbool);cdecl;external;
+{ @  }{ Thread-safe initialization state functions  }
+{ Ends C function definitions when using C++  }
+{ C++ end of extern C conditionnal removed }
+{$include <SDL3/SDL_close_code.h>}
+{$endif}
+{ SDL_mutex_h_  }
 
-/* @} *//* Thread-safe initialization state functions */
+implementation
 
-/* Ends C function definitions when using C++ */
-#ifdef __cplusplus
-}
-#endif
-#include <SDL3/SDL_close_code.h>
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_CAPABILITY(x : longint) : longint;
+begin
+  SDL_CAPABILITY:=capability(x);
+end;
 
-#endif /* SDL_mutex_h_ */
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_GUARDED_BY(x : longint) : longint;
+begin
+  SDL_GUARDED_BY:=guarded_by(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_PT_GUARDED_BY(x : longint) : longint;
+begin
+  SDL_PT_GUARDED_BY:=pt_guarded_by(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ACQUIRED_BEFORE(x : longint) : longint;
+begin
+  SDL_ACQUIRED_BEFORE:=acquired_before(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ACQUIRED_AFTER(x : longint) : longint;
+begin
+  SDL_ACQUIRED_AFTER:=acquired_after(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_REQUIRES(x : longint) : longint;
+begin
+  SDL_REQUIRES:=requires_capability(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_REQUIRES_SHARED(x : longint) : longint;
+begin
+  SDL_REQUIRES_SHARED:=requires_shared_capability(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ACQUIRE(x : longint) : longint;
+begin
+  SDL_ACQUIRE:=acquire_capability(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ACQUIRE_SHARED(x : longint) : longint;
+begin
+  SDL_ACQUIRE_SHARED:=acquire_shared_capability(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_RELEASE(x : longint) : longint;
+begin
+  SDL_RELEASE:=release_capability(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_RELEASE_SHARED(x : longint) : longint;
+begin
+  SDL_RELEASE_SHARED:=release_shared_capability(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_RELEASE_GENERIC(x : longint) : longint;
+begin
+  SDL_RELEASE_GENERIC:=release_generic_capability(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_TRY_ACQUIRE(x,y : longint) : longint;
+begin
+  SDL_TRY_ACQUIRE:=try_acquire_capability(x,y);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_TRY_ACQUIRE_SHARED(x,y : longint) : longint;
+begin
+  SDL_TRY_ACQUIRE_SHARED:=try_acquire_shared_capability(x,y);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_EXCLUDES(x : longint) : longint;
+begin
+  SDL_EXCLUDES:=locks_excluded(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ASSERT_CAPABILITY(x : longint) : longint;
+begin
+  SDL_ASSERT_CAPABILITY:=assert_capability(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_ASSERT_SHARED_CAPABILITY(x : longint) : longint;
+begin
+  SDL_ASSERT_SHARED_CAPABILITY:=assert_shared_capability(x);
+end;
+
+{ was #define dname(params) para_def_expr }
+{ argument types are unknown }
+{ return type might be wrong }   
+function SDL_RETURN_CAPABILITY(x : longint) : longint;
+begin
+  SDL_RETURN_CAPABILITY:=lock_returned(x);
+end;
+
+
+end.

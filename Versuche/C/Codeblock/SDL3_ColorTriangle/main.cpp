@@ -45,6 +45,4 @@ int main(int argc, char *argv[])
   bool b =0;
 }
 
-//SDL_bool
-//SDL_HAS_BUILTIN
-//SDL_SetMemoryFunctions
+SDL_GLContextState

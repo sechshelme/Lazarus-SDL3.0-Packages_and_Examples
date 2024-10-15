@@ -43,7 +43,7 @@ type
 
 const
   Sources: TSources = (
-    (libs: 'libSDL3'; units: 'crt'),
+    (libs: 'libSDL3'; units: 'ctypes, SDL_stdinc'),
 
     (libs: ''; units: ''));
 

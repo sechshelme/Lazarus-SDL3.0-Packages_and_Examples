@@ -1,4 +1,27 @@
-/*
+
+unit SDL_rect;
+interface
+
+{
+  Automatically converted by H2Pas 0.99.16 from SDL_rect.h
+  The following command line parameters were used:
+    -p
+    -T
+    -d
+    -c
+    -e
+    SDL_rect.h
+}
+
+Type
+Psingle = ^Tsingle;
+
+{$IFDEF FPC}
+{$PACKRECORDS C}
+{$ENDIF}
+
+
+{
   Simple DirectMedia Layer
   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
 
@@ -17,57 +40,49 @@
   2. Altered source versions must be plainly marked as such, and must not be
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
-*/
-
-/**
+ }
+{*
  * # CategoryRect
  *
  * Some helper functions for managing rectangles and 2D points, in both
  * integer and floating point versions.
- */
-
-#ifndef SDL_rect_h_
-#define SDL_rect_h_
-
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_error.h>
-
-#include <SDL3/SDL_begin_code.h>
-/* Set up for C function definitions, even when using C++ */
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
+  }
+{$ifndef SDL_rect_h_}
+{$define SDL_rect_h_}
+{$include <SDL3/SDL_stdinc.h>}
+{$include <SDL3/SDL_error.h>}
+{$include <SDL3/SDL_begin_code.h>}
+{ Set up for C function definitions, even when using C++  }
+{ C++ extern C conditionnal removed }
+{*
  * The structure that defines a point (using integers).
  *
  * \since This struct is available since SDL 3.0.0.
  *
  * \sa SDL_GetRectEnclosingPoints
  * \sa SDL_PointInRect
- */
-typedef struct SDL_Point
-{
-    int x;
-    int y;
-} SDL_Point;
-
-/**
+  }
+type
+  PSDL_Point = ^TSDL_Point;
+  TSDL_Point = record
+      x : longint;
+      y : longint;
+    end;
+{*
  * The structure that defines a point (using floating point values).
  *
  * \since This struct is available since SDL 3.0.0.
  *
  * \sa SDL_GetRectEnclosingPointsFloat
  * \sa SDL_PointInRectFloat
- */
-typedef struct SDL_FPoint
-{
-    float x;
-    float y;
-} SDL_FPoint;
+  }
 
-
-/**
+  PSDL_FPoint = ^TSDL_FPoint;
+  TSDL_FPoint = record
+      x : single;
+      y : single;
+    end;
+{*
  * A rectangle, with the origin at the upper left (using integers).
  *
  * \since This struct is available since SDL 3.0.0.
@@ -79,15 +94,16 @@ typedef struct SDL_FPoint
  * \sa SDL_GetRectAndLineIntersection
  * \sa SDL_GetRectUnion
  * \sa SDL_GetRectEnclosingPoints
- */
-typedef struct SDL_Rect
-{
-    int x, y;
-    int w, h;
-} SDL_Rect;
+  }
 
-
-/**
+  PSDL_Rect = ^TSDL_Rect;
+  TSDL_Rect = record
+      x : longint;
+      y : longint;
+      w : longint;
+      h : longint;
+    end;
+{*
  * A rectangle, with the origin at the upper left (using floating point
  * values).
  *
@@ -102,17 +118,16 @@ typedef struct SDL_Rect
  * \sa SDL_GetRectUnionFloat
  * \sa SDL_GetRectEnclosingPointsFloat
  * \sa SDL_PointInRectFloat
- */
-typedef struct SDL_FRect
-{
-    float x;
-    float y;
-    float w;
-    float h;
-} SDL_FRect;
+  }
 
-
-/**
+  PSDL_FRect = ^TSDL_FRect;
+  TSDL_FRect = record
+      x : single;
+      y : single;
+      w : single;
+      h : single;
+    end;
+{*
  * Convert an SDL_Rect to SDL_FRect
  *
  * \param rect a pointer to an SDL_Rect.
@@ -122,16 +137,16 @@ typedef struct SDL_FRect
  * \threadsafety It is safe to call this function from any thread.
  *
  * \since This function is available since SDL 3.0.0.
- */
-SDL_FORCE_INLINE void SDL_RectToFRect(const SDL_Rect *rect, SDL_FRect *frect)
-{
-    frect->x = (float)rect->x;
-    frect->y = (float)rect->y;
-    frect->w = (float)rect->w;
-    frect->h = (float)rect->h;
-}
-
-/**
+  }
+{/// xxxxxxxxxxxxxxxx }
+{SDL_FORCE_INLINE void SDL_RectToFRect(const SDL_Rect *rect, SDL_FRect *frect) }
+{ }
+{    frect->x = (float)rect->x; }
+{    frect->y = (float)rect->y; }
+{    frect->w = (float)rect->w; }
+{    frect->h = (float)rect->h; }
+{ }
+{*
  * Determine whether a point resides inside a rectangle.
  *
  * A point is considered part of a rectangle if both `p` and `r` are not NULL,
@@ -151,14 +166,15 @@ SDL_FORCE_INLINE void SDL_RectToFRect(const SDL_Rect *rect, SDL_FRect *frect)
  * \threadsafety It is safe to call this function from any thread.
  *
  * \since This function is available since SDL 3.0.0.
- */
-SDL_FORCE_INLINE bool SDL_PointInRect(const SDL_Point *p, const SDL_Rect *r)
-{
-    return ( p && r && (p->x >= r->x) && (p->x < (r->x + r->w)) &&
-             (p->y >= r->y) && (p->y < (r->y + r->h)) ) ? true : false;
-}
-
-/**
+  }
+{ xxxxxxxxxxxxxx }
+{SDL_FORCE_INLINE bool SDL_PointInRect(const SDL_Point *p, const SDL_Rect *r) }
+{ }
+{    return ( p && r && (p->x >= r->x) && (p->x < (r->x + r->w)) && }
+{             (p->y >= r->y) && (p->y < (r->y + r->h)) ) ? true : false; }
+{ }
+{ }
+{*
  * Determine whether a rectangle has no area.
  *
  * A rectangle is considered "empty" for this function if `r` is NULL, or if
@@ -175,13 +191,13 @@ SDL_FORCE_INLINE bool SDL_PointInRect(const SDL_Point *p, const SDL_Rect *r)
  * \threadsafety It is safe to call this function from any thread.
  *
  * \since This function is available since SDL 3.0.0.
- */
-SDL_FORCE_INLINE bool SDL_RectEmpty(const SDL_Rect *r)
-{
-    return ((!r) || (r->w <= 0) || (r->h <= 0)) ? true : false;
-}
-
-/**
+  }
+{ xxxxxxxxxxxxxx }
+{SDL_FORCE_INLINE bool SDL_RectEmpty(const SDL_Rect *r) }
+{ }
+{    return ((!r) || (r->w <= 0) || (r->h <= 0)) ? true : false; }
+{ }
+{*
  * Determine whether two rectangles are equal.
  *
  * Rectangles are considered equal if both are not NULL and each of their x,
@@ -199,14 +215,14 @@ SDL_FORCE_INLINE bool SDL_RectEmpty(const SDL_Rect *r)
  * \threadsafety It is safe to call this function from any thread.
  *
  * \since This function is available since SDL 3.0.0.
- */
-SDL_FORCE_INLINE bool SDL_RectsEqual(const SDL_Rect *a, const SDL_Rect *b)
-{
-    return (a && b && (a->x == b->x) && (a->y == b->y) &&
-            (a->w == b->w) && (a->h == b->h)) ? true : false;
-}
-
-/**
+  }
+{ // xxxxxxxxxxxxxx }
+{SDL_FORCE_INLINE bool SDL_RectsEqual(const SDL_Rect *a, const SDL_Rect *b) }
+{ }
+{    return (a && b && (a->x == b->x) && (a->y == b->y) && }
+{            (a->w == b->w) && (a->h == b->h)) ? true : false; }
+{ }
+{*
  * Determine whether two rectangles intersect.
  *
  * If either pointer is NULL the function will return false.
@@ -220,10 +236,12 @@ SDL_FORCE_INLINE bool SDL_RectsEqual(const SDL_Rect *a, const SDL_Rect *b)
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_GetRectIntersection
- */
-extern  bool  SDL_HasRectIntersection(const SDL_Rect *A, const SDL_Rect *B);
+  }
+(* Const before declarator ignored *)
+(* Const before declarator ignored *)
 
-/**
+function SDL_HasRectIntersection(A:PSDL_Rect; B:PSDL_Rect):Tbool;cdecl;external;
+{*
  * Calculate the intersection of two rectangles.
  *
  * If `result` is NULL then this function will return false.
@@ -237,10 +255,11 @@ extern  bool  SDL_HasRectIntersection(const SDL_Rect *A, const SDL_Rect *B);
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_HasRectIntersection
- */
-extern  bool  SDL_GetRectIntersection(const SDL_Rect *A, const SDL_Rect *B, SDL_Rect *result);
-
-/**
+  }
+(* Const before declarator ignored *)
+(* Const before declarator ignored *)
+function SDL_GetRectIntersection(A:PSDL_Rect; B:PSDL_Rect; result:PSDL_Rect):Tbool;cdecl;external;
+{*
  * Calculate the union of two rectangles.
  *
  * \param A an SDL_Rect structure representing the first rectangle.
@@ -251,10 +270,11 @@ extern  bool  SDL_GetRectIntersection(const SDL_Rect *A, const SDL_Rect *B, SDL_
  *          information.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  bool  SDL_GetRectUnion(const SDL_Rect *A, const SDL_Rect *B, SDL_Rect *result);
-
-/**
+  }
+(* Const before declarator ignored *)
+(* Const before declarator ignored *)
+function SDL_GetRectUnion(A:PSDL_Rect; B:PSDL_Rect; result:PSDL_Rect):Tbool;cdecl;external;
+{*
  * Calculate a minimal rectangle enclosing a set of points.
  *
  * If `clip` is not NULL then only points inside of the clipping rectangle are
@@ -270,10 +290,11 @@ extern  bool  SDL_GetRectUnion(const SDL_Rect *A, const SDL_Rect *B, SDL_Rect *r
  *          outside of the clipping rectangle.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  bool  SDL_GetRectEnclosingPoints(const SDL_Point *points, int count, const SDL_Rect *clip, SDL_Rect *result);
-
-/**
+  }
+(* Const before declarator ignored *)
+(* Const before declarator ignored *)
+function SDL_GetRectEnclosingPoints(points:PSDL_Point; count:longint; clip:PSDL_Rect; result:PSDL_Rect):Tbool;cdecl;external;
+{*
  * Calculate the intersection of a rectangle and line segment.
  *
  * This function is used to clip a line segment to a rectangle. A line segment
@@ -290,13 +311,11 @@ extern  bool  SDL_GetRectEnclosingPoints(const SDL_Point *points, int count, con
  * \returns true if there is an intersection, false otherwise.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  bool  SDL_GetRectAndLineIntersection(const SDL_Rect *rect, int *X1, int *Y1, int *X2, int *Y2);
-
-
-/* SDL_FRect versions... */
-
-/**
+  }
+(* Const before declarator ignored *)
+function SDL_GetRectAndLineIntersection(rect:PSDL_Rect; X1:Plongint; Y1:Plongint; X2:Plongint; Y2:Plongint):Tbool;cdecl;external;
+{ SDL_FRect versions...  }
+{*
  * Determine whether a point resides inside a floating point rectangle.
  *
  * A point is considered part of a rectangle if both `p` and `r` are not NULL,
@@ -316,14 +335,14 @@ extern  bool  SDL_GetRectAndLineIntersection(const SDL_Rect *rect, int *X1, int 
  * \threadsafety It is safe to call this function from any thread.
  *
  * \since This function is available since SDL 3.0.0.
- */
-SDL_FORCE_INLINE bool SDL_PointInRectFloat(const SDL_FPoint *p, const SDL_FRect *r)
-{
-    return ( p && r && (p->x >= r->x) && (p->x <= (r->x + r->w)) &&
-             (p->y >= r->y) && (p->y <= (r->y + r->h)) ) ? true : false;
-}
-
-/**
+  }
+{ xxxxxxxxxxxxxx }
+{SDL_FORCE_INLINE bool SDL_PointInRectFloat(const SDL_FPoint *p, const SDL_FRect *r) }
+{ }
+{    return ( p && r && (p->x >= r->x) && (p->x <= (r->x + r->w)) && }
+{             (p->y >= r->y) && (p->y <= (r->y + r->h)) ) ? true : false; }
+{ }
+{*
  * Determine whether a floating point rectangle can contain any point.
  *
  * A rectangle is considered "empty" for this function if `r` is NULL, or if
@@ -340,13 +359,13 @@ SDL_FORCE_INLINE bool SDL_PointInRectFloat(const SDL_FPoint *p, const SDL_FRect 
  * \threadsafety It is safe to call this function from any thread.
  *
  * \since This function is available since SDL 3.0.0.
- */
-SDL_FORCE_INLINE bool SDL_RectEmptyFloat(const SDL_FRect *r)
-{
-    return ((!r) || (r->w < 0.0f) || (r->h < 0.0f)) ? true : false;
-}
-
-/**
+  }
+{ xxxxxxxxxxxxxx }
+{SDL_FORCE_INLINE bool SDL_RectEmptyFloat(const SDL_FRect *r) }
+{ }
+{    return ((!r) || (r->w < 0.0f) || (r->h < 0.0f)) ? true : false; }
+{ }
+{*
  * Determine whether two floating point rectangles are equal, within some
  * given epsilon.
  *
@@ -370,18 +389,18 @@ SDL_FORCE_INLINE bool SDL_RectEmptyFloat(const SDL_FRect *r)
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_RectsEqualFloat
- */
-SDL_FORCE_INLINE bool SDL_RectsEqualEpsilon(const SDL_FRect *a, const SDL_FRect *b, const float epsilon)
-{
-    return (a && b && ((a == b) ||
-            ((SDL_fabsf(a->x - b->x) <= epsilon) &&
-            (SDL_fabsf(a->y - b->y) <= epsilon) &&
-            (SDL_fabsf(a->w - b->w) <= epsilon) &&
-            (SDL_fabsf(a->h - b->h) <= epsilon))))
-            ? true : false;
-}
-
-/**
+  }
+{ xxxxxxxxxxxxxx }
+{SDL_FORCE_INLINE bool SDL_RectsEqualEpsilon(const SDL_FRect *a, const SDL_FRect *b, const float epsilon) }
+{ }
+{    return (a && b && ((a == b) || }
+{            ((SDL_fabsf(a->x - b->x) <= epsilon) && }
+{            (SDL_fabsf(a->y - b->y) <= epsilon) && }
+{            (SDL_fabsf(a->w - b->w) <= epsilon) && }
+{            (SDL_fabsf(a->h - b->h) <= epsilon)))) }
+{            ? true : false; }
+{ }
+{*
  * Determine whether two floating point rectangles are equal, within a default
  * epsilon.
  *
@@ -405,13 +424,13 @@ SDL_FORCE_INLINE bool SDL_RectsEqualEpsilon(const SDL_FRect *a, const SDL_FRect 
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_RectsEqualEpsilon
- */
-SDL_FORCE_INLINE bool SDL_RectsEqualFloat(const SDL_FRect *a, const SDL_FRect *b)
-{
-    return SDL_RectsEqualEpsilon(a, b, SDL_FLT_EPSILON);
-}
-
-/**
+  }
+{ xxxxxxxxxxxxxx }
+{SDL_FORCE_INLINE bool SDL_RectsEqualFloat(const SDL_FRect *a, const SDL_FRect *b) }
+{ }
+{  return SDL_RectsEqualEpsilon(a, b, SDL_FLT_EPSILON); }
+{ }
+{*
  * Determine whether two rectangles intersect with float precision.
  *
  * If either pointer is NULL the function will return false.
@@ -423,10 +442,11 @@ SDL_FORCE_INLINE bool SDL_RectsEqualFloat(const SDL_FRect *a, const SDL_FRect *b
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_GetRectIntersection
- */
-extern  bool  SDL_HasRectIntersectionFloat(const SDL_FRect *A, const SDL_FRect *B);
-
-/**
+  }
+(* Const before declarator ignored *)
+(* Const before declarator ignored *)
+function SDL_HasRectIntersectionFloat(A:PSDL_FRect; B:PSDL_FRect):Tbool;cdecl;external;
+{*
  * Calculate the intersection of two rectangles with float precision.
  *
  * If `result` is NULL then this function will return false.
@@ -440,10 +460,11 @@ extern  bool  SDL_HasRectIntersectionFloat(const SDL_FRect *A, const SDL_FRect *
  * \since This function is available since SDL 3.0.0.
  *
  * \sa SDL_HasRectIntersectionFloat
- */
-extern  bool  SDL_GetRectIntersectionFloat(const SDL_FRect *A, const SDL_FRect *B, SDL_FRect *result);
-
-/**
+  }
+(* Const before declarator ignored *)
+(* Const before declarator ignored *)
+function SDL_GetRectIntersectionFloat(A:PSDL_FRect; B:PSDL_FRect; result:PSDL_FRect):Tbool;cdecl;external;
+{*
  * Calculate the union of two rectangles with float precision.
  *
  * \param A an SDL_FRect structure representing the first rectangle.
@@ -454,10 +475,11 @@ extern  bool  SDL_GetRectIntersectionFloat(const SDL_FRect *A, const SDL_FRect *
  *          information.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  bool  SDL_GetRectUnionFloat(const SDL_FRect *A, const SDL_FRect *B, SDL_FRect *result);
-
-/**
+  }
+(* Const before declarator ignored *)
+(* Const before declarator ignored *)
+function SDL_GetRectUnionFloat(A:PSDL_FRect; B:PSDL_FRect; result:PSDL_FRect):Tbool;cdecl;external;
+{*
  * Calculate a minimal rectangle enclosing a set of points with float
  * precision.
  *
@@ -474,10 +496,11 @@ extern  bool  SDL_GetRectUnionFloat(const SDL_FRect *A, const SDL_FRect *B, SDL_
  *          outside of the clipping rectangle.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  bool  SDL_GetRectEnclosingPointsFloat(const SDL_FPoint *points, int count, const SDL_FRect *clip, SDL_FRect *result);
-
-/**
+  }
+(* Const before declarator ignored *)
+(* Const before declarator ignored *)
+function SDL_GetRectEnclosingPointsFloat(points:PSDL_FPoint; count:longint; clip:PSDL_FRect; result:PSDL_FRect):Tbool;cdecl;external;
+{*
  * Calculate the intersection of a rectangle and line segment with float
  * precision.
  *
@@ -495,13 +518,16 @@ extern  bool  SDL_GetRectEnclosingPointsFloat(const SDL_FPoint *points, int coun
  * \returns true if there is an intersection, false otherwise.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  bool  SDL_GetRectAndLineIntersectionFloat(const SDL_FRect *rect, float *X1, float *Y1, float *X2, float *Y2);
+  }
+(* Const before declarator ignored *)
+function SDL_GetRectAndLineIntersectionFloat(rect:PSDL_FRect; X1:Psingle; Y1:Psingle; X2:Psingle; Y2:Psingle):Tbool;cdecl;external;
+{ Ends C function definitions when using C++  }
+{ C++ end of extern C conditionnal removed }
+{$include <SDL3/SDL_close_code.h>}
+{$endif}
+{ SDL_rect_h_  }
 
-/* Ends C function definitions when using C++ */
-#ifdef __cplusplus
-}
-#endif
-#include <SDL3/SDL_close_code.h>
+implementation
 
-#endif /* SDL_rect_h_ */
+
+end.
