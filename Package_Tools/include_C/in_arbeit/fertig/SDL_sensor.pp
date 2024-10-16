@@ -1,4 +1,28 @@
-/*
+
+unit SDL_sensor;
+interface
+
+{
+  Automatically converted by H2Pas 0.99.16 from SDL_sensor.h
+  The following command line parameters were used:
+    -p
+    -T
+    -d
+    -c
+    -e
+    SDL_sensor.h
+}
+
+Type
+PSDL_Sensor = ^TSDL_Sensor;
+Psingle = ^Tsingle;
+
+{$IFDEF FPC}
+{$PACKRECORDS C}
+{$ENDIF}
+
+
+{
   Simple DirectMedia Layer
   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
 
@@ -17,9 +41,8 @@
   2. Altered source versions must be plainly marked as such, and must not be
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
-*/
-
-/**
+ }
+{*
  * # CategorySensor
  *
  * SDL sensor management.
@@ -27,36 +50,27 @@
  * In order to use these functions, SDL_Init() must have been called with the
  * SDL_INIT_SENSOR flag. This causes SDL to scan the system for sensors, and
  * load appropriate drivers.
- */
-
-#ifndef SDL_sensor_h_
-#define SDL_sensor_h_
-
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_error.h>
-#include <SDL3/SDL_properties.h>
-
-#include <SDL3/SDL_begin_code.h>
-/* Set up for C function definitions, even when using C++ */
-#ifdef __cplusplus
-/* *INDENT-OFF* */
-extern "C" {
-/* *INDENT-ON* */
-#endif
-
-typedef struct SDL_Sensor SDL_Sensor;
-
-/**
+  }
+{$ifndef SDL_sensor_h_}
+{$define SDL_sensor_h_}
+{$include <SDL3/SDL_stdinc.h>}
+{$include <SDL3/SDL_error.h>}
+{$include <SDL3/SDL_properties.h>}
+{$include <SDL3/SDL_begin_code.h>}
+{ Set up for C function definitions, even when using C++  }
+type
+{*
  * This is a unique ID for a sensor for the time it is connected to the
  * system, and is never reused for the lifetime of the application.
  *
  * The value 0 is an invalid ID.
  *
  * \since This datatype is available since SDL 3.0.0.
- */
-typedef Uint32 SDL_SensorID;
+  }
 
-/**
+  PSDL_SensorID = ^TSDL_SensorID;
+  TSDL_SensorID = TUint32;
+{*
  * A constant to represent standard gravity for accelerometer sensors.
  *
  * The accelerometer returns the current acceleration in SI meters per second
@@ -65,10 +79,11 @@ typedef Uint32 SDL_SensorID;
  * earth, which is a positive Y value.
  *
  * \since This macro is available since SDL 3.0.0.
- */
-#define SDL_STANDARD_GRAVITY    9.80665f
+  }
 
-/**
+const
+  SDL_STANDARD_GRAVITY = 9.80665;  
+{*
  * The different sensors defined by SDL.
  *
  * Additional sensors may be available, using platform dependent semantics.
@@ -121,23 +136,30 @@ typedef Uint32 SDL_SensorID;
  * \since This enum is available since SDL 3.0.0.
  *
  * \sa SDL_GetCurrentDisplayOrientation
- */
-typedef enum SDL_SensorType
-{
-    SDL_SENSOR_INVALID = -1,    /**< Returned for an invalid sensor */
-    SDL_SENSOR_UNKNOWN,         /**< Unknown sensor type */
-    SDL_SENSOR_ACCEL,           /**< Accelerometer */
-    SDL_SENSOR_GYRO,            /**< Gyroscope */
-    SDL_SENSOR_ACCEL_L,         /**< Accelerometer for left Joy-Con controller and Wii nunchuk */
-    SDL_SENSOR_GYRO_L,          /**< Gyroscope for left Joy-Con controller */
-    SDL_SENSOR_ACCEL_R,         /**< Accelerometer for right Joy-Con controller */
-    SDL_SENSOR_GYRO_R           /**< Gyroscope for right Joy-Con controller */
-} SDL_SensorType;
-
-
-/* Function prototypes */
-
-/**
+  }
+{*< Returned for an invalid sensor  }
+{*< Unknown sensor type  }
+{*< Accelerometer  }
+{*< Gyroscope  }
+{*< Accelerometer for left Joy-Con controller and Wii nunchuk  }
+{*< Gyroscope for left Joy-Con controller  }
+{*< Accelerometer for right Joy-Con controller  }
+{*< Gyroscope for right Joy-Con controller  }
+type
+  PSDL_SensorType = ^TSDL_SensorType;
+  TSDL_SensorType =  Longint;
+  Const
+    SDL_SENSOR_INVALID = -(1);
+    SDL_SENSOR_UNKNOWN = (-(1))+1;
+    SDL_SENSOR_ACCEL = (-(1))+2;
+    SDL_SENSOR_GYRO = (-(1))+3;
+    SDL_SENSOR_ACCEL_L = (-(1))+4;
+    SDL_SENSOR_GYRO_L = (-(1))+5;
+    SDL_SENSOR_ACCEL_R = (-(1))+6;
+    SDL_SENSOR_GYRO_R = (-(1))+7;
+;
+{ Function prototypes  }
+{*
  * Get a list of currently connected sensors.
  *
  * \param count a pointer filled in with the number of sensors returned, may
@@ -147,10 +169,10 @@ typedef enum SDL_SensorType
  *          with SDL_free() when it is no longer needed.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  SDL_SensorID *  SDL_GetSensors(int *count);
+  }
 
-/**
+function SDL_GetSensors(count:Plongint):PSDL_SensorID;cdecl;external;
+{*
  * Get the implementation dependent name of a sensor.
  *
  * This can be called before any sensors are opened.
@@ -159,10 +181,10 @@ extern  SDL_SensorID *  SDL_GetSensors(int *count);
  * \returns the sensor name, or NULL if `instance_id` is not valid.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  const char *  SDL_GetSensorNameForID(SDL_SensorID instance_id);
-
-/**
+  }
+(* Const before declarator ignored *)
+function SDL_GetSensorNameForID(instance_id:TSDL_SensorID):Pansichar;cdecl;external;
+{*
  * Get the type of a sensor.
  *
  * This can be called before any sensors are opened.
@@ -172,10 +194,9 @@ extern  const char *  SDL_GetSensorNameForID(SDL_SensorID instance_id);
  *          not valid.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  SDL_SensorType  SDL_GetSensorTypeForID(SDL_SensorID instance_id);
-
-/**
+  }
+function SDL_GetSensorTypeForID(instance_id:TSDL_SensorID):TSDL_SensorType;cdecl;external;
+{*
  * Get the platform dependent type of a sensor.
  *
  * This can be called before any sensors are opened.
@@ -185,10 +206,9 @@ extern  SDL_SensorType  SDL_GetSensorTypeForID(SDL_SensorID instance_id);
  *          valid.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  int  SDL_GetSensorNonPortableTypeForID(SDL_SensorID instance_id);
-
-/**
+  }
+function SDL_GetSensorNonPortableTypeForID(instance_id:TSDL_SensorID):longint;cdecl;external;
+{*
  * Open a sensor for use.
  *
  * \param instance_id the sensor instance ID.
@@ -196,10 +216,9 @@ extern  int  SDL_GetSensorNonPortableTypeForID(SDL_SensorID instance_id);
  *          more information.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  SDL_Sensor *  SDL_OpenSensor(SDL_SensorID instance_id);
-
-/**
+  }
+function SDL_OpenSensor(instance_id:TSDL_SensorID):PSDL_Sensor;cdecl;external;
+{*
  * Return the SDL_Sensor associated with an instance ID.
  *
  * \param instance_id the sensor instance ID.
@@ -207,10 +226,9 @@ extern  SDL_Sensor *  SDL_OpenSensor(SDL_SensorID instance_id);
  *          more information.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  SDL_Sensor *  SDL_GetSensorFromID(SDL_SensorID instance_id);
-
-/**
+  }
+function SDL_GetSensorFromID(instance_id:TSDL_SensorID):PSDL_Sensor;cdecl;external;
+{*
  * Get the properties associated with a sensor.
  *
  * \param sensor the SDL_Sensor object.
@@ -218,10 +236,9 @@ extern  SDL_Sensor *  SDL_GetSensorFromID(SDL_SensorID instance_id);
  *          SDL_GetError() for more information.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  SDL_PropertiesID  SDL_GetSensorProperties(SDL_Sensor *sensor);
-
-/**
+  }
+function SDL_GetSensorProperties(sensor:PSDL_Sensor):TSDL_PropertiesID;cdecl;external;
+{*
  * Get the implementation dependent name of a sensor.
  *
  * \param sensor the SDL_Sensor object.
@@ -229,10 +246,10 @@ extern  SDL_PropertiesID  SDL_GetSensorProperties(SDL_Sensor *sensor);
  *          information.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  const char *  SDL_GetSensorName(SDL_Sensor *sensor);
-
-/**
+  }
+(* Const before declarator ignored *)
+function SDL_GetSensorName(sensor:PSDL_Sensor):Pansichar;cdecl;external;
+{*
  * Get the type of a sensor.
  *
  * \param sensor the SDL_Sensor object to inspect.
@@ -240,20 +257,18 @@ extern  const char *  SDL_GetSensorName(SDL_Sensor *sensor);
  *          NULL.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  SDL_SensorType  SDL_GetSensorType(SDL_Sensor *sensor);
-
-/**
+  }
+function SDL_GetSensorType(sensor:PSDL_Sensor):TSDL_SensorType;cdecl;external;
+{*
  * Get the platform dependent type of a sensor.
  *
  * \param sensor the SDL_Sensor object to inspect.
  * \returns the sensor platform dependent type, or -1 if `sensor` is NULL.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  int  SDL_GetSensorNonPortableType(SDL_Sensor *sensor);
-
-/**
+  }
+function SDL_GetSensorNonPortableType(sensor:PSDL_Sensor):longint;cdecl;external;
+{*
  * Get the instance ID of a sensor.
  *
  * \param sensor the SDL_Sensor object to inspect.
@@ -261,10 +276,9 @@ extern  int  SDL_GetSensorNonPortableType(SDL_Sensor *sensor);
  *          more information.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  SDL_SensorID  SDL_GetSensorID(SDL_Sensor *sensor);
-
-/**
+  }
+function SDL_GetSensorID(sensor:PSDL_Sensor):TSDL_SensorID;cdecl;external;
+{*
  * Get the current state of an opened sensor.
  *
  * The number of values and interpretation of the data is sensor dependent.
@@ -276,19 +290,17 @@ extern  SDL_SensorID  SDL_GetSensorID(SDL_Sensor *sensor);
  *          information.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  bool  SDL_GetSensorData(SDL_Sensor *sensor, float *data, int num_values);
-
-/**
+  }
+function SDL_GetSensorData(sensor:PSDL_Sensor; data:Psingle; num_values:longint):Tbool;cdecl;external;
+{*
  * Close a sensor previously opened with SDL_OpenSensor().
  *
  * \param sensor the SDL_Sensor object to close.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  void  SDL_CloseSensor(SDL_Sensor *sensor);
-
-/**
+  }
+procedure SDL_CloseSensor(sensor:PSDL_Sensor);cdecl;external;
+{*
  * Update the current state of the open sensors.
  *
  * This is called automatically by the event loop if sensor events are
@@ -298,16 +310,14 @@ extern  void  SDL_CloseSensor(SDL_Sensor *sensor);
  * subsystem.
  *
  * \since This function is available since SDL 3.0.0.
- */
-extern  void  SDL_UpdateSensors(void);
+  }
+procedure SDL_UpdateSensors;cdecl;external;
+{ Ends C function definitions when using C++  }
+{$include <SDL3/SDL_close_code.h>}
+{$endif}
+{ SDL_sensor_h_  }
+
+implementation
 
 
-/* Ends C function definitions when using C++ */
-#ifdef __cplusplus
-/* *INDENT-OFF* */
-}
-/* *INDENT-ON* */
-#endif
-#include <SDL3/SDL_close_code.h>
-
-#endif /* SDL_sensor_h_ */
+end.
