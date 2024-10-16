@@ -3,7 +3,7 @@ unit SDL_events;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_video, SDL_keyboard, SDL_keycode, SDL_mouse, SDL_scancode, SDL_joystick, SDL_power, SDL_audio;
+  ctypes, SDL_stdinc, SDL_video, SDL_keyboard, SDL_keycode, SDL_mouse, SDL_pen, SDL_sensor, SDL_touch, SDL_scancode, SDL_joystick, SDL_power, SDL_audio, SDL_camera;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}
@@ -603,6 +603,7 @@ function SDL_PushEvent(event: PSDL_Event): Tbool; cdecl; external libSDL3;
 
 type
   TSDL_EventFilter = function(userdata: pointer; event: PSDL_Event): Tbool; cdecl;
+  PSDL_EventFilter = ^TSDL_EventFilter;
 
 procedure SDL_SetEventFilter(filter: TSDL_EventFilter; userdata: pointer); cdecl; external libSDL3;
 function SDL_GetEventFilter(filter: PSDL_EventFilter; userdata: Ppointer): Tbool; cdecl; external libSDL3;
