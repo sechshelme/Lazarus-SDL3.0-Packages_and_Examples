@@ -91,8 +91,8 @@ extern "C" {
 #elif !defined(SDL_ASSERT_LEVEL)
 #ifdef SDL_DEFAULT_ASSERT_LEVEL
 #define SDL_ASSERT_LEVEL SDL_DEFAULT_ASSERT_LEVEL
-#elif defined(_DEBUG) || defined(DEBUG) || \
-      (defined(__GNUC__) && !defined(__OPTIMIZE__))
+//#elif defined(_DEBUG) || defined(DEBUG) || \
+//      (defined(__GNUC__) && !defined(__OPTIMIZE__))
 #define SDL_ASSERT_LEVEL 2
 #else
 #define SDL_ASSERT_LEVEL 1
@@ -122,34 +122,7 @@ extern "C" {
  */
 #define SDL_TriggerBreakpoint() TriggerABreakpointInAPlatformSpecificManner
 
-#elif defined(_MSC_VER)
-    /* Don't include intrin.h here because it contains C++ code */
-    extern void __cdecl __debugbreak(void);
-    #define SDL_TriggerBreakpoint() __debugbreak()
-#elif defined(ANDROID)
-    #include <assert.h>
-    #define SDL_TriggerBreakpoint() assert(0)
-#elif SDL_HAS_BUILTIN(__builtin_debugtrap)
-    #define SDL_TriggerBreakpoint() __builtin_debugtrap()
-#elif (defined(__GNUC__) || defined(__clang__)) && (defined(__i386__) || defined(__x86_64__))
-    #define SDL_TriggerBreakpoint() __asm__ __volatile__ ( "int $3\n\t" )
-#elif (defined(__GNUC__) || defined(__clang__)) && defined(__riscv)
-    #define SDL_TriggerBreakpoint() __asm__ __volatile__ ( "ebreak\n\t" )
-#elif ( defined(SDL_PLATFORM_APPLE) && (defined(__arm64__) || defined(__aarch64__)) )  /* this might work on other ARM targets, but this is a known quantity... */
-    #define SDL_TriggerBreakpoint() __asm__ __volatile__ ( "brk #22\n\t" )
-#elif defined(SDL_PLATFORM_APPLE) && defined(__arm__)
-    #define SDL_TriggerBreakpoint() __asm__ __volatile__ ( "bkpt #22\n\t" )
-#elif defined(_WIN32) && ((defined(__GNUC__) || defined(__clang__)) && (defined(__arm64__) || defined(__aarch64__)) )
-    #define SDL_TriggerBreakpoint() __asm__ __volatile__ ( "brk #0xF000\n\t" )
-#elif defined(__386__) && defined(__WATCOMC__)
-    #define SDL_TriggerBreakpoint() { _asm { int 0x03 } }
-#elif defined(HAVE_SIGNAL_H) && !defined(__WATCOMC__)
-    #include <signal.h>
-    #define SDL_TriggerBreakpoint() raise(SIGTRAP)
-#else
-    /* How do we trigger breakpoints on this platform? */
-    #define SDL_TriggerBreakpoint()
-#endif
+
 
 #if defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L) /* C99 supports __func__ as a standard. */
 #   define SDL_FUNCTION __func__
@@ -178,14 +151,7 @@ disable assertions.
 
 /* "while (0,0)" fools Microsoft's compiler's /W4 warning level into thinking
     this condition isn't constant. And looks like an owl's face! */
-#ifdef _MSC_VER  /* stupid /W4 warnings. */
-#define SDL_NULL_WHILE_LOOP_CONDITION (0,0)
-#else
-#define SDL_NULL_WHILE_LOOP_CONDITION (0)
-#endif
 
-#define SDL_disabled_assert(condition) \
-    do { (void) sizeof ((condition)); } while (SDL_NULL_WHILE_LOOP_CONDITION)
 
 /**
  * Possible outcomes from a triggered assertion.
@@ -244,17 +210,10 @@ typedef struct SDL_AssertData
  */
 extern  SDL_AssertState  SDL_ReportAssertion(SDL_AssertData *data,
                                                             const char *func,
-                                                            const char *file, int line) SDL_ANALYZER_NORETURN;
+                                                            const char *file, int line) ;
 
 /* Define the trigger breakpoint call used in asserts */
-#ifndef SDL_AssertBreakpoint
-#if defined(ANDROID) && defined(assert)
-/* Define this as empty in case assert() is defined as SDL_assert */
-#define SDL_AssertBreakpoint()
-#else
-#define SDL_AssertBreakpoint() SDL_TriggerBreakpoint()
-#endif
-#endif /* !SDL_AssertBreakpoint */
+
 
 /* the do {} while(0) avoids dangling else problems:
     if (x) SDL_assert(y); else blah();
@@ -263,21 +222,7 @@ extern  SDL_AssertState  SDL_ReportAssertion(SDL_AssertData *data,
    the static vars, and break points. The heavy lifting is handled in
    SDL_ReportAssertion(), in SDL_assert.c.
 */
-#define SDL_enabled_assert(condition) \
-    do { \
-        while ( !(condition) ) { \
-            static struct SDL_AssertData sdl_assert_data = { 0, 0, #condition, 0, 0, 0, 0 }; \
-            const SDL_AssertState sdl_assert_state = SDL_ReportAssertion(&sdl_assert_data, SDL_FUNCTION, SDL_FILE, SDL_LINE); \
-            if (sdl_assert_state == SDL_ASSERTION_RETRY) { \
-                continue; /* go again. */ \
-            } else if (sdl_assert_state == SDL_ASSERTION_BREAK) { \
-                SDL_AssertBreakpoint(); \
-            } \
-            break; /* not retrying. */ \
-        } \
-    } while (SDL_NULL_WHILE_LOOP_CONDITION)
 
-#ifdef SDL_WIKI_DOCUMENTATION_SECTION
 
 /**
  * An assertion test that is normally performed only in debug builds.
@@ -307,7 +252,7 @@ extern  SDL_AssertState  SDL_ReportAssertion(SDL_AssertData *data,
  *
  * \since This macro is available since SDL 3.0.0.
  */
-#define SDL_assert(condition) if (assertion_enabled && (condition)) { trigger_assertion; }
+//#define SDL_assert(condition) if (assertion_enabled && (condition)) { trigger_assertion; }
 
 /**
  * An assertion test that is performed even in release builds.
