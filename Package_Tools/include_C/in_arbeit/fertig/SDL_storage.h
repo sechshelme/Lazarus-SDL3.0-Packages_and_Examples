@@ -103,9 +103,7 @@ typedef struct SDL_StorageInterface
  * or the interface has been updated and this should be updated to match and
  * the code using this interface should be updated to handle the old version.
  */
-SDL_COMPILE_TIME_ASSERT(SDL_StorageInterface_SIZE,
-    (sizeof(void *) == 4 && sizeof(SDL_StorageInterface) == 48) ||
-    (sizeof(void *) == 8 && sizeof(SDL_StorageInterface) == 96));
+
 
 /**
  * An abstract interface for filesystem access.
