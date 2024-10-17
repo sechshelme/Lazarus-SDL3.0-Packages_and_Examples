@@ -78,7 +78,6 @@
         #define SDL_MAIN_NEEDED
 
         /* We need to export SDL_main so it can be launched from Java */
-        #define SDLMAIN_DECLSPEC    
 
     #elif defined(SDL_PLATFORM_EMSCRIPTEN)
         /* On Emscripten, SDL provides a main function that converts URL
@@ -102,9 +101,9 @@
     #elif defined(SDL_PLATFORM_PS2)
         #define SDL_MAIN_AVAILABLE
 
-        #define SDL_PS2_SKIP_IOP_RESET() \
-           void reset_IOP(); \
-           void reset_IOP() {}
+//        #define SDL_PS2_SKIP_IOP_RESET() \
+//           void reset_IOP(); \
+//           void reset_IOP() {}
 
     #elif defined(SDL_PLATFORM_3DS)
         /*
@@ -250,7 +249,7 @@ extern "C" {
  * \sa SDL_AppEvent
  * \sa SDL_AppQuit
  */
-extern SDLMAIN_DECLSPEC SDL_AppResult  SDL_AppInit(void **appstate, int argc, char *argv[]);
+extern SDL_AppResult  SDL_AppInit(void **appstate, int argc, char *argv[]);
 
 /**
  * App-implemented iteration entry point for SDL_MAIN_USE_CALLBACKS apps.
@@ -298,7 +297,7 @@ extern SDLMAIN_DECLSPEC SDL_AppResult  SDL_AppInit(void **appstate, int argc, ch
  * \sa SDL_AppInit
  * \sa SDL_AppEvent
  */
-extern SDLMAIN_DECLSPEC SDL_AppResult  SDL_AppIterate(void *appstate);
+extern SDL_AppResult  SDL_AppIterate(void *appstate);
 
 /**
  * App-implemented event entry point for SDL_MAIN_USE_CALLBACKS apps.
@@ -345,7 +344,7 @@ extern SDLMAIN_DECLSPEC SDL_AppResult  SDL_AppIterate(void *appstate);
  * \sa SDL_AppInit
  * \sa SDL_AppIterate
  */
-extern SDLMAIN_DECLSPEC SDL_AppResult  SDL_AppEvent(void *appstate, SDL_Event *event);
+extern SDL_AppResult  SDL_AppEvent(void *appstate, SDL_Event *event);
 
 /**
  * App-implemented deinit entry point for SDL_MAIN_USE_CALLBACKS apps.
@@ -380,7 +379,7 @@ extern SDLMAIN_DECLSPEC SDL_AppResult  SDL_AppEvent(void *appstate, SDL_Event *e
  *
  * \sa SDL_AppInit
  */
-extern SDLMAIN_DECLSPEC void  SDL_AppQuit(void *appstate, SDL_AppResult result);
+extern void  SDL_AppQuit(void *appstate, SDL_AppResult result);
 
 #endif  /* SDL_MAIN_USE_CALLBACKS */
 
@@ -429,7 +428,7 @@ typedef int ( *SDL_main_func)(int argc, char *argv[]);
  *
  * \since This function is available since SDL 3.0.0.
  */
-extern SDLMAIN_DECLSPEC int  SDL_main(int argc, char *argv[]);
+extern int  SDL_main(int argc, char *argv[]);
 
 /**
  * Circumvent failure of SDL_Init() when not using SDL_main() as an entry
@@ -568,31 +567,6 @@ extern  void  SDL_GDKSuspendComplete(void);
 
 #include <SDL3/SDL_close_code.h>
 
-#if !defined(SDL_MAIN_HANDLED) && !defined(SDL_MAIN_NOIMPL)
-    /* include header-only SDL_main implementations */
-    #if defined(SDL_MAIN_USE_CALLBACKS) \
-        || defined(SDL_PLATFORM_WINDOWS) || defined(SDL_PLATFORM_IOS) || defined(SDL_PLATFORM_TVOS) \
-        || defined(SDL_PLATFORM_3DS) || defined(SDL_PLATFORM_NGAGE) || defined(SDL_PLATFORM_PS2) || defined(SDL_PLATFORM_PSP) \
-        || defined(SDL_PLATFORM_EMSCRIPTEN)
 
-        /* platforms which main (-equivalent) can be implemented in plain C */
-        #include <SDL3/SDL_main_impl.h>
-
-    #elif 0  /* C++ platforms (currently none, this used to be here for WinRT, but is left for future platforms that might arrive. */
-        #ifdef __cplusplus
-        #include <SDL3/SDL_main_impl.h>
-        #else
-            /* Note: to get rid of the following warning, you can #define SDL_MAIN_NOIMPL before including SDL_main.h
-             *  in your C sourcefile that contains the standard main. Do *not* use SDL_MAIN_HANDLED for that, then SDL_main won't find your main()!
-             */
-            #ifdef _MSC_VER
-                #pragma message("Note: Your platform needs the SDL_main implementation in a C++ source file. You can keep your main() in plain C (then continue including SDL_main.h there!) and create a fresh .cpp file that only contains #include <SDL3/SDL_main.h>")
-            #elif defined(__GNUC__) /* gcc, clang, mingw and compatible are matched by this and have #warning */
-                #warning "Note: Your platform needs the SDL_main implementation in a C++ source file. You can keep your main() in plain C and create a fresh .cpp file that only contains #include <SDL3/SDL_main.h>"
-            #endif /* __GNUC__ */
-        #endif /* __cplusplus */
-
-    #endif /* C++ platforms */
-#endif
 
 #endif /* SDL_main_h_ */

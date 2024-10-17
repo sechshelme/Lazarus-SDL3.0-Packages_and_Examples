@@ -21,7 +21,7 @@ begin
 end;
 
 begin
-  SDL_Init(SDL_INIT_TIMER);
+  SDL_Init(0);
   SDL_Log('Simple SDL_AddTimer test:');
   timer_id1 := SDL_AddTimer(500, @my_callbackfunc, PChar('Timer 1'));
   timer_id2 := SDL_AddTimer(300, @my_callbackfunc, PChar('Timer 2'));

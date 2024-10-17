@@ -8,15 +8,18 @@ uses
   {$IFDEF Linux}
   x, xlib,
   {$ENDIF}
+  {$IFDEF Windows}
+  windows,
+  {$ENDIF}
   ctypes;
 
 const
   {$IFDEF Linux}
-  sdl3_lib = 'SDL3';
+  libSDL3 = 'SDL3';
   {$ENDIF}
 
   {$IFDEF Windows}
-  sdl3_lib = 'SDL3.dll';
+  libSDL3 = 'SDL3.dll';
   {$ENDIF}
 
   {$IFDEF FPC}

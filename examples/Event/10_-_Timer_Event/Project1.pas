@@ -114,7 +114,7 @@ var
     Pointrect: array [0..TimerCount - 1] of TPointrect;
     i: integer;
   begin
-    SDL_init(SDL_INIT_VIDEO or SDL_INIT_TIMER);
+    SDL_init(SDL_INIT_VIDEO);
 
     for i := 0 to TimerCount - 1 do begin
       Pointrect[i].rect.x := Random(RectSize) + RectSize;

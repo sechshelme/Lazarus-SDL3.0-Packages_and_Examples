@@ -21,7 +21,7 @@ var
     e: TSDL_Event;
     quit: boolean = False;
     rDest: TSDL_FRect;
-    keyStat: PUInt8;
+    keyStat: PBoolean;
     time: extended;
     red, green, blue: int64;
   begin
@@ -31,19 +31,19 @@ var
     rDest.h := 100;
     while not quit do begin
       keyStat := SDL_GetKeyboardState(nil);
-      if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
+      if keyStat[SDL_SCANCODE_SPACE] then begin
       end;
 
-      if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+      if keyStat[SDL_SCANCODE_RIGHT] then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] then begin
           rDest.x -= step;
           rDest.w += step * 2;
         end else begin
           rDest.x += step;
         end;
       end;
-      if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+      if keyStat[SDL_SCANCODE_LEFT] then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] then begin
           if rDest.w > 1 then begin
             rDest.x += step;
             rDest.w -= step * 2;
@@ -52,16 +52,16 @@ var
           rDest.x -= step;
         end;
       end;
-      if keyStat[SDL_SCANCODE_DOWN] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+      if keyStat[SDL_SCANCODE_DOWN] then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] then begin
           rDest.y -= step;
           rDest.h += step * 2;
         end else begin
           rDest.y += step;
         end;
       end;
-      if keyStat[SDL_SCANCODE_UP] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+      if keyStat[SDL_SCANCODE_UP] then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] then begin
           if rDest.h > 1 then begin
             rDest.y += step;
             rDest.h -= step * 2;

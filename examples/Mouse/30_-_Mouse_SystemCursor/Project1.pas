@@ -26,7 +26,7 @@ var
     customBWCursor := SDL_CreateCursor(Data, mask, size, size, 0, 0);
     customColorCursor := SDL_CreateColorCursor(nil, 0, 0);
 
-    SetLength(cursors, SDL_NUM_SYSTEM_CURSORS);
+    SetLength(cursors, SDL_SYSTEM_CURSOR_COUNT);
     for i := 0 to Length(cursors) - 1 do begin
       cursors[i] := SDL_CreateSystemCursor(i);
     end;
@@ -72,7 +72,7 @@ var
             case e.button.button of
               SDL_BUTTON_LEFT: begin
                 Inc(cursorIndex);
-                if cursorIndex >= SDL_NUM_SYSTEM_CURSORS then begin
+                if cursorIndex >= SDL_SYSTEM_CURSOR_COUNT then begin
                   cursorIndex := 0;
                 end;
 

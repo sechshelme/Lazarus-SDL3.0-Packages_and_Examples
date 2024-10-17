@@ -224,10 +224,10 @@ function Mix_GetTimidityCfg: PChar; cdecl; external sdl3_mixer_lib;
 function Mix_GetChunk(channel: longint): PMix_Chunk; cdecl; external sdl3_mixer_lib;
 procedure Mix_CloseAudio; cdecl; external sdl3_mixer_lib;
 
-function Mix_SetError(fmt: PChar): longint; varargs; cdecl; external sdl3_lib Name 'SDL_SetError';
-function Mix_GetError: PChar; cdecl; external sdl3_lib Name 'SDL_GetError';
-procedure Mix_ClearError; cdecl; external sdl3_lib Name 'SDL_ClearError';
-procedure Mix_OutOfMemory; cdecl; external sdl3_lib Name 'SDL_OutOfMemory';
+function Mix_SetError(fmt: PChar): longint; varargs; cdecl; external libSDL3 Name 'SDL_SetError';
+function Mix_GetError: PChar; cdecl; external libSDL3 Name 'SDL_GetError';
+procedure Mix_ClearError; cdecl; external libSDL3 Name 'SDL_ClearError';
+procedure Mix_OutOfMemory; cdecl; external libSDL3 Name 'SDL_OutOfMemory';
 //function Mix_OutOfMemory: longint;
 
 implementation

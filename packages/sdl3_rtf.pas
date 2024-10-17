@@ -86,8 +86,8 @@ function RTF_GetHeight(ctx: PRTF_Context; Width: longint): longint; cdecl; exter
 procedure RTF_Render(ctx: PRTF_Context; rect: PSDL_Rect; yOffset: longint); cdecl; external sdl3_rtf_lib;
 procedure RTF_FreeContext(ctx: PRTF_Context); cdecl; external sdl3_rtf_lib;
 
-function RTF_SetError(fmt: PChar): longint; varargs; cdecl; external sdl3_lib Name 'SDL_SetError';
-function RTF_GetError: PChar; cdecl; external sdl3_lib Name 'SDL_GetError';
+function RTF_SetError(fmt: PChar): longint; varargs; cdecl; external libSDL3 Name 'SDL_SetError';
+function RTF_GetError: PChar; cdecl; external libSDL3 Name 'SDL_GetError';
 
 implementation
 

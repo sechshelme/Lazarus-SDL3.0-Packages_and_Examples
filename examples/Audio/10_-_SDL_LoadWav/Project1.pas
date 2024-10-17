@@ -55,7 +55,7 @@ var
   var
     i: integer;
   begin
-    if SDL_LoadWAV(SoundFile, @Result.wave.spec, @Result.wave.sound, @Result.wave.soundlen) <> 0 then begin
+    if not SDL_LoadWAV(SoundFile, @Result.wave.spec, @Result.wave.sound, @Result.wave.soundlen) then begin
       SDL_LogError(0, 'Konnte WAV nicht öffnen !   %s', SDL_GetError);
       Exit;
     end;
@@ -181,7 +181,7 @@ var
         end;
       end;
 
-      SDL_Log('size: %i', SDL_GetAudioStreamQueued(sound.stream));
+//      SDL_Log('size: %i', SDL_GetAudioStreamQueued(sound.stream));
 
       SDL_SetRenderDrawColorFloat(renderer, Random, Random, Random, SDL_ALPHA_OPAQUE);
       SDL_RenderClear(renderer);
@@ -204,7 +204,7 @@ var
 
   procedure main;
   begin
-    if SDL_init(SDL_INIT_VIDEO or SDL_INIT_AUDIO or SDL_INIT_EVENTS) <> 0 then  begin
+    if not SDL_init(SDL_INIT_VIDEO or SDL_INIT_AUDIO or SDL_INIT_EVENTS)  then  begin
       SDL_Log('Kann kein SDL-Fenster erzeugen !   %s', SDL_GetError);
     end;
 

@@ -9,16 +9,6 @@ uses
   {$PACKRECORDS C}
   {$ENDIF}
 
-const
-  {$IFDEF Linux}
-  libSDL3 = 'SDL3';
-  {$ENDIF}
-
-  {$IFDEF Windows}
-  libSDL3 = 'SDL3.dll';
-  {$ENDIF}
-
-
 type
   PSDL_GLContextState=Pointer; // ??????????????????????
 

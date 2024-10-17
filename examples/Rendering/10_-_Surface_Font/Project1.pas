@@ -66,7 +66,7 @@ const
     quit: boolean = False;
     event: TSDL_Event;
   begin
-    if SDL_init(SDL_INIT_VIDEO) < 0 then begin
+    if not SDL_init(SDL_INIT_VIDEO) then begin
       SDL_Log('Konnte SDL-VIDEO nicht laden!:  %s', SDL_GetError);
     end;
 

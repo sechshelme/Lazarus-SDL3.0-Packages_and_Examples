@@ -155,8 +155,8 @@ function TTF_GetFontKerningSizeGlyphs32(font: PTTF_Font; previous_ch: TUint32; c
 function TTF_SetFontSDF(font: PTTF_Font; on_off: TSDL_bool): longint; cdecl; external sdl3_ttf_lib;
 function TTF_GetFontSDF(font: PTTF_Font): TSDL_bool; cdecl; external sdl3_ttf_lib;
 
-function TTF_SetError(fmt: PChar): longint; varargs; cdecl; external sdl3_lib Name 'SDL_SetError';
-function TTF_GetError: PChar; cdecl; external sdl3_lib Name 'SDL_GetError';
+function TTF_SetError(fmt: PChar): longint; varargs; cdecl; external libSDL3 Name 'SDL_SetError';
+function TTF_GetError: PChar; cdecl; external libSDL3 Name 'SDL_GetError';
 
 type
   PTTF_Direction = ^TTTF_Direction;

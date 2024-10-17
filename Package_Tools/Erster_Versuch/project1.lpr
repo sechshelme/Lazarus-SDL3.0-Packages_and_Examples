@@ -2,7 +2,6 @@ program project1;
 
 uses
   SDL_stdinc,
-  SDL_system,
   SDL_guid,
   SDL_properties,
   SDL_log,
@@ -30,6 +29,7 @@ uses
   SDL_sensor,        // SDL_properties
   SDL_surface,       // SDL_properties, SDL_pixels, SDL_iostream, SDL_blendmode, SDL_rect
   SDL_video,         // SDL_properties, SDL_pixels, SDL_rect, SDL_surface
+  SDL_system,        // SDL_video
   SDL_dialog,        // SDL_video
   SDL_messagebox,    // SDL_video
   SDL_vulkan,        // SDL_video
@@ -52,6 +52,7 @@ uses
   SDL_misc,
   SDL_platform,
   SDL_revision,
+  SDL_main,          // SDL_init, SDL_events
 
 
 

@@ -143,7 +143,7 @@ function TSoundBar.LoadWave: TSound;
 var
   i: integer;
 begin
-  if SDL_LoadWAV(PChar(FTitle), @Result.wave.spec, @Result.wave.sound, @Result.wave.soundlen) <> 0 then begin
+  if not SDL_LoadWAV(PChar(FTitle), @Result.wave.spec, @Result.wave.sound, @Result.wave.soundlen) then begin
     SDL_LogError(0, 'Konnte WAV nicht öffnen !   %s', SDL_GetError);
     Exit;
   end;

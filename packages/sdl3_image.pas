@@ -117,8 +117,8 @@ function IMG_LoadWEBPAnimation_IO(src: PSDL_IOStream): PIMG_Animation; cdecl; ex
 //const
 //  IMG_SetError = SDL_SetError;  
 //IMG_GetError = SDL_GetError;
-function IMG_SetError(fmt: PChar): longint; varargs; cdecl; external sdl3_lib Name 'SDL_SetError';
-function IMG_GetError: PChar; cdecl; external sdl3_lib Name 'SDL_GetError';
+function IMG_SetError(fmt: PChar): longint; varargs; cdecl; external libSDL3 Name 'SDL_SetError';
+function IMG_GetError: PChar; cdecl; external libSDL3 Name 'SDL_GetError';
 
 implementation
 

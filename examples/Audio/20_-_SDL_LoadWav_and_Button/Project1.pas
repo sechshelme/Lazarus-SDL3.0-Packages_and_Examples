@@ -33,7 +33,7 @@ type
     WindowSize.x := 320;
     WindowSize.y := 200;
 
-    if SDL_init(SDL_INIT_VIDEO or SDL_INIT_AUDIO or SDL_INIT_EVENTS) <> 0 then  begin
+    if not SDL_init(SDL_INIT_VIDEO or SDL_INIT_AUDIO or SDL_INIT_EVENTS) then  begin
       SDL_Log('Kann kein SDL-Fenster erzeugen !   %s', SDL_GetError);
     end;
 

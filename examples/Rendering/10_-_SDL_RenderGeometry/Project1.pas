@@ -74,7 +74,7 @@ uses
     e: TSDL_Event;
 
   begin
-    if SDL_Init(SDL_INIT_VIDEO) < 0 then begin
+    if not SDL_Init(SDL_INIT_VIDEO) then begin
       Halt;
     end;
 

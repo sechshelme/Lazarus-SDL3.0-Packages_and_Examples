@@ -35,17 +35,17 @@ var
     quit: boolean = False;
     time: single;
     red, green, blue: byte;
-    keyStat: PUInt8;
+    keyStat: PBoolean;
     cnt: integer = 0;
   begin
 
     while not quit do begin
       keyStat := SDL_GetKeyboardState(nil);
-      if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
+      if keyStat[SDL_SCANCODE_SPACE] then begin
         SDL_Log('Space is pressed   %i', cnt);
         Inc(cnt);
       end;
-      if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
+      if keyStat[SDL_SCANCODE_LEFT] then begin
         SDL_Log('Left is pressed   %i', cnt);
         Inc(cnt);
       end;
