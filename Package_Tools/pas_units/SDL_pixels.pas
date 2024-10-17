@@ -86,54 +86,6 @@ const
   SDL_PACKEDLAYOUT_2101010 = 7;
   SDL_PACKEDLAYOUT_1010102 = 8;
 
-
-  { xxxxxxxxxxxxxxxxxxxxxxxxxxxxx }
-{
-#define SDL_BYTESPERPIXEL(X) \
-    (SDL_ISPIXELFORMAT_FOURCC(X) ? \
-        ((((X) == SDL_PIXELFORMAT_YUY2) || \
-          ((X) == SDL_PIXELFORMAT_UYVY) || \
-          ((X) == SDL_PIXELFORMAT_YVYU) || \
-          ((X) == SDL_PIXELFORMAT_P010)) ? 2 : 1) : (((X) >> 0) & 0xFF))
-
-#define SDL_ISPIXELFORMAT_INDEXED(format)   \
-    (!SDL_ISPIXELFORMAT_FOURCC(format) && \
-     ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1) || \
-      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX2) || \
-      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX4) || \
-      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8)))
-
-#define SDL_ISPIXELFORMAT_PACKED(format) \
-    (!SDL_ISPIXELFORMAT_FOURCC(format) && \
-     ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8) || \
-      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED16) || \
-      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32)))
-
-#define SDL_ISPIXELFORMAT_ARRAY(format) \
-    (!SDL_ISPIXELFORMAT_FOURCC(format) && \
-     ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8) || \
-      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU16) || \
-      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU32) || \
-      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16) || \
-      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32)))
-
-#define SDL_ISPIXELFORMAT_ALPHA(format)   \
-    ((SDL_ISPIXELFORMAT_PACKED(format) && \
-     ((SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB) || \
-      (SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA) || \
-      (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ABGR) || \
-      (SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA))))
-
-#define SDL_ISPIXELFORMAT_10BIT(format)    \
-      (!SDL_ISPIXELFORMAT_FOURCC(format) && \
-       ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32) && \
-        (SDL_PIXELLAYOUT(format) == SDL_PACKEDLAYOUT_2101010)))
-
-#define SDL_ISPIXELFORMAT_FLOAT(format)    \
-      (!SDL_ISPIXELFORMAT_FOURCC(format) && \
-       ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16) || \
-        (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32)))
- }
 type
   PSDL_PixelFormat = ^TSDL_PixelFormat;
   TSDL_PixelFormat = longint;
@@ -327,24 +279,18 @@ const
 
 type
   PSDL_Color = ^TSDL_Color;
-
   TSDL_Color = record
-    r: TUint8;
-    g: TUint8;
-    b: TUint8;
-    a: TUint8;
+    case byte of
+      1: (r, g, b, a: uint8);
+      2: (items: array[0..3] of uint8);
   end;
 
   PSDL_FColor = ^TSDL_FColor;
-
   TSDL_FColor = record
-    r: single;
-    g: single;
-    b: single;
-    a: single;
-  end;
-
-  PSDL_Palette = ^TSDL_Palette;
+    case byte of
+      1: (r, g, b, a: single);
+      2: (items: array[0..3] of single);
+    end;
 
   TSDL_Palette = record
     ncolors: longint;
@@ -352,8 +298,7 @@ type
     version: TUint32;
     refcount: longint;
   end;
-
-  PSDL_PixelFormatDetails = ^TSDL_PixelFormatDetails;
+  PSDL_Palette = ^TSDL_Palette;
 
   TSDL_PixelFormatDetails = record
     format: TSDL_PixelFormat;
@@ -373,6 +318,8 @@ type
     Bshift: TUint8;
     Ashift: TUint8;
   end;
+  PSDL_PixelFormatDetails = ^TSDL_PixelFormatDetails;
+
 
 function SDL_GetPixelFormatName(format: TSDL_PixelFormat): pansichar; cdecl; external libSDL3;
 function SDL_GetMasksForPixelFormat(format: TSDL_PixelFormat; bpp: Plongint; Rmask: PUint32; Gmask: PUint32; Bmask: PUint32;

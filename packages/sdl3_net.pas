@@ -48,9 +48,9 @@ type
   PSDLNet_Datagram = ^TSDLNet_Datagram;
   PPSDLNet_Datagram = ^PSDLNet_Datagram;
 
-procedure SDL_NET_VERSION(X: PSDL_Version);
+//procedure SDL_NET_VERSION(X: PSDL_Version);
 
-function SDLNet_LinkedVersion: PSDL_Version; cdecl; external sdl3_net_lib;
+//function SDLNet_LinkedVersion: PSDL_Version; cdecl; external sdl3_net_lib;
 function SDLNet_Init: longint; cdecl; external sdl3_net_lib;
 procedure SDLNet_Quit; cdecl; external sdl3_net_lib;
 function SDLNet_ResolveHostname(host: PChar): PSDLNet_Address; cdecl; external sdl3_net_lib;
@@ -86,11 +86,11 @@ function SDLNet_WaitUntilInputAvailable(vsockets: Ppointer; numsockets: longint;
 
 implementation
 
-procedure SDL_NET_VERSION(X: PSDL_Version);
-begin
-  X^.major := SDL_NET_MAJOR_VERSION;
-  X^.minor := SDL_NET_MINOR_VERSION;
-  X^.patch := SDL_NET_PATCHLEVEL;
-end;
+//procedure SDL_NET_VERSION(X: PSDL_Version);
+//begin
+//  X^.major := SDL_NET_MAJOR_VERSION;
+//  X^.minor := SDL_NET_MINOR_VERSION;
+//  X^.patch := SDL_NET_PATCHLEVEL;
+//end;
 
 end.

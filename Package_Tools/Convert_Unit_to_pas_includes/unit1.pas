@@ -10,7 +10,7 @@ uses
 //  SDL_time,
 //  SDL_filesystem,
 //    SDL_storage,
-//  SDL3,
+  SDL3,
 //  SDL3_mouse,
 //  SDL3_events,
 //  SDL3_dialog,
@@ -63,6 +63,7 @@ begin
     inc_dest.Add('/////////////////////////////////////////////////////////////');
     inc_dest.Add('');
     unit_source.LoadFromFile(slFile[i]);
+WriteLn(  slFile[i]);
 
     j := 0;
 
@@ -126,7 +127,7 @@ begin
 
     path := ExtractFileName(slFile[i]);
     path := ChangeFileExt(path, '.inc');
-    path := '/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/packages/' + path;
+    path := '/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/packages/SDL3/' + path;
     Memo1.Lines.Add(path);
 
     inc_dest.SaveToFile(path);

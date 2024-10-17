@@ -87,4 +87,6 @@ function SDL_GetGDKDefaultUser(outUserHandle: PXUserHandle): Tbool; cdecl; exter
 {$endif}
 
 implementation
+
+
 end.

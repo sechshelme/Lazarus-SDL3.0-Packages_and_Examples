@@ -28,14 +28,14 @@ const
   RTF_MINOR_VERSION = SDL_RTF_MINOR_VERSION;
   RTF_PATCHLEVEL = SDL_RTF_PATCHLEVEL;
 
-procedure SDL_RTF_VERSION(X: PSDL_Version);
-procedure RTF_VERSION(X: PSDL_Version);
+//procedure SDL_RTF_VERSION(X: PSDL_Version);
+//procedure RTF_VERSION(X: PSDL_Version);
 
 type
   TRTF_Context = Pointer;
   PRTF_Context = ^TRTF_Context;
 
-function RTF_Linked_Version: PSDL_Version; cdecl; external sdl3_rtf_lib;
+//function RTF_Linked_Version: PSDL_Version; cdecl; external sdl3_rtf_lib;
 
 type
 
@@ -91,16 +91,16 @@ function RTF_GetError: PChar; cdecl; external sdl3_lib Name 'SDL_GetError';
 
 implementation
 
-procedure SDL_RTF_VERSION(X: PSDL_Version);
-begin
-  X^.major := SDL_RTF_MAJOR_VERSION;
-  X^.minor := SDL_RTF_MINOR_VERSION;
-  X^.patch := SDL_RTF_PATCHLEVEL;
-end;
-
-procedure RTF_VERSION(X: PSDL_Version);
-begin
-  SDL_RTF_VERSION(X);
-end;
+//procedure SDL_RTF_VERSION(X: PSDL_Version);
+//begin
+//  X^.major := SDL_RTF_MAJOR_VERSION;
+//  X^.minor := SDL_RTF_MINOR_VERSION;
+//  X^.patch := SDL_RTF_PATCHLEVEL;
+//end;
+//
+//procedure RTF_VERSION(X: PSDL_Version);
+//begin
+//  SDL_RTF_VERSION(X);
+//end;
 
 end.

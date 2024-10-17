@@ -20,7 +20,7 @@ type
     WinSize: TSDL_Point;
     renderer: PSDL_Renderer;
     bitmapTex: PSDL_Texture;
-    keyStat: PUInt8;
+    keyStat: PBoolean;
     rDest: TSDL_FRect;
     function CreateTexture: PSDL_Texture;
   end;
@@ -110,8 +110,8 @@ var
   step: single;
 begin
   if (SDL_GetWindowFlags(win) and SDL_WINDOW_INPUT_FOCUS) = SDL_WINDOW_INPUT_FOCUS then begin
-    IsShift := (keyStat[SDL_SCANCODE_LSHIFT] <> 0) or (keyStat[SDL_SCANCODE_RSHIFT] <> 0);
-    IsCtrl := (keyStat[SDL_SCANCODE_LCTRL] <> 0) or (keyStat[SDL_SCANCODE_RCTRL] <> 0);
+    IsShift := (keyStat[SDL_SCANCODE_LSHIFT]) or (keyStat[SDL_SCANCODE_RSHIFT]);
+    IsCtrl := (keyStat[SDL_SCANCODE_LCTRL]) or (keyStat[SDL_SCANCODE_RCTRL]);
 
     if IsShift then begin
       step := 0.5;
@@ -119,7 +119,7 @@ begin
       step := 0.05;
     end;
 
-    if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
+    if keyStat[SDL_SCANCODE_RIGHT] then begin
       if IsCtrl then begin
         rDest.x -= step;
         rDest.w += step * 2;
@@ -127,7 +127,7 @@ begin
         rDest.x += step;
       end;
     end;
-    if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
+    if keyStat[SDL_SCANCODE_LEFT] then begin
       if IsCtrl then begin
         if rDest.w > 1 then begin
           rDest.x += step;
@@ -137,7 +137,7 @@ begin
         rDest.x -= step;
       end;
     end;
-    if keyStat[SDL_SCANCODE_DOWN] <> 0 then begin
+    if keyStat[SDL_SCANCODE_DOWN] then begin
       if IsCtrl then begin
         rDest.y -= step;
         rDest.h += step * 2;
@@ -145,7 +145,7 @@ begin
         rDest.y += step;
       end;
     end;
-    if keyStat[SDL_SCANCODE_UP] <> 0 then begin
+    if keyStat[SDL_SCANCODE_UP] then begin
       if IsCtrl then begin
         if rDest.h > 1 then begin
           rDest.y += step;

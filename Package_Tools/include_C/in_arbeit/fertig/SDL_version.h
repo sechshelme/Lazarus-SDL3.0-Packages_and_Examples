@@ -97,8 +97,10 @@ extern "C" {
  * \param version the version number.
  *
  * \since This macro is available since SDL 3.0.0.
- */
-#define SDL_VERSIONNUM_MINOR(version) (((version) / 1000) % 1000)
+ *
+vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv*/
+//#define SDL_VERSIONNUM_MINOR(version) (((version) / 1000) % 1000)
+#define SDL_VERSIONNUM_MINOR(version) (((version) / 1000) / 1000)
 
 /**
  * This macro extracts the micro version from a version number
@@ -109,7 +111,9 @@ extern "C" {
  *
  * \since This macro is available since SDL 3.0.0.
  */
-#define SDL_VERSIONNUM_MICRO(version) ((version) % 1000)
+//#define SDL_VERSIONNUM_MICRO(version) ((version) % 1000)
+//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+#define SDL_VERSIONNUM_MICRO(version) ((version) / 1000)
 
 /**
  * This is the version number macro for the current SDL version.

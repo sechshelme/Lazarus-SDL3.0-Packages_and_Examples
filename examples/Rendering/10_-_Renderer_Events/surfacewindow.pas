@@ -20,7 +20,7 @@ type
   private
     win: PSDL_Window;
     winSurface: PSDL_Surface;
-    keyStat: PUInt8;
+    keyStat: PBoolean;
     Surface: array of PSDL_Surface;
     procedure WinTransform(const ofs: TSDL_Rect);
     procedure ShowWinPos(const ev: TSDL_Event);
@@ -64,7 +64,7 @@ begin
   Surface += [CreateBMPSurface('autos4bit.bmp')];
   Surface += [CreateBMPSurface('autos8bit.bmp')];
 
-  Surface += [SDL_ConvertSurfaceFormat(Surface[4], SDL_PIXELFORMAT_RGBA32)];
+//  Surface += [SDL_ConvertSurfaceFormat(Surface[4], SDL_PIXELFORMAT_RGBA32)];
 
   Surface += [CreateSurfaceFromQuadBuffer];
   Surface += [CreateSurfaceFromTriBuffer];
@@ -89,7 +89,7 @@ begin
   end;
   winSurface := SDL_GetWindowSurface(win);
 
-  skyblue := SDL_MapRGB(winSurface^.format, 65, 193, 193);
+  skyblue := SDL_MapRGB(@winSurface^.format,nil, 65, 193, 193);
   SDL_FillSurfaceRect(winSurface, nil, skyblue);
 
   SDL_GetWindowSize(win, @w, @h);
@@ -129,8 +129,8 @@ var
   IsMotif: boolean = False;
 begin
   if (SDL_GetWindowFlags(win) and SDL_WINDOW_INPUT_FOCUS) = SDL_WINDOW_INPUT_FOCUS then begin
-    IsShift := (keyStat[SDL_SCANCODE_LSHIFT] <> 0) or (keyStat[SDL_SCANCODE_RSHIFT] <> 0);
-    IsCtrl := (keyStat[SDL_SCANCODE_LCTRL] <> 0) or (keyStat[SDL_SCANCODE_RCTRL] <> 0);
+    IsShift := (keyStat[SDL_SCANCODE_LSHIFT] ) or (keyStat[SDL_SCANCODE_RSHIFT] );
+    IsCtrl := (keyStat[SDL_SCANCODE_LCTRL] ) or (keyStat[SDL_SCANCODE_RCTRL] );
 
     //  if IsCtrl then WriteLn('Ctrl')else WriteLn('no Ctrl');
 
@@ -140,7 +140,7 @@ begin
       step := 1;
     end;
 
-    if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
+    if keyStat[SDL_SCANCODE_RIGHT]  then begin
       if IsCtrl then begin
         Inc(trans.w, step);
       end else begin
@@ -149,7 +149,7 @@ begin
       IsMotif := True;
     end;
 
-    if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
+    if keyStat[SDL_SCANCODE_LEFT]  then begin
       if IsCtrl then begin
         Dec(trans.w, step);
       end else begin
@@ -158,7 +158,7 @@ begin
       IsMotif := True;
     end;
 
-    if keyStat[SDL_SCANCODE_DOWN] <> 0 then begin
+    if keyStat[SDL_SCANCODE_DOWN]  then begin
       if IsCtrl then begin
         Inc(trans.h, step);
       end else begin
@@ -167,7 +167,7 @@ begin
       IsMotif := True;
     end;
 
-    if keyStat[SDL_SCANCODE_UP] <> 0 then begin
+    if keyStat[SDL_SCANCODE_UP]  then begin
       if IsCtrl then begin
         Dec(trans.h, step);
       end else begin
@@ -221,11 +221,11 @@ var
 begin
   ch := sur^.pixels;
   SDL_Log('Pixel: %02X %02X %02X %02X ', ch[0], ch[1], ch[2], ch[3]);
-  SDL_Log('format: %u', sur^.format^.format);
-  SDL_Log('bit per pixel: %u    bytes per Pixel: %u', sur^.format^.bits_per_pixel, sur^.format^.bytes_per_pixel);
-  SDL_Log('Rmask:  %08X   Gmask:  %08X   Bmask:  %08X   Amask:  %08X   ', sur^.format^.Rmask, sur^.format^.Gmask, sur^.format^.Bmask, sur^.format^.Amask);
-  SDL_Log('Rshift: %u   Gshift: %u   Bshift: %u   Ashift: %u   ', sur^.format^.Rshift, sur^.format^.Gshift, sur^.format^.Bshift, sur^.format^.Ashift);
-  SDL_Log('Rloss: %u   Gloss: %u   Bloss: %u   Aloss: %u'#10#10, sur^.format^.Rloss, sur^.format^.Gloss, sur^.format^.Bloss, sur^.format^.Aloss);
+  //SDL_Log('format: %u', sur^.format^.format);
+  //SDL_Log('bit per pixel: %u    bytes per Pixel: %u', sur^.format^.bits_per_pixel, sur^.format^.bytes_per_pixel);
+  //SDL_Log('Rmask:  %08X   Gmask:  %08X   Bmask:  %08X   Amask:  %08X   ', sur^.format^.Rmask, sur^.format^.Gmask, sur^.format^.Bmask, sur^.format^.Amask);
+  //SDL_Log('Rshift: %u   Gshift: %u   Bshift: %u   Ashift: %u   ', sur^.format^.Rshift, sur^.format^.Gshift, sur^.format^.Bshift, sur^.format^.Ashift);
+  //SDL_Log('Rloss: %u   Gloss: %u   Bloss: %u   Aloss: %u'#10#10, sur^.format^.Rloss, sur^.format^.Gloss, sur^.format^.Bloss, sur^.format^.Aloss);
 end;
 
 function TSurfaceWindow.CreateBMPSurface(path: PChar): PSDL_Surface;
@@ -264,7 +264,9 @@ begin
     $888888, $FF8888, $88FF88, $8888FF,
     $AAAAAA, $FFAAAA, $AAFFAA, $AAAAAA];
 
-  Result := SDL_CreateSurfaceFrom(PTriByte(Data), 4, 4, 12, SDL_PIXELFORMAT_RGB24);
+//  function SDL_CreateSurfaceFrom(Width: longint; Height: longint; format: TSDL_PixelFormat; pixels: pointer; pitch: longint): PSDL_Surface; cdecl; external libSDL3;
+
+  Result := SDL_CreateSurfaceFrom(4,4,SDL_PIXELFORMAT_RGB24, PTriByte(Data), 12);
   if Result = nil then begin
     SDL_Log('Konnte Surface nicht laden!:  %s', SDL_GetError);
   end;
@@ -280,7 +282,8 @@ const
     $888888FF, $FF8888FF, $88FF88FF, $8888FFFF,
     $AAAAAAFF, $FFAAAAFF, $AAFFAAFF, $AAAAAAFF);
 begin
-  Result := SDL_CreateSurfaceFrom(PDWord(Data), 4, 4, 16, SDL_PIXELFORMAT_RGBA8888);
+//  Result := SDL_CreateSurfaceFrom(PDWord(Data), 4, 4, 16, SDL_PIXELFORMAT_RGBA8888);
+  Result := SDL_CreateSurfaceFrom(4,4,SDL_PIXELFORMAT_RGBA8888, PDWord(Data), 16);
   if Result = nil then begin
     SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
   end;
@@ -294,7 +297,8 @@ const
     (rgb: $888888), (rgb: $FF8888), (rgb: $88FF88), (rgb: $8888FF),
     (rgb: $AAAAAA), (rgb: $FFAAAA), (rgb: $AAFFAA), (rgb: $AAAAAA));
 begin
-  Result := SDL_CreateSurfaceFrom(PDWord(Data), 4, 4, 12, SDL_PIXELFORMAT_RGB24);
+//  Result := SDL_CreateSurfaceFrom(PDWord(Data), 4, 4, 12, SDL_PIXELFORMAT_RGB24);
+  Result := SDL_CreateSurfaceFrom(4,4,SDL_PIXELFORMAT_RGB24, PDWord(Data), 12);
   if Result = nil then begin
     SDL_Log('Konnte BMP nicht laden!:  %s', SDL_GetError);
   end;

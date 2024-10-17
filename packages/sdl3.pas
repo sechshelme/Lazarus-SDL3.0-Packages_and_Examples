@@ -5,6 +5,9 @@ unit SDL3;
 interface
 
 uses
+  {$IFDEF Linux}
+  x, xlib,
+  {$ENDIF}
   ctypes;
 
 const

@@ -27,11 +27,11 @@ const
   MIX_MINOR_VERSION = SDL_MIXER_MINOR_VERSION;
   MIX_PATCHLEVEL = SDL_MIXER_PATCHLEVEL;
 
-procedure SDL_MIXER_VERSION(X: PSDL_Version);
-procedure MIX_VERSION(X: PSDL_Version);
+//procedure SDL_MIXER_VERSION(X: PSDL_Version);
+//procedure MIX_VERSION(X: PSDL_Version);
 function SDL_MIXER_COMPILEDVERSION: longint;
 
-function Mix_Linked_Version: PSDL_Version; cdecl; external sdl3_mixer_lib;
+//function Mix_Linked_Version: PSDL_Version; cdecl; external sdl3_mixer_lib;
 
 type
   PMIX_InitFlags = ^TMIX_InitFlags;
@@ -56,7 +56,7 @@ const
   MIX_DEFAULT_FREQUENCY = 44100;
   MIX_DEFAULT_FORMAT = SDL_AUDIO_S16;
   MIX_DEFAULT_CHANNELS = 2;
-  MIX_MAX_VOLUME = SDL_MIX_MAXVOLUME;
+//  MIX_MAX_VOLUME = SDL_MIX_MAXVOLUME;
 
 type
   PMix_Chunk = ^TMix_Chunk;
@@ -232,17 +232,17 @@ procedure Mix_OutOfMemory; cdecl; external sdl3_lib Name 'SDL_OutOfMemory';
 
 implementation
 
-procedure SDL_MIXER_VERSION(X: PSDL_Version);
-begin
-  X^.major := SDL_MIXER_MAJOR_VERSION;
-  X^.minor := SDL_MIXER_MINOR_VERSION;
-  X^.patch := SDL_MIXER_PATCHLEVEL;
-end;
-
-procedure MIX_VERSION(X: PSDL_Version);
-begin
-  SDL_MIXER_VERSION(X);
-end;
+//procedure SDL_MIXER_VERSION(X: PSDL_Version);
+//begin
+//  X^.major := SDL_MIXER_MAJOR_VERSION;
+//  X^.minor := SDL_MIXER_MINOR_VERSION;
+//  X^.patch := SDL_MIXER_PATCHLEVEL;
+//end;
+//
+//procedure MIX_VERSION(X: PSDL_Version);
+//begin
+//  SDL_MIXER_VERSION(X);
+//end;
 
 function SDL_MIXER_COMPILEDVERSION: longint;
 begin

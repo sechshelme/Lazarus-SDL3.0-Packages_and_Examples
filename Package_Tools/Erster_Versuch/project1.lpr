@@ -1,4 +1,5 @@
 program project1;
+
 uses
   SDL_stdinc,
   SDL_system,
@@ -6,6 +7,13 @@ uses
   SDL_properties,
   SDL_log,
   SDL_atomic,
+  SDL_timer,
+  SDL_time,
+  SDL_cpuinfo,
+  SDL_error,
+  SDL_loadso,
+  SDL_version,
+  SDL_clipboard,
   SDL_power,
   SDL_filesystem,
   SDL_storage,       // SDL_properties, SDL_filesystem
@@ -23,6 +31,8 @@ uses
   SDL_surface,       // SDL_properties, SDL_pixels, SDL_iostream, SDL_blendmode, SDL_rect
   SDL_video,         // SDL_properties, SDL_pixels, SDL_rect, SDL_surface
   SDL_dialog,        // SDL_video
+  SDL_messagebox,    // SDL_video
+  SDL_vulkan,        // SDL_video
   SDL_scancode,
   SDL_keycode,
   SDL_keyboard,      // SDL_properties, SDL_video, SDL_keycode, SDL_scancode, SDL_rect
@@ -37,14 +47,43 @@ uses
   SDL_events,        // SDL_video, SDL_keyboard, SDL_keycode, SDL_mouse, SDL_pen, SDL_sensor, SDL_touch, SDL_scancode, SDL_joystick, SDL_power, SDL_audio, SDL_camera
   SDL_init,          // SDL_events
   SDL_render,        // SDL_rect, SDL_pixels, SDL_video, SDL_properties, SDL_surface, SDL_blendmode, SDL_events
+  SDL_metal,
+  SDL_locale,
+  SDL_misc,
+  SDL_platform,
+  SDL_revision,
 
 
 
 
   SDL_gpu,
 
+  Strings,
   ctypes;
+
+  procedure main;
+  var
+    dev: PSDL_GPUDevice;
+    pl: pansichar;
+    i: integer;
+    l: SizeInt;
+  begin
+    dev := SDL_CreateGPUDevice(SDL_GPU_SHADERFORMAT_SPIRV, False, 'test');
+    SDL_DestroyGPUDevice(dev);
+
+    SDL_Metal_CreateView(nil);
+    pl := SDL_GetPlatform;
+    if pl = nil then begin
+      WriteLn('pl = nil');
+    end;
+    l := strlen(pl);
+    for i := 0 to l - 1 do begin
+      Write(byte(pl[i]), ' - ');
+    end;
+    WriteLn(pl);
+
+  end;
+
 begin
-
+  main;
 end.
-

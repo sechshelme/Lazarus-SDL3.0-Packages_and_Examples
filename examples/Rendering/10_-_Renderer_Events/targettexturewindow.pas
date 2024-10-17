@@ -20,7 +20,7 @@ type
     WinSize: TSDL_Point;
     renderer: PSDL_Renderer;
     texture: PSDL_Texture;
-    keyStat: PUInt8;
+    keyStat: PBoolean;
     procedure Triangle(Arenderer:PSDL_Renderer);
   end;
 

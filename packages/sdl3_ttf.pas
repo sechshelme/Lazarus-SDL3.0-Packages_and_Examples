@@ -32,12 +32,12 @@ const
   TTF_MINOR_VERSION = SDL_TTF_MINOR_VERSION;
   TTF_PATCHLEVEL = SDL_TTF_PATCHLEVEL;
 
-procedure SDL_TTF_VERSION(X: PSDL_Version);
-procedure TTF_VERSION(X: PSDL_Version);
+//procedure SDL_TTF_VERSION(X: PSDL_Version);
+//procedure TTF_VERSION(X: PSDL_Version);
 
 function SDL_TTF_VERSION_ATLEAST(X, Y, Z: longint): TSDL_bool;
 
-function TTF_Linked_Version: PSDL_Version; cdecl; external sdl3_ttf_lib;
+//function TTF_Linked_Version: PSDL_Version; cdecl; external sdl3_ttf_lib;
 procedure TTF_GetFreeTypeVersion(major: Plongint; minor: Plongint; patch: Plongint); cdecl; external sdl3_ttf_lib;
 procedure TTF_GetHarfBuzzVersion(major: Plongint; minor: Plongint; patch: Plongint); cdecl; external sdl3_ttf_lib;
 
@@ -175,17 +175,17 @@ function TTF_IsFontScalable(font: PTTF_Font): TSDL_bool; cdecl; external sdl3_tt
 
 implementation
 
-procedure SDL_TTF_VERSION(X: PSDL_Version);
-begin
-  X^.major := SDL_TTF_MAJOR_VERSION;
-  X^.minor := SDL_TTF_MINOR_VERSION;
-  X^.patch := SDL_TTF_PATCHLEVEL;
-end;
-
-procedure TTF_VERSION(X: PSDL_Version);
-begin
-  SDL_TTF_VERSION(X);
-end;
+//procedure SDL_TTF_VERSION(X: PSDL_Version);
+//begin
+//  X^.major := SDL_TTF_MAJOR_VERSION;
+//  X^.minor := SDL_TTF_MINOR_VERSION;
+//  X^.patch := SDL_TTF_PATCHLEVEL;
+//end;
+//
+//procedure TTF_VERSION(X: PSDL_Version);
+//begin
+//  SDL_TTF_VERSION(X);
+//end;
 
 function SDL_TTF_VERSION_ATLEAST(X, Y, Z: longint): TSDL_bool;
 begin

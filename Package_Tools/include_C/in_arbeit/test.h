@@ -1,0 +1,46 @@
+#define SDL_BYTESPERPIXEL(X) \
+    (SDL_ISPIXELFORMAT_FOURCC(X) ? \
+        ((((X) == SDL_PIXELFORMAT_YUY2) | \
+          ((X) == SDL_PIXELFORMAT_UYVY) | \
+          ((X) == SDL_PIXELFORMAT_YVYU) | \
+          ((X) == SDL_PIXELFORMAT_P010)) ? 2 : 1) : (((X) >> 0) & 0xFF))
+
+#define SDL_ISPIXELFORMAT_INDEXED(format)   \
+    (!SDL_ISPIXELFORMAT_FOURCC(format) && \
+     ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX1) | \
+      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX2) | \
+      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX4) | \
+      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_INDEX8)))
+
+#define SDL_ISPIXELFORMAT_PACKED(format) \
+    (!SDL_ISPIXELFORMAT_FOURCC(format) && \
+     ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED8) | \
+      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED16) | \
+      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32)))
+
+#define SDL_ISPIXELFORMAT_ARRAY(format) \
+    (!SDL_ISPIXELFORMAT_FOURCC(format) && \
+     ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU8) | \
+      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU16) | \
+      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYU32) | \
+      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16) | \
+      (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32)))
+
+#define SDL_ISPIXELFORMAT_ALPHA(format)   \
+    ((SDL_ISPIXELFORMAT_PACKED(format) && \
+     ((SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB) | \
+      (SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA) | \
+      (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ABGR) | \
+      (SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA))))
+
+#define SDL_ISPIXELFORMAT_10BIT(format)    \
+      (!SDL_ISPIXELFORMAT_FOURCC(format) && \
+       ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_PACKED32) && \
+        (SDL_PIXELLAYOUT(format) == SDL_PACKEDLAYOUT_2101010)))
+
+#define SDL_ISPIXELFORMAT_FLOAT(format)    \
+      (!SDL_ISPIXELFORMAT_FOURCC(format) && \
+       ((SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF16) | \
+        (SDL_PIXELTYPE(format) == SDL_PIXELTYPE_ARRAYF32)))
+ 
+
