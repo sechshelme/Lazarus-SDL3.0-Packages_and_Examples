@@ -53,11 +53,7 @@ uses
   SDL_platform,
   SDL_revision,
   SDL_main,          // SDL_init, SDL_events
-
-
-
-
-  SDL_gpu,
+  SDL_gpu,           // SDL_properties, SDL_pixels, SDL_surface, SDL_rect, SDL_video
 
   Strings,
   ctypes;

@@ -32,7 +32,7 @@ const
     event: TSDL_Event;
     rect: TSDL_Rect;
   begin
-    if SDL_init(SDL_INIT_VIDEO) < 0 then begin
+    if not SDL_init(SDL_INIT_VIDEO) then begin
       SDL_Log('Konnte SDL-VIDEO nicht laden!:  %s', SDL_GetError);
     end;
 
@@ -57,7 +57,7 @@ const
       SDL_Log('Konnte Palette nicht erzeugen!:  %s', SDL_GetError);
     end;
 
-    if SDL_SetSurfacePalette(surface, palette) <> 0 then begin
+    if not SDL_SetSurfacePalette(surface, palette) then begin
       SDL_Log('Unable to set palette');
     end;
 

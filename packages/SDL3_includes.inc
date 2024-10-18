@@ -53,4 +53,5 @@
 {$include SDL3/SDL_platform.inc}
 {$include SDL3/SDL_revision.inc}
 {$include SDL3/SDL_main.inc}          // SDL_init, SDL_events
+{$include SDL3/SDL_gpu.inc}           // SDL_properties, SDL_pixels, SDL_surface, SDL_rect, SDL_video
 
