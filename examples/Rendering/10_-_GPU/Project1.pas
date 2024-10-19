@@ -23,9 +23,12 @@ const
     dw, dh: longint;
     cmdbuf: PSDL_GPUCommandBuffer;
     swapchainTexture: PSDL_GPUTexture = nil;
-    w, h: DWord;
     renderPass: PSDL_GPURenderPass;
     color_target_info: TSDL_GPUColorTargetInfo;
+    now: TUint64;
+    thn: TUint64 = 0;
+    frames: TUint64 = 0;
+    currentTime: double;
   begin
     if not SDL_init(SDL_INIT_VIDEO) then begin
       SDL_Log('Konnte SDL-VIDEO nicht laden!:  %s', SDL_GetError);
@@ -55,6 +58,7 @@ const
     SDL_GetWindowSizeInPixels(window, @dw, @dh);
     SDL_Log('Draw Size      : %dx%d', dw, dh);
 
+    thn := SDL_GetTicks();
 
     while not quit do begin
       while SDL_PollEvent(@event) do begin
@@ -77,40 +81,37 @@ const
         SDL_Log('Konnte kein cmdbuf erzeugen!:  %s', SDL_GetError);
       end;
 
-      w := 0;
-      h := 0;
-      if not SDL_AcquireGPUSwapchainTexture(cmdbuf, window, @swapchainTexture, @w, @h) then begin
+      if not SDL_AcquireGPUSwapchainTexture(cmdbuf, window, @swapchainTexture, nil, nil) then begin
         SDL_Log('Konnte keine swap chain Textur erzeugen!:  %s', SDL_GetError);
       end;
-      WriteLn(w, ' x ', h);
-
 
       if swapchainTexture = nil then begin
-        WriteLn('error');
-        //     exit;
+        SDL_Log('Konnte keine Swap Texture erzeugen!:  %s', SDL_GetError);
       end else begin
-        FillChar(color_target_info, SizeOf(color_target_info), $00);
+        currentTime := SDL_GetPerformanceCounter / SDL_GetPerformanceFrequency;
 
+        FillChar(color_target_info, SizeOf(color_target_info), $00);
         color_target_info.texture := swapchainTexture;
-        color_target_info.clear_color.r := random;
-        color_target_info.clear_color.g := random;
-        color_target_info.clear_color.b := random;
+        color_target_info.clear_color.r := 0.5 + 0.5 * SDL_sin(currentTime);
+        color_target_info.clear_color.g := 0.5 + 0.5 * SDL_sin(currentTime + SDL_PI_D * 2 / 3);
+        color_target_info.clear_color.b := 0.5 + 0.5 * SDL_sin(currentTime + SDL_PI_D * 4 / 3);
+
         color_target_info.clear_color.a := 1.0;
         color_target_info.load_op := SDL_GPU_LOADOP_CLEAR;
         color_target_info.store_op := SDL_GPU_STOREOP_STORE;
 
         renderPass := SDL_BeginGPURenderPass(cmdbuf, @color_target_info, 1, nil);
-        if renderPass = nil then begin
-          WriteLn('nil');
-        end else begin
-          WriteLn('io.');
-        end;
         SDL_EndGPURenderPass(renderPass);
 
         SDL_SubmitGPUCommandBuffer(cmdbuf);
 
+        Inc(frames);
       end;
+    end;
 
+    now := SDL_GetTicks;
+    if now > thn then begin
+      SDL_log('%2.2f frames per secound'#10, frames * 1000 / (now - thn));
     end;
 
     SDL_DestroyWindow(window);
