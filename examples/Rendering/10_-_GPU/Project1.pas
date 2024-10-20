@@ -90,7 +90,8 @@ const
       end else begin
         currentTime := SDL_GetPerformanceCounter / SDL_GetPerformanceFrequency;
 
-        FillChar(color_target_info, SizeOf(color_target_info), $00);
+        //        FillChar(color_target_info, SizeOf(color_target_info), $00);
+        color_target_info := Default(TSDL_GPUColorTargetInfo);
         color_target_info.texture := swapchainTexture;
         color_target_info.clear_color.r := 0.5 + 0.5 * SDL_sin(currentTime);
         color_target_info.clear_color.g := 0.5 + 0.5 * SDL_sin(currentTime + SDL_PI_D * 2 / 3);
