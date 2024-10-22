@@ -3,7 +3,7 @@ unit SDL_joystick;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_mutex, SDL_guid, SDL_sensor, SDL_properties, SDL_power;
+  SDL_stdinc, SDL_mutex, SDL_guid, SDL_sensor, SDL_properties, SDL_power;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

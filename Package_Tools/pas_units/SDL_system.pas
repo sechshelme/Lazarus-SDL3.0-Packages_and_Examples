@@ -4,9 +4,9 @@ interface
 
 uses
   {$IFDEF Linux}
-  x, xlib,
+  xlib,
   {$ENDIF}
-  ctypes, SDL_stdinc;
+  SDL_stdinc;
 
 {$IFDEF FPC}
 {$PACKRECORDS C}

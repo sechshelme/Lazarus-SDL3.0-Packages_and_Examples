@@ -195,86 +195,12 @@ type
       1: (x, y, w, h: single);
       2: (items: array[0..3] of single);
   end;
-
-...
-
-procedure SDL_RectToFRect(const rect: PSDL_Rect; frect: PSDL_FRect);
-function SDL_PointInRect(p: PSDL_Point; r: PSDL_Rect): boolean;
-function SDL_RectEmpty(r: PSDL_Rect): TSDL_bool;
-function SDL_RectsEqual(a: PSDL_Rect; b: PSDL_Rect): boolean;
-
-function SDL_PointInRectFloat(p: PSDL_FPoint; r: PSDL_FRect): boolean;
-function SDL_RectEmptyFloat(r: PSDL_FRect): boolean;
-function SDL_RectsEqualEpsilon(const RectA: PSDL_FRect; const RectB: PSDL_FRect; const Epsilon: single): boolean;
-function SDL_RectsEqualFloat(const RectA: PSDL_FRect; const RectB: PSDL_FRect): boolean;
-
-implementation
-
-procedure SDL_RectToFRect(const rect: PSDL_Rect; frect: PSDL_FRect);
-begin
-  frect^.x := rect^.x;
-  frect^.y := rect^.y;
-  frect^.w := rect^.w;
-  frect^.h := rect^.h;
-end;
-
-function SDL_PointInRect(p: PSDL_Point; r: PSDL_Rect): boolean;
-begin
-  Result := (p <> nil) and (r <> nil) and
-    (p^.x >= r^.x) and (p^.x < (r^.x + r^.w)) and
-    (p^.y >= r^.y) and (p^.y < (r^.y + r^.h));
-end;
-
-function SDL_RectEmpty(r: PSDL_Rect): TSDL_bool;
-begin
-  if (r = nil) or (r^.w <= 0) or (r^.h <= 0) then begin
-    Result := SDL_TRUE;
-  end else begin
-    Result := SDL_FALSE;
-  end;
-end;
-
-function SDL_RectsEqual(a: PSDL_Rect; b: PSDL_Rect): boolean;
-begin
-  Result := (a <> nil) and (b <> nil) and
-    (a^.x = b^.x) and (a^.y = b^.y) and
-    (a^.w = b^.w) and (a^.h = b^.h);
-end;
-
-// ====
-
-function SDL_PointInRectFloat(p: PSDL_FPoint; r: PSDL_FRect): boolean;
-begin
-  Result := (p <> nil) and (r <> nil) and
-    (p^.x >= r^.x) and (p^.x <= (r^.x + r^.w)) and
-    (p^.y >= r^.y) and (p^.y <= (r^.y + r^.h));
-end;
-
-function SDL_RectEmptyFloat(r: PSDL_FRect): boolean;
-begin
-  Result := (r = nil) or (r^.w < 0.0) or (r^.h < 0.0);
-end;
-
-function SDL_RectsEqualEpsilon(const RectA: PSDL_FRect; const RectB: PSDL_FRect; const Epsilon: single): boolean;
-begin
-  Result := (RectA <> nil) and (RectB <> nil) and
-    ((RectA = RectB) or
-    ((SDL_fabsf(RectA^.x - RectB^.x) <= Epsilon) and
-    (SDL_fabsf(RectA^.y - RectB^.y) <= Epsilon) and
-    (SDL_fabsf(RectA^.w - RectB^.w) <= Epsilon) and
-    (SDL_fabsf(RectA^.h - RectB^.h) <= Epsilon)));
-end;
-
-function SDL_RectsEqualFloat(const RectA: PSDL_FRect; const RectB: PSDL_FRect): boolean;
-begin
-  Result := SDL_RectsEqualEpsilon(RectA, RectB, SDL_FLT_EPSILON);
-end;
 ```
 
 ### .../pas_units/sdl3_log.pas
 Folgendes ergänzen:
 ```pascal
-procedure SDL_Log(fmt: PChar); varargs; cdecl; external name 'SDL_Log';
+procedure SDL_Log(fmt: PChar); varargs; cdecl; external libSDL3 name 'SDL_Log';
 ```
 # Abhängigkeiten
 
@@ -341,14 +267,6 @@ procedure SDL_Log(fmt: PChar); varargs; cdecl; external name 'SDL_Log';
 - `unit SDL3_opengl;`
 - `unit SDL3_opengl_glext;SDL3_opengl;`
 - `unit SDL3_egl;`
-
-
-
-# Gröbere Änderungen
-
-## Müssen neu gemacht werden:
-
-
 
 
  

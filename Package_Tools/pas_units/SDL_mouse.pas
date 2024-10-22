@@ -3,7 +3,7 @@ unit SDL_mouse;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_video, SDL_surface;
+  SDL_stdinc, SDL_video, SDL_surface;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

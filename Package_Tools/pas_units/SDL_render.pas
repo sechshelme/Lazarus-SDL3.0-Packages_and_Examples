@@ -3,7 +3,7 @@ unit SDL_render;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_rect, SDL_pixels, SDL_video, SDL_properties, SDL_surface, SDL_blendmode, SDL_events;
+  SDL_stdinc, SDL_rect, SDL_pixels, SDL_video, SDL_properties, SDL_surface, SDL_blendmode, SDL_events;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

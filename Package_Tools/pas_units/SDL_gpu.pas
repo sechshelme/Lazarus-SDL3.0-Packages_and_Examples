@@ -3,7 +3,7 @@ unit SDL_gpu;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_properties, SDL_pixels, SDL_surface, SDL_rect, SDL_video;
+  SDL_stdinc, SDL_properties, SDL_pixels, SDL_surface, SDL_rect, SDL_video;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

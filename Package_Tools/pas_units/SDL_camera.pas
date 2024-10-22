@@ -3,7 +3,7 @@ unit SDL_camera;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_pixels, SDL_properties, SDL_surface;
+  SDL_stdinc, SDL_pixels, SDL_properties, SDL_surface;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

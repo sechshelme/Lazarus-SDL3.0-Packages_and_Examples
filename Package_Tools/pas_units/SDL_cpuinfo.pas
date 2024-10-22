@@ -3,7 +3,7 @@ unit SDL_cpuinfo;
 interface
 
 uses
-  ctypes, SDL_stdinc;
+  SDL_stdinc;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

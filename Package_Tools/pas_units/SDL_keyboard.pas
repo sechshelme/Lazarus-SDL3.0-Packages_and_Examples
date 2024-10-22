@@ -3,7 +3,7 @@ unit SDL_keyboard;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_video, SDL_keycode, SDL_scancode, SDL_properties, SDL_rect;
+  SDL_stdinc, SDL_video, SDL_keycode, SDL_scancode, SDL_properties, SDL_rect;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

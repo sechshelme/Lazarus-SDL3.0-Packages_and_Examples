@@ -2,7 +2,7 @@
 //                                                         //
 //   WARNUNG, dies Datei wird automatisch durch            //
 //   das Program "Convert_Unit_to_pas_includes" erzeugt !  //
-//   Erzeugt am: 17-10-2024   19:37                        //
+//   Erzeugt am: 22-10-2024   15:23                        //
 //                                                         //
 /////////////////////////////////////////////////////////////
 
@@ -54,7 +54,7 @@ procedure SDL_SetLogPriority(category: longint; priority: TSDL_LogPriority); cde
 function SDL_GetLogPriority(category: longint): TSDL_LogPriority; cdecl; external libSDL3;
 procedure SDL_ResetLogPriorities; cdecl; external libSDL3;
 function SDL_SetLogPriorityPrefix(priority: TSDL_LogPriority; prefix: pansichar): Tbool; cdecl; external libSDL3;
-procedure SDL_Log(fmt: PChar); varargs; cdecl; external name 'SDL_Log';
+procedure SDL_Log(fmt: PChar); varargs; cdecl; external libSDL3 name 'SDL_Log';
 procedure SDL_LogTrace(category: longint; fmt: pansichar); varargs cdecl; external libSDL3;
 procedure SDL_LogVerbose(category: longint; fmt: pansichar); varargs cdecl; external libSDL3;
 procedure SDL_LogDebug(category: longint; fmt: pansichar); varargs cdecl; external libSDL3;

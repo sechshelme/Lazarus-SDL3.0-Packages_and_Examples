@@ -2,14 +2,23 @@
 //                                                         //
 //   WARNUNG, dies Datei wird automatisch durch            //
 //   das Program "Convert_Unit_to_pas_includes" erzeugt !  //
-//   Erzeugt am: 17-10-2024   19:37                        //
+//   Erzeugt am: 22-10-2024   15:23                        //
 //                                                         //
 /////////////////////////////////////////////////////////////
 
 {$IFDEF read_interface}
 
+const
+  {$IFDEF Linux}
+  libSDL3 = 'SDL3';
+  {$ENDIF}
+
+  {$IFDEF Windows}
+  libSDL3 = 'SDL3.dll';
+  {$ENDIF}
+
 type
-  PSDL_GLContextState=Pointer; // ??????????????????????
+  PSDL_GLContextState = Pointer; // ??????????????????????
 
   Tbool = boolean;
   Tdouble = double;

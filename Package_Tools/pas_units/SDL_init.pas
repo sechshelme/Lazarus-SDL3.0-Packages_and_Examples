@@ -3,7 +3,7 @@ unit SDL_init;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_events;
+  SDL_stdinc, SDL_events;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

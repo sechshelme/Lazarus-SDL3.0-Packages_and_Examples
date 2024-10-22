@@ -3,7 +3,7 @@ unit SDL_storage;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_properties, SDL_filesystem;
+  SDL_stdinc, SDL_properties, SDL_filesystem;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

@@ -3,7 +3,7 @@ unit SDL_haptic;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_joystick;
+  SDL_stdinc, SDL_joystick;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

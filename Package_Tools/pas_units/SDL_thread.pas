@@ -3,7 +3,7 @@ unit SDL_thread;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_atomic, SDL_properties;
+  SDL_stdinc, SDL_atomic, SDL_properties;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

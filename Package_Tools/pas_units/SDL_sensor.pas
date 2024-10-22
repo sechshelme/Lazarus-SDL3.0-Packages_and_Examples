@@ -3,7 +3,7 @@ unit SDL_sensor;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_properties;
+  SDL_stdinc, SDL_properties;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

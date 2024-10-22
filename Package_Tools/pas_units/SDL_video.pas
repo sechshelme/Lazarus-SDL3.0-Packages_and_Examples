@@ -3,7 +3,7 @@ unit SDL_video;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_pixels, SDL_properties, SDL_rect, SDL_surface;
+  SDL_stdinc, SDL_pixels, SDL_properties, SDL_rect, SDL_surface;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

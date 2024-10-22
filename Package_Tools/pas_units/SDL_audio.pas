@@ -3,7 +3,7 @@ unit SDL_audio;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_properties, SDL_iostream;
+  SDL_stdinc, SDL_properties, SDL_iostream;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

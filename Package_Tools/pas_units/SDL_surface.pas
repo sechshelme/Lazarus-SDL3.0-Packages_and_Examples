@@ -3,7 +3,7 @@ unit SDL_surface;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_properties, SDL_pixels, SDL_iostream, SDL_blendmode, SDL_rect;
+  SDL_stdinc, SDL_properties, SDL_pixels, SDL_iostream, SDL_blendmode, SDL_rect;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

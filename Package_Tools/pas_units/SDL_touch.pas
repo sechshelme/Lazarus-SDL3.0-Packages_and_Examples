@@ -3,7 +3,7 @@ unit SDL_touch;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_mouse;
+  SDL_stdinc, SDL_mouse;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

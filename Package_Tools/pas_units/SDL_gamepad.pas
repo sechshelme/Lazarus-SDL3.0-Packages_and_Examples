@@ -3,7 +3,7 @@ unit SDL_gamepad;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_properties, SDL_iostream, SDL_guid, SDL_power, SDL_joystick, SDL_sensor;
+  SDL_stdinc, SDL_properties, SDL_iostream, SDL_guid, SDL_power, SDL_joystick, SDL_sensor;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

@@ -2,9 +2,6 @@ unit SDL_scancode;
 
 interface
 
-uses
-  ctypes, SDL_stdinc;
-
   {$IFDEF FPC}
   {$PACKRECORDS C}
   {$ENDIF}

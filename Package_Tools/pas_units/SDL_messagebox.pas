@@ -3,7 +3,7 @@ unit SDL_messagebox;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_video;
+  SDL_stdinc, SDL_video;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

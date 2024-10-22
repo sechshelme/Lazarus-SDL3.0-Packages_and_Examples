@@ -3,7 +3,7 @@ unit SDL_iostream;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_properties;
+  SDL_stdinc, SDL_properties;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

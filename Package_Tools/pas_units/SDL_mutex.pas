@@ -3,7 +3,7 @@ unit SDL_mutex;
 interface
 
 uses
-  ctypes, SDL_stdinc, SDL_atomic, SDL_thread;
+  SDL_stdinc, SDL_atomic, SDL_thread;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}

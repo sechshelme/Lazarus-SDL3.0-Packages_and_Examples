@@ -2,8 +2,6 @@ unit SDL_revision;
 
 interface
 
-uses
-  ctypes, SDL_stdinc;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}
