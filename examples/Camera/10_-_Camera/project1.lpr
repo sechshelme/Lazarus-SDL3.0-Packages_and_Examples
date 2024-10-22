@@ -7,6 +7,8 @@ type
   TAppstate = record
     window: PSDL_Window;
     renderer: PSDL_Renderer;
+    camera: PSDL_Camera;
+    texture: PSDL_Texture;
     Value: integer;
   end;
   PAppstate = ^TAppstate;
@@ -15,13 +17,20 @@ type
   function AppInit(appstate: Ppointer; argc: longint; argv: PPansichar): TSDL_AppResult; cdecl;
   var
     app: PAppstate = nil;
+    devices: PSDL_CameraID;
+    devcount: longint;
   begin
-    SDL_Init(SDL_INIT_VIDEO);
-
-//    SDL_SetAppMetadata('Example Camera Read and Draw', '1.0', 'com.example.camera-read-and-draw');
-
     app := SDL_malloc(SizeOf(TAppstate));
+    app^ := Default(TAppstate);
     appstate^ := app;
+
+    SDL_SetAppMetadata('Example Camera Read and Draw', '1.0', 'com.example.camera-read-and-draw');
+
+    if not SDL_Init(SDL_INIT_VIDEO or SDL_INIT_CAMERA) then  begin
+      SDL_Log('Kann SDL nict inizialisieren: %s', SDL_GetError);
+      exit(SDL_APP_FAILURE);
+    end;
+
     app^.window := SDL_CreateWindow('SDL3 Window', 640, 480, SDL_WINDOW_RESIZABLE);
     if app^.window = nil then begin
       SDL_LogError(SDL_LOG_CATEGORY_ERROR, 'Kann kein SDL-Fenster erzeugen !');
@@ -32,6 +41,21 @@ type
       SDL_LogError(SDL_LOG_CATEGORY_ERROR, 'Kann kein SDL-Renderer erzeugen !');
     end;
 
+    devices := SDL_GetCameras(@devcount);
+    if devices = nil then begin
+      SDL_Log('Keine Kamera Device gefunden: %s', SDL_GetError);
+      exit(SDL_APP_FAILURE);
+    end else if devcount = 0 then begin
+      SDL_Log('Keine Kamera gefunden');
+      exit(SDL_APP_FAILURE);
+    end;
+
+    app^.camera := SDL_OpenCamera(devices[0], nil);
+    SDL_free(devices);
+    if app^.camera = nil then begin
+      SDL_Log('Kann Kamera nicht öffnen: %s', SDL_GetError);
+    end;
+
     app^.Value := 100;
     Result := SDL_APP_CONTINUE;
   end;
@@ -39,17 +63,28 @@ type
   function AppIterate(appstate: pointer): TSDL_AppResult; cdecl;
   var
     app: PAppstate absolute appstate;
-    rect: TSDL_FRect;
+    timestampNS: uint64;
+    frame: PSDL_Surface;
   begin
-    SDL_SetRenderDrawColorFloat(app^.renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+    frame := SDL_AcquireCameraFrame(app^.camera, @timestampNS);
 
-    rect.x := SDL_rand(640) - 320;
-    rect.y := SDL_rand(480) - 240;
-    rect.w := SDL_rand(640);
-    rect.h := SDL_rand(480);
+    if frame <> nil then begin
+      if app^.texture = nil then begin
+        SDL_SetWindowSize(app^.window, frame^.w, frame^.h);
+        app^.texture := SDL_CreateTexture(app^.renderer, frame^.format, SDL_TEXTUREACCESS_STREAMING, frame^.w, frame^.h);
+      end;
 
-    SDL_SetRenderDrawColorFloat(app^.renderer, Random, Random, Random, SDL_ALPHA_OPAQUE);
-    SDL_RenderRect(app^.renderer, @rect);
+      if app^.texture <> nil then begin
+        SDL_UpdateTexture(app^.texture,nil,frame^.pixels,frame^.pitch);
+      end;
+
+      SDL_ReleaseCameraFrame(app^.camera,frame);
+    end;
+
+    SDL_SetRenderDrawColor(app^.renderer, $99,$99,$99,$FF);
+    SDL_RenderClear(app^.renderer);
+
+    if app^.texture<>nil then SDL_RenderTexture(app^.renderer,app^.texture,nil,nil);
 
     SDL_RenderPresent(app^.renderer);
     Result := SDL_APP_CONTINUE;
@@ -68,7 +103,7 @@ type
           end;
           SDLK_SPACE: begin
             Inc(app^.Value);
-//            SDL_LogError(0,'value: %i', app^.Value);
+            //            SDL_LogError(0,'value: %i', app^.Value);
             SDL_Log('value: %i', app^.Value);
           end;
         end;
@@ -80,7 +115,9 @@ type
   var
     app: PAppstate absolute appstate;
   begin
+    SDL_CloseCamera(app^.camera);
     SDL_DestroyRenderer(app^.renderer);
+    SDL_DestroyTexture(app^.texture);
     SDL_DestroyWindow(app^.window);
 
     SDL_free(app);
