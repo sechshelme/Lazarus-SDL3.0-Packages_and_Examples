@@ -4,11 +4,7 @@ h2pas -p -T -d -c -e xxx.h
 ```
 
 # Spezielle Behandlungen:
-## vor h2pas
-### .../include_C/sdl_pixels.h 
-Die *.pp mit folgendem Tool bearbeiten "convert_SDL_pixels.pp", wegen den Makros.
 
-## nach h2pas
 ### .../pas_units/sdl3_stdinc.pas
 Folgendes ergänzen:
 ```pascal
