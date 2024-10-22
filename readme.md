@@ -2,7 +2,7 @@
 - Dies ist ein SDL3.1.3 -Header für FPC/Lazarus
 
 # Installation
-- Passendes Paket runterladen (https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.3)[SDL 3.1.3]
+- Passendes Paket runterladen [https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.3]](SDL 3.1.3)
 ## Linux
 - Folgende Anleitung beachten: https://github.com/libsdl-org/SDL/blob/main/docs/README-cmake.md
 ## Windows und 
