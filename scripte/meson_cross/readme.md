@@ -26,6 +26,12 @@ cpu_family = 'x86_64'
 cpu = 'x86_64'
 endian = 'little'
 ```
+### Evtl. noch dies:
+```
+[properties]
+c_args = ['-D_FILE_OFFSET_BITS=64']
+cpp_args = ['-D_FILE_OFFSET_BITS=64']
+```
 
 ## cross.txt ( Muster GTK4 )
 ```ini
@@ -58,7 +64,7 @@ https://mesonbuild.com/Cross-compilation.html
 https://stackoverflow.com/questions/57436089/meson-can-not-find-windows-resource-compiler-on-linux
 https://sourceforge.net/p/meson/wiki/Cross%20compilation/
 
-## Keine Tests
+## Keine Tests ( Bei meson )
 `-Dtests=disabled`
 
 

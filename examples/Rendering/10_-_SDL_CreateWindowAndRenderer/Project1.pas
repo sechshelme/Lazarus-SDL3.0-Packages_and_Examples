@@ -40,9 +40,9 @@ var
     e: TSDL_Event;
     quit: boolean = False;
     rDest: TSDL_FRect;
-    keyStat: PUInt8;
     time: extended;
-    red, green, blue: Single;
+    red, green, blue: single;
+    keyStat: PBoolean;
   begin
     rDest.w := 100;
     rDest.h := 100;
@@ -50,19 +50,19 @@ var
     rDest.y := (heigt - rDest.h) / 2;
     while not quit do begin
       keyStat := SDL_GetKeyboardState(nil);
-      if keyStat[SDL_SCANCODE_SPACE] <> 0 then begin
+      if keyStat[SDL_SCANCODE_SPACE] then begin
       end;
 
-      if keyStat[SDL_SCANCODE_RIGHT] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+      if keyStat[SDL_SCANCODE_RIGHT] then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] then begin
           rDest.x -= step;
           rDest.w += step * 2;
         end else begin
           rDest.x += step;
         end;
       end;
-      if keyStat[SDL_SCANCODE_LEFT] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+      if keyStat[SDL_SCANCODE_LEFT] then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] then begin
           if rDest.w > 1 then begin
             rDest.x += step;
             rDest.w -= step * 2;
@@ -71,16 +71,16 @@ var
           rDest.x -= step;
         end;
       end;
-      if keyStat[SDL_SCANCODE_DOWN] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+      if keyStat[SDL_SCANCODE_DOWN] then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] then begin
           rDest.y -= step;
           rDest.h += step * 2;
         end else begin
           rDest.y += step;
         end;
       end;
-      if keyStat[SDL_SCANCODE_UP] <> 0 then begin
-        if keyStat[SDL_SCANCODE_LSHIFT] <> 0 then begin
+      if keyStat[SDL_SCANCODE_UP] then begin
+        if keyStat[SDL_SCANCODE_LSHIFT] then begin
           if rDest.h > 1 then begin
             rDest.y += step;
             rDest.h -= step * 2;
@@ -127,7 +127,7 @@ var
 begin
   SDL_init(SDL_INIT_VIDEO);
 
-  SDL_CreateWindowAndRenderer('titel',Width,heigt,SDL_WINDOW_HIDDEN,@window,@renderer);
+  SDL_CreateWindowAndRenderer('titel', Width, heigt, SDL_WINDOW_HIDDEN, @window, @renderer);
 
   bitmapSurface := CreateSurface;
 
