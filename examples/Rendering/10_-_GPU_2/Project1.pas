@@ -144,11 +144,14 @@ const
     buf_location: TSDL_GPUTransferBufferLocation;
     dst_region: TSDL_GPUBufferRegion;
     pipelinedesc: TSDL_GPUGraphicsPipelineCreateInfo;
-    color_target_desc:TSDL_GPUColorTargetDescription;
+    color_target_desc: TSDL_GPUColorTargetDescription;
+    vertex_buffer_desc: TSDL_GPUVertexBufferDescription;
+    vertex_attributes: array[0..1] of TSDL_GPUVertexAttribute;
   begin
     gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, nil);
-    if gpu_device <> nil then begin
-      WriteLn('gpu_device io.');
+//    gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, 'vulkan');
+    if gpu_device = nil then begin
+      WriteLn('gpu_device  error.');
     end;
 
     if not SDL_ClaimWindowForGPUDevice(gpu_device, window) then begin
@@ -156,13 +159,13 @@ const
     end;
 
     vertex_shader := load_shader(True);
-    if vertex_shader <> nil then begin
-      WriteLn('vertex_shader io.');
+    if vertex_shader = nil then begin
+      WriteLn('vertex_shader  error.');
     end;
 
     fragment_shader := load_shader(True);
-    if fragment_shader <> nil then begin
-      WriteLn('fragment_shader io.');
+    if fragment_shader = nil then begin
+      WriteLn('fragment_shader  error.');
     end;
 
     buffer_desc.usage := SDL_GPU_BUFFERUSAGE_VERTEX;
@@ -170,8 +173,8 @@ const
     buffer_desc.props := 0;
 
     render_state.buf_vertex := SDL_CreateGPUBuffer(gpu_device, @buffer_desc);
-    if render_state.buf_vertex <> nil then begin
-      WriteLn('render_state.buf_vertex  io.');
+    if render_state.buf_vertex = nil then begin
+      WriteLn('render_state.buf_vertex  error.');
     end;
 
     SDL_SetGPUBufferName(gpu_device, render_state.buf_vertex, 'космонавт');
@@ -180,8 +183,8 @@ const
     transfer_buffer_desc.size := SizeOf(vertex_data);
     transfer_buffer_desc.props := 0;
     buf_transfer := SDL_CreateGPUTransferBuffer(gpu_device, @transfer_buffer_desc);
-    if buf_transfer <> nil then begin
-      WriteLn('bus_transfer  io.');
+    if buf_transfer = nil then begin
+      WriteLn('bus_transfer  error.');
     end;
 
     map := SDL_MapGPUTransferBuffer(gpu_device, buf_transfer, False);
@@ -190,14 +193,11 @@ const
 
     cmd := SDL_AcquireGPUCommandBuffer(gpu_device);
     copy_pass := SDL_BeginGPUCopyPass(cmd);
-
     buf_location.transfer_buffer := buf_transfer;
     buf_location.offset := 0;
-
     dst_region.buffer := render_state.buf_vertex;
     dst_region.offset := 0;
     dst_region.size := SizeOf(vertex_data);
-
     SDL_UploadToGPUBuffer(copy_pass, @buf_location, @dst_region, False);
     SDL_EndGPUCopyPass(copy_pass);
     SDL_SubmitGPUCommandBuffer(cmd);
@@ -209,17 +209,56 @@ const
       render_state.sample_count := SDL_GPU_SAMPLECOUNT_4;
     end;
 
-    pipelinedesc:=Default(TSDL_GPUGraphicsPipelineCreateInfo);
-    pipelinedesc.target_info.num_color_targets:=1;
-    pipelinedesc.target_info.color_target_descriptions:=@color_target_desc;
+    pipelinedesc := Default(TSDL_GPUGraphicsPipelineCreateInfo);
+    color_target_desc := Default(TSDL_GPUColorTargetDescription);
 
-        .............
+    color_target_desc.format:=   SDL_GetGPUSwapchainTextureFormat(gpu_device,window);
 
+    pipelinedesc.target_info.num_color_targets := 1;
+    pipelinedesc.target_info.color_target_descriptions := @color_target_desc;
+    pipelinedesc.target_info.depth_stencil_format := SDL_GPU_TEXTUREFORMAT_D16_UNORM;
+    pipelinedesc.target_info.has_depth_stencil_target := True;
 
+    pipelinedesc.depth_stencil_state.enable_depth_test := True;
+    pipelinedesc.depth_stencil_state.enable_depth_write := True;
+    pipelinedesc.depth_stencil_state.compare_op := SDL_GPU_COMPAREOP_LESS_OR_EQUAL;
 
-render_state.pipeline:=SDL_CreateGPUGraphicsPipeline(gpu_device,    @pipelinedesc);
+    pipelinedesc.multisample_state.sample_count := render_state.sample_count;
 
+    pipelinedesc.primitive_type := SDL_GPU_PRIMITIVETYPE_TRIANGLELIST;
 
+    pipelinedesc.vertex_shader := vertex_shader;
+    pipelinedesc.fragment_shader := fragment_shader;
+
+    vertex_buffer_desc.slot := 0;
+    vertex_buffer_desc.input_rate := SDL_GPU_VERTEXINPUTRATE_VERTEX;
+    vertex_buffer_desc.instance_step_rate := 0;
+    vertex_buffer_desc.pitch := SizeOf(TVertexData);
+
+    vertex_attributes[0].buffer_slot := 0;
+    vertex_attributes[0].format := SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3;
+    vertex_attributes[0].location := 0;
+    vertex_attributes[0].offset := 0;
+
+    vertex_attributes[1].buffer_slot := 0;
+    vertex_attributes[1].format := SDL_GPU_VERTEXELEMENTFORMAT_FLOAT3;
+    vertex_attributes[1].location := 1;
+    vertex_attributes[1].offset := SizeOf(cfloat) * 3;
+
+    pipelinedesc.vertex_input_state.num_vertex_buffers := 1;
+    pipelinedesc.vertex_input_state.vertex_buffer_descriptions := @vertex_buffer_desc;
+    pipelinedesc.vertex_input_state.num_vertex_attributes := 2;
+    pipelinedesc.vertex_input_state.vertex_attributes := PSDL_GPUVertexAttribute(@vertex_attributes);
+
+    pipelinedesc.props := 0;
+
+    WriteLn(11111);
+    render_state.pipeline := SDL_CreateGPUGraphicsPipeline(gpu_device, @pipelinedesc);
+    if render_state.pipeline = nil then begin
+      WriteLn('render_state.pipeline  error.');
+    end;
+
+    WriteLn(11111);
 
 
     ///////////
