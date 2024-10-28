@@ -21,8 +21,18 @@ type
     sample_count: TSDL_GPUSampleCount;
   end;
 
+  { TWindowState }
+
+  TWindowState = record
+    angle_x, angle_y, angle_z: cint;
+    tex_depth, tex_msaa, tex_resolve: PSDL_GPUTexture;
+    prev_drawablew, prev_drawableh: uint32;
+  end;
+  PWindowState = ^TWindowState;
+
 var
   render_state: TRenderState;
+  window_states: PWindowState;
 
   window: PSDL_Window;
   gpu_device: PSDL_GPUDevice;
@@ -132,6 +142,74 @@ const
     Result := SDL_CreateGPUShader(gpu_device, @createinfo);
   end;
 
+  function CreateDepthTexture(drawablew: uint32; drawableh: uint32): PSDL_GPUTexture;
+  var
+    createinfo: TSDL_GPUTextureCreateInfo;
+  begin
+    createinfo._type := SDL_GPU_TEXTURETYPE_2D;
+    createinfo.format := SDL_GPU_TEXTUREFORMAT_D16_UNORM;
+    createinfo.Width := drawablew;
+    createinfo.Height := drawableh;
+    createinfo.layer_count_or_depth := 1;
+    createinfo.num_levels := 1;
+    createinfo.sample_count := render_state.sample_count;
+    createinfo.usage := SDL_GPU_TEXTUREUSAGE_DEPTH_STENCIL_TARGET;
+    createinfo.props := 0;
+
+    Result := SDL_CreateGPUTexture(gpu_device, @createinfo);
+    if Result = nil then begin
+      WriteLn('CreateDepthTexture  error.');
+    end;
+  end;
+
+  function CreateMSAATexture(drawablew: uint32; drawableh: uint32): PSDL_GPUTexture;
+  var
+    createinfo: TSDL_GPUTextureCreateInfo;
+  begin
+    if render_state.sample_count = SDL_GPU_SAMPLECOUNT_1 then begin
+      Exit(nil);
+    end;
+
+    createinfo._type := SDL_GPU_TEXTURETYPE_2D;
+    createinfo.format := SDL_GetGPUSwapchainTextureFormat(gpu_device, window);
+    createinfo.Width := drawablew;
+    createinfo.Height := drawableh;
+    createinfo.layer_count_or_depth := 1;
+    createinfo.num_levels := 1;
+    createinfo.sample_count := render_state.sample_count;
+    createinfo.usage := SDL_GPU_TEXTUREUSAGE_COLOR_TARGET;
+    createinfo.props := 0;
+
+    Result := SDL_CreateGPUTexture(gpu_device, @createinfo);
+    if Result = nil then begin
+      WriteLn('CreateMSAATexture()  error.');
+    end;
+  end;
+
+  function CreateResolveTexture(drawablew: uint32; drawableh: uint32): PSDL_GPUTexture;
+  var
+    createinfo: TSDL_GPUTextureCreateInfo;
+  begin
+    if render_state.sample_count = SDL_GPU_SAMPLECOUNT_1 then begin
+      Exit(nil);
+    end;
+
+    createinfo._type := SDL_GPU_TEXTURETYPE_2D;
+    createinfo.format := SDL_GetGPUSwapchainTextureFormat(gpu_device, window);
+    createinfo.Width := drawablew;
+    createinfo.Height := drawableh;
+    createinfo.layer_count_or_depth := 1;
+    createinfo.num_levels := 1;
+    createinfo.sample_count := SDL_GPU_SAMPLECOUNT_1;
+    createinfo.usage := SDL_GPU_TEXTUREUSAGE_COLOR_TARGET or SDL_GPU_TEXTUREUSAGE_SAMPLER;
+    createinfo.props := 0;
+
+    Result := SDL_CreateGPUTexture(gpu_device, @createinfo);
+    if Result = nil then begin
+      WriteLn('CreateResolveTexture()  error.');
+    end;
+  end;
+
   procedure init_renderer_state(msaa: longint);
   var
     vertex_shader, fragment_shader: PSDL_GPUShader;
@@ -145,11 +223,14 @@ const
     dst_region: TSDL_GPUBufferRegion;
     pipelinedesc: TSDL_GPUGraphicsPipelineCreateInfo;
     color_target_desc: TSDL_GPUColorTargetDescription;
+    drawablew, drawableh: uint32;
+
     vertex_buffer_desc: TSDL_GPUVertexBufferDescription;
     vertex_attributes: array[0..1] of TSDL_GPUVertexAttribute;
+    winstate: PWindowState;
   begin
     gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, nil);
-//    gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, 'vulkan');
+    //    gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, 'vulkan');
     if gpu_device = nil then begin
       WriteLn('gpu_device  error.');
     end;
@@ -188,7 +269,7 @@ const
     end;
 
     map := SDL_MapGPUTransferBuffer(gpu_device, buf_transfer, False);
-    SDL_memcpy(map, @vertex_data, SizeOf(vertex_data));
+    SDL_memcpy(map, @vertex_data[0], SizeOf(vertex_data));
     SDL_UnmapGPUTransferBuffer(gpu_device, buf_transfer);
 
     cmd := SDL_AcquireGPUCommandBuffer(gpu_device);
@@ -212,7 +293,7 @@ const
     pipelinedesc := Default(TSDL_GPUGraphicsPipelineCreateInfo);
     color_target_desc := Default(TSDL_GPUColorTargetDescription);
 
-    color_target_desc.format:=   SDL_GetGPUSwapchainTextureFormat(gpu_device,window);
+    color_target_desc.format := SDL_GetGPUSwapchainTextureFormat(gpu_device, window);
 
     pipelinedesc.target_info.num_color_targets := 1;
     pipelinedesc.target_info.color_target_descriptions := @color_target_desc;
@@ -257,13 +338,38 @@ const
     if render_state.pipeline = nil then begin
       WriteLn('render_state.pipeline  error.');
     end;
-
     WriteLn(11111);
 
+    SDL_ReleaseGPUShader(gpu_device, vertex_shader);
+    SDL_ReleaseGPUShader(gpu_device, fragment_shader);
 
-    ///////////
+    window_states := PWindowState(SDL_calloc(1, SizeOf(TWindowState)));
+    if window_states = nil then begin
+      WriteLn('window_states  error.');
+    end;
 
+    winstate := @window_states[0];
+
+    SDL_GetWindowSizeInPixels(window, pcint(@drawablew), pcint(@drawableh));
+    WriteLn(drawablew, 'x', drawableh);
+    winstate^.tex_depth := CreateDepthTexture(drawablew, drawableh);
+    winstate^.tex_msaa := CreateMSAATexture(drawablew, drawableh);
+    winstate^.tex_resolve := CreateResolveTexture(drawablew, drawableh);
+
+    winstate^.angle_x := 0;
+    winstate^.angle_y := 0;
+    winstate^.angle_z := 0;
   end;
+
+  procedure Render(window: PSDL_Window);
+begin
+
+end;
+
+  procedure loop;
+begin
+  Render(window);
+end;
 
   procedure main;
   var
@@ -313,6 +419,7 @@ const
     thn := SDL_GetTicks();
 
     while not quit do begin
+        loop();
       while SDL_PollEvent(@event) do begin
         case event._type of
           SDL_EVENT_KEY_DOWN: begin
@@ -326,39 +433,6 @@ const
             quit := True;
           end;
         end;
-      end;
-
-      cmdbuf := SDL_AcquireGPUCommandBuffer(gpu_device);
-      if cmdbuf = nil then begin
-        SDL_Log('Konnte kein cmdbuf erzeugen!:  %s', SDL_GetError);
-      end;
-
-      if not SDL_AcquireGPUSwapchainTexture(cmdbuf, window, @swapchainTexture, nil, nil) then begin
-        SDL_Log('Konnte keine swap chain Textur erzeugen!:  %s', SDL_GetError);
-      end;
-
-      if swapchainTexture = nil then begin
-        SDL_Log('Konnte keine Swap Texture erzeugen!:  %s', SDL_GetError);
-      end else begin
-        currentTime := SDL_GetPerformanceCounter / SDL_GetPerformanceFrequency;
-
-        //        FillChar(color_target_info, SizeOf(color_target_info), $00);
-        color_target_info := Default(TSDL_GPUColorTargetInfo);
-        color_target_info.texture := swapchainTexture;
-        color_target_info.clear_color.r := 0.5 + 0.5 * SDL_sin(currentTime);
-        color_target_info.clear_color.g := 0.5 + 0.5 * SDL_sin(currentTime + SDL_PI_D * 2 / 3);
-        color_target_info.clear_color.b := 0.5 + 0.5 * SDL_sin(currentTime + SDL_PI_D * 4 / 3);
-
-        color_target_info.clear_color.a := 1.0;
-        color_target_info.load_op := SDL_GPU_LOADOP_CLEAR;
-        color_target_info.store_op := SDL_GPU_STOREOP_STORE;
-
-        renderPass := SDL_BeginGPURenderPass(cmdbuf, @color_target_info, 1, nil);
-        SDL_EndGPURenderPass(renderPass);
-
-        SDL_SubmitGPUCommandBuffer(cmdbuf);
-
-        Inc(frames);
       end;
     end;
 
