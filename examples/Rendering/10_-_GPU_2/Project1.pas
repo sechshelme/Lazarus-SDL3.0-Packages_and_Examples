@@ -230,7 +230,7 @@ const
     winstate: PWindowState;
   begin
     gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, nil);
-    //    gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, 'vulkan');
+//        gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, 'vulkan');
     if gpu_device = nil then begin
       WriteLn('gpu_device  error.');
     end;
@@ -334,6 +334,7 @@ const
     pipelinedesc.props := 0;
 
     WriteLn(11111);
+//    render_state.pipeline := SDL_CreateGPUGraphicsPipeline(gpu_device, @pipelinedesc);
     render_state.pipeline := SDL_CreateGPUGraphicsPipeline(gpu_device, @pipelinedesc);
     if render_state.pipeline = nil then begin
       WriteLn('render_state.pipeline  error.');
@@ -362,14 +363,103 @@ const
   end;
 
   procedure Render(window: PSDL_Window);
-begin
+  var
+    winstate: PWindowState;
+    swapchainTexture: PSDL_GPUTexture;
+    color_target: TSDL_GPUColorTargetInfo;
+    depth_target: TSDL_GPUDepthStencilTargetInfo;
+    matrix_rotate: array[0..15] of single = (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    matrix_final: array[0..15] of single = (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    cmd: PSDL_GPUCommandBuffer;
+    pass: PSDL_GPURenderPass;
+    vertex_binding: TSDL_GPUBufferBinding;
+    blit_info: TSDL_GPUBlitInfo;
+    drawablew, drawableh: DWord;
+  begin
+    winstate := @window_states[0];
+    cmd := SDL_AcquireGPUCommandBuffer(gpu_device);
+    if cmd = nil then begin
+      WriteLn('Render cmd  error.');
+    end;
+    if not SDL_AcquireGPUSwapchainTexture(cmd, window, @swapchainTexture, @drawablew, @drawableh) then begin
+      WriteLn('swapchain error');
+    end;
 
-end;
+    if swapchainTexture = nil then begin
+      SDL_SubmitGPUCommandBuffer(cmd);
+    end;
+
+    // matrix zeugs --------
+
+    if (winstate^.prev_drawablew <> drawablew) or (winstate^.prev_drawableh <> drawableh) then begin
+      SDL_ReleaseGPUTexture(gpu_device, winstate^.tex_depth);
+      SDL_ReleaseGPUTexture(gpu_device, winstate^.tex_msaa);
+      SDL_ReleaseGPUTexture(gpu_device, winstate^.tex_resolve);
+      winstate^.tex_depth := CreateDepthTexture(drawablew, drawableh);
+      winstate^.tex_msaa := CreateMSAATexture(drawablew, drawableh);
+      winstate^.tex_resolve := CreateResolveTexture(drawablew, drawableh);
+    end;
+    winstate^.prev_drawablew := drawablew;
+    winstate^.prev_drawableh := drawableh;
+
+    color_target := Default(TSDL_GPUColorTargetInfo);
+    color_target.clear_color.a := 1.0;
+    if winstate^.tex_msaa <> nil then begin
+      color_target.load_op := SDL_GPU_LOADOP_CLEAR;
+      color_target.store_op := SDL_GPU_STOREOP_RESOLVE;
+      color_target.texture := winstate^.tex_msaa;
+      color_target.resolve_texture := winstate^.tex_resolve;
+      color_target.cycle := True;
+      color_target.cycle_resolve_texture := True;
+    end else begin
+      color_target.load_op := SDL_GPU_LOADOP_CLEAR;
+      color_target.store_op := SDL_GPU_STOREOP_STORE;
+      color_target.texture := swapchainTexture;
+    end;
+
+    depth_target := Default(TSDL_GPUDepthStencilTargetInfo);
+    depth_target.clear_depth := 1.0;
+    depth_target.load_op := SDL_GPU_LOADOP_CLEAR;
+    depth_target.store_op := SDL_GPU_STOREOP_DONT_CARE;
+    depth_target.stencil_load_op := SDL_GPU_LOADOP_DONT_CARE;
+    depth_target.stencil_store_op := SDL_GPU_STOREOP_DONT_CARE;
+    depth_target.texture := winstate^.tex_depth;
+    depth_target.cycle := True;
+
+    vertex_binding.buffer := render_state.buf_vertex;
+    vertex_binding.offset := 0;
+
+    SDL_PushGPUVertexUniformData(cmd, 0, @matrix_final, SizeOf(matrix_final));
+
+    pass := SDL_BeginGPURenderPass(cmd, @color_target, 1, @depth_target);
+    SDL_BindGPUGraphicsPipeline(pass, render_state.pipeline);
+    SDL_BindGPUVertexBuffers(pass, 0, @vertex_binding, 1);
+    SDL_DrawGPUPrimitives(pass, 36, 1, 0, 0);
+    SDL_EndGPURenderPass(pass);
+
+    if render_state.sample_count = SDL_GPU_SAMPLECOUNT_1 then begin
+      blit_info := Default(TSDL_GPUBlitInfo);
+      blit_info.Source.texture := winstate^.tex_resolve;
+      blit_info.Source.w := drawablew;
+      blit_info.Source.h := drawableh;
+
+      blit_info.destination.texture := swapchainTexture;
+      blit_info.destination.w := drawablew;
+      blit_info.destination.h := drawableh;
+
+      blit_info.load_op := SDL_GPU_LOADOP_DONT_CARE;
+      blit_info.filter := SDL_GPU_FILTER_LINEAR;
+
+      SDL_BlitGPUTexture(cmd, @blit_info);
+    end;
+
+    SDL_SubmitGPUCommandBuffer(cmd);
+  end;
 
   procedure loop;
-begin
-  Render(window);
-end;
+  begin
+    Render(window);
+  end;
 
   procedure main;
   var
@@ -419,7 +509,7 @@ end;
     thn := SDL_GetTicks();
 
     while not quit do begin
-        loop();
+      loop();
       while SDL_PollEvent(@event) do begin
         case event._type of
           SDL_EVENT_KEY_DOWN: begin
