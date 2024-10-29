@@ -112,11 +112,11 @@ const
     (x: 0.5; y: -0.5; z: 0.5; r: 1.0; g: 0.0; b: 1.0)  { magenta }
     );
 
-  var
-  matrix_rotate: array[0..15] of single = (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-//  matrix_final: array[0..15] of single = (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+var
+  matrix_rotate: Tmat4x4;
+  matrix_modelview: Tmat4x4;
+  matrix_perspective: Tmat4x4;
   matrix_final: Tmat4x4;
-
 
   function load_shader(is_vertex: boolean): PSDL_GPUShader;
   var
@@ -145,7 +145,7 @@ const
       createinfo.code_size := cube_frag_spv_len;
       createinfo.stage := SDL_GPU_SHADERSTAGE_FRAGMENT;
     end;
-    createinfo.entrypoint:='main';
+    createinfo.entrypoint := 'main';
 
     Result := SDL_CreateGPUShader(gpu_device, @createinfo);
   end;
@@ -238,7 +238,7 @@ const
     winstate: PWindowState;
   begin
     gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, nil);
-//        gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, 'vulkan');
+    //        gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, 'vulkan');
     if gpu_device = nil then begin
       WriteLn('gpu_device  error.');
     end;
@@ -394,6 +394,48 @@ const
 
     // matrix zeugs --------
 
+
+    matrix_modelview.Identity;
+    matrix_modelview.RotateA(winstate^.angle_x / 180 * pi);
+    matrix_rotate.Identity;
+    matrix_rotate.RotateB(winstate^.angle_y / 180 * pi);
+
+    matrix_modelview := matrix_rotate * matrix_modelview;
+
+    matrix_rotate.Identity;
+    matrix_rotate.RotateB(winstate^.angle_z / 180 * pi);
+
+    matrix_rotate := matrix_rotate * matrix_modelview;
+
+    matrix_modelview.Translate(0, 0, -2.5);
+
+    matrix_perspective.Perspective(45, drawablew / drawableh, 0.01, 100);
+
+    matrix_final := matrix_perspective * matrix_modelview;
+
+    winstate^.angle_x += 3;
+    winstate^.angle_y += 2;
+    winstate^.angle_z += 1;
+
+    if winstate^.angle_x >= 360 then begin
+      winstate^.angle_x := winstate^.angle_x - 360;
+    end;
+    if winstate^.angle_x < 0 then begin
+      winstate^.angle_x := winstate^.angle_x + 360;
+    end;
+    if winstate^.angle_y >= 360 then begin
+      winstate^.angle_y := winstate^.angle_y - 360;
+    end;
+    if winstate^.angle_y < 0 then begin
+      winstate^.angle_y := winstate^.angle_y + 360;
+    end;
+    if winstate^.angle_z >= 360 then begin
+      winstate^.angle_z := winstate^.angle_z - 360;
+    end;
+    if winstate^.angle_z < 0 then begin
+      winstate^.angle_z := winstate^.angle_z + 360;
+    end;
+
     if (winstate^.prev_drawablew <> drawablew) or (winstate^.prev_drawableh <> drawableh) then begin
       SDL_ReleaseGPUTexture(gpu_device, winstate^.tex_depth);
       SDL_ReleaseGPUTexture(gpu_device, winstate^.tex_msaa);
@@ -457,8 +499,6 @@ const
     end;
 
     SDL_SubmitGPUCommandBuffer(cmd);
-
-    matrix_final.RotateC(0.1);
   end;
 
   procedure loop;
