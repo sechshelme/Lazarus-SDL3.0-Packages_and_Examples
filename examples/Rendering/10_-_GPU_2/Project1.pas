@@ -5,6 +5,7 @@ program Project1;
 uses
   ctypes,
   SDL3,
+  oglMatrix,
   test_gpu_spirv;
 
 const
@@ -111,6 +112,12 @@ const
     (x: 0.5; y: -0.5; z: 0.5; r: 1.0; g: 0.0; b: 1.0)  { magenta }
     );
 
+  var
+  matrix_rotate: array[0..15] of single = (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+//  matrix_final: array[0..15] of single = (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  matrix_final: Tmat4x4;
+
+
   function load_shader(is_vertex: boolean): PSDL_GPUShader;
   var
     createinfo: TSDL_GPUShaderCreateInfo;
@@ -138,6 +145,7 @@ const
       createinfo.code_size := cube_frag_spv_len;
       createinfo.stage := SDL_GPU_SHADERSTAGE_FRAGMENT;
     end;
+    createinfo.entrypoint:='main';
 
     Result := SDL_CreateGPUShader(gpu_device, @createinfo);
   end;
@@ -244,7 +252,7 @@ const
       WriteLn('vertex_shader  error.');
     end;
 
-    fragment_shader := load_shader(True);
+    fragment_shader := load_shader(False);
     if fragment_shader = nil then begin
       WriteLn('fragment_shader  error.');
     end;
@@ -333,13 +341,10 @@ const
 
     pipelinedesc.props := 0;
 
-    WriteLn(11111);
-//    render_state.pipeline := SDL_CreateGPUGraphicsPipeline(gpu_device, @pipelinedesc);
     render_state.pipeline := SDL_CreateGPUGraphicsPipeline(gpu_device, @pipelinedesc);
     if render_state.pipeline = nil then begin
       WriteLn('render_state.pipeline  error.');
     end;
-    WriteLn(11111);
 
     SDL_ReleaseGPUShader(gpu_device, vertex_shader);
     SDL_ReleaseGPUShader(gpu_device, fragment_shader);
@@ -368,8 +373,6 @@ const
     swapchainTexture: PSDL_GPUTexture;
     color_target: TSDL_GPUColorTargetInfo;
     depth_target: TSDL_GPUDepthStencilTargetInfo;
-    matrix_rotate: array[0..15] of single = (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-    matrix_final: array[0..15] of single = (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
     cmd: PSDL_GPUCommandBuffer;
     pass: PSDL_GPURenderPass;
     vertex_binding: TSDL_GPUBufferBinding;
@@ -437,7 +440,7 @@ const
     SDL_DrawGPUPrimitives(pass, 36, 1, 0, 0);
     SDL_EndGPURenderPass(pass);
 
-    if render_state.sample_count = SDL_GPU_SAMPLECOUNT_1 then begin
+    if render_state.sample_count > SDL_GPU_SAMPLECOUNT_1 then begin
       blit_info := Default(TSDL_GPUBlitInfo);
       blit_info.Source.texture := winstate^.tex_resolve;
       blit_info.Source.w := drawablew;
@@ -454,6 +457,8 @@ const
     end;
 
     SDL_SubmitGPUCommandBuffer(cmd);
+
+    matrix_final.RotateC(0.1);
   end;
 
   procedure loop;
@@ -482,29 +487,20 @@ const
       SDL_Log('Konnte SDL-VIDEO nicht laden!:  %s', SDL_GetError);
     end;
 
-    window := SDL_CreateWindow('Palette', widht * 2, Height * 2, 0);
+    window := SDL_CreateWindow('Palette', widht * 2, Height * 2, SDL_WINDOW_RESIZABLE);
     if window = nil then begin
       SDL_Log('Konnte kein Windows erzeugen!:  %s', SDL_GetError);
     end;
-
-    //gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, nil);
-    //if gpu_device = nil then begin
-    //  SDL_Log('Konnte keine GPU-Device erzeugen!:  %s', SDL_GetError);
-    //end;
-    //
-    //if not SDL_ClaimWindowForGPUDevice(gpu_device, window) then begin
-    //  SDL_Log('Claim error!:  %s', SDL_GetError);
-    //end;
 
     mode := SDL_GetCurrentDisplayMode(SDL_GetPrimaryDisplay);
     if mode <> nil then begin
       SDL_Log('Screen BPP     : %d', SDL_BITSPERPIXEL(mode^.format));
     end;
 
+    matrix_final.Identity;
     init_renderer_state(msaa);
 
     ////////////
-
 
     thn := SDL_GetTicks();
 
