@@ -5,6 +5,9 @@ unit Unit1;
 interface
 
 uses
+  {$IFDEF MSWINDOWS}
+  Windows,
+  {$ENDIF}
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls,
   SDL3, SDL3_mixer;
 
@@ -49,6 +52,17 @@ begin
   end;
 end;
 
+function ResourceToStr(Resource: string): TCharArray;
+var
+  rs: TResourceStream;
+begin
+  Result := nil;
+  rs := TResourceStream.Create(HINSTANCE, Resource, RT_RCDATA);
+  SetLength(Result, rs.Size);
+  rs.Read(PChar(Result)^, rs.Size);
+  rs.Free;
+end;
+
 var
   buffer: TCharArray;
 
@@ -56,7 +70,8 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   stream: PSDL_IOStream;
 begin
-  buffer := FileToStr('/home/tux/Schreibtisch/sound/test.mp3');
+  //  buffer := FileToStr('/home/tux/Schreibtisch/sound/test.mp3');
+  buffer := ResourceToStr('MP3');
 
   stream := SDL_IOFromConstMem(Pointer(buffer), Length(buffer));
   if stream = nil then begin
