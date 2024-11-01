@@ -34,7 +34,7 @@ implementation
 
 { TForm1 }
 
-function FileToStr(const path: string): TCharArray;
+function FileToByteBuffer(const path: string): TCharArray;
 var
   f: file of byte;
   size: int64;
@@ -52,7 +52,7 @@ begin
   end;
 end;
 
-function ResourceToStr(Resource: string): TCharArray;
+function ResourceToByteBuffer(Resource: string): TCharArray;
 var
   rs: TResourceStream;
 begin
@@ -70,8 +70,8 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   stream: PSDL_IOStream;
 begin
-  //  buffer := FileToStr('/home/tux/Schreibtisch/sound/test.mp3');
-  buffer := ResourceToStr('MP3');
+  //  buffer := FileToByteBuffer('/home/tux/Schreibtisch/sound/test.mp3');
+  buffer := ResourceToByteBuffer('MP3');
 
   stream := SDL_IOFromConstMem(Pointer(buffer), Length(buffer));
   if stream = nil then begin
