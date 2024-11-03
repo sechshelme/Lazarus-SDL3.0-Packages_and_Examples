@@ -6,6 +6,7 @@
 {$include SDL3/SDL_properties.inc}
 {$include SDL3/SDL_log.inc}
 {$include SDL3/SDL_bits.inc}
+{$include SDL3/SDL_endian.inc}
 {$include SDL3/SDL_atomic.inc}
 {$include SDL3/SDL_timer.inc}
 {$include SDL3/SDL_time.inc}
