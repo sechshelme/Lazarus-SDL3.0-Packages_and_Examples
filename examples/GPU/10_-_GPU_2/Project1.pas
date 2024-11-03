@@ -238,7 +238,6 @@ var
     winstate: PWindowState;
   begin
     gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, nil);
-    //        gpu_device := SDL_CreateGPUDevice(TESTGPU_SUPPORTED_FORMATS, True, 'vulkan');
     if gpu_device = nil then begin
       WriteLn('gpu_device  error.');
     end;
@@ -403,7 +402,7 @@ var
     matrix_modelview := matrix_rotate * matrix_modelview;
 
     matrix_rotate.Identity;
-    matrix_rotate.RotateB(winstate^.angle_z / 180 * pi);
+    matrix_rotate.RotateC(winstate^.angle_z / 180 * pi);
 
     matrix_rotate := matrix_rotate * matrix_modelview;
 

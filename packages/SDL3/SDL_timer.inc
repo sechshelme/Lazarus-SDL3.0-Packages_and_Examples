@@ -28,6 +28,8 @@ function SDL_GetPerformanceCounter:TUint64;cdecl;external libSDL3;
 function SDL_GetPerformanceFrequency:TUint64;cdecl;external libSDL3;
 procedure SDL_Delay(ms:TUint32);cdecl;external libSDL3;
 procedure SDL_DelayNS(ns:TUint64);cdecl;external libSDL3;
+procedure SDL_DelayPrecise(ns:TUint64);cdecl;external libSDL3;
+
 type
   TSDL_TimerID = TUint32;
   PSDL_TimerID = ^TSDL_TimerID;

@@ -247,7 +247,12 @@ const
 
 function SDL_GetRenderVSync(renderer: PSDL_Renderer; vsync: Plongint): Tbool; cdecl; external libSDL3;
 
-{$ENDIF read_interface}
+const
+  SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE = 8;
+
+function SDL_RenderDebugText(renderer: PSDL_Renderer; x, y: cfloat; str: PChar): Boolean; cdecl; external libSDL3;
+
+  {$ENDIF read_interface}
 
 
 {$IFDEF read_implementation}

@@ -206,6 +206,7 @@ SDL_stdinc      |
 SDL_guid        |
 SDL_properties  |
 SDL_log         |
+SDL_bits        |
 SDL_atomic      |
 SDL_timer       |
 SDL_time        |

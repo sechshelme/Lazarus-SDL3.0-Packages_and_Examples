@@ -16,7 +16,6 @@ var
   renderer: PSDL_Renderer;
   bitmapTex: PSDL_Texture;
 
-  function SDL_RenderDebugText(renderer: PSDL_Renderer; x, y: Single; str: PChar): Boolean; cdecl; external libSDL3;
 
 
   function CreateSurface: PSDL_Surface;

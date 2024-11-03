@@ -9,6 +9,7 @@
 {$IFDEF read_interface}
 
 function SDL_SetError(fmt: pansichar): Tbool; varargs cdecl; external libSDL3;
+function SDL_SetErrorV(fmt:Pansichar; ap:Tva_list):Tbool;cdecl;external  libSDL3;
 function SDL_OutOfMemory: Tbool; cdecl; external libSDL3;
 function SDL_GetError: pansichar; cdecl; external libSDL3;
 function SDL_ClearError: Tbool; cdecl; external libSDL3;

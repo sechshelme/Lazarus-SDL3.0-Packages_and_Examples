@@ -125,8 +125,8 @@ type
   PSDL_EGLIntArrayCallback = ^TSDL_EGLIntArrayCallback;
   TSDL_EGLIntArrayCallback = function(userdata: pointer; display: TSDL_EGLDisplay; config: TSDL_EGLConfig): PSDL_EGLint; cdecl;
 
-  PSDL_GLattr = ^TSDL_GLattr;
-  TSDL_GLattr = longint;
+  PSDL_GLattr = ^TSDL_GLAttr;
+  TSDL_GLAttr = longint;
 
 const
   SDL_GL_RED_SIZE = 0;
@@ -158,18 +158,10 @@ const
   SDL_GL_FLOATBUFFERS = 26;
   SDL_GL_EGL_PLATFORM = 27;
 
-type
-  PSDL_GLprofile = ^TSDL_GLprofile;
-  TSDL_GLprofile = longint;
-
 const
   SDL_GL_CONTEXT_PROFILE_CORE = $0001;
   SDL_GL_CONTEXT_PROFILE_COMPATIBILITY = $0002;
   SDL_GL_CONTEXT_PROFILE_ES = $0004;
-
-type
-  PSDL_GLcontextFlag = ^TSDL_GLcontextFlag;
-  TSDL_GLcontextFlag = longint;
 
 const
   SDL_GL_CONTEXT_DEBUG_FLAG = $0001;
@@ -177,17 +169,9 @@ const
   SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG = $0004;
   SDL_GL_CONTEXT_RESET_ISOLATION_FLAG = $0008;
 
-type
-  PSDL_GLcontextReleaseFlag = ^TSDL_GLcontextReleaseFlag;
-  TSDL_GLcontextReleaseFlag = longint;
-
 const
   SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE = $0000;
   SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = $0001;
-
-type
-  PSDL_GLContextResetNotification = ^TSDL_GLContextResetNotification;
-  TSDL_GLContextResetNotification = longint;
 
 const
   SDL_GL_CONTEXT_RESET_NO_NOTIFICATION = $0000;
@@ -399,8 +383,8 @@ function SDL_EGL_GetProcAddress(proc: pansichar): TSDL_FunctionPointer; cdecl; e
 procedure SDL_GL_UnloadLibrary; cdecl; external libSDL3;
 function SDL_GL_ExtensionSupported(extension: pansichar): Tbool; cdecl; external libSDL3;
 procedure SDL_GL_ResetAttributes; cdecl; external libSDL3;
-function SDL_GL_SetAttribute(attr: TSDL_GLattr; Value: longint): Tbool; cdecl; external libSDL3;
-function SDL_GL_GetAttribute(attr: TSDL_GLattr; Value: Plongint): Tbool; cdecl; external libSDL3;
+function SDL_GL_SetAttribute(attr: TSDL_GLAttr; Value: longint): Tbool; cdecl; external libSDL3;
+function SDL_GL_GetAttribute(attr: TSDL_GLAttr; Value: Plongint): Tbool; cdecl; external libSDL3;
 function SDL_GL_CreateContext(window: PSDL_Window): TSDL_GLContext; cdecl; external libSDL3;
 function SDL_GL_MakeCurrent(window: PSDL_Window; context: TSDL_GLContext): Tbool; cdecl; external libSDL3;
 function SDL_GL_GetCurrentWindow: PSDL_Window; cdecl; external libSDL3;

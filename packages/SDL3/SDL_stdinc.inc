@@ -271,6 +271,7 @@ const
   SDL_INVALID_UNICODE_CODEPOINT = $FFFD;
 
 function SDL_StepUTF8(pstr: PPansichar; pslen: Psize_t): TUint32; cdecl; external libSDL3;
+function SDL_StepBackUTF8(start: Pchar; pstr: PPChar): TUint32; cdecl; external libSDL3;
 function SDL_UCS4ToUTF8(codepoint: TUint32; dst: pansichar): pansichar; cdecl; external libSDL3;
 function SDL_sscanf(Text: pansichar; fmt: pansichar; args: array of const): longint; cdecl; external libSDL3;
 function SDL_sscanf(Text: pansichar; fmt: pansichar): longint; cdecl; external libSDL3;

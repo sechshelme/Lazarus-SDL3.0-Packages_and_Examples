@@ -60,6 +60,18 @@ function SDL_SendAndroidMessage(command: TUint32; param: longint): Tbool; cdecl;
 function SDL_IsTablet: Tbool; cdecl; external libSDL3;
 function SDL_IsTV: Tbool; cdecl; external libSDL3;
 
+type
+  PSDL_Sandbox = ^TSDL_Sandbox;
+  TSDL_Sandbox = longint;
+
+const
+  SDL_SANDBOX_NONE = 0;
+  SDL_SANDBOX_UNKNOWN_CONTAINER = 1;
+  SDL_SANDBOX_FLATPAK = 2;
+  SDL_SANDBOX_SNAP = 3;
+  SDL_SANDBOX_MACOS = 4;
+
+function SDL_GetSandbox:TSDL_Sandbox;cdecl;external libSDL3;
 procedure SDL_OnApplicationWillTerminate; cdecl; external libSDL3;
 procedure SDL_OnApplicationDidReceiveMemoryWarning; cdecl; external libSDL3;
 procedure SDL_OnApplicationWillEnterBackground; cdecl; external libSDL3;

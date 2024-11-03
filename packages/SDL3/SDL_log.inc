@@ -69,6 +69,7 @@ type
   TSDL_LogOutputFunction = procedure(userdata: pointer; category: longint; priority: TSDL_LogPriority; message: pansichar); cdecl;
   PSDL_LogOutputFunction = ^TSDL_LogOutputFunction;
 
+function SDL_GetDefaultLogOutputFunction:TSDL_LogOutputFunction;cdecl;external libSDL3;
 procedure SDL_GetLogOutputFunction(callback: PSDL_LogOutputFunction; userdata: Ppointer); cdecl; external libSDL3;
 procedure SDL_SetLogOutputFunction(callback: TSDL_LogOutputFunction; userdata: pointer); cdecl; external libSDL3;
 
