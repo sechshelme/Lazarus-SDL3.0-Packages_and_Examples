@@ -1,4 +1,25 @@
-/*
+
+unit SDL_test_log;
+interface
+
+{
+  Automatically converted by H2Pas 0.99.16 from SDL_test_log.h
+  The following command line parameters were used:
+    -p
+    -T
+    -d
+    -c
+    -e
+    SDL_test_log.h
+}
+
+
+{$IFDEF FPC}
+{$PACKRECORDS C}
+{$ENDIF}
+
+
+{
   Simple DirectMedia Layer
   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
 
@@ -17,61 +38,60 @@
   2. Altered source versions must be plainly marked as such, and must not be
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
-*/
-
-/**
+ }
+{*
  *  \file SDL_test_log.h
  *
  *  Logging related functions of SDL test framework.
  *
  *  This code is a part of the SDL test library, not the main SDL library.
- */
-
-/*
+  }
+{
  *
  *  Wrapper to log in the TEST category
  *
- */
-
-#ifndef SDL_test_log_h_
-#define SDL_test_log_h_
-
-#include <SDL3/SDL_stdinc.h>
-
-#include <SDL3/SDL_begin_code.h>
-/* Set up for C function definitions, even when using C++ */
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
+  }
+{$ifndef SDL_test_log_h_}
+{$define SDL_test_log_h_}
+{$include <SDL3/SDL_stdinc.h>}
+{$include <SDL3/SDL_begin_code.h>}
+{ Set up for C function definitions, even when using C++  }
+{ C++ extern C conditionnal removed }
+{*
  * Prints given message with a timestamp in the TEST category and INFO priority.
  *
  * \param fmt Message to be logged
- */
-void  SDLTest_Log(SDL_PRINTF_FORMAT_STRING const char *fmt, ...) SDL_PRINTF_VARARG_FUNC(1);
+  }
+(* Const before declarator ignored *)
 
-/**
+procedure SDLTest_Log(fmt:Pansichar; args:array of const);cdecl;external;
+procedure SDLTest_Log(fmt:Pansichar);cdecl;external;
+{*
  * Prints given prefix and buffer.
  * Non-printible characters in the raw data are substituted by printible alternatives.
  *
  * \param prefix Prefix message.
  * \param buffer Raw data to be escaped.
  * \param size Number of bytes in buffer.
- */
-void  SDLTest_LogEscapedString(const char *prefix, const void *buffer, size_t size);
-
-/**
+  }
+(* Const before declarator ignored *)
+(* Const before declarator ignored *)
+procedure SDLTest_LogEscapedString(prefix:Pansichar; buffer:pointer; size:Tsize_t);cdecl;external;
+{*
  * Prints given message with a timestamp in the TEST category and the ERROR priority.
  *
  * \param fmt Message to be logged
- */
-void  SDLTest_LogError(SDL_PRINTF_FORMAT_STRING const char *fmt, ...) SDL_PRINTF_VARARG_FUNC(1);
+  }
+(* Const before declarator ignored *)
+procedure SDLTest_LogError(fmt:Pansichar; args:array of const);cdecl;external;
+procedure SDLTest_LogError(fmt:Pansichar);cdecl;external;
+{ Ends C function definitions when using C++  }
+{ C++ end of extern C conditionnal removed }
+{$include <SDL3/SDL_close_code.h>}
+{$endif}
+{ SDL_test_log_h_  }
 
-/* Ends C function definitions when using C++ */
-#ifdef __cplusplus
-}
-#endif
-#include <SDL3/SDL_close_code.h>
+implementation
 
-#endif /* SDL_test_log_h_ */
+
+end.
