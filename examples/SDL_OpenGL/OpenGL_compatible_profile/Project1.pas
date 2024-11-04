@@ -51,6 +51,6 @@ begin
   end;
 
   SDL_DestroyWindow(window);
-  SDL_GL_DeleteContext(glcontext);
+  SDL_GL_DestroyContext(glcontext);
   SDL_Quit;
 end.

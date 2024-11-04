@@ -138,9 +138,6 @@ begin
 end;
 ```
 
-
-
-
 ### .../pas_units/sdl3_pixels.pas
 Folgendes ersetzen:
 ```pascal

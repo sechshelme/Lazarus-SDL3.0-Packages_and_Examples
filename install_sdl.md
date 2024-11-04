@@ -32,9 +32,6 @@ sudo apt install g++-mingw-w64-x86-64-win32
 
 ```
 
-
-
-
 ### SDL3.DLL für wine und Windows erstellen.
 ```bash
 git clone https://github.com/libsdl-org/SDL.git
@@ -71,7 +68,7 @@ cmake --install build --install-prefix /usr/local
 sudo ldconfig
 ```
 
-#CMAKE-Tools
+# CMAKE-Tools
 ```bash
 sudo apt install cmake-qt-gui
 

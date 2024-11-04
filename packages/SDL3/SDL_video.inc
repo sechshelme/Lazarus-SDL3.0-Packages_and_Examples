@@ -396,6 +396,7 @@ procedure SDL_EGL_SetAttributeCallbacks(platformAttribCallback: TSDL_EGLAttribAr
 function SDL_GL_SetSwapInterval(interval: longint): Tbool; cdecl; external libSDL3;
 function SDL_GL_GetSwapInterval(interval: Plongint): Tbool; cdecl; external libSDL3;
 function SDL_GL_SwapWindow(window: PSDL_Window): Tbool; cdecl; external libSDL3;
+function SDL_GL_DestroyContext(context: PSDL_GLContext): Tbool; cdecl; external libSDL3;
 
 function SDL_WINDOWPOS_UNDEFINED_DISPLAY(X: longint): longint;
 function SDL_WINDOWPOS_UNDEFINED: longint;
