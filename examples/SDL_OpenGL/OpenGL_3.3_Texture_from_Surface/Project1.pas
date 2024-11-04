@@ -81,30 +81,57 @@ const
     surface: PSDL_Surface;
     mode: GLint;
   begin
-    surface := SDL_LoadBMP('mauer.bmp');
+    //    surface := SDL_LoadBMP('mauer.bmp');
+    surface := SDL_LoadBMP('project1.bmp');
+    if surface = nil then begin
+      SDL_Log('BMP error: %s', SDL_GetError);
+      Exit;
+    end;
 
-    case surface^.format^.bytes_per_pixel of
-      3: begin
-        WriteLn(surface^.format^.Rmask);
-        if surface^.format^.Rmask = $FF then  begin
-          mode := GL_RGB;
-        end else begin
-          mode := GL_BGR;
-        end;
+    WriteLn('-----');
+    WriteLn('format: ', SDL_GetPixelFormatName(surface^.format));
+    WriteLn('-----');
+    case surface^.format of
+      SDL_PIXELFORMAT_RGBA8888: begin
+        mode := GL_RGBA;
       end;
-      4: begin
-        WriteLn(surface^.format^.Rmask);
-        if surface^.format^.Rmask = $FF then  begin
-          mode := GL_RGBA;
-        end else begin
-          mode := GL_BGRA;
-        end;
+      SDL_PIXELFORMAT_BGRA8888: begin
+        mode := GL_BGRA;
+      end;
+      SDL_PIXELFORMAT_ARGB8888: begin
+ //       mode := GL_ABGR;
+        mode := GL_BGRA;
+      end;
+      SDL_PIXELFORMAT_RGB24: begin
+        mode := GL_RGB;
+      end;
+      SDL_PIXELFORMAT_BGR24: begin
+        mode := GL_BGR;
       end;
     end;
+    //case surface^.format^.bytes_per_pixel of
+    //  3: begin
+    //    WriteLn(surface^.format^.Rmask);
+    //    if surface^.format^.Rmask = $FF then  begin
+    //      mode := GL_RGB;
+    //    end else begin
+    //      mode := GL_BGR;
+    //    end;
+    //  end;
+    //  4: begin
+    //    WriteLn(surface^.format^.Rmask);
+    //    if surface^.format^.Rmask = $FF then  begin
+    //      mode := GL_RGBA;
+    //    end else begin
+    //      mode := GL_BGRA;
+    //    end;
+    //  end;
+    //end;
 
     // Textur
     glBindTexture(GL_TEXTURE_2D, TexturID);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, mode, GL_UNSIGNED_BYTE, surface^.pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, mode, GL_UNSIGNED_INT_8_8_8_8_REV, surface^.pixels);
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface^.w, surface^.h, 0, mode, GL_UNSIGNED_BYTE, surface^.pixels);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -174,7 +201,7 @@ const
   procedure Init_SDL_and_OpenGL;
   begin
     // --- SDL inizialisieren
-    if SDL_Init(SDL_INIT_VIDEO) < 0 then begin
+    if not SDL_Init(SDL_INIT_VIDEO) then begin
       WriteLn('SDL could not initialize! SDL_Error: ', SDL_GetError);
       Halt(1);
     end;
@@ -191,7 +218,7 @@ const
       Halt(1);
     end;
 
-    if SDL_GL_SetSwapInterval(1) < 0 then begin
+    if not SDL_GL_SetSwapInterval(1) then begin
       WriteLn('Warning: Unable to set VSync! SDL Error: ', SDL_GetError);
     end;
 
@@ -296,7 +323,7 @@ const
 
     MyShader.Free;
 
-    SDL_GL_DeleteContext(glcontext);
+    SDL_GL_DestroyContext(glcontext);
     SDL_DestroyWindow(gWindow);
     SDL_Quit();
   end;

@@ -30,57 +30,41 @@ var
   MyShader: TShader;
   ModelMatrix: Tmat4x4;
 
-  Texture: array[(TexID)] of GLuint;
   VAOs: array [(vaQuad)] of TGLuint;
-  Mesh_Buffers: array [(mbVector, mbTexturCord)] of TGLuint;
+  Mesh_Buffers: array [(mbVector)] of TGLuint;
 
 const
   QuadVertex: array of TVector3f =
-    ((-0.8, -0.8, 0.0), (0.8, 0.8, 0.0), (-0.8, 0.8, 0.0),
-    (-0.8, -0.8, 0.0), (0.8, -0.8, 0.0), (0.8, 0.8, 0.0));
-
-  TextureVertex: array of TVector2f =
-    ((0.0, 0.0), (1.0, 1.0), (0.0, 1.0),
-    (0.0, 0.0), (1.0, 0.0), (1.0, 1.0));
-
-const
-  Textur32_0: packed array[0..1, 0..1, 0..3] of byte = ((($FF, $00, $00, $FF), ($00, $FF, $00, $FF)), (($00, $00, $FF, $FF), ($FF, $00, $00, $FF)));
-
+    ((-0.6, -0.6, 0.0), (0.6, 0.6, 0.0), (-0.6, 0.6, 0.0),
+    (-0.6, -0.6, 0.0), (0.6, -0.6, 0.0), (0.6, 0.6, 0.0));
 
   vertex_shader_text: string =
     '#version 330 core' + #10 +
     '' + #10 +
     'layout (location = 0) in vec3 vPosition;' + #10 +
-    'layout (location = 1) in vec2 inUV;' + #10 +    // Textur-Koordinaten
     '' + #10 +
     'uniform mat4x4 matrix;' + #10 +
-    '' + #10 +
-    'out vec2 UV0;' + #10 +
     '' + #10 +
     'void main()' + #10 +
     '{' + #10 +
     '  gl_Position = matrix * vec4(vPosition, 1);' + #10 +
-    'UV0 = inUV;' + #10 +
     '}';
 
   fragment_shader_text =
     '#version 330 core' + #10 +
     '' + #10 +
-    'in vec2 UV0;' + #10 +
-    'uniform sampler2D Sampler;' + #10 +
-    '' + #10 +
     'out vec4 fColor;' + #10 +
     '' + #10 +
     'void main()' + #10 +
     '{' + #10 +
-    '  fColor = texture( Sampler, UV0);' + #10 +
+    '  fColor = vec4(1.0, 0.5, 0.0, 1.0);' + #10 +
     '}';
 
 
   procedure Init_SDL_and_OpenGL;
   begin
     // --- SDL inizialisieren
-    if SDL_Init(SDL_INIT_VIDEO) < 0 then begin
+    if not SDL_Init(SDL_INIT_VIDEO) then begin
       WriteLn('SDL could not initialize! SDL_Error: ', SDL_GetError);
       Halt(1);
     end;
@@ -97,7 +81,7 @@ const
       Halt(1);
     end;
 
-    if SDL_GL_SetSwapInterval(1) < 0 then begin
+    if not SDL_GL_SetSwapInterval(1) then begin
       WriteLn('Warning: Unable to set VSync! SDL Error: ', SDL_GetError);
     end;
 
@@ -119,23 +103,7 @@ const
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nil);
     glEnableVertexAttribArray(0);
 
-    // TexturCoord
-    glBindBuffer(GL_ARRAY_BUFFER, Mesh_Buffers[mbTexturCord]);
-    glBufferData(GL_ARRAY_BUFFER, Length(TextureVertex) * sizeof(TVector2f), PVector2f(TextureVertex), GL_STATIC_DRAW);
-
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, nil);
-    glEnableVertexAttribArray(1);
-
     glBindVertexArray(0);
-
-    // Textur
-    glGenTextures(Length(Texture), Texture);
-
-    glBindTexture(GL_TEXTURE_2D, Texture[TexID]);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 2, 2, 0, GL_RGBA, GL_UNSIGNED_BYTE, @Textur32_0);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glBindTexture(GL_TEXTURE_2D, 0);
 
     // Shader
     MyShader := TShader.Create;
@@ -158,8 +126,6 @@ const
     mat_id := MyShader.UniformLocation('matrix');
     ModelMatrix.Uniform(mat_id);
 
-    glBindTexture(GL_TEXTURE_2D, Texture[TexID]);
-
     glBindVertexArray(VAOs[vaQuad]);
     glDrawArrays(GL_TRIANGLES, 0, Length(QuadVertex));
 
@@ -168,13 +134,12 @@ const
 
   procedure Destroy_SDL_and_OpenGL;
   begin
-    glDeleteTextures(Length(Texture), Texture);
     glDeleteVertexArrays(Length(VAOs), VAOs);
     glDeleteBuffers(Length(Mesh_Buffers), Mesh_Buffers);
 
     MyShader.Free;
 
-    SDL_GL_DeleteContext(glcontext);
+    SDL_GL_DestroyContext(glcontext);
     SDL_DestroyWindow(gWindow);
     SDL_Quit();
   end;

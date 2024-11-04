@@ -6,9 +6,9 @@ uses
   // https://wiki.libsdl.org/SDL3/SDL_GL_ExtensionSupported
 
 
-  procedure ShowGLExt(const ext:String);
+  procedure ShowGLExt(const ext: string);
   begin
-    SDL_Log(PChar( ext + ' %d: ') ,SDL_GL_ExtensionSupported(PChar(ext)));
+    SDL_Log(PChar(ext + ' %d: '), SDL_GL_ExtensionSupported(PChar(ext)));
   end;
 
 

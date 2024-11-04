@@ -38,7 +38,7 @@ const
     i: integer;
   begin
     // --- SDL inizialisieren
-    if SDL_Init(SDL_INIT_VIDEO) < 0 then begin
+    if not SDL_Init(SDL_INIT_VIDEO) then begin
       SDL_Log('SDL could not initialize! SDL_Error: ', SDL_GetError);
       Halt(1);
     end;
@@ -59,7 +59,7 @@ const
       Halt(1);
     end;
 
-    if SDL_GL_SetSwapInterval(1) < 0 then begin
+    if not SDL_GL_SetSwapInterval(1) then begin
       SDL_Log('Warning: Unable to set VSync! SDL Error: ', SDL_GetError);
     end;
 
@@ -126,7 +126,7 @@ const
     glDeleteBuffers(1, @VBO);
     MyShader.Free;
 
-    SDL_GL_DeleteContext(glcontext);
+    SDL_GL_DestroyContext(glcontext);
     for i := 0 to Length(window) - 1 do begin
       SDL_DestroyWindow(window[i]);
     end;

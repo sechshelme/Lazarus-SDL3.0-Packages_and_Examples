@@ -13,7 +13,7 @@ const
 var
   // SDL
   glcontext: TSDL_GLContext;
-  gWindow: PSDL_Window;
+  window: PSDL_Window;
 
   quit: boolean = False;
   e: TSDL_Event;
@@ -55,7 +55,7 @@ const
   procedure Init_SDL_and_OpenGL;
   begin
     // --- SDL inizialisieren
-    if SDL_Init(SDL_INIT_VIDEO) < 0 then begin
+    if not SDL_Init(SDL_INIT_VIDEO) then begin
       WriteLn('SDL could not initialize! SDL_Error: ', SDL_GetError);
       Halt(1);
     end;
@@ -65,14 +65,14 @@ const
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-    gwindow := SDL_CreateWindow('SDL3 Window', Screen_Widht, Screen_Height, SDL_WINDOW_OPENGL or SDL_WINDOW_RESIZABLE);
-    glcontext := SDL_GL_CreateContext(gWindow);
+    window := SDL_CreateWindow('SDL3 Window', Screen_Widht, Screen_Height, SDL_WINDOW_OPENGL or SDL_WINDOW_RESIZABLE);
+    glcontext := SDL_GL_CreateContext(window);
     if glcontext = nil then begin
       Writeln('OpenGL context could not be created! SDL Error: ', SDL_GetError);
       Halt(1);
     end;
 
-    if SDL_GL_SetSwapInterval(1) < 0 then begin
+    if not SDL_GL_SetSwapInterval(1) then begin
       WriteLn('Warning: Unable to set VSync! SDL Error: ', SDL_GetError);
     end;
 
@@ -113,7 +113,7 @@ const
     glBindVertexArray(VAOs[vaTriangle]);
     glDrawArrays(GL_TRIANGLES, 0, Length(vertices));
 
-    SDL_GL_SwapWindow(gWindow);
+    SDL_GL_SwapWindow(window);
   end;
 
   procedure Destroy_SDL_and_OpenGL;
@@ -123,8 +123,8 @@ const
 
     MyShader.Free;
 
-//    SDL_GL_DeleteContext(glcontext);
-    SDL_DestroyWindow(gWindow);
+    SDL_GL_DestroyContext(glcontext);
+    SDL_DestroyWindow(window);
     SDL_Quit();
   end;
 
