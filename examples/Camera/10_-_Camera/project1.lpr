@@ -108,6 +108,9 @@ type
           end;
         end;
       end;
+      SDL_EVENT_QUIT: begin
+        Result := SDL_APP_SUCCESS;
+      end;
     end;
   end;
 

@@ -17,11 +17,11 @@ var
   begin
     while not quit do begin
       while SDL_PollEvent(@event) do begin
-        case event.type_ of
+        case event._type of
           SDL_EVENT_KEY_DOWN: begin
-            SDL_Log('key: %i', event.key.keysym.sym); // neu
+            SDL_Log('key: %i', event.key.key); // neu
 
-            case event.key.keysym.sym of
+            case event.key.key of
               SDLK_ESCAPE: begin
                 quit := True;
               end;
@@ -76,7 +76,7 @@ begin
 
   //  Mix_SetMusicCMD(SDL_getenv('MUSIC_CMD'));
 
-  music := Mix_LoadMUS('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/examples/Audio/20_-_SDL_LoadWav_and_Button/Boing_1.wav');
+  music := Mix_LoadMUS('/home/tux/Schreibtisch/sound/test.mp3');
   //  music := Mix_LoadMUS('/home/tux/Schreibtisch/sound/dia.wav');
   if music = nil then begin
     WriteLn('WAV nicht gefunden !  ', Mix_GetError);
