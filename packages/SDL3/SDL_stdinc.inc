@@ -14,7 +14,7 @@ const
   {$ENDIF}
 
   {$IFDEF Windows}
-  libSDL3 = 'SDL3.dll';
+  libSDL3 = 'SDL3';
   {$ENDIF}
 
 type
