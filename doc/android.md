@@ -11,4 +11,4 @@ cmake ../SDL/ -DCMAKE_TOOLCHAIN_FILE=/home/tux/Android/Sdk/ndk/28.0.12674087/bui
 ```
 
 Mehr Infos: 
-- (SDL3 git doc)[https://github.com/libsdl-org/SDL/blob/main/docs/README-android.md]
+- [SDL3 git doc](https://github.com/libsdl-org/SDL/blob/main/docs/README-android.md)
