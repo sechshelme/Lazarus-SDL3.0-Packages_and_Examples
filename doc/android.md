@@ -2,7 +2,7 @@
 - AS starten
 - Tools -> SDL-Manager -> Android SDK -> SDK-Tools -> NDK (Side by side) -> apply -> OK -> .... -> Finish
 - AS beenden
-Dann sollte ein Odner `~/Android/Sdk/nnk/xx.x.xxxxxxxx` da sein.
+Dann sollte ein Odner `~/Android/Sdk/ndk/xx.x.xxxxxxxx` da sein.
 
 Dann sollte man mit dieser oder ähnlichen Zeile die Adroid-Libs bauen können.
 
