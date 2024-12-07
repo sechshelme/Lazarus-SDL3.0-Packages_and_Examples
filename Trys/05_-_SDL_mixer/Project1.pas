@@ -5,10 +5,9 @@ uses
   SDL3_mixer;
 
 var
-  spec: TSDL_AudioSpec;
   music: PMix_Music;
   window: PSDL_Window;
-
+  renderer: PSDL_Renderer;
 
   procedure EventHandle;
   var
@@ -25,70 +24,45 @@ var
               SDLK_ESCAPE: begin
                 quit := True;
               end;
-              SDLK_m: begin
-                //                SwitchMouseButton;
-              end;
-
             end;
-          end;
-          SDL_EVENT_MOUSE_BUTTON_DOWN: begin
-            SDL_Log('Mouse down');
-          end;
-          SDL_EVENT_MOUSE_BUTTON_UP: begin
-            SDL_Log('Mouse up');
           end;
           SDL_EVENT_QUIT: begin
             quit := True;
           end;
         end;
       end;
+
+      SDL_SetRenderDrawColorFloat(renderer, 1.0, 1.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT);
+      SDL_RenderDebugText(renderer, 110, 90, 'press <ESC>');
+      SDL_RenderPresent(renderer);
     end;
   end;
 
 begin
-  //spec.freq := MIX_DEFAULT_FREQUENCY;
-  //spec.format := MIX_DEFAULT_FORMAT;
-  //spec.channels := MIX_DEFAULT_CHANNELS;
-  //
   SDL_Init(SDL_INIT_VIDEO or SDL_INIT_AUDIO);
   if Mix_Init(MIX_INIT_WAVPACK) <> 0 then begin
     SDL_Log('Fehler: MixInit: %s', SDL_GetError());
     halt;
   end;
 
-  window := SDL_CreateWindow('SDL3 Window', 320, 200, SDL_WINDOW_RESIZABLE);
+  window := SDL_CreateWindow('SDL3 Window', 320, 200, 0);
   if window = nil then begin
     SDL_Log('Kann kein SDL-Fenster erzeugen !   %s', SDL_GetError);
   end;
 
+  renderer:=SDL_CreateRenderer(window,nil);
+  if renderer = nil then begin
+    SDL_Log('Kann kein SDL-Rendere erzeugen !   %s', SDL_GetError);
+  end;
 
   if Mix_OpenAudio(0, nil) < 0 then  begin
     SDL_Log('Fehler: Kann Audio nicht öffnen: %s', SDL_GetError());
   end;
 
-
-//  Mix_QuerySpec(@spec.freq, @spec.format, @spec.channels);
-//  WriteLn(spec.freq);
-  //WriteLn(spec.channels);
-//  WriteLn(SDL_AUDIO_BITSIZE(spec.format));
-
-  //  Mix_VolumeMusic(MIX_MAX_VOLUME);
-
-  //  Mix_SetMusicCMD(SDL_getenv('MUSIC_CMD'));
-
   music := Mix_LoadMUS('/home/tux/Schreibtisch/sound/test.mp3');
-  //  music := Mix_LoadMUS('/home/tux/Schreibtisch/sound/dia.wav');
   if music = nil then begin
     WriteLn('WAV nicht gefunden !  ', Mix_GetError);
   end;
-
-//  if Mix_GetMusicType(music) = MUS_WAV then begin
-//    WriteLn('WAV');
-//  end;
-
-//  WriteLn(Mix_MusicDuration(music): 4: 2);
-
-  //  Mix_FadeInMusic(music, 0, 2000);
 
   Mix_PlayMusic(music, -10);
 

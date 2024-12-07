@@ -287,6 +287,7 @@ const
 
     Mix_FadeInMusic(music, -1, 3000);
 
+    Writeln('Press <Enter>');
     ReadLn;
   end;
 
