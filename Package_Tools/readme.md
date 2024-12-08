@@ -197,8 +197,8 @@ procedure SDL_Log(fmt: PChar); varargs; cdecl; external libSDL3 name 'SDL_Log';
 ```
 # Unit Abhängigkeiten
 
-Unit | Abhängigkeit
---------- | ---------
+Unit            | Abhängigkeit
+---------       | ---------
 SDL_stdinc      |
 SDL_guid        |
 SDL_properties  |

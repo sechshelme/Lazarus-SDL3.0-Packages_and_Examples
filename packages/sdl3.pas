@@ -9,12 +9,21 @@ uses
   x, xlib,
   {$ENDIF}
   {$IFDEF Windows}
-  windows,
+  Windows,
   {$ENDIF}
   ctypes;
 
   {$IFDEF FPC}
   {$PACKRECORDS C}
+  {$ENDIF}
+
+const
+  {$IFDEF Linux}
+  libSDL3 = 'SDL3';
+  {$ENDIF}
+
+  {$IFDEF Windows}
+  libSDL3 = 'SDL3';
   {$ENDIF}
 
   {$DEFINE read_interface}
@@ -29,4 +38,3 @@ implementation
 {$UNDEF read_implementation}
 
 end.
-

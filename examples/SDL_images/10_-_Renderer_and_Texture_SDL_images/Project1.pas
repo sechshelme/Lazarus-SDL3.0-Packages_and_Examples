@@ -19,7 +19,7 @@ var
   begin
     Result := IMG_Load('image.png');
     if Result = nil then begin
-      SDL_Log('Kann keine textur erzeugen !');
+      SDL_Log('Kann keine Textur erzeugen !');
     end;
     r.x := 1;
     r.y := 1;
@@ -121,7 +121,7 @@ var
 
 begin
   SDL_init(SDL_INIT_VIDEO);
-  IMG_Init(IMG_INIT_JPG);
+//  IMG_Init(IMG_INIT_JPG);
 
   window := SDL_CreateWindow('SDL3 Window', 800, 600, SDL_WINDOW_RESIZABLE);
   if window = nil then begin
@@ -148,6 +148,6 @@ begin
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 
-  IMG_Quit;
+//  IMG_Quit;
   SDL_Quit;
 end.

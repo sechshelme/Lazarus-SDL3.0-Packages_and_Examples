@@ -53,14 +53,14 @@ begin
   for i := 0 to slFile.Count - 1 do begin
     unit_source := TStringList.Create;
     inc_dest := TStringList.Create;
-    inc_dest.Add('/////////////////////////////////////////////////////////////');
-    inc_dest.Add('//                                                         //');
-    inc_dest.Add('//   WARNUNG, dies Datei wird automatisch durch            //');
-    inc_dest.Add('//   das Program "Convert_Unit_to_pas_includes" erzeugt !  //');
-    inc_dest.Add('//   Erzeugt am: '+FormatDateTime('dd/mm/yyyy   hh:nn', now)+  '                        //');
-    inc_dest.Add('//                                                         //');
-    inc_dest.Add('/////////////////////////////////////////////////////////////');
-    inc_dest.Add('');
+    //inc_dest.Add('/////////////////////////////////////////////////////////////');
+    //inc_dest.Add('//                                                         //');
+    //inc_dest.Add('//   WARNUNG, dies Datei wird automatisch durch            //');
+    //inc_dest.Add('//   das Program "Convert_Unit_to_pas_includes" erzeugt !  //');
+    //inc_dest.Add('//   Erzeugt am: '+FormatDateTime('dd/mm/yyyy   hh:nn', now)+  '                        //');
+    //inc_dest.Add('//                                                         //');
+    //inc_dest.Add('/////////////////////////////////////////////////////////////');
+    //inc_dest.Add('');
     unit_source.LoadFromFile(slFile[i]);
 WriteLn(  slFile[i]);
 

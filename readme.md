@@ -30,6 +30,10 @@ Eventuell muss folgends für `SDL_mix` installiert werden:
 - `sudo apt install fluidsynth`
 
 
+# Speicherleek
+Wen folgendes ein Speicherleek anzeigt `valgrind --leak-check=full ./main , muss folgendes im Code eingefügt werden.
+
+
 
 
 
