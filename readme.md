@@ -31,7 +31,12 @@ Eventuell muss folgends für `SDL_mix` installiert werden:
 
 
 # Speicherleek
-Wen folgendes ein Speicherleek anzeigt `valgrind --leak-check=full ./main , muss folgendes im Code eingefügt werden.
+Wen folgendes ein Speicherleek anzeigt `valgrind --leak-check=full ./main`, muss folgendes im Code eingefügt werden.
+```
+SDL_SetHint(SDL_HINT_SHUTDOWN_DBUS_ON_QUIT, "1");
+```
+
+Genauer testen `valgrind --leak-check=full --trace-children=yes ./main`
 
 
 
