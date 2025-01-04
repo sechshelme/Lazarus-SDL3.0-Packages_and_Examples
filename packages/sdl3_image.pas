@@ -18,6 +18,10 @@ const
   libSDL3_image = 'SDL3_image.dll';
   {$ENDIF}
 
+  {$IFDEF Darwin}
+  libSDL3_image = 'libSDL3_image.dylib';
+  {$ENDIF}
+
 const
   SDL_IMAGE_MAJOR_VERSION = 3;
   SDL_IMAGE_MINOR_VERSION = 1;

@@ -11,13 +11,16 @@ uses
 
 const
   {$IFDEF Linux}
-  sdl3_rtf_lib = 'libSDL3_rtf.so';
+  libSDL3_RTF = 'libSDL3_rtf.so';
   {$ENDIF}
 
   {$IFDEF Windows}
-  sdl3_rtf_lib = 'SDL3_rtf.dll';
+  libSDL3_RTF = 'SDL3_rtf.dll';
   {$ENDIF}
 
+  {$IFDEF Darwin}
+  libSDL3_RTF = 'libSDL3_rtf.dylib';
+  {$ENDIF}
 
 const
   SDL_RTF_MAJOR_VERSION = 3;
@@ -76,15 +79,15 @@ type
     FreeFont: procedure(font: pointer); cdecl;
   end;
 
-function RTF_CreateContext(renderer: PSDL_Renderer; fontEngine: PRTF_FontEngine): PRTF_Context; cdecl; external sdl3_rtf_lib;
-function RTF_Load(ctx: PRTF_Context; file_: PChar): longint; cdecl; external sdl3_rtf_lib;
-function RTF_Load_IO(ctx: PRTF_Context; src: PSDL_IOStream; closeio: longint): longint; cdecl; external sdl3_rtf_lib;
-function RTF_GetTitle(ctx: PRTF_Context): PChar; cdecl; external sdl3_rtf_lib;
-function RTF_GetSubject(ctx: PRTF_Context): PChar; cdecl; external sdl3_rtf_lib;
-function RTF_GetAuthor(ctx: PRTF_Context): PChar; cdecl; external sdl3_rtf_lib;
-function RTF_GetHeight(ctx: PRTF_Context; Width: longint): longint; cdecl; external sdl3_rtf_lib;
-procedure RTF_Render(ctx: PRTF_Context; rect: PSDL_Rect; yOffset: longint); cdecl; external sdl3_rtf_lib;
-procedure RTF_FreeContext(ctx: PRTF_Context); cdecl; external sdl3_rtf_lib;
+function RTF_CreateContext(renderer: PSDL_Renderer; fontEngine: PRTF_FontEngine): PRTF_Context; cdecl; external libSDL3_RTF;
+function RTF_Load(ctx: PRTF_Context; file_: PChar): longint; cdecl; external libSDL3_RTF;
+function RTF_Load_IO(ctx: PRTF_Context; src: PSDL_IOStream; closeio: longint): longint; cdecl; external libSDL3_RTF;
+function RTF_GetTitle(ctx: PRTF_Context): PChar; cdecl; external libSDL3_RTF;
+function RTF_GetSubject(ctx: PRTF_Context): PChar; cdecl; external libSDL3_RTF;
+function RTF_GetAuthor(ctx: PRTF_Context): PChar; cdecl; external libSDL3_RTF;
+function RTF_GetHeight(ctx: PRTF_Context; Width: longint): longint; cdecl; external libSDL3_RTF;
+procedure RTF_Render(ctx: PRTF_Context; rect: PSDL_Rect; yOffset: longint); cdecl; external libSDL3_RTF;
+procedure RTF_FreeContext(ctx: PRTF_Context); cdecl; external libSDL3_RTF;
 
 function RTF_SetError(fmt: PChar): longint; varargs; cdecl; external libSDL3 Name 'SDL_SetError';
 function RTF_GetError: PChar; cdecl; external libSDL3 Name 'SDL_GetError';

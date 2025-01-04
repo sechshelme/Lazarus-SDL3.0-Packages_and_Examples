@@ -26,6 +26,10 @@ const
   libSDL3 = 'SDL3';
   {$ENDIF}
 
+  {$IFDEF Darwin}
+  libSDL3 = 'libSDL3.dylib';
+  {$ENDIF}
+
   {$DEFINE read_interface}
   {$include SDL3_includes.inc}
   {$UNDEF read_interface}
