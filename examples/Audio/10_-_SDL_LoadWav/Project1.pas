@@ -1,14 +1,8 @@
 program Project1;
 
 uses
-  heaptrc,
   ctypes,
   SDL3;
-
-  // https://gist.github.com/chrplr/cd76ec6d3c0140a1786a5b083620ea3d
-
-  // /home/tux/Schreibtisch/von_Git/SDL/SDL3/SDL/test/loopwave.c
-  // https://stackoverflow.com/questions/62105714/sdl-loadwav-not-loading-file
 
 type
   TWave = record
@@ -43,7 +37,6 @@ var
     if additional_amount = total_amount then begin
       SDL_PutAudioStreamData(sound.stream, sound.wave.sound, sound.wave.soundlen);
     end;
-    //    exit;
     WriteLn('Callback');
     WriteLn('additional_amount: ', additional_amount);
     WriteLn('total_amount: ', total_amount);

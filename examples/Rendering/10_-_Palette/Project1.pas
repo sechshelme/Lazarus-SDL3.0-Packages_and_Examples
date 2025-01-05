@@ -32,29 +32,26 @@ const
     event: TSDL_Event;
     rect: TSDL_Rect;
   begin
-    if not SDL_init(SDL_INIT_VIDEO) then begin
-      SDL_Log('Konnte SDL-VIDEO nicht laden!:  %s', SDL_GetError);
-    end;
+    SDL_init(SDL_INIT_VIDEO);
 
     window := SDL_CreateWindow('Palette', widht * 2, Height * 2, 0);
     if window = nil then begin
-      SDL_Log('Konnte kein Windows erzeugen!:  %s', SDL_GetError);
+      SDL_Log('Cannot create SDL window !');
     end;
 
     winSurface := SDL_GetWindowSurface(window);
     if winSurface = nil then begin
-      SDL_Log('Konnte kein Window-Surface erzeugen!:  %s', SDL_GetError);
+      SDL_Log('Cannot create SDL window surface !  :  %s', SDL_GetError);
     end;
 
     surface := SDL_CreateSurface(widht, Height, SDL_PIXELFORMAT_INDEX8);
-//    surface := SDL_CreateSurface(widht, Height, SDL_PIXELFORMAT_RGBA8888);
     if surface = nil then begin
-      SDL_Log('Konnte kein Surface erzeugen!:  %s', SDL_GetError);
+      SDL_Log('Cannot create SDL surface !  :  %s', SDL_GetError);
     end;
 
     palette := createPalette;
     if palette = nil then begin
-      SDL_Log('Konnte Palette nicht erzeugen!:  %s', SDL_GetError);
+      SDL_Log('Cannot create SDL palette !  :  %s', SDL_GetError);
     end;
 
     if not SDL_SetSurfacePalette(surface, palette) then begin

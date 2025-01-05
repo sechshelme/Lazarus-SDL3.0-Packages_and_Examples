@@ -12,7 +12,6 @@ var
   window: array[0..winCount] of PSDL_Window;
   renderer: array[0..winCount] of PSDL_Renderer;
   i: integer;
-  props: TSDL_PropertiesID;
 
   procedure SDLMain;
   var
@@ -65,24 +64,12 @@ begin
   for i := 0 to winCount - 1 do begin
     window[i] := SDL_CreateWindow('Fenster', 320, 200, 0);
 
-    //props:=SDL_CreateProperties;
-    //SDL_SetProperty(props, SDL_PROP_RENDERER_CREATE_WINDOW_POINTER, window[i]);
-    //SDL_SetNumberProperty(props,SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER,1);
-    //renderer[i]:=SDL_CreateRendererWithProperties(props);
-    //SDL_DestroyProperties(props);
-
-
-    //    renderer[i]:=SDL_CreateRenderer(window[i], SDL_SOFTWARE_RENDERER);
     renderer[i] := SDL_CreateRenderer(window[i], 'vulkan');
     if renderer[i] = nil then begin
       SDL_Log('Renderer Error: %s', SDL_GetError);
       Halt;
     end;
     SDL_SetWindowPosition(window[i], i mod 4 * 350, i div 4 * 250);
-
-
-
-    // SDL_SetRenderVSync(renderer[i], 1);
   end;
 
   SDLMain;

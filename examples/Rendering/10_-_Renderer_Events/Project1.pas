@@ -34,9 +34,8 @@ var
             end;
           end;
          SDL_EVENT_WINDOW_CLOSE_REQUESTED: begin
-    //      SDL_EVENT_QUIT: begin
             quit := True;
-            WriteLn('quit');
+            SDL_Log('quit');
           end;
         end;
       end;

@@ -7,7 +7,7 @@ uses
   SDL3;
 
 var
-  window: array[0..3] of PSDL_Window;
+  window: array of PSDL_Window;
 
   procedure Run;
   var
@@ -37,7 +37,6 @@ var
           end;
         end;
       end;
-
     end;
   end;
 
@@ -47,12 +46,13 @@ var
     s: string;
   begin
     SDL_init(SDL_INIT_VIDEO);
+    SetLength(window, 8);
 
     for i := 0 to Length(window) - 1 do begin
       str(i, s);
       window[i] := SDL_CreateWindow(PChar('SDL3 Window (' + s + ')'), 320, 200, SDL_WINDOW_RESIZABLE or SDL_WINDOW_OPENGL);
       if window[i] = nil then begin
-        SDL_Log('Kann kein SDL-Fenster erzeugen !');
+        SDL_Log('Cannot create SDL window !');
       end;
       SDL_SetWindowPosition(window[i], i * 100 + 500, i * 75);
       SDL_ShowWindow(window[i]);

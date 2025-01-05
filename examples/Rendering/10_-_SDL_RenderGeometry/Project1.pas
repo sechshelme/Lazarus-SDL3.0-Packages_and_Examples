@@ -78,7 +78,7 @@ uses
       Halt;
     end;
 
-    window := SDL_CreateWindow('Triangle Example', 800, 600, SDL_WINDOW_RESIZABLE);
+    window := SDL_CreateWindow('RenderGeometrie Example', 800, 600, SDL_WINDOW_RESIZABLE);
     if window = nil then begin
       Halt;
     end;

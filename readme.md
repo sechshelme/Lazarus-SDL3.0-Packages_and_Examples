@@ -2,8 +2,8 @@
 - Dies ist ein SDL3.1.6 - Header für FPC/Lazarus
 
 # Neuerungen:
-| Datum | Änderungen 
-| :---: | ---
+| Datum      | Änderungen 
+| ---        | ---
 | 19.03.2024 | Eröfffnung des Repository
 | 22.10.2024 | Angepasst an 3.1.3
 | 03.11.2024 | Angepasst an 3.1.6

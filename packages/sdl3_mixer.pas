@@ -236,26 +236,9 @@ procedure Mix_OutOfMemory; cdecl; external libSDL3 Name 'SDL_OutOfMemory';
 
 implementation
 
-//procedure SDL_MIXER_VERSION(X: PSDL_Version);
-//begin
-//  X^.major := SDL_MIXER_MAJOR_VERSION;
-//  X^.minor := SDL_MIXER_MINOR_VERSION;
-//  X^.patch := SDL_MIXER_PATCHLEVEL;
-//end;
-//
-//procedure MIX_VERSION(X: PSDL_Version);
-//begin
-//  SDL_MIXER_VERSION(X);
-//end;
-
 function SDL_MIXER_COMPILEDVERSION: longint;
 begin
   SDL_MIXER_COMPILEDVERSION := SDL_VERSIONNUM(SDL_MIXER_MAJOR_VERSION, SDL_MIXER_MINOR_VERSION, SDL_MIXER_PATCHLEVEL);
 end;
-
-//function Mix_OutOfMemory: longint;
-//begin
-//  Result := SDL_Error(SDL_ENOMEM);
-//end;
 
 end.

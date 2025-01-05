@@ -23,7 +23,7 @@ uses
   begin
     SDL_Init(SDL_INIT_VIDEO);
     win := SDL_CreateWindow('Knoten', 1000, 1000, SDL_WINDOW_RESIZABLE);
-    screen := SDL_CreateRenderer(win, nil, SDL_RENDERER_PRESENTVSYNC);
+    screen := SDL_CreateRenderer(win, nil);
 
 
     for i := 0 to 8 do begin
@@ -36,9 +36,9 @@ uses
           Attributes[i].handleEvent(@event);
         end;
 
-        case event.type_ of
+        case event._type of
           SDL_EVENT_KEY_DOWN: begin
-            case event.key.keysym.sym of
+            case event.key.key of
               SDLK_ESCAPE: begin
                 quit := True;
               end;

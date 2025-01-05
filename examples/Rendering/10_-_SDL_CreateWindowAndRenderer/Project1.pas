@@ -24,7 +24,7 @@ var
   begin
     Result := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA32);
     if Result = nil then begin
-      SDL_Log('Kann kein Surface erzeugen !');
+      SDL_Log('Surface error !');
     end;
     r.x := 0;
     r.y := 0;
@@ -127,13 +127,13 @@ var
 begin
   SDL_init(SDL_INIT_VIDEO);
 
-  SDL_CreateWindowAndRenderer('titel', Width, heigt, SDL_WINDOW_HIDDEN, @window, @renderer);
+  SDL_CreateWindowAndRenderer('SDL3', Width, heigt, SDL_WINDOW_HIDDEN, @window, @renderer);
 
   bitmapSurface := CreateSurface;
 
   bitmapTex := SDL_CreateTextureFromSurface(renderer, bitmapSurface);
   if bitmapSurface = nil then begin
-    SDL_Log('Kann bmp nicht laden !');
+    SDL_Log('bitmap error !');
   end;
 
   SDL_DestroySurface(bitmapSurface);

@@ -1,14 +1,11 @@
 program Project1;
 
 uses
-  heaptrc,
+//  heaptrc,
   ctypes,
   SDL3,
   Button,
   AudioBar;
-
-  // https://gist.github.com/chrplr/cd76ec6d3c0140a1786a5b083620ea3d
-  // https://stackoverflow.com/questions/62105714/sdl-loadwav-not-loading-file
 
 type
   TMyApp = class(TObject)
@@ -18,7 +15,6 @@ type
   private
     window: PSDL_Window;
     renderer: PSDL_Renderer;
-
     SoundBar: array[0..5] of TSoundBar;
     WindowSize: TSDL_Point;
   end;
@@ -112,8 +108,6 @@ type
           SoundBar[i].EventHandle(event);
         end;
       end;
-
-      //      SDL_Log('size: %i', SDL_GetAudioStreamQueued(sound.stream));
 
       time := SDL_GetTicks / 1000;
       red := (SDL_sinf(time) + 1) / 2.0;

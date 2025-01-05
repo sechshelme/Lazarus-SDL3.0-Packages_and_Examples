@@ -2,7 +2,7 @@ program Project1;
 
 uses
   ctypes,
-//  SDL3_pixels,
+  //  SDL3_pixels,
   SDL3;
 
 var
@@ -16,7 +16,7 @@ var
 
   procedure ShowCpuInfo;
   begin
-    Writeln(SDL_GetCPUCount);
+    //    Writeln(SDL_GetCPUCount);
     Writeln(SDL_GetCPUCacheLineSize);
     Writeln(SDL_HasAltiVec);
     Writeln(SDL_HasMMX);
@@ -33,16 +33,19 @@ var
     Writeln(SDL_HasLSX);
     Writeln(SDL_HasLASX);
     Writeln(SDL_GetSystemRAM);
-    Writeln(SDL_SIMDGetAlignment);
+    //    Writeln(SDL_SIMDGetAlignment);
   end;
 
   procedure ShowLocale;
   var
-    locales: PSDL_Locale;
+    locales: PPSDL_Locale;
+    Count: longint;
+    i: integer;
   begin
-    locales := SDL_GetPreferredLocales;
-    WriteLn('language: ', locales^.country);
-    WriteLn('country:  ', locales^.language);
+    locales := SDL_GetPreferredLocales(@Count);
+    for i := 0 to Count - 1 do begin
+      WriteLn(i: 3, '. language: ', locales[i]^.country: 10, '   country:  ', locales[i]^.language: 10);
+    end;
   end;
 
   procedure ShowMessageBox;
@@ -96,7 +99,7 @@ begin
   SDL_init(SDL_INIT_VIDEO);
 
   win := SDL_CreateWindow('SDL3 Window', 320, 200, SDL_WINDOW_RESIZABLE);
-  renderer := SDL_CreateRenderer(win, nil, SDL_RENDERER_ACCELERATED);
+  renderer := SDL_CreateRenderer(win, nil);
   bitmapSurface := SDL_LoadBMP('mauer.bmp');
   bitmapTex := SDL_CreateTextureFromSurface(renderer, bitmapSurface);
   SDL_DestroySurface(bitmapSurface);
@@ -109,11 +112,11 @@ begin
 
 
   while not quit do begin
-    while SDL_PollEvent(@e) <> 0 do begin
-      case e.type_ of
+    while SDL_PollEvent(@e) do begin
+      case e._type of
         //        SDL_KEYDOWN: begin
         SDL_EVENT_KEY_DOWN: begin
-          case e.key.keysym.sym of
+          case e.key.key of
 
             SDLK_ESCAPE: begin
               quit := True;

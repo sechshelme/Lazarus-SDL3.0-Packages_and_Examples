@@ -93,7 +93,6 @@ begin
   sur := SDL_CreateSurface(w, h * 2, SDL_PIXELFORMAT_RGBA8888);
   r := Rect(0, 0, w, h * 2);
 
-  // Schwarzer Rahmen;
   SDL_FillSurfaceRect(sur, @r, $000000FF);
 
   // Rahmen Up
@@ -129,7 +128,6 @@ var
   w, h: Single;
 begin
   SDL_GetTextureSize(tex, @w, @h);
-//  SDL_QueryTexture(tex, nil, nil, @w, @h);
 
   srcrect.x := 0;
   srcrect.w := w;

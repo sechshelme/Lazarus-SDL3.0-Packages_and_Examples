@@ -39,7 +39,6 @@ var
         case e._type of
           SDL_EVENT_KEY_DOWN: begin
             case e.key.key of
-
               SDLK_ESCAPE: begin
                 quit := True;
               end;
@@ -130,12 +129,12 @@ var
 
     window := SDL_CreateWindow('SDL3 Window', Width, heigt, SDL_WINDOW_RESIZABLE);
     if window = nil then begin
-      SDL_Log('Kann kein SDL-Fenster erzeugen !');
+      SDL_Log('Cannot create SDL window !');
     end;
 
     renderer := SDL_CreateRenderer(window, nil);
     if renderer = nil then begin
-      SDL_Log('Kann kein SDL-Renderer erzeugen !');
+      SDL_Log('Cannot create SDL renderer !');
     end;
 
     Run;

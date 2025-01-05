@@ -1,7 +1,5 @@
 unit SDL3;
 
-//{$modeswitch typehelpers}
-
 interface
 
 uses

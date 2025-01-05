@@ -13,7 +13,7 @@ type
 
   TAttribute = class(TObject)
     renderer: PSDL_Renderer;
-    image: TSDL_Texture;
+    image: PSDL_Texture;
     Fpos: TSDL_FRect;
     mouse: TSDL_FPoint;
     input, output, dragLink: TNode;
@@ -54,8 +54,8 @@ destructor TAttribute.Destroy;
 begin
   SDL_DestroyTexture(image);
   image := nil;
-  //  input.Free;
-  //  output.Free;
+//  if input<>nil then   input.Free;
+//  if output<>nil then   output.Free;
   inherited Destroy;
 end;
 
@@ -71,7 +71,7 @@ procedure TAttribute.handleEvent(event: PSDL_Event);
 var
   i: integer;
 begin
-  case event^.type_ of
+  case event^._type of
     SDL_EVENT_MOUSE_MOTION: begin
       mouse.items := [event^.button.x, event^.button.y];
       if dragLink <> nil then begin

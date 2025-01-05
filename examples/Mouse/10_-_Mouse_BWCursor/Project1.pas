@@ -65,28 +65,28 @@ uses
   end;
 
 var
-  win: PSDL_Window;
+  window: PSDL_Window;
   renderer: PSDL_Renderer;
   customCursor: PSDL_Cursor;
 
   procedure Init;
   begin
     SDL_Init(SDL_INIT_VIDEO);
-    win := SDL_CreateWindow('Cursor', 640, 480, SDL_WINDOW_RESIZABLE);
-    if win = nil then begin
-      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Konnte Fenster nicht erzeugen !');
+    window := SDL_CreateWindow('Cursor', 640, 480, SDL_WINDOW_RESIZABLE);
+    if window = nil then begin
+      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Cannot create SDL window !');
       Halt(-1);
     end;
 
-    renderer := SDL_CreateRenderer(win, nil);
+    renderer := SDL_CreateRenderer(window, nil);
     if renderer = nil then begin
-      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Kann kein SDL-Renderer erzeugen !');
+      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Cannot create SDL renderer !');
       Halt(-1);
     end;
 
     customCursor := init_system_cursor;
     if customCursor = nil then begin
-      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Kann kein Cursor laden !');
+      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Cursors error !');
       Halt(-1);
     end;
     SDL_SetCursor(customCursor);
@@ -138,7 +138,7 @@ var
   begin
     SDL_DestroyCursor(customCursor);
     SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(win);
+    SDL_DestroyWindow(window);
     SDL_Quit;
   end;
 

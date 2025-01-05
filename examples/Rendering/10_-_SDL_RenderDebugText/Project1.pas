@@ -12,28 +12,7 @@ const
 
 var
   window: PSDL_Window;
-  bitmapSurface: PSDL_Surface;
   renderer: PSDL_Renderer;
-  bitmapTex: PSDL_Texture;
-
-
-
-  function CreateSurface: PSDL_Surface;
-  const
-    size = 64;
-  var
-    r: TSDL_Rect;
-  begin
-    Result := SDL_CreateSurface(size, size, SDL_PIXELFORMAT_RGBA32);
-    if Result = nil then begin
-      SDL_Log('Kann kein Surface erzeugen !');
-    end;
-    r.x := 0;
-    r.y := 0;
-    r.w := size;
-    r.h := size;
-    SDL_FillSurfaceRect(Result, @r, $8888FFFF);
-  end;
 
   procedure SDLMain;
   const
@@ -121,7 +100,6 @@ var
       SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
       SDL_RenderClear(renderer);
 
-      SDL_RenderTexture(renderer, bitmapTex, nil, @rDest);
       SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
       SDL_RenderDebugText(renderer, 0, 0, 'Hello World');
       SDL_SetRenderDrawColorFloat(renderer, 1.0, 1.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT);
@@ -133,21 +111,11 @@ var
 begin
   SDL_init(SDL_INIT_VIDEO);
 
-  SDL_CreateWindowAndRenderer('titel', Width, heigt, SDL_WINDOW_HIDDEN, @window, @renderer);
-
-  bitmapSurface := CreateSurface;
-
-  bitmapTex := SDL_CreateTextureFromSurface(renderer, bitmapSurface);
-  if bitmapSurface = nil then begin
-    SDL_Log('Kann bmp nicht laden !');
-  end;
-
-  SDL_DestroySurface(bitmapSurface);
+  SDL_CreateWindowAndRenderer('Debug Text', Width, heigt, SDL_WINDOW_HIDDEN, @window, @renderer);
   SDL_ShowWindow(window);
 
   SDLMain;
 
-  SDL_DestroyTexture(bitmapTex);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
 

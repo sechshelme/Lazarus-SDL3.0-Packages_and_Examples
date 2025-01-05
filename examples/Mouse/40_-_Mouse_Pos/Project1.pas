@@ -58,7 +58,6 @@ var
       SDL_SetRenderDrawColor(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
 
       SDL_RenderClear(renderer);
-      //    SDL_RenderTexture(renderer, bitmapTex, nil, nil);
       SDL_RenderPresent(renderer);
     end;
   end;
@@ -68,11 +67,12 @@ begin
 
   window := SDL_CreateWindow('SDL3 Window', 320, 200, SDL_WINDOW_RESIZABLE);
   if window = nil then begin
-    SDLFail('Kann kein SDL-Fenster erzeugen !');
+    SDLFail('Cannot create SDL window !');
   end;
+
   renderer := SDL_CreateRenderer(window, nil);
   if renderer = nil then begin
-    SDLFail('Kann kein SDL-Renderer erzeugen !');
+    SDLFail('Cannot create SDL renderer !');
   end;
 
   SDL_ShowWindow(window);

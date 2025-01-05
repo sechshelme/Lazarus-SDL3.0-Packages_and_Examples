@@ -37,13 +37,13 @@ var
     SDL_Init(SDL_INIT_VIDEO);
     win := SDL_CreateWindow('Cursor', 640, 480, SDL_WINDOW_RESIZABLE);
     if win = nil then begin
-      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Konnte Fenster nicht erzeugen !');
+      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Cannot create SDL window !');
       Halt(-1);
     end;
 
     renderer := SDL_CreateRenderer(win, nil);
     if renderer = nil then begin
-      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Kann kein SDL-Renderer erzeugen !');
+      SDL_LogError(SDL_LOG_CATEGORY_CUSTOM, 'Cannot create SDL renderer !');
       Halt(-1);
     end;
 

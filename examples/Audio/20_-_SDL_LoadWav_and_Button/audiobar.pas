@@ -43,7 +43,6 @@ type
   end;
 
 
-
 implementation
 
 procedure AudioStreamCallback(userdata: pointer; {%H-}stream: PSDL_AudioStream; additional_amount: longint; total_amount: longint); cdecl;

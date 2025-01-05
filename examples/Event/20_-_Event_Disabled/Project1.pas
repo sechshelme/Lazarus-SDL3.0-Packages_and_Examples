@@ -20,8 +20,6 @@ var
   procedure SwitchMouseButton;
   var
     IsEnabled: TSDL_bool;
-
-    // https://wiki.libsdl.org/SDL3/SDL_SetEventEnabled
   begin
     IsEnabled := SDL_EventEnabled(SDL_EVENT_MOUSE_BUTTON_DOWN);
     IsEnabled := not IsEnabled;
@@ -95,23 +93,19 @@ begin
 
   window := SDL_CreateWindow('SDL3 Window', 320, 200, SDL_WINDOW_RESIZABLE);
   if window = nil then begin
-    SDLFail('Kann kein SDL-Fenster erzeugen !');
+    SDLFail('Cannot create SDL window !');
   end;
+
   renderer := SDL_CreateRenderer(window, nil);
   if renderer = nil then begin
-    SDLFail('Kann kein SDL-Renderer erzeugen !');
+    SDLFail('Cannot create SDL renderer !');
   end;
 
   SDL_ShowWindow(window);
 
   SDL_GetWindowSize(window, @Width, @Height);
   SDL_GetWindowSizeInPixels(window, @bbwidth, @bbheight);
-  SDL_LogCritical(0, 'Window size: %ix%i', bbwidth, bbheight);
-  SDL_LogCritical(0, 'blabla');
   SDL_Log('Window size: %ix%i', bbwidth, bbheight);
-  SDL_Log('log');
-  SDL_LogWarn(0, 'warn');
-  WriteLn('Window size: ', bbwidth, 'x', bbheight);
 
   if Width <> bbwidth then  begin
     SDL_Log('This is a highdpi environment.');
