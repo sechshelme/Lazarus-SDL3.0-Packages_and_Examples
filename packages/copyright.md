@@ -1,5 +1,5 @@
-  zlib License
-  SDL3 Pascal Bindings
+  zlib License<br>
+  SDL3 Pascal Bindings<br>
   Copyright (c) 2023-2025 Mathias Burkhard
 
   This software is provided 'as-is', without any express or implied warranty. 
@@ -20,7 +20,7 @@
 
 =============================================================================
 
-  Simple DirectMedia Layer
+  Simple DirectMedia Layer<br>
   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
@@ -41,7 +41,7 @@
 
 =============================================================================
 
-  SDL_mixer:  An audio mixer library based on the SDL library
+  SDL_mixer:  An audio mixer library based on the SDL library<br>
   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
@@ -62,7 +62,7 @@
 
 =============================================================================
 
-  SDL_net: A simple networking library for use with SDL
+  SDL_net: A simple networking library for use with SDL<br>
   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
@@ -83,7 +83,7 @@
 
 =============================================================================
 
-  SDL_ttf:  A companion library to SDL for working with TrueType (tm) fonts
+  SDL_ttf:  A companion library to SDL for working with TrueType (tm) fonts<br>
   Copyright (C) 2001-2024 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
@@ -104,7 +104,7 @@
 
 =============================================================================
 
-  SDL_rtf:  A companion library to SDL for displaying RTF format text
+  SDL_rtf:  A companion library to SDL for displaying RTF format text<br>
   Copyright (C) 2003-2024 Sam Lantinga <slouken@libsdl.org>
 
   This software is provided 'as-is', without any express or implied
