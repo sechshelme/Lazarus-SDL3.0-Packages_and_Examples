@@ -1,5 +1,4 @@
-
-{$IFDEF read_interface}
+  {$IFDEF read_interface}
 
 type
   PSDL_EventType = ^TSDL_EventType;
@@ -409,6 +408,14 @@ type
   end;
   PSDL_CameraDeviceEvent = ^TSDL_CameraDeviceEvent;
 
+  TSDL_RenderEvent = record
+    _type: TSDL_EventType;
+    reserved: TUint32;
+    timestamp: TUint64;
+    windowID: TSDL_WindowID;
+  end;
+  PSDL_RenderEvent = ^TSDL_RenderEvent;
+
   TSDL_TouchFingerEvent = record
     _type: TSDL_EventType;
     reserved: TUint32;
@@ -571,9 +578,10 @@ type
       32: (pmotion: TSDL_PenMotionEvent);
       33: (pbutton: TSDL_PenButtonEvent);
       34: (paxis: TSDL_PenAxisEvent);
-      35: (drop: TSDL_DropEvent);
-      36: (clipboard: TSDL_ClipboardEvent);
-      37: (padding: array[0..127] of TUint8);
+      35: (render: TSDL_RenderEvent);
+      36: (drop: TSDL_DropEvent);
+      37: (clipboard: TSDL_ClipboardEvent);
+      38: (padding: array[0..127] of TUint8);
   end;
   PSDL_Event = ^TSDL_Event;
 

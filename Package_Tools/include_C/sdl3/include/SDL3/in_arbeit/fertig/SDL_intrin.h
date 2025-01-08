@@ -222,11 +222,6 @@
    so we define the needed '_m_prefetch' here as a pseudo-header, until the issue is fixed. */
 #ifndef __PRFCHWINTRIN_H
 #define __PRFCHWINTRIN_H
-static __inline__ void __attribute__((__always_inline__, __nodebug__))
-_m_prefetch(void *__P)
-{
-  __builtin_prefetch (__P, 0, 3 /* _MM_HINT_T0 */);
-}
 #endif /* __PRFCHWINTRIN_H */
 #endif /* __clang__ */
 #include <intrin.h>
@@ -339,11 +334,6 @@ _m_prefetch(void *__P)
  */
 #define SDL_TARGETING(x) __attribute__((target(x)))
 
-#elif defined(SDL_HAS_TARGET_ATTRIBS)
-# define SDL_TARGETING(x) __attribute__((target(x)))
-#else
-# define SDL_TARGETING(x)
-#endif
 
 #ifdef __loongarch64
 # ifndef SDL_DISABLE_LSX

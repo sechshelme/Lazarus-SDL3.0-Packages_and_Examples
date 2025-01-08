@@ -421,7 +421,7 @@ const
   SDL_GPU_SWAPCHAINCOMPOSITION_SDR = 0;
   SDL_GPU_SWAPCHAINCOMPOSITION_SDR_LINEAR = 1;
   SDL_GPU_SWAPCHAINCOMPOSITION_HDR_EXTENDED_LINEAR = 2;
-  SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2048 = 3;
+  SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2084 = 3;
 
 type
   TSDL_GPUViewport = record
@@ -627,14 +627,6 @@ type
     props: TSDL_PropertiesID;
   end;
   PSDL_GPUTextureCreateInfo = ^TSDL_GPUTextureCreateInfo;
-
-const
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.r';
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.g';
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.b';
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.a';
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.depth';
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8 = 'SDL.gpu.createtexture.d3d12.clear.stencil';
 
 type
   TSDL_GPUBufferCreateInfo = record
@@ -882,6 +874,14 @@ function SDL_CreateGPUComputePipeline(device: PSDL_GPUDevice; createinfo: PSDL_G
 function SDL_CreateGPUGraphicsPipeline(device: PSDL_GPUDevice; createinfo: PSDL_GPUGraphicsPipelineCreateInfo): PSDL_GPUGraphicsPipeline; cdecl; external libSDL3;
 function SDL_CreateGPUSampler(device: PSDL_GPUDevice; createinfo: PSDL_GPUSamplerCreateInfo): PSDL_GPUSampler; cdecl; external libSDL3;
 function SDL_CreateGPUShader(device: PSDL_GPUDevice; createinfo: PSDL_GPUShaderCreateInfo): PSDL_GPUShader; cdecl; external libSDL3;
+const
+  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.r';
+  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.g';
+  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.b';
+  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.a';
+  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.depth';
+  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8 = 'SDL.gpu.createtexture.d3d12.clear.stencil';
+
 function SDL_CreateGPUTexture(device: PSDL_GPUDevice; createinfo: PSDL_GPUTextureCreateInfo): PSDL_GPUTexture; cdecl; external libSDL3;
 function SDL_CreateGPUBuffer(device: PSDL_GPUDevice; createinfo: PSDL_GPUBufferCreateInfo): PSDL_GPUBuffer; cdecl; external libSDL3;
 function SDL_CreateGPUTransferBuffer(device: PSDL_GPUDevice; createinfo: PSDL_GPUTransferBufferCreateInfo): PSDL_GPUTransferBuffer; cdecl; external libSDL3;
@@ -948,8 +948,11 @@ function SDL_WindowSupportsGPUPresentMode(device: PSDL_GPUDevice; window: PSDL_W
 function SDL_ClaimWindowForGPUDevice(device: PSDL_GPUDevice; window: PSDL_Window): Tbool; cdecl; external libSDL3;
 procedure SDL_ReleaseWindowFromGPUDevice(device: PSDL_GPUDevice; window: PSDL_Window); cdecl; external libSDL3;
 function SDL_SetGPUSwapchainParameters(device: PSDL_GPUDevice; window: PSDL_Window; swapchain_composition: TSDL_GPUSwapchainComposition; present_mode: TSDL_GPUPresentMode): Tbool; cdecl; external libSDL3;
+function SDL_SetGPUAllowedFramesInFlight(device:PSDL_GPUDevice; allowed_frames_in_flight:TUint32):Tbool;cdecl;external libSDL3;
 function SDL_GetGPUSwapchainTextureFormat(device: PSDL_GPUDevice; window: PSDL_Window): TSDL_GPUTextureFormat; cdecl; external libSDL3;
 function SDL_AcquireGPUSwapchainTexture(command_buffer: PSDL_GPUCommandBuffer; window: PSDL_Window; swapchain_texture: PPSDL_GPUTexture; swapchain_texture_width: PUint32; swapchain_texture_height: PUint32): Tbool; cdecl; external libSDL3;
+function SDL_WaitForGPUSwapchain(device:PSDL_GPUDevice; window:PSDL_Window):Tbool;cdecl;external libSDL3;
+function SDL_WaitAndAcquireGPUSwapchainTexture(command_buffer:PSDL_GPUCommandBuffer; window:PSDL_Window; swapchain_texture:PPSDL_GPUTexture; swapchain_texture_width:PUint32; swapchain_texture_height:PUint32):Tbool;cdecl;external libSDL3;
 function SDL_SubmitGPUCommandBuffer(command_buffer: PSDL_GPUCommandBuffer): Tbool; cdecl; external libSDL3;
 function SDL_SubmitGPUCommandBufferAndAcquireFence(command_buffer: PSDL_GPUCommandBuffer): PSDL_GPUFence; cdecl; external libSDL3;
 function SDL_WaitForGPUIdle(device: PSDL_GPUDevice): Tbool; cdecl; external libSDL3;

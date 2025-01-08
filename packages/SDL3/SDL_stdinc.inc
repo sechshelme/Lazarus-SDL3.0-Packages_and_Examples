@@ -37,12 +37,12 @@ type
   PSint32 = ^int32;
   PSint64 = ^int64;
 
-  Tsize_t = SizeInt;
-  //  Tsize_t = SizeUInt;
-  Tuintptr_t = PtrUInt;
-
-
+  Tsize_t = csize_t;
   Psize_t = ^Tsize_t;
+
+  Tuintptr_t = PtrUInt;
+  Puintptr_t = ^Tuintptr_t;
+
 
   Twchar_t = word;
   Pwchar_t = ^Twchar_t;
@@ -105,7 +105,6 @@ const
 const
   SDL_MAX_TIME = SDL_MAX_SINT64;
   SDL_MIN_TIME = SDL_MIN_SINT64;
-
 
   SDL_FLT_EPSILON = single(1.1920928955078125e-07);
 
@@ -229,7 +228,7 @@ function SDL_strrchr(str: pansichar; c: longint): pansichar; cdecl; external lib
 function SDL_strstr(haystack: pansichar; needle: pansichar): pansichar; cdecl; external libSDL3;
 function SDL_strnstr(haystack: pansichar; needle: pansichar; maxlen: Tsize_t): pansichar; cdecl; external libSDL3;
 function SDL_strcasestr(haystack: pansichar; needle: pansichar): pansichar; cdecl; external libSDL3;
-function SDL_strtok_r(s1: pansichar; s2: pansichar; saveptr: PPansichar): pansichar; cdecl; external libSDL3;
+function SDL_strtok_r(str: pansichar; delim: pansichar; saveptr: PPansichar): pansichar; cdecl; external libSDL3;
 function SDL_utf8strlen(str: pansichar): Tsize_t; cdecl; external libSDL3;
 function SDL_utf8strnlen(str: pansichar; bytes: Tsize_t): Tsize_t; cdecl; external libSDL3;
 function SDL_itoa(Value: longint; str: pansichar; radix: longint): pansichar; cdecl; external libSDL3;

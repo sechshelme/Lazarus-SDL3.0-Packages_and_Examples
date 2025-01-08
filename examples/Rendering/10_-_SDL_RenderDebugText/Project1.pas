@@ -1,7 +1,5 @@
 program Project1;
 
-// https://github.com/Ravbug/sdl3-sample/blob/main/src/main.cpp
-
 uses
   ctypes,
   SDL3;
@@ -100,10 +98,13 @@ var
       SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
       SDL_RenderClear(renderer);
 
-      SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
-      SDL_RenderDebugText(renderer, 0, 0, 'Hello World');
+      SDL_SetRenderDrawColorFloat(renderer, 0.0, 1.0, 0.0, SDL_ALPHA_OPAQUE_FLOAT);
+      SDL_RenderFillRect(renderer, @rDest);
+
       SDL_SetRenderDrawColorFloat(renderer, 1.0, 1.0, 1.0, SDL_ALPHA_OPAQUE_FLOAT);
-      SDL_RenderDebugText(renderer, 0, 20, 'Hello World');
+      SDL_RenderDebugText(renderer, 10, 10, 'Zeile 1');
+      SDL_RenderDebugText(renderer, 10, 30, 'Zeile 2');
+      SDL_RenderDebugTextFormat(renderer, 10, 50, 'X: %6.2f Y: %6.2f W: %6.2f H: %6.2f  ', rDest.x, rDest.y, rDest.w, rDest.h);
       SDL_RenderPresent(renderer);
     end;
   end;
@@ -112,6 +113,7 @@ begin
   SDL_init(SDL_INIT_VIDEO);
 
   SDL_CreateWindowAndRenderer('Debug Text', Width, heigt, SDL_WINDOW_HIDDEN, @window, @renderer);
+
   SDL_ShowWindow(window);
 
   SDLMain;

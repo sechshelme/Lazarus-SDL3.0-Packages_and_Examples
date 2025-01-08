@@ -1,5 +1,4 @@
-
-{$IFDEF read_interface}
+  {$IFDEF read_interface}
 
 const
   SDL_SOFTWARE_RENDERER = 'software';
@@ -95,6 +94,7 @@ const
   SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER = 'SDL.renderer.vulkan.graphics_queue_family_index';
   SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER = 'SDL.renderer.vulkan.present_queue_family_index';
   SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER = 'SDL.renderer.vulkan.swapchain_image_count';
+  SDL_PROP_RENDERER_GPU_DEVICE_POINTER = 'SDL.renderer.gpu.device';
 
 function SDL_GetRenderOutputSize(renderer: PSDL_Renderer; w: Plongint; h: Plongint): Tbool; cdecl; external libSDL3;
 function SDL_GetCurrentRenderOutputSize(renderer: PSDL_Renderer; w: Plongint; h: Plongint): Tbool; cdecl; external libSDL3;
@@ -216,6 +216,8 @@ function SDL_RenderFillRects(renderer: PSDL_Renderer; rects: PSDL_FRect; Count: 
 function SDL_RenderTexture(renderer: PSDL_Renderer; texture: PSDL_Texture; srcrect: PSDL_FRect; dstrect: PSDL_FRect): Tbool; cdecl; external libSDL3;
 function SDL_RenderTextureRotated(renderer: PSDL_Renderer; texture: PSDL_Texture; srcrect: PSDL_FRect; dstrect: PSDL_FRect; angle: Tdouble;
   center: PSDL_FPoint; flip: TSDL_FlipMode): Tbool; cdecl; external libSDL3;
+function SDL_RenderTextureAffine(renderer: PSDL_Renderer; texture: PSDL_Texture; srcrect: PSDL_FRect; origin: PSDL_FPoint; right: PSDL_FPoint;
+  down: PSDL_FPoint): Tbool; cdecl; external libSDL3;
 function SDL_RenderTextureTiled(renderer: PSDL_Renderer; texture: PSDL_Texture; srcrect: PSDL_FRect; scale: single; dstrect: PSDL_FRect): Tbool; cdecl; external libSDL3;
 function SDL_RenderTexture9Grid(renderer: PSDL_Renderer; texture: PSDL_Texture; srcrect: PSDL_FRect; left_width: single; right_width: single;
   top_height: single; bottom_height: single; scale: single; dstrect: PSDL_FRect): Tbool; cdecl; external libSDL3;
@@ -243,9 +245,11 @@ function SDL_GetRenderVSync(renderer: PSDL_Renderer; vsync: Plongint): Tbool; cd
 const
   SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE = 8;
 
-function SDL_RenderDebugText(renderer: PSDL_Renderer; x, y: cfloat; str: PChar): Boolean; cdecl; external libSDL3;
+function SDL_RenderDebugText(renderer: PSDL_Renderer; x, y: cfloat; str: pchar): boolean; cdecl; external libSDL3;
+function SDL_RenderDebugTextFormat(renderer: PSDL_Renderer; x: single; y: single; fmt: pchar): Tbool; varargs; cdecl; external libSDL3;
 
-  {$ENDIF read_interface}
+
+{$ENDIF read_interface}
 
 
 {$IFDEF read_implementation}

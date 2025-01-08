@@ -195,8 +195,7 @@ function SDL_GetNaturalDisplayOrientation(displayID: TSDL_DisplayID): TSDL_Displ
 function SDL_GetCurrentDisplayOrientation(displayID: TSDL_DisplayID): TSDL_DisplayOrientation; cdecl; external libSDL3;
 function SDL_GetDisplayContentScale(displayID: TSDL_DisplayID): single; cdecl; external libSDL3;
 function SDL_GetFullscreenDisplayModes(displayID: TSDL_DisplayID; Count: Plongint): PPSDL_DisplayMode; cdecl; external libSDL3;
-function SDL_GetClosestFullscreenDisplayMode(displayID: TSDL_DisplayID; w: longint; h: longint; refresh_rate: single; include_high_density_modes: Tbool;
-  mode: PSDL_DisplayMode): Tbool; cdecl; external libSDL3;
+function SDL_GetClosestFullscreenDisplayMode(displayID: TSDL_DisplayID; w: longint; h: longint; refresh_rate: single; include_high_density_modes: Tbool; closest: PSDL_DisplayMode): Tbool; cdecl; external libSDL3;
 function SDL_GetDesktopDisplayMode(displayID: TSDL_DisplayID): PSDL_DisplayMode; cdecl; external libSDL3;
 function SDL_GetCurrentDisplayMode(displayID: TSDL_DisplayID): PSDL_DisplayMode; cdecl; external libSDL3;
 function SDL_GetDisplayForPoint(point: PSDL_Point): TSDL_DisplayID; cdecl; external libSDL3;
@@ -280,6 +279,7 @@ const
   SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER = 'SDL.window.win32.instance';
   SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER = 'SDL.window.wayland.display';
   SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER = 'SDL.window.wayland.surface';
+  SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER = 'SDL.window.wayland.viewport';
   SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER = 'SDL.window.wayland.egl_window';
   SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER = 'SDL.window.wayland.xdg_surface';
   SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER = 'SDL.window.wayland.xdg_toplevel';

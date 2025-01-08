@@ -2,6 +2,7 @@
 
 
 {$include SDL3/SDL_stdinc.inc}
+{$include SDL3/SDL_intrin.inc}
 {$include SDL3/SDL_guid.inc}
 {$include SDL3/SDL_properties.inc}
 {$include SDL3/SDL_log.inc}
@@ -56,4 +57,6 @@
 {$include SDL3/SDL_revision.inc}
 {$include SDL3/SDL_main.inc}          // SDL_init, SDL_events
 {$include SDL3/SDL_gpu.inc}           // SDL_properties, SDL_pixels, SDL_surface, SDL_rect, SDL_video
+{$include SDL3/SDL_asyncio.inc}
+{$include SDL3/SDL_tray.inc}
 

@@ -74,6 +74,8 @@ function SDL_IOvprintf(context: PSDL_IOStream; fmt: pansichar; ap: Tva_list): Ts
 function SDL_FlushIO(context: PSDL_IOStream): Tbool; cdecl; external libSDL3;
 function SDL_LoadFile_IO(src: PSDL_IOStream; datasize: Psize_t; closeio: Tbool): pointer; cdecl; external libSDL3;
 function SDL_LoadFile(file_: pansichar; datasize: Psize_t): pointer; cdecl; external libSDL3;
+function SDL_SaveFile_IO(src:PSDL_IOStream; data:pointer; datasize:Tsize_t; closeio:Tbool):Tbool;cdecl;external libSDL3;
+function SDL_SaveFile(file_:Pchar; data:pointer; datasize:Tsize_t):Tbool;cdecl;external libSDL3;
 function SDL_ReadU8(src: PSDL_IOStream; Value: PUint8): Tbool; cdecl; external libSDL3;
 function SDL_ReadS8(src: PSDL_IOStream; Value: PSint8): Tbool; cdecl; external libSDL3;
 function SDL_ReadU16LE(src: PSDL_IOStream; Value: PUint16): Tbool; cdecl; external libSDL3;

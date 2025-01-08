@@ -1,5 +1,4 @@
-
-{$IFDEF read_interface}
+  {$IFDEF read_interface}
 
 type
   PSDL_ThreadID = ^TSDL_ThreadID;
@@ -8,6 +7,7 @@ type
   PSDL_TLSID = ^TSDL_TLSID;
   TSDL_TLSID = TSDL_AtomicInt;
 
+type
   PSDL_ThreadPriority = ^TSDL_ThreadPriority;
   TSDL_ThreadPriority = longint;
 
@@ -16,6 +16,16 @@ const
   SDL_THREAD_PRIORITY_NORMAL = 1;
   SDL_THREAD_PRIORITY_HIGH = 2;
   SDL_THREAD_PRIORITY_TIME_CRITICAL = 3;
+
+type
+  PSDL_ThreadState = ^TSDL_ThreadState;
+  TSDL_ThreadState = longint;
+
+const
+  SDL_THREAD_UNKNOWN = 0;
+  SDL_THREAD_ALIVE = 1;
+  SDL_THREAD_DETACHED = 2;
+  SDL_THREAD_COMPLETE = 3;
 
 type
   TSDL_ThreadFunction = function(Data: pointer): longint; cdecl;
@@ -44,6 +54,7 @@ function SDL_GetCurrentThreadID: TSDL_ThreadID; cdecl; external libSDL3;
 function SDL_GetThreadID(thread: PSDL_Thread): TSDL_ThreadID; cdecl; external libSDL3;
 function SDL_SetCurrentThreadPriority(priority: TSDL_ThreadPriority): Tbool; cdecl; external libSDL3;
 procedure SDL_WaitThread(thread: PSDL_Thread; status: Plongint); cdecl; external libSDL3;
+function SDL_GetThreadState(thread: PSDL_Thread): TSDL_ThreadState; cdecl; external libSDL3;
 procedure SDL_DetachThread(thread: PSDL_Thread); cdecl; external libSDL3;
 function SDL_GetTLS(id: PSDL_TLSID): pointer; cdecl; external libSDL3;
 

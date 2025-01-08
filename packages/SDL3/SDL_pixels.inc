@@ -333,13 +333,13 @@ function SDL_DEFINE_PIXELFOURCC(A, B, C, D: byte): uint32;
 
 function SDL_DEFINE_PIXELFORMAT(_type, order, layout, bits, bytes: longint): longint;
 
-function SDL_PIXELFLAG(X: longint): longint;
-function SDL_PIXELTYPE(X: longint): longint;
-function SDL_PIXELORDER(X: longint): longint;
-function SDL_PIXELLAYOUT(X: longint): longint;
-function SDL_BITSPERPIXEL(X: longint): longint;
+function SDL_PIXELFLAG(format: longint): longint;
+function SDL_PIXELTYPE(format: longint): longint;
+function SDL_PIXELORDER(format: longint): longint;
+function SDL_PIXELLAYOUT(format: longint): longint;
+function SDL_BITSPERPIXEL(format: longint): longint;
 
-function SDL_BYTESPERPIXEL(X: longint): longint;
+function SDL_BYTESPERPIXEL(format: longint): longint;
 function SDL_ISPIXELFORMAT_INDEXED(format: longint): boolean;
 function SDL_ISPIXELFORMAT_PACKED(format: longint): boolean;
 function SDL_ISPIXELFORMAT_ARRAY(format: longint): boolean;
@@ -350,18 +350,18 @@ function SDL_ISPIXELFORMAT_FLOAT(format: longint): boolean;
 function SDL_ISPIXELFORMAT_FOURCC(format: TSDL_PixelFormat): boolean;
 
 function SDL_DEFINE_COLORSPACE(_type, range, primaries, transfer, matrix, chroma: longint): longint;
-function SDL_COLORSPACETYPE(X: longint): TSDL_ColorType;
-function SDL_COLORSPACERANGE(X: longint): TSDL_ColorRange;
-function SDL_COLORSPACECHROMA(X: longint): TSDL_ChromaLocation;
-function SDL_COLORSPACEPRIMARIES(X: longint): TSDL_ColorPrimaries;
-function SDL_COLORSPACETRANSFER(X: longint): TSDL_TransferCharacteristics;
-function SDL_COLORSPACEMATRIX(X: longint): TSDL_MatrixCoefficients;
+function SDL_COLORSPACETYPE(cspace: longint): TSDL_ColorType;
+function SDL_COLORSPACERANGE(cspace: longint): TSDL_ColorRange;
+function SDL_COLORSPACECHROMA(cspace: longint): TSDL_ChromaLocation;
+function SDL_COLORSPACEPRIMARIES(cspace: longint): TSDL_ColorPrimaries;
+function SDL_COLORSPACETRANSFER(cspace: longint): TSDL_TransferCharacteristics;
+function SDL_COLORSPACEMATRIX(cspace: longint): TSDL_MatrixCoefficients;
 
-function SDL_ISCOLORSPACE_MATRIX_BT601(X: longint): boolean;
-function SDL_ISCOLORSPACE_MATRIX_BT709(X: longint): boolean;
-function SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(X: longint): boolean;
-function SDL_ISCOLORSPACE_LIMITED_RANGE(X: longint): boolean;
-function SDL_ISCOLORSPACE_FULL_RANGE(X: longint): boolean;
+function SDL_ISCOLORSPACE_MATRIX_BT601(cspace: longint): boolean;
+function SDL_ISCOLORSPACE_MATRIX_BT709(cspace: longint): boolean;
+function SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(cspace: longint): boolean;
+function SDL_ISCOLORSPACE_LIMITED_RANGE(cspace: longint): boolean;
+function SDL_ISCOLORSPACE_FULL_RANGE(cspace: longint): boolean;
 
 
 {$ENDIF read_interface}
@@ -384,32 +384,32 @@ begin
   Result := (format <> 0) and (SDL_PIXELFLAG(format) <> 1);
 end;
 
-function SDL_PIXELFLAG(X: longint): longint;
+function SDL_PIXELFLAG(format: longint): longint;
 begin
-  SDL_PIXELFLAG := (X shr 28) and $0F;
+  SDL_PIXELFLAG := (format shr 28) and $0F;
 end;
 
-function SDL_PIXELTYPE(X: longint): longint;
+function SDL_PIXELTYPE(format: longint): longint;
 begin
-  SDL_PIXELTYPE := (X shr 24) and $0F;
+  SDL_PIXELTYPE := (format shr 24) and $0F;
 end;
 
-function SDL_PIXELORDER(X: longint): longint;
+function SDL_PIXELORDER(format: longint): longint;
 begin
-  SDL_PIXELORDER := (X shr 20) and $0F;
+  SDL_PIXELORDER := (format shr 20) and $0F;
 end;
 
-function SDL_PIXELLAYOUT(X: longint): longint;
+function SDL_PIXELLAYOUT(format: longint): longint;
 begin
-  SDL_PIXELLAYOUT := (X shr 16) and $0F;
+  SDL_PIXELLAYOUT := (format shr 16) and $0F;
 end;
 
-function SDL_BITSPERPIXEL(X: longint): longint;
+function SDL_BITSPERPIXEL(format: longint): longint;
 begin
-  if SDL_ISPIXELFORMAT_FOURCC(X) then begin
+  if SDL_ISPIXELFORMAT_FOURCC(format) then begin
     Result := 0;
   end else begin
-    Result := (X shr 8) and $FF;
+    Result := (format shr 8) and $FF;
   end;
 end;
 
@@ -418,72 +418,72 @@ begin
   SDL_DEFINE_COLORSPACE := ((((((TUint32(_type)) shl 28) or ((TUint32(range)) shl 24)) or ((TUint32(chroma)) shl 20)) or ((TUint32(primaries)) shl 10)) or ((TUint32(transfer)) shl 5)) or ((TUint32(matrix)) shl 0);
 end;
 
-function SDL_COLORSPACETYPE(X: longint): TSDL_ColorType;
+function SDL_COLORSPACETYPE(cspace: longint): TSDL_ColorType;
 begin
-  SDL_COLORSPACETYPE := TSDL_ColorType((X shr 28) and $0F);
+  SDL_COLORSPACETYPE := TSDL_ColorType((cspace shr 28) and $0F);
 end;
 
-function SDL_COLORSPACERANGE(X: longint): TSDL_ColorRange;
+function SDL_COLORSPACERANGE(cspace: longint): TSDL_ColorRange;
 begin
-  SDL_COLORSPACERANGE := TSDL_ColorRange((X shr 24) and $0F);
+  SDL_COLORSPACERANGE := TSDL_ColorRange((cspace shr 24) and $0F);
 end;
 
-function SDL_COLORSPACECHROMA(X: longint): TSDL_ChromaLocation;
+function SDL_COLORSPACECHROMA(cspace: longint): TSDL_ChromaLocation;
 begin
-  SDL_COLORSPACECHROMA := TSDL_ChromaLocation((X shr 20) and $0F);
+  SDL_COLORSPACECHROMA := TSDL_ChromaLocation((cspace shr 20) and $0F);
 end;
 
-function SDL_COLORSPACEPRIMARIES(X: longint): TSDL_ColorPrimaries;
+function SDL_COLORSPACEPRIMARIES(cspace: longint): TSDL_ColorPrimaries;
 begin
-  SDL_COLORSPACEPRIMARIES := TSDL_ColorPrimaries((X shr 10) and $1F);
+  SDL_COLORSPACEPRIMARIES := TSDL_ColorPrimaries((cspace shr 10) and $1F);
 end;
 
-function SDL_COLORSPACETRANSFER(X: longint): TSDL_TransferCharacteristics;
+function SDL_COLORSPACETRANSFER(cspace: longint): TSDL_TransferCharacteristics;
 begin
-  SDL_COLORSPACETRANSFER := TSDL_TransferCharacteristics((X shr 5) and $1F);
+  SDL_COLORSPACETRANSFER := TSDL_TransferCharacteristics((cspace shr 5) and $1F);
 end;
 
-function SDL_COLORSPACEMATRIX(X: longint): TSDL_MatrixCoefficients;
+function SDL_COLORSPACEMATRIX(cspace: longint): TSDL_MatrixCoefficients;
 begin
-  SDL_COLORSPACEMATRIX := TSDL_MatrixCoefficients(X and $1F);
+  SDL_COLORSPACEMATRIX := TSDL_MatrixCoefficients(cspace and $1F);
 end;
 
-function SDL_ISCOLORSPACE_MATRIX_BT601(X: longint): boolean;
+function SDL_ISCOLORSPACE_MATRIX_BT601(cspace: longint): boolean;
 begin
-  SDL_ISCOLORSPACE_MATRIX_BT601 := (SDL_COLORSPACEMATRIX(X) = SDL_MATRIX_COEFFICIENTS_BT601) or (SDL_COLORSPACEMATRIX(X) = SDL_MATRIX_COEFFICIENTS_BT470BG);
+  SDL_ISCOLORSPACE_MATRIX_BT601 := (SDL_COLORSPACEMATRIX(cspace) = SDL_MATRIX_COEFFICIENTS_BT601) or (SDL_COLORSPACEMATRIX(cspace) = SDL_MATRIX_COEFFICIENTS_BT470BG);
 end;
 
-function SDL_ISCOLORSPACE_MATRIX_BT709(X: longint): boolean;
+function SDL_ISCOLORSPACE_MATRIX_BT709(cspace: longint): boolean;
 begin
-  SDL_ISCOLORSPACE_MATRIX_BT709 := (SDL_COLORSPACEMATRIX(X)) = SDL_MATRIX_COEFFICIENTS_BT709;
+  SDL_ISCOLORSPACE_MATRIX_BT709 := (SDL_COLORSPACEMATRIX(cspace)) = SDL_MATRIX_COEFFICIENTS_BT709;
 end;
 
-function SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(X: longint): boolean;
+function SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(cspace: longint): boolean;
 begin
-  SDL_ISCOLORSPACE_MATRIX_BT2020_NCL := (SDL_COLORSPACEMATRIX(X)) = SDL_MATRIX_COEFFICIENTS_BT2020_NCL;
+  SDL_ISCOLORSPACE_MATRIX_BT2020_NCL := (SDL_COLORSPACEMATRIX(cspace)) = SDL_MATRIX_COEFFICIENTS_BT2020_NCL;
 end;
 
-function SDL_ISCOLORSPACE_LIMITED_RANGE(X: longint): boolean;
+function SDL_ISCOLORSPACE_LIMITED_RANGE(cspace: longint): boolean;
 begin
-  SDL_ISCOLORSPACE_LIMITED_RANGE := (SDL_COLORSPACERANGE(X)) <> SDL_COLOR_RANGE_FULL;
+  SDL_ISCOLORSPACE_LIMITED_RANGE := (SDL_COLORSPACERANGE(cspace)) <> SDL_COLOR_RANGE_FULL;
 end;
 
-function SDL_ISCOLORSPACE_FULL_RANGE(X: longint): boolean;
+function SDL_ISCOLORSPACE_FULL_RANGE(cspace: longint): boolean;
 begin
-  SDL_ISCOLORSPACE_FULL_RANGE := (SDL_COLORSPACERANGE(X)) = SDL_COLOR_RANGE_FULL;
+  SDL_ISCOLORSPACE_FULL_RANGE := (SDL_COLORSPACERANGE(cspace)) = SDL_COLOR_RANGE_FULL;
 end;
 
-function SDL_BYTESPERPIXEL(X: longint): longint;
+function SDL_BYTESPERPIXEL(format: longint): longint;
 begin
-  if SDL_ISPIXELFORMAT_FOURCC(X) then begin
-    if (X = SDL_PIXELFORMAT_YUY2) or (X = SDL_PIXELFORMAT_UYVY) or
-      (X = SDL_PIXELFORMAT_YVYU) or (X = SDL_PIXELFORMAT_P010) then begin
+  if SDL_ISPIXELFORMAT_FOURCC(format) then begin
+    if (format = SDL_PIXELFORMAT_YUY2) or (format = SDL_PIXELFORMAT_UYVY) or
+      (format = SDL_PIXELFORMAT_YVYU) or (format = SDL_PIXELFORMAT_P010) then begin
       Result := 2;
     end else begin
       Result := 1;
     end;
   end else begin
-    Result := (X shr 0) and $FF;
+    Result := (format shr 0) and $FF;
   end;
 end;
 
@@ -516,11 +516,16 @@ end;
 
 function SDL_ISPIXELFORMAT_ALPHA(format: longint): boolean;
 begin
-  Result := SDL_ISPIXELFORMAT_PACKED(format) and
+  Result := (SDL_ISPIXELFORMAT_PACKED(format) and
     ((SDL_PIXELORDER(format) = SDL_PACKEDORDER_ARGB) or
     (SDL_PIXELORDER(format) = SDL_PACKEDORDER_RGBA) or
     (SDL_PIXELORDER(format) = SDL_PACKEDORDER_ABGR) or
-    (SDL_PIXELORDER(format) = SDL_PACKEDORDER_BGRA));
+    (SDL_PIXELORDER(format) = SDL_PACKEDORDER_BGRA))) or
+    (SDL_ISPIXELFORMAT_ARRAY(format) and
+    ((SDL_PIXELORDER(format) = SDL_ARRAYORDER_ARGB) or
+    (SDL_PIXELORDER(format) = SDL_ARRAYORDER_RGBA) or
+    (SDL_PIXELORDER(format) = SDL_ARRAYORDER_ABGR) or
+    (SDL_PIXELORDER(format) = SDL_ARRAYORDER_BGRA)));
 end;
 
 function SDL_ISPIXELFORMAT_10BIT(format: longint): boolean;

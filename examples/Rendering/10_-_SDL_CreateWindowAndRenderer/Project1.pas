@@ -130,13 +130,12 @@ begin
   SDL_CreateWindowAndRenderer('SDL3', Width, heigt, SDL_WINDOW_HIDDEN, @window, @renderer);
 
   bitmapSurface := CreateSurface;
-
   bitmapTex := SDL_CreateTextureFromSurface(renderer, bitmapSurface);
   if bitmapSurface = nil then begin
     SDL_Log('bitmap error !');
   end;
-
   SDL_DestroySurface(bitmapSurface);
+
   SDL_ShowWindow(window);
 
   SDLMain;

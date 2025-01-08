@@ -1,5 +1,4 @@
-
-{$IFDEF read_interface}
+  {$IFDEF read_interface}
 
 function SDL_GetBasePath: pansichar; cdecl; external libSDL3;
 function SDL_GetPrefPath(org: pansichar; app: pansichar): pansichar; cdecl; external libSDL3;
@@ -70,6 +69,7 @@ function SDL_RenamePath(oldpath: pansichar; newpath: pansichar): Tbool; cdecl; e
 function SDL_CopyFile(oldpath: pansichar; newpath: pansichar): Tbool; cdecl; external libSDL3;
 function SDL_GetPathInfo(path: pansichar; info: PSDL_PathInfo): Tbool; cdecl; external libSDL3;
 function SDL_GlobDirectory(path: pansichar; pattern: pansichar; flags: TSDL_GlobFlags; Count: Plongint): PPChar; cdecl; external libSDL3;
+function SDL_GetCurrentDirectory: pchar; cdecl; external libSDL3;
 
 {$ENDIF read_interface}
 

@@ -165,9 +165,9 @@ typedef struct SDL_IOStreamInterface
  * or the interface has been updated and this should be updated to match and
  * the code using this interface should be updated to handle the old version.
  */
-SDL_COMPILE_TIME_ASSERT(SDL_IOStreamInterface_SIZE,
-    (sizeof(void *) == 4 && sizeof(SDL_IOStreamInterface) == 28) ||
-    (sizeof(void *) == 8 && sizeof(SDL_IOStreamInterface) == 56));
+//SDL_COMPILE_TIME_ASSERT(SDL_IOStreamInterface_SIZE,
+//    (sizeof(void *) == 4 && sizeof(SDL_IOStreamInterface) == 28) ||
+//    (sizeof(void *) == 8 && sizeof(SDL_IOStreamInterface) == 56));
 
 /**
  * The read/write operation structure.
@@ -608,7 +608,7 @@ extern  size_t  SDL_WriteIO(SDL_IOStream *context, const void *ptr, size_t size)
  * \sa SDL_IOvprintf
  * \sa SDL_WriteIO
  */
-extern  size_t  SDL_IOprintf(SDL_IOStream *context, SDL_PRINTF_FORMAT_STRING const char *fmt, ...)  SDL_PRINTF_VARARG_FUNC(2);
+extern  size_t  SDL_IOprintf(SDL_IOStream *context,  const char *fmt, ...) ;
 
 /**
  * Print to an SDL_IOStream data stream.
@@ -626,7 +626,7 @@ extern  size_t  SDL_IOprintf(SDL_IOStream *context, SDL_PRINTF_FORMAT_STRING con
  * \sa SDL_IOprintf
  * \sa SDL_WriteIO
  */
-extern  size_t  SDL_IOvprintf(SDL_IOStream *context, SDL_PRINTF_FORMAT_STRING const char *fmt, va_list ap) SDL_PRINTF_VARARG_FUNCV(2);
+extern  size_t  SDL_IOvprintf(SDL_IOStream *context,  const char *fmt, va_list ap) ;
 
 /**
  * Flush any buffered data in the stream.

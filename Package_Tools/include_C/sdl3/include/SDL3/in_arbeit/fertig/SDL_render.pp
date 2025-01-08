@@ -1,4 +1,52 @@
-/*
+
+unit SDL_render;
+interface
+
+{
+  Automatically converted by H2Pas 1.0.0 from SDL_render.h
+  The following command line parameters were used:
+    -p
+    -T
+    -d
+    -c
+    -e
+    SDL_render.h
+}
+
+{ Pointers to basic pascal types, inserted by h2pas conversion program.}
+Type
+  PLongint  = ^Longint;
+  PSmallInt = ^SmallInt;
+  PByte     = ^Byte;
+  PWord     = ^Word;
+  PDWord    = ^DWord;
+  PDouble   = ^Double;
+
+Type
+Pchar  = ^char;
+Plongint  = ^longint;
+PSDL_BlendMode  = ^SDL_BlendMode;
+PSDL_Event  = ^SDL_Event;
+PSDL_FColor  = ^SDL_FColor;
+PSDL_FPoint  = ^SDL_FPoint;
+PSDL_FRect  = ^SDL_FRect;
+PSDL_Rect  = ^SDL_Rect;
+PSDL_Renderer  = ^SDL_Renderer;
+PSDL_RendererLogicalPresentation  = ^SDL_RendererLogicalPresentation;
+PSDL_ScaleMode  = ^SDL_ScaleMode;
+PSDL_Surface  = ^SDL_Surface;
+PSDL_Texture  = ^SDL_Texture;
+PSDL_TextureAccess  = ^SDL_TextureAccess;
+PSDL_Vertex  = ^SDL_Vertex;
+PSDL_Window  = ^SDL_Window;
+Psingle  = ^single;
+PUint8  = ^Uint8;
+{$IFDEF FPC}
+{$PACKRECORDS C}
+{$ENDIF}
+
+
+{
   Simple DirectMedia Layer
   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
 
@@ -17,9 +65,8 @@
   2. Altered source versions must be plainly marked as such, and must not be
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
-*/
-
-/**
+ }
+{*
  * # CategoryRender
  *
  * Header file for SDL 2D rendering functions.
@@ -45,82 +92,88 @@
  *
  * These functions must be called from the main thread. See this bug for
  * details: https://github.com/libsdl-org/SDL/issues/986
- */
-
-#ifndef SDL_render_h_
-#define SDL_render_h_
-
-#include <SDL3/SDL_stdinc.h>
-#include <SDL3/SDL_blendmode.h>
-#include <SDL3/SDL_error.h>
-#include <SDL3/SDL_events.h>
-#include <SDL3/SDL_pixels.h>
-#include <SDL3/SDL_properties.h>
-#include <SDL3/SDL_rect.h>
-#include <SDL3/SDL_surface.h>
-#include <SDL3/SDL_video.h>
-
-#include <SDL3/SDL_begin_code.h>
-/* Set up for C function definitions, even when using C++ */
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
+  }
+{$ifndef SDL_render_h_}
+{$define SDL_render_h_}
+{$include <SDL3/SDL_stdinc.h>}
+{$include <SDL3/SDL_blendmode.h>}
+{$include <SDL3/SDL_error.h>}
+{$include <SDL3/SDL_events.h>}
+{$include <SDL3/SDL_pixels.h>}
+{$include <SDL3/SDL_properties.h>}
+{$include <SDL3/SDL_rect.h>}
+{$include <SDL3/SDL_surface.h>}
+{$include <SDL3/SDL_video.h>}
+{$include <SDL3/SDL_begin_code.h>}
+{ Set up for C function definitions, even when using C++  }
+{ C++ extern C conditionnal removed }
+{*
  * The name of the software renderer.
  *
  * \since This macro is available since SDL 3.1.3.
- */
-#define SDL_SOFTWARE_RENDERER   "software"
+  }
 
-/**
+const
+  SDL_SOFTWARE_RENDERER = 'software';  
+{*
  * Vertex structure.
  *
  * \since This struct is available since SDL 3.1.3.
- */
-typedef struct SDL_Vertex
-{
-    SDL_FPoint position;        /**< Vertex position, in SDL_Renderer coordinates  */
-    SDL_FColor color;           /**< Vertex color */
-    SDL_FPoint tex_coord;       /**< Normalized texture coordinates, if needed */
-} SDL_Vertex;
-
-/**
+  }
+{*< Vertex position, in SDL_Renderer coordinates   }
+{*< Vertex color  }
+{*< Normalized texture coordinates, if needed  }
+type
+  PSDL_Vertex = ^TSDL_Vertex;
+  TSDL_Vertex = record
+      position : TSDL_FPoint;
+      color : TSDL_FColor;
+      tex_coord : TSDL_FPoint;
+    end;
+{*
  * The access pattern allowed for a texture.
  *
  * \since This enum is available since SDL 3.1.3.
- */
-typedef enum SDL_TextureAccess
-{
-    SDL_TEXTUREACCESS_STATIC,    /**< Changes rarely, not lockable */
-    SDL_TEXTUREACCESS_STREAMING, /**< Changes frequently, lockable */
-    SDL_TEXTUREACCESS_TARGET     /**< Texture can be used as a render target */
-} SDL_TextureAccess;
+  }
+{*< Changes rarely, not lockable  }
+{*< Changes frequently, lockable  }
+{*< Texture can be used as a render target  }
 
-/**
+  PSDL_TextureAccess = ^TSDL_TextureAccess;
+  TSDL_TextureAccess =  Longint;
+  Const
+    SDL_TEXTUREACCESS_STATIC = 0;
+    SDL_TEXTUREACCESS_STREAMING = 1;
+    SDL_TEXTUREACCESS_TARGET = 2;
+;
+{*
  * How the logical size is mapped to the output.
  *
  * \since This enum is available since SDL 3.1.3.
- */
-typedef enum SDL_RendererLogicalPresentation
-{
-    SDL_LOGICAL_PRESENTATION_DISABLED,  /**< There is no logical size in effect */
-    SDL_LOGICAL_PRESENTATION_STRETCH,   /**< The rendered content is stretched to the output resolution */
-    SDL_LOGICAL_PRESENTATION_LETTERBOX, /**< The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars */
-    SDL_LOGICAL_PRESENTATION_OVERSCAN,  /**< The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds */
-    SDL_LOGICAL_PRESENTATION_INTEGER_SCALE   /**< The rendered content is scaled up by integer multiples to fit the output resolution */
-} SDL_RendererLogicalPresentation;
-
-/**
+  }
+{*< There is no logical size in effect  }
+{*< The rendered content is stretched to the output resolution  }
+{*< The rendered content is fit to the largest dimension and the other dimension is letterboxed with black bars  }
+{*< The rendered content is fit to the smallest dimension and the other dimension extends beyond the output bounds  }
+{*< The rendered content is scaled up by integer multiples to fit the output resolution  }
+type
+  PSDL_RendererLogicalPresentation = ^TSDL_RendererLogicalPresentation;
+  TSDL_RendererLogicalPresentation =  Longint;
+  Const
+    SDL_LOGICAL_PRESENTATION_DISABLED = 0;
+    SDL_LOGICAL_PRESENTATION_STRETCH = 1;
+    SDL_LOGICAL_PRESENTATION_LETTERBOX = 2;
+    SDL_LOGICAL_PRESENTATION_OVERSCAN = 3;
+    SDL_LOGICAL_PRESENTATION_INTEGER_SCALE = 4;
+;
+{*
  * A structure representing rendering state
  *
  * \since This struct is available since SDL 3.1.3.
- */
-typedef struct SDL_Renderer SDL_Renderer;
-
-#ifndef SDL_INTERNAL
-
-/**
+  }
+type
+{$ifndef SDL_INTERNAL}
+{*
  * An efficient driver-specific representation of pixel data
  *
  * \since This struct is available since SDL 3.1.3.
@@ -129,22 +182,25 @@ typedef struct SDL_Renderer SDL_Renderer;
  * \sa SDL_CreateTextureFromSurface
  * \sa SDL_CreateTextureWithProperties
  * \sa SDL_DestroyTexture
- */
-struct SDL_Texture
-{
-    SDL_PixelFormat format;     /**< The format of the texture, read-only */
-    int w;                      /**< The width of the texture, read-only. */
-    int h;                      /**< The height of the texture, read-only. */
+  }
+{*< The format of the texture, read-only  }
+{*< The width of the texture, read-only.  }
+{*< The height of the texture, read-only.  }
+{*< Application reference count, used when freeing texture  }
+type
+  PSDL_Texture = ^TSDL_Texture;
+  TSDL_Texture = record
+      format : TSDL_PixelFormat;
+      w : longint;
+      h : longint;
+      refcount : longint;
+    end;
 
-    int refcount;               /**< Application reference count, used when freeing texture */
-};
-#endif /* !SDL_INTERNAL */
-
-typedef struct SDL_Texture SDL_Texture;
-
-/* Function prototypes */
-
-/**
+{$endif}
+{ !SDL_INTERNAL  }
+type
+{ Function prototypes  }
+{*
  * Get the number of 2D rendering drivers available for the current display.
  *
  * A render driver is a set of code that handles rendering and texture
@@ -161,10 +217,10 @@ typedef struct SDL_Texture SDL_Texture;
  *
  * \sa SDL_CreateRenderer
  * \sa SDL_GetRenderDriver
- */
-extern  int  SDL_GetNumRenderDrivers(void);
+  }
 
-/**
+function SDL_GetNumRenderDrivers:longint;cdecl;external;
+{*
  * Use this function to get the name of a built in 2D rendering driver.
  *
  * The list of rendering drivers is given in the order that they are normally
@@ -185,10 +241,10 @@ extern  int  SDL_GetNumRenderDrivers(void);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetNumRenderDrivers
- */
-extern  const char *  SDL_GetRenderDriver(int index);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_GetRenderDriver(index:longint):Pchar;cdecl;external;
+{*
  * Create a window and default renderer.
  *
  * \param title the title of the window, in UTF-8 encoding.
@@ -207,10 +263,11 @@ extern  const char *  SDL_GetRenderDriver(int index);
  *
  * \sa SDL_CreateRenderer
  * \sa SDL_CreateWindow
- */
-extern  bool  SDL_CreateWindowAndRenderer(const char *title, int width, int height, SDL_WindowFlags window_flags, SDL_Window **window, SDL_Renderer **renderer);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_CreateWindowAndRenderer(title:Pchar; width:longint; height:longint; window_flags:TSDL_WindowFlags; window:PPSDL_Window; 
+           renderer:PPSDL_Renderer):Tbool;cdecl;external;
+{*
  * Create a 2D rendering context for a window.
  *
  * If you want a specific renderer, you can specify its name here. A list of
@@ -239,10 +296,10 @@ extern  bool  SDL_CreateWindowAndRenderer(const char *title, int width, int heig
  * \sa SDL_GetNumRenderDrivers
  * \sa SDL_GetRenderDriver
  * \sa SDL_GetRendererName
- */
-extern  SDL_Renderer *  SDL_CreateRenderer(SDL_Window *window, const char *name);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_CreateRenderer(window:PSDL_Window; name:Pchar):PSDL_Renderer;cdecl;external;
+{*
  * Create a 2D rendering context for a window, with the specified properties.
  *
  * These are the supported properties:
@@ -292,22 +349,21 @@ extern  SDL_Renderer *  SDL_CreateRenderer(SDL_Window *window, const char *name)
  * \sa SDL_CreateSoftwareRenderer
  * \sa SDL_DestroyRenderer
  * \sa SDL_GetRendererName
- */
-extern  SDL_Renderer *  SDL_CreateRendererWithProperties(SDL_PropertiesID props);
-
-#define SDL_PROP_RENDERER_CREATE_NAME_STRING                                "SDL.renderer.create.name"
-#define SDL_PROP_RENDERER_CREATE_WINDOW_POINTER                             "SDL.renderer.create.window"
-#define SDL_PROP_RENDERER_CREATE_SURFACE_POINTER                            "SDL.renderer.create.surface"
-#define SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER                   "SDL.renderer.create.output_colorspace"
-#define SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER                       "SDL.renderer.create.present_vsync"
-#define SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER                    "SDL.renderer.create.vulkan.instance"
-#define SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER                      "SDL.renderer.create.vulkan.surface"
-#define SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER             "SDL.renderer.create.vulkan.physical_device"
-#define SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER                      "SDL.renderer.create.vulkan.device"
-#define SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER  "SDL.renderer.create.vulkan.graphics_queue_family_index"
-#define SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER   "SDL.renderer.create.vulkan.present_queue_family_index"
-
-/**
+  }
+function SDL_CreateRendererWithProperties(props:TSDL_PropertiesID):PSDL_Renderer;cdecl;external;
+const
+  SDL_PROP_RENDERER_CREATE_NAME_STRING = 'SDL.renderer.create.name';  
+  SDL_PROP_RENDERER_CREATE_WINDOW_POINTER = 'SDL.renderer.create.window';  
+  SDL_PROP_RENDERER_CREATE_SURFACE_POINTER = 'SDL.renderer.create.surface';  
+  SDL_PROP_RENDERER_CREATE_OUTPUT_COLORSPACE_NUMBER = 'SDL.renderer.create.output_colorspace';  
+  SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER = 'SDL.renderer.create.present_vsync';  
+  SDL_PROP_RENDERER_CREATE_VULKAN_INSTANCE_POINTER = 'SDL.renderer.create.vulkan.instance';  
+  SDL_PROP_RENDERER_CREATE_VULKAN_SURFACE_NUMBER = 'SDL.renderer.create.vulkan.surface';  
+  SDL_PROP_RENDERER_CREATE_VULKAN_PHYSICAL_DEVICE_POINTER = 'SDL.renderer.create.vulkan.physical_device';  
+  SDL_PROP_RENDERER_CREATE_VULKAN_DEVICE_POINTER = 'SDL.renderer.create.vulkan.device';  
+  SDL_PROP_RENDERER_CREATE_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER = 'SDL.renderer.create.vulkan.graphics_queue_family_index';  
+  SDL_PROP_RENDERER_CREATE_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER = 'SDL.renderer.create.vulkan.present_queue_family_index';  
+{*
  * Create a 2D software rendering context for a surface.
  *
  * Two other API which can be used to create SDL_Renderer:
@@ -325,10 +381,10 @@ extern  SDL_Renderer *  SDL_CreateRendererWithProperties(SDL_PropertiesID props)
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_DestroyRenderer
- */
-extern  SDL_Renderer *  SDL_CreateSoftwareRenderer(SDL_Surface *surface);
+  }
 
-/**
+function SDL_CreateSoftwareRenderer(surface:PSDL_Surface):PSDL_Renderer;cdecl;external;
+{*
  * Get the renderer associated with a window.
  *
  * \param window the window to query.
@@ -338,10 +394,9 @@ extern  SDL_Renderer *  SDL_CreateSoftwareRenderer(SDL_Surface *surface);
  * \threadsafety It is safe to call this function from any thread.
  *
  * \since This function is available since SDL 3.1.3.
- */
-extern  SDL_Renderer *  SDL_GetRenderer(SDL_Window *window);
-
-/**
+  }
+function SDL_GetRenderer(window:PSDL_Window):PSDL_Renderer;cdecl;external;
+{*
  * Get the window associated with a renderer.
  *
  * \param renderer the renderer to query.
@@ -351,10 +406,9 @@ extern  SDL_Renderer *  SDL_GetRenderer(SDL_Window *window);
  * \threadsafety It is safe to call this function from any thread.
  *
  * \since This function is available since SDL 3.1.3.
- */
-extern  SDL_Window *  SDL_GetRenderWindow(SDL_Renderer *renderer);
-
-/**
+  }
+function SDL_GetRenderWindow(renderer:PSDL_Renderer):PSDL_Window;cdecl;external;
+{*
  * Get the name of a renderer.
  *
  * \param renderer the rendering context.
@@ -367,10 +421,10 @@ extern  SDL_Window *  SDL_GetRenderWindow(SDL_Renderer *renderer);
  *
  * \sa SDL_CreateRenderer
  * \sa SDL_CreateRendererWithProperties
- */
-extern  const char *  SDL_GetRendererName(SDL_Renderer *renderer);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_GetRendererName(renderer:PSDL_Renderer):Pchar;cdecl;external;
+{*
  * Get the properties associated with a renderer.
  *
  * The following read-only properties are provided by SDL:
@@ -453,35 +507,34 @@ extern  const char *  SDL_GetRendererName(SDL_Renderer *renderer);
  * \threadsafety It is safe to call this function from any thread.
  *
  * \since This function is available since SDL 3.1.3.
- */
-extern  SDL_PropertiesID  SDL_GetRendererProperties(SDL_Renderer *renderer);
-
-#define SDL_PROP_RENDERER_NAME_STRING                               "SDL.renderer.name"
-#define SDL_PROP_RENDERER_WINDOW_POINTER                            "SDL.renderer.window"
-#define SDL_PROP_RENDERER_SURFACE_POINTER                           "SDL.renderer.surface"
-#define SDL_PROP_RENDERER_VSYNC_NUMBER                              "SDL.renderer.vsync"
-#define SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER                   "SDL.renderer.max_texture_size"
-#define SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER                   "SDL.renderer.texture_formats"
-#define SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER                  "SDL.renderer.output_colorspace"
-#define SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN                       "SDL.renderer.HDR_enabled"
-#define SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT                     "SDL.renderer.SDR_white_point"
-#define SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT                        "SDL.renderer.HDR_headroom"
-#define SDL_PROP_RENDERER_D3D9_DEVICE_POINTER                       "SDL.renderer.d3d9.device"
-#define SDL_PROP_RENDERER_D3D11_DEVICE_POINTER                      "SDL.renderer.d3d11.device"
-#define SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER                   "SDL.renderer.d3d11.swap_chain"
-#define SDL_PROP_RENDERER_D3D12_DEVICE_POINTER                      "SDL.renderer.d3d12.device"
-#define SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER                   "SDL.renderer.d3d12.swap_chain"
-#define SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER               "SDL.renderer.d3d12.command_queue"
-#define SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER                   "SDL.renderer.vulkan.instance"
-#define SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER                     "SDL.renderer.vulkan.surface"
-#define SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER            "SDL.renderer.vulkan.physical_device"
-#define SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER                     "SDL.renderer.vulkan.device"
-#define SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER "SDL.renderer.vulkan.graphics_queue_family_index"
-#define SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER  "SDL.renderer.vulkan.present_queue_family_index"
-#define SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER       "SDL.renderer.vulkan.swapchain_image_count"
-#define SDL_PROP_RENDERER_GPU_DEVICE_POINTER                        "SDL.renderer.gpu.device"
-
-/**
+  }
+function SDL_GetRendererProperties(renderer:PSDL_Renderer):TSDL_PropertiesID;cdecl;external;
+const
+  SDL_PROP_RENDERER_NAME_STRING = 'SDL.renderer.name';  
+  SDL_PROP_RENDERER_WINDOW_POINTER = 'SDL.renderer.window';  
+  SDL_PROP_RENDERER_SURFACE_POINTER = 'SDL.renderer.surface';  
+  SDL_PROP_RENDERER_VSYNC_NUMBER = 'SDL.renderer.vsync';  
+  SDL_PROP_RENDERER_MAX_TEXTURE_SIZE_NUMBER = 'SDL.renderer.max_texture_size';  
+  SDL_PROP_RENDERER_TEXTURE_FORMATS_POINTER = 'SDL.renderer.texture_formats';  
+  SDL_PROP_RENDERER_OUTPUT_COLORSPACE_NUMBER = 'SDL.renderer.output_colorspace';  
+  SDL_PROP_RENDERER_HDR_ENABLED_BOOLEAN = 'SDL.renderer.HDR_enabled';  
+  SDL_PROP_RENDERER_SDR_WHITE_POINT_FLOAT = 'SDL.renderer.SDR_white_point';  
+  SDL_PROP_RENDERER_HDR_HEADROOM_FLOAT = 'SDL.renderer.HDR_headroom';  
+  SDL_PROP_RENDERER_D3D9_DEVICE_POINTER = 'SDL.renderer.d3d9.device';  
+  SDL_PROP_RENDERER_D3D11_DEVICE_POINTER = 'SDL.renderer.d3d11.device';  
+  SDL_PROP_RENDERER_D3D11_SWAPCHAIN_POINTER = 'SDL.renderer.d3d11.swap_chain';  
+  SDL_PROP_RENDERER_D3D12_DEVICE_POINTER = 'SDL.renderer.d3d12.device';  
+  SDL_PROP_RENDERER_D3D12_SWAPCHAIN_POINTER = 'SDL.renderer.d3d12.swap_chain';  
+  SDL_PROP_RENDERER_D3D12_COMMAND_QUEUE_POINTER = 'SDL.renderer.d3d12.command_queue';  
+  SDL_PROP_RENDERER_VULKAN_INSTANCE_POINTER = 'SDL.renderer.vulkan.instance';  
+  SDL_PROP_RENDERER_VULKAN_SURFACE_NUMBER = 'SDL.renderer.vulkan.surface';  
+  SDL_PROP_RENDERER_VULKAN_PHYSICAL_DEVICE_POINTER = 'SDL.renderer.vulkan.physical_device';  
+  SDL_PROP_RENDERER_VULKAN_DEVICE_POINTER = 'SDL.renderer.vulkan.device';  
+  SDL_PROP_RENDERER_VULKAN_GRAPHICS_QUEUE_FAMILY_INDEX_NUMBER = 'SDL.renderer.vulkan.graphics_queue_family_index';  
+  SDL_PROP_RENDERER_VULKAN_PRESENT_QUEUE_FAMILY_INDEX_NUMBER = 'SDL.renderer.vulkan.present_queue_family_index';  
+  SDL_PROP_RENDERER_VULKAN_SWAPCHAIN_IMAGE_COUNT_NUMBER = 'SDL.renderer.vulkan.swapchain_image_count';  
+  SDL_PROP_RENDERER_GPU_DEVICE_POINTER = 'SDL.renderer.gpu.device';  
+{*
  * Get the output size in pixels of a rendering context.
  *
  * This returns the true output size in pixels, ignoring any render targets or
@@ -498,10 +551,10 @@ extern  SDL_PropertiesID  SDL_GetRendererProperties(SDL_Renderer *renderer);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetCurrentRenderOutputSize
- */
-extern  bool  SDL_GetRenderOutputSize(SDL_Renderer *renderer, int *w, int *h);
+  }
 
-/**
+function SDL_GetRenderOutputSize(renderer:PSDL_Renderer; w:Plongint; h:Plongint):Tbool;cdecl;external;
+{*
  * Get the current output size in pixels of a rendering context.
  *
  * If a rendering target is active, this will return the size of the rendering
@@ -520,10 +573,9 @@ extern  bool  SDL_GetRenderOutputSize(SDL_Renderer *renderer, int *w, int *h);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetRenderOutputSize
- */
-extern  bool  SDL_GetCurrentRenderOutputSize(SDL_Renderer *renderer, int *w, int *h);
-
-/**
+  }
+function SDL_GetCurrentRenderOutputSize(renderer:PSDL_Renderer; w:Plongint; h:Plongint):Tbool;cdecl;external;
+{*
  * Create a texture for a rendering context.
  *
  * The contents of a texture when first created are not defined.
@@ -545,10 +597,9 @@ extern  bool  SDL_GetCurrentRenderOutputSize(SDL_Renderer *renderer, int *w, int
  * \sa SDL_DestroyTexture
  * \sa SDL_GetTextureSize
  * \sa SDL_UpdateTexture
- */
-extern  SDL_Texture *  SDL_CreateTexture(SDL_Renderer *renderer, SDL_PixelFormat format, SDL_TextureAccess access, int w, int h);
-
-/**
+  }
+function SDL_CreateTexture(renderer:PSDL_Renderer; format:TSDL_PixelFormat; access:TSDL_TextureAccess; w:longint; h:longint):PSDL_Texture;cdecl;external;
+{*
  * Create a texture from an existing surface.
  *
  * The surface is not modified or freed by this function.
@@ -573,10 +624,9 @@ extern  SDL_Texture *  SDL_CreateTexture(SDL_Renderer *renderer, SDL_PixelFormat
  * \sa SDL_CreateTexture
  * \sa SDL_CreateTextureWithProperties
  * \sa SDL_DestroyTexture
- */
-extern  SDL_Texture *  SDL_CreateTextureFromSurface(SDL_Renderer *renderer, SDL_Surface *surface);
-
-/**
+  }
+function SDL_CreateTextureFromSurface(renderer:PSDL_Renderer; surface:PSDL_Surface):PSDL_Texture;cdecl;external;
+{*
  * Create a texture for a rendering context with the specified properties.
  *
  * These are the supported properties:
@@ -685,34 +735,33 @@ extern  SDL_Texture *  SDL_CreateTextureFromSurface(SDL_Renderer *renderer, SDL_
  * \sa SDL_DestroyTexture
  * \sa SDL_GetTextureSize
  * \sa SDL_UpdateTexture
- */
-extern  SDL_Texture *  SDL_CreateTextureWithProperties(SDL_Renderer *renderer, SDL_PropertiesID props);
-
-#define SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER           "SDL.texture.create.colorspace"
-#define SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER               "SDL.texture.create.format"
-#define SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER               "SDL.texture.create.access"
-#define SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER                "SDL.texture.create.width"
-#define SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER               "SDL.texture.create.height"
-#define SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT       "SDL.texture.create.SDR_white_point"
-#define SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT          "SDL.texture.create.HDR_headroom"
-#define SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER       "SDL.texture.create.d3d11.texture"
-#define SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER     "SDL.texture.create.d3d11.texture_u"
-#define SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER     "SDL.texture.create.d3d11.texture_v"
-#define SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER       "SDL.texture.create.d3d12.texture"
-#define SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER     "SDL.texture.create.d3d12.texture_u"
-#define SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER     "SDL.texture.create.d3d12.texture_v"
-#define SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER   "SDL.texture.create.metal.pixelbuffer"
-#define SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER       "SDL.texture.create.opengl.texture"
-#define SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER    "SDL.texture.create.opengl.texture_uv"
-#define SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER     "SDL.texture.create.opengl.texture_u"
-#define SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER     "SDL.texture.create.opengl.texture_v"
-#define SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER    "SDL.texture.create.opengles2.texture"
-#define SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER "SDL.texture.create.opengles2.texture_uv"
-#define SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER  "SDL.texture.create.opengles2.texture_u"
-#define SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER  "SDL.texture.create.opengles2.texture_v"
-#define SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER       "SDL.texture.create.vulkan.texture"
-
-/**
+  }
+function SDL_CreateTextureWithProperties(renderer:PSDL_Renderer; props:TSDL_PropertiesID):PSDL_Texture;cdecl;external;
+const
+  SDL_PROP_TEXTURE_CREATE_COLORSPACE_NUMBER = 'SDL.texture.create.colorspace';  
+  SDL_PROP_TEXTURE_CREATE_FORMAT_NUMBER = 'SDL.texture.create.format';  
+  SDL_PROP_TEXTURE_CREATE_ACCESS_NUMBER = 'SDL.texture.create.access';  
+  SDL_PROP_TEXTURE_CREATE_WIDTH_NUMBER = 'SDL.texture.create.width';  
+  SDL_PROP_TEXTURE_CREATE_HEIGHT_NUMBER = 'SDL.texture.create.height';  
+  SDL_PROP_TEXTURE_CREATE_SDR_WHITE_POINT_FLOAT = 'SDL.texture.create.SDR_white_point';  
+  SDL_PROP_TEXTURE_CREATE_HDR_HEADROOM_FLOAT = 'SDL.texture.create.HDR_headroom';  
+  SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_POINTER = 'SDL.texture.create.d3d11.texture';  
+  SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_U_POINTER = 'SDL.texture.create.d3d11.texture_u';  
+  SDL_PROP_TEXTURE_CREATE_D3D11_TEXTURE_V_POINTER = 'SDL.texture.create.d3d11.texture_v';  
+  SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_POINTER = 'SDL.texture.create.d3d12.texture';  
+  SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_U_POINTER = 'SDL.texture.create.d3d12.texture_u';  
+  SDL_PROP_TEXTURE_CREATE_D3D12_TEXTURE_V_POINTER = 'SDL.texture.create.d3d12.texture_v';  
+  SDL_PROP_TEXTURE_CREATE_METAL_PIXELBUFFER_POINTER = 'SDL.texture.create.metal.pixelbuffer';  
+  SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_NUMBER = 'SDL.texture.create.opengl.texture';  
+  SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_UV_NUMBER = 'SDL.texture.create.opengl.texture_uv';  
+  SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_U_NUMBER = 'SDL.texture.create.opengl.texture_u';  
+  SDL_PROP_TEXTURE_CREATE_OPENGL_TEXTURE_V_NUMBER = 'SDL.texture.create.opengl.texture_v';  
+  SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_NUMBER = 'SDL.texture.create.opengles2.texture';  
+  SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_UV_NUMBER = 'SDL.texture.create.opengles2.texture_uv';  
+  SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_U_NUMBER = 'SDL.texture.create.opengles2.texture_u';  
+  SDL_PROP_TEXTURE_CREATE_OPENGLES2_TEXTURE_V_NUMBER = 'SDL.texture.create.opengles2.texture_v';  
+  SDL_PROP_TEXTURE_CREATE_VULKAN_TEXTURE_NUMBER = 'SDL.texture.create.vulkan.texture';  
+{*
  * Get the properties associated with a texture.
  *
  * The following read-only properties are provided by SDL:
@@ -797,37 +846,37 @@ extern  SDL_Texture *  SDL_CreateTextureWithProperties(SDL_Renderer *renderer, S
  * \threadsafety It is safe to call this function from any thread.
  *
  * \since This function is available since SDL 3.1.3.
- */
-extern  SDL_PropertiesID  SDL_GetTextureProperties(SDL_Texture *texture);
+  }
 
-#define SDL_PROP_TEXTURE_COLORSPACE_NUMBER                  "SDL.texture.colorspace"
-#define SDL_PROP_TEXTURE_FORMAT_NUMBER                      "SDL.texture.format"
-#define SDL_PROP_TEXTURE_ACCESS_NUMBER                      "SDL.texture.access"
-#define SDL_PROP_TEXTURE_WIDTH_NUMBER                       "SDL.texture.width"
-#define SDL_PROP_TEXTURE_HEIGHT_NUMBER                      "SDL.texture.height"
-#define SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT              "SDL.texture.SDR_white_point"
-#define SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT                 "SDL.texture.HDR_headroom"
-#define SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER              "SDL.texture.d3d11.texture"
-#define SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER            "SDL.texture.d3d11.texture_u"
-#define SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER            "SDL.texture.d3d11.texture_v"
-#define SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER              "SDL.texture.d3d12.texture"
-#define SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER            "SDL.texture.d3d12.texture_u"
-#define SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER            "SDL.texture.d3d12.texture_v"
-#define SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER              "SDL.texture.opengl.texture"
-#define SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER           "SDL.texture.opengl.texture_uv"
-#define SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER            "SDL.texture.opengl.texture_u"
-#define SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER            "SDL.texture.opengl.texture_v"
-#define SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER       "SDL.texture.opengl.target"
-#define SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT                 "SDL.texture.opengl.tex_w"
-#define SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT                 "SDL.texture.opengl.tex_h"
-#define SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER           "SDL.texture.opengles2.texture"
-#define SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER        "SDL.texture.opengles2.texture_uv"
-#define SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER         "SDL.texture.opengles2.texture_u"
-#define SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER         "SDL.texture.opengles2.texture_v"
-#define SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER    "SDL.texture.opengles2.target"
-#define SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER              "SDL.texture.vulkan.texture"
-
-/**
+function SDL_GetTextureProperties(texture:PSDL_Texture):TSDL_PropertiesID;cdecl;external;
+const
+  SDL_PROP_TEXTURE_COLORSPACE_NUMBER = 'SDL.texture.colorspace';  
+  SDL_PROP_TEXTURE_FORMAT_NUMBER = 'SDL.texture.format';  
+  SDL_PROP_TEXTURE_ACCESS_NUMBER = 'SDL.texture.access';  
+  SDL_PROP_TEXTURE_WIDTH_NUMBER = 'SDL.texture.width';  
+  SDL_PROP_TEXTURE_HEIGHT_NUMBER = 'SDL.texture.height';  
+  SDL_PROP_TEXTURE_SDR_WHITE_POINT_FLOAT = 'SDL.texture.SDR_white_point';  
+  SDL_PROP_TEXTURE_HDR_HEADROOM_FLOAT = 'SDL.texture.HDR_headroom';  
+  SDL_PROP_TEXTURE_D3D11_TEXTURE_POINTER = 'SDL.texture.d3d11.texture';  
+  SDL_PROP_TEXTURE_D3D11_TEXTURE_U_POINTER = 'SDL.texture.d3d11.texture_u';  
+  SDL_PROP_TEXTURE_D3D11_TEXTURE_V_POINTER = 'SDL.texture.d3d11.texture_v';  
+  SDL_PROP_TEXTURE_D3D12_TEXTURE_POINTER = 'SDL.texture.d3d12.texture';  
+  SDL_PROP_TEXTURE_D3D12_TEXTURE_U_POINTER = 'SDL.texture.d3d12.texture_u';  
+  SDL_PROP_TEXTURE_D3D12_TEXTURE_V_POINTER = 'SDL.texture.d3d12.texture_v';  
+  SDL_PROP_TEXTURE_OPENGL_TEXTURE_NUMBER = 'SDL.texture.opengl.texture';  
+  SDL_PROP_TEXTURE_OPENGL_TEXTURE_UV_NUMBER = 'SDL.texture.opengl.texture_uv';  
+  SDL_PROP_TEXTURE_OPENGL_TEXTURE_U_NUMBER = 'SDL.texture.opengl.texture_u';  
+  SDL_PROP_TEXTURE_OPENGL_TEXTURE_V_NUMBER = 'SDL.texture.opengl.texture_v';  
+  SDL_PROP_TEXTURE_OPENGL_TEXTURE_TARGET_NUMBER = 'SDL.texture.opengl.target';  
+  SDL_PROP_TEXTURE_OPENGL_TEX_W_FLOAT = 'SDL.texture.opengl.tex_w';  
+  SDL_PROP_TEXTURE_OPENGL_TEX_H_FLOAT = 'SDL.texture.opengl.tex_h';  
+  SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_NUMBER = 'SDL.texture.opengles2.texture';  
+  SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_UV_NUMBER = 'SDL.texture.opengles2.texture_uv';  
+  SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_U_NUMBER = 'SDL.texture.opengles2.texture_u';  
+  SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_V_NUMBER = 'SDL.texture.opengles2.texture_v';  
+  SDL_PROP_TEXTURE_OPENGLES2_TEXTURE_TARGET_NUMBER = 'SDL.texture.opengles2.target';  
+  SDL_PROP_TEXTURE_VULKAN_TEXTURE_NUMBER = 'SDL.texture.vulkan.texture';  
+{*
  * Get the renderer that created an SDL_Texture.
  *
  * \param texture the texture to query.
@@ -837,10 +886,10 @@ extern  SDL_PropertiesID  SDL_GetTextureProperties(SDL_Texture *texture);
  * \threadsafety It is safe to call this function from any thread.
  *
  * \since This function is available since SDL 3.1.3.
- */
-extern  SDL_Renderer *  SDL_GetRendererFromTexture(SDL_Texture *texture);
+  }
 
-/**
+function SDL_GetRendererFromTexture(texture:PSDL_Texture):PSDL_Renderer;cdecl;external;
+{*
  * Get the size of a texture, as floating point values.
  *
  * \param texture the texture to query.
@@ -854,10 +903,9 @@ extern  SDL_Renderer *  SDL_GetRendererFromTexture(SDL_Texture *texture);
  * \threadsafety This function should only be called on the main thread.
  *
  * \since This function is available since SDL 3.1.3.
- */
-extern  bool  SDL_GetTextureSize(SDL_Texture *texture, float *w, float *h);
-
-/**
+  }
+function SDL_GetTextureSize(texture:PSDL_Texture; w:Psingle; h:Psingle):Tbool;cdecl;external;
+{*
  * Set an additional color value multiplied into render copy operations.
  *
  * When this texture is rendered, during the copy operation each source color
@@ -883,11 +931,9 @@ extern  bool  SDL_GetTextureSize(SDL_Texture *texture, float *w, float *h);
  * \sa SDL_GetTextureColorMod
  * \sa SDL_SetTextureAlphaMod
  * \sa SDL_SetTextureColorModFloat
- */
-extern  bool  SDL_SetTextureColorMod(SDL_Texture *texture, Uint8 r, Uint8 g, Uint8 b);
-
-
-/**
+  }
+function SDL_SetTextureColorMod(texture:PSDL_Texture; r:TUint8; g:TUint8; b:TUint8):Tbool;cdecl;external;
+{*
  * Set an additional color value multiplied into render copy operations.
  *
  * When this texture is rendered, during the copy operation each source color
@@ -913,11 +959,9 @@ extern  bool  SDL_SetTextureColorMod(SDL_Texture *texture, Uint8 r, Uint8 g, Uin
  * \sa SDL_GetTextureColorModFloat
  * \sa SDL_SetTextureAlphaModFloat
  * \sa SDL_SetTextureColorMod
- */
-extern  bool  SDL_SetTextureColorModFloat(SDL_Texture *texture, float r, float g, float b);
-
-
-/**
+  }
+function SDL_SetTextureColorModFloat(texture:PSDL_Texture; r:single; g:single; b:single):Tbool;cdecl;external;
+{*
  * Get the additional color value multiplied into render copy operations.
  *
  * \param texture the texture to query.
@@ -934,10 +978,9 @@ extern  bool  SDL_SetTextureColorModFloat(SDL_Texture *texture, float r, float g
  * \sa SDL_GetTextureAlphaMod
  * \sa SDL_GetTextureColorModFloat
  * \sa SDL_SetTextureColorMod
- */
-extern  bool  SDL_GetTextureColorMod(SDL_Texture *texture, Uint8 *r, Uint8 *g, Uint8 *b);
-
-/**
+  }
+function SDL_GetTextureColorMod(texture:PSDL_Texture; r:PUint8; g:PUint8; b:PUint8):Tbool;cdecl;external;
+{*
  * Get the additional color value multiplied into render copy operations.
  *
  * \param texture the texture to query.
@@ -954,10 +997,9 @@ extern  bool  SDL_GetTextureColorMod(SDL_Texture *texture, Uint8 *r, Uint8 *g, U
  * \sa SDL_GetTextureAlphaModFloat
  * \sa SDL_GetTextureColorMod
  * \sa SDL_SetTextureColorModFloat
- */
-extern  bool  SDL_GetTextureColorModFloat(SDL_Texture *texture, float *r, float *g, float *b);
-
-/**
+  }
+function SDL_GetTextureColorModFloat(texture:PSDL_Texture; r:Psingle; g:Psingle; b:Psingle):Tbool;cdecl;external;
+{*
  * Set an additional alpha value multiplied into render copy operations.
  *
  * When this texture is rendered, during the copy operation the source alpha
@@ -980,10 +1022,9 @@ extern  bool  SDL_GetTextureColorModFloat(SDL_Texture *texture, float *r, float 
  * \sa SDL_GetTextureAlphaMod
  * \sa SDL_SetTextureAlphaModFloat
  * \sa SDL_SetTextureColorMod
- */
-extern  bool  SDL_SetTextureAlphaMod(SDL_Texture *texture, Uint8 alpha);
-
-/**
+  }
+function SDL_SetTextureAlphaMod(texture:PSDL_Texture; alpha:TUint8):Tbool;cdecl;external;
+{*
  * Set an additional alpha value multiplied into render copy operations.
  *
  * When this texture is rendered, during the copy operation the source alpha
@@ -1006,10 +1047,9 @@ extern  bool  SDL_SetTextureAlphaMod(SDL_Texture *texture, Uint8 alpha);
  * \sa SDL_GetTextureAlphaModFloat
  * \sa SDL_SetTextureAlphaMod
  * \sa SDL_SetTextureColorModFloat
- */
-extern  bool  SDL_SetTextureAlphaModFloat(SDL_Texture *texture, float alpha);
-
-/**
+  }
+function SDL_SetTextureAlphaModFloat(texture:PSDL_Texture; alpha:single):Tbool;cdecl;external;
+{*
  * Get the additional alpha value multiplied into render copy operations.
  *
  * \param texture the texture to query.
@@ -1024,10 +1064,9 @@ extern  bool  SDL_SetTextureAlphaModFloat(SDL_Texture *texture, float alpha);
  * \sa SDL_GetTextureAlphaModFloat
  * \sa SDL_GetTextureColorMod
  * \sa SDL_SetTextureAlphaMod
- */
-extern  bool  SDL_GetTextureAlphaMod(SDL_Texture *texture, Uint8 *alpha);
-
-/**
+  }
+function SDL_GetTextureAlphaMod(texture:PSDL_Texture; alpha:PUint8):Tbool;cdecl;external;
+{*
  * Get the additional alpha value multiplied into render copy operations.
  *
  * \param texture the texture to query.
@@ -1042,10 +1081,9 @@ extern  bool  SDL_GetTextureAlphaMod(SDL_Texture *texture, Uint8 *alpha);
  * \sa SDL_GetTextureAlphaMod
  * \sa SDL_GetTextureColorModFloat
  * \sa SDL_SetTextureAlphaModFloat
- */
-extern  bool  SDL_GetTextureAlphaModFloat(SDL_Texture *texture, float *alpha);
-
-/**
+  }
+function SDL_GetTextureAlphaModFloat(texture:PSDL_Texture; alpha:Psingle):Tbool;cdecl;external;
+{*
  * Set the blend mode for a texture, used by SDL_RenderTexture().
  *
  * If the blend mode is not supported, the closest supported mode is chosen
@@ -1061,10 +1099,9 @@ extern  bool  SDL_GetTextureAlphaModFloat(SDL_Texture *texture, float *alpha);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetTextureBlendMode
- */
-extern  bool  SDL_SetTextureBlendMode(SDL_Texture *texture, SDL_BlendMode blendMode);
-
-/**
+  }
+function SDL_SetTextureBlendMode(texture:PSDL_Texture; blendMode:TSDL_BlendMode):Tbool;cdecl;external;
+{*
  * Get the blend mode used for texture copy operations.
  *
  * \param texture the texture to query.
@@ -1077,10 +1114,9 @@ extern  bool  SDL_SetTextureBlendMode(SDL_Texture *texture, SDL_BlendMode blendM
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetTextureBlendMode
- */
-extern  bool  SDL_GetTextureBlendMode(SDL_Texture *texture, SDL_BlendMode *blendMode);
-
-/**
+  }
+function SDL_GetTextureBlendMode(texture:PSDL_Texture; blendMode:PSDL_BlendMode):Tbool;cdecl;external;
+{*
  * Set the scale mode used for texture scale operations.
  *
  * The default texture scale mode is SDL_SCALEMODE_LINEAR.
@@ -1097,10 +1133,9 @@ extern  bool  SDL_GetTextureBlendMode(SDL_Texture *texture, SDL_BlendMode *blend
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetTextureScaleMode
- */
-extern  bool  SDL_SetTextureScaleMode(SDL_Texture *texture, SDL_ScaleMode scaleMode);
-
-/**
+  }
+function SDL_SetTextureScaleMode(texture:PSDL_Texture; scaleMode:TSDL_ScaleMode):Tbool;cdecl;external;
+{*
  * Get the scale mode used for texture scale operations.
  *
  * \param texture the texture to query.
@@ -1113,10 +1148,9 @@ extern  bool  SDL_SetTextureScaleMode(SDL_Texture *texture, SDL_ScaleMode scaleM
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetTextureScaleMode
- */
-extern  bool  SDL_GetTextureScaleMode(SDL_Texture *texture, SDL_ScaleMode *scaleMode);
-
-/**
+  }
+function SDL_GetTextureScaleMode(texture:PSDL_Texture; scaleMode:PSDL_ScaleMode):Tbool;cdecl;external;
+{*
  * Update the given texture rectangle with new pixel data.
  *
  * The pixel data must be in the pixel format of the texture, which can be
@@ -1147,10 +1181,11 @@ extern  bool  SDL_GetTextureScaleMode(SDL_Texture *texture, SDL_ScaleMode *scale
  * \sa SDL_UnlockTexture
  * \sa SDL_UpdateNVTexture
  * \sa SDL_UpdateYUVTexture
- */
-extern  bool  SDL_UpdateTexture(SDL_Texture *texture, const SDL_Rect *rect, const void *pixels, int pitch);
-
-/**
+  }
+(* Const before type ignored *)
+(* Const before type ignored *)
+function SDL_UpdateTexture(texture:PSDL_Texture; rect:PSDL_Rect; pixels:pointer; pitch:longint):Tbool;cdecl;external;
+{*
  * Update a rectangle within a planar YV12 or IYUV texture with new pixel
  * data.
  *
@@ -1179,14 +1214,14 @@ extern  bool  SDL_UpdateTexture(SDL_Texture *texture, const SDL_Rect *rect, cons
  *
  * \sa SDL_UpdateNVTexture
  * \sa SDL_UpdateTexture
- */
-extern  bool  SDL_UpdateYUVTexture(SDL_Texture *texture,
-                                                 const SDL_Rect *rect,
-                                                 const Uint8 *Yplane, int Ypitch,
-                                                 const Uint8 *Uplane, int Upitch,
-                                                 const Uint8 *Vplane, int Vpitch);
-
-/**
+  }
+(* Const before type ignored *)
+(* Const before type ignored *)
+(* Const before type ignored *)
+(* Const before type ignored *)
+function SDL_UpdateYUVTexture(texture:PSDL_Texture; rect:PSDL_Rect; Yplane:PUint8; Ypitch:longint; Uplane:PUint8; 
+           Upitch:longint; Vplane:PUint8; Vpitch:longint):Tbool;cdecl;external;
+{*
  * Update a rectangle within a planar NV12 or NV21 texture with new pixels.
  *
  * You can use SDL_UpdateTexture() as long as your pixel data is a contiguous
@@ -1211,13 +1246,13 @@ extern  bool  SDL_UpdateYUVTexture(SDL_Texture *texture,
  *
  * \sa SDL_UpdateTexture
  * \sa SDL_UpdateYUVTexture
- */
-extern  bool  SDL_UpdateNVTexture(SDL_Texture *texture,
-                                                 const SDL_Rect *rect,
-                                                 const Uint8 *Yplane, int Ypitch,
-                                                 const Uint8 *UVplane, int UVpitch);
-
-/**
+  }
+(* Const before type ignored *)
+(* Const before type ignored *)
+(* Const before type ignored *)
+function SDL_UpdateNVTexture(texture:PSDL_Texture; rect:PSDL_Rect; Yplane:PUint8; Ypitch:longint; UVplane:PUint8; 
+           UVpitch:longint):Tbool;cdecl;external;
+{*
  * Lock a portion of the texture for **write-only** pixel access.
  *
  * As an optimization, the pixels made available for editing don't necessarily
@@ -1246,12 +1281,10 @@ extern  bool  SDL_UpdateNVTexture(SDL_Texture *texture,
  *
  * \sa SDL_LockTextureToSurface
  * \sa SDL_UnlockTexture
- */
-extern  bool  SDL_LockTexture(SDL_Texture *texture,
-                                            const SDL_Rect *rect,
-                                            void **pixels, int *pitch);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_LockTexture(texture:PSDL_Texture; rect:PSDL_Rect; pixels:Ppointer; pitch:Plongint):Tbool;cdecl;external;
+{*
  * Lock a portion of the texture for **write-only** pixel access, and expose
  * it as a SDL surface.
  *
@@ -1284,10 +1317,10 @@ extern  bool  SDL_LockTexture(SDL_Texture *texture,
  *
  * \sa SDL_LockTexture
  * \sa SDL_UnlockTexture
- */
-extern  bool  SDL_LockTextureToSurface(SDL_Texture *texture, const SDL_Rect *rect, SDL_Surface **surface);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_LockTextureToSurface(texture:PSDL_Texture; rect:PSDL_Rect; surface:PPSDL_Surface):Tbool;cdecl;external;
+{*
  * Unlock a texture, uploading the changes to video memory, if needed.
  *
  * **Warning**: Please note that SDL_LockTexture() is intended to be
@@ -1305,10 +1338,9 @@ extern  bool  SDL_LockTextureToSurface(SDL_Texture *texture, const SDL_Rect *rec
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_LockTexture
- */
-extern  void  SDL_UnlockTexture(SDL_Texture *texture);
-
-/**
+  }
+procedure SDL_UnlockTexture(texture:PSDL_Texture);cdecl;external;
+{*
  * Set a texture as the current rendering target.
  *
  * The default render target is the window for which the renderer was created.
@@ -1327,10 +1359,9 @@ extern  void  SDL_UnlockTexture(SDL_Texture *texture);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetRenderTarget
- */
-extern  bool  SDL_SetRenderTarget(SDL_Renderer *renderer, SDL_Texture *texture);
-
-/**
+  }
+function SDL_SetRenderTarget(renderer:PSDL_Renderer; texture:PSDL_Texture):Tbool;cdecl;external;
+{*
  * Get the current render target.
  *
  * The default render target is the window for which the renderer was created,
@@ -1344,10 +1375,9 @@ extern  bool  SDL_SetRenderTarget(SDL_Renderer *renderer, SDL_Texture *texture);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetRenderTarget
- */
-extern  SDL_Texture *  SDL_GetRenderTarget(SDL_Renderer *renderer);
-
-/**
+  }
+function SDL_GetRenderTarget(renderer:PSDL_Renderer):PSDL_Texture;cdecl;external;
+{*
  * Set a device independent resolution and presentation mode for rendering.
  *
  * This function sets the width and height of the logical rendering output.
@@ -1385,10 +1415,9 @@ extern  SDL_Texture *  SDL_GetRenderTarget(SDL_Renderer *renderer);
  * \sa SDL_ConvertEventToRenderCoordinates
  * \sa SDL_GetRenderLogicalPresentation
  * \sa SDL_GetRenderLogicalPresentationRect
- */
-extern  bool  SDL_SetRenderLogicalPresentation(SDL_Renderer *renderer, int w, int h, SDL_RendererLogicalPresentation mode);
-
-/**
+  }
+function SDL_SetRenderLogicalPresentation(renderer:PSDL_Renderer; w:longint; h:longint; mode:TSDL_RendererLogicalPresentation):Tbool;cdecl;external;
+{*
  * Get device independent resolution and presentation mode for rendering.
  *
  * This function gets the width and height of the logical rendering output, or
@@ -1406,10 +1435,9 @@ extern  bool  SDL_SetRenderLogicalPresentation(SDL_Renderer *renderer, int w, in
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetRenderLogicalPresentation
- */
-extern  bool  SDL_GetRenderLogicalPresentation(SDL_Renderer *renderer, int *w, int *h, SDL_RendererLogicalPresentation *mode);
-
-/**
+  }
+function SDL_GetRenderLogicalPresentation(renderer:PSDL_Renderer; w:Plongint; h:Plongint; mode:PSDL_RendererLogicalPresentation):Tbool;cdecl;external;
+{*
  * Get the final presentation rectangle for rendering.
  *
  * This function returns the calculated rectangle used for logical
@@ -1428,10 +1456,9 @@ extern  bool  SDL_GetRenderLogicalPresentation(SDL_Renderer *renderer, int *w, i
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetRenderLogicalPresentation
- */
-extern  bool  SDL_GetRenderLogicalPresentationRect(SDL_Renderer *renderer, SDL_FRect *rect);
-
-/**
+  }
+function SDL_GetRenderLogicalPresentationRect(renderer:PSDL_Renderer; rect:PSDL_FRect):Tbool;cdecl;external;
+{*
  * Get a point in render coordinates when given a point in window coordinates.
  *
  * This takes into account several states:
@@ -1455,10 +1482,9 @@ extern  bool  SDL_GetRenderLogicalPresentationRect(SDL_Renderer *renderer, SDL_F
  *
  * \sa SDL_SetRenderLogicalPresentation
  * \sa SDL_SetRenderScale
- */
-extern  bool  SDL_RenderCoordinatesFromWindow(SDL_Renderer *renderer, float window_x, float window_y, float *x, float *y);
-
-/**
+  }
+function SDL_RenderCoordinatesFromWindow(renderer:PSDL_Renderer; window_x:single; window_y:single; x:Psingle; y:Psingle):Tbool;cdecl;external;
+{*
  * Get a point in window coordinates when given a point in render coordinates.
  *
  * This takes into account several states:
@@ -1485,10 +1511,9 @@ extern  bool  SDL_RenderCoordinatesFromWindow(SDL_Renderer *renderer, float wind
  * \sa SDL_SetRenderLogicalPresentation
  * \sa SDL_SetRenderScale
  * \sa SDL_SetRenderViewport
- */
-extern  bool  SDL_RenderCoordinatesToWindow(SDL_Renderer *renderer, float x, float y, float *window_x, float *window_y);
-
-/**
+  }
+function SDL_RenderCoordinatesToWindow(renderer:PSDL_Renderer; x:single; y:single; window_x:Psingle; window_y:Psingle):Tbool;cdecl;external;
+{*
  * Convert the coordinates in an event to render coordinates.
  *
  * This takes into account several states:
@@ -1521,10 +1546,9 @@ extern  bool  SDL_RenderCoordinatesToWindow(SDL_Renderer *renderer, float x, flo
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderCoordinatesFromWindow
- */
-extern  bool  SDL_ConvertEventToRenderCoordinates(SDL_Renderer *renderer, SDL_Event *event);
-
-/**
+  }
+function SDL_ConvertEventToRenderCoordinates(renderer:PSDL_Renderer; event:PSDL_Event):Tbool;cdecl;external;
+{*
  * Set the drawing area for rendering on the current target.
  *
  * Drawing will clip to this area (separately from any clipping done with
@@ -1545,10 +1569,10 @@ extern  bool  SDL_ConvertEventToRenderCoordinates(SDL_Renderer *renderer, SDL_Ev
  *
  * \sa SDL_GetRenderViewport
  * \sa SDL_RenderViewportSet
- */
-extern  bool  SDL_SetRenderViewport(SDL_Renderer *renderer, const SDL_Rect *rect);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_SetRenderViewport(renderer:PSDL_Renderer; rect:PSDL_Rect):Tbool;cdecl;external;
+{*
  * Get the drawing area for the current target.
  *
  * \param renderer the rendering context.
@@ -1562,10 +1586,9 @@ extern  bool  SDL_SetRenderViewport(SDL_Renderer *renderer, const SDL_Rect *rect
  *
  * \sa SDL_RenderViewportSet
  * \sa SDL_SetRenderViewport
- */
-extern  bool  SDL_GetRenderViewport(SDL_Renderer *renderer, SDL_Rect *rect);
-
-/**
+  }
+function SDL_GetRenderViewport(renderer:PSDL_Renderer; rect:PSDL_Rect):Tbool;cdecl;external;
+{*
  * Return whether an explicit rectangle was set as the viewport.
  *
  * This is useful if you're saving and restoring the viewport and want to know
@@ -1582,10 +1605,9 @@ extern  bool  SDL_GetRenderViewport(SDL_Renderer *renderer, SDL_Rect *rect);
  *
  * \sa SDL_GetRenderViewport
  * \sa SDL_SetRenderViewport
- */
-extern  bool  SDL_RenderViewportSet(SDL_Renderer *renderer);
-
-/**
+  }
+function SDL_RenderViewportSet(renderer:PSDL_Renderer):Tbool;cdecl;external;
+{*
  * Get the safe area for rendering within the current viewport.
  *
  * Some devices have portions of the screen which are partially obscured or
@@ -1604,10 +1626,9 @@ extern  bool  SDL_RenderViewportSet(SDL_Renderer *renderer);
  * \threadsafety This function should only be called on the main thread.
  *
  * \since This function is available since SDL 3.1.3.
- */
-extern  bool  SDL_GetRenderSafeArea(SDL_Renderer *renderer, SDL_Rect *rect);
-
-/**
+  }
+function SDL_GetRenderSafeArea(renderer:PSDL_Renderer; rect:PSDL_Rect):Tbool;cdecl;external;
+{*
  * Set the clip rectangle for rendering on the specified target.
  *
  * \param renderer the rendering context.
@@ -1622,10 +1643,10 @@ extern  bool  SDL_GetRenderSafeArea(SDL_Renderer *renderer, SDL_Rect *rect);
  *
  * \sa SDL_GetRenderClipRect
  * \sa SDL_RenderClipEnabled
- */
-extern  bool  SDL_SetRenderClipRect(SDL_Renderer *renderer, const SDL_Rect *rect);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_SetRenderClipRect(renderer:PSDL_Renderer; rect:PSDL_Rect):Tbool;cdecl;external;
+{*
  * Get the clip rectangle for the current target.
  *
  * \param renderer the rendering context.
@@ -1640,10 +1661,9 @@ extern  bool  SDL_SetRenderClipRect(SDL_Renderer *renderer, const SDL_Rect *rect
  *
  * \sa SDL_RenderClipEnabled
  * \sa SDL_SetRenderClipRect
- */
-extern  bool  SDL_GetRenderClipRect(SDL_Renderer *renderer, SDL_Rect *rect);
-
-/**
+  }
+function SDL_GetRenderClipRect(renderer:PSDL_Renderer; rect:PSDL_Rect):Tbool;cdecl;external;
+{*
  * Get whether clipping is enabled on the given renderer.
  *
  * \param renderer the rendering context.
@@ -1656,10 +1676,9 @@ extern  bool  SDL_GetRenderClipRect(SDL_Renderer *renderer, SDL_Rect *rect);
  *
  * \sa SDL_GetRenderClipRect
  * \sa SDL_SetRenderClipRect
- */
-extern  bool  SDL_RenderClipEnabled(SDL_Renderer *renderer);
-
-/**
+  }
+function SDL_RenderClipEnabled(renderer:PSDL_Renderer):Tbool;cdecl;external;
+{*
  * Set the drawing scale for rendering on the current target.
  *
  * The drawing coordinates are scaled by the x/y scaling factors before they
@@ -1681,10 +1700,9 @@ extern  bool  SDL_RenderClipEnabled(SDL_Renderer *renderer);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetRenderScale
- */
-extern  bool  SDL_SetRenderScale(SDL_Renderer *renderer, float scaleX, float scaleY);
-
-/**
+  }
+function SDL_SetRenderScale(renderer:PSDL_Renderer; scaleX:single; scaleY:single):Tbool;cdecl;external;
+{*
  * Get the drawing scale for the current target.
  *
  * \param renderer the rendering context.
@@ -1698,10 +1716,9 @@ extern  bool  SDL_SetRenderScale(SDL_Renderer *renderer, float scaleX, float sca
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetRenderScale
- */
-extern  bool  SDL_GetRenderScale(SDL_Renderer *renderer, float *scaleX, float *scaleY);
-
-/**
+  }
+function SDL_GetRenderScale(renderer:PSDL_Renderer; scaleX:Psingle; scaleY:Psingle):Tbool;cdecl;external;
+{*
  * Set the color used for drawing operations.
  *
  * Set the color for drawing or filling rectangles, lines, and points, and for
@@ -1723,10 +1740,9 @@ extern  bool  SDL_GetRenderScale(SDL_Renderer *renderer, float *scaleX, float *s
  *
  * \sa SDL_GetRenderDrawColor
  * \sa SDL_SetRenderDrawColorFloat
- */
-extern  bool  SDL_SetRenderDrawColor(SDL_Renderer *renderer, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
-
-/**
+  }
+function SDL_SetRenderDrawColor(renderer:PSDL_Renderer; r:TUint8; g:TUint8; b:TUint8; a:TUint8):Tbool;cdecl;external;
+{*
  * Set the color used for drawing operations (Rect, Line and Clear).
  *
  * Set the color for drawing or filling rectangles, lines, and points, and for
@@ -1748,10 +1764,9 @@ extern  bool  SDL_SetRenderDrawColor(SDL_Renderer *renderer, Uint8 r, Uint8 g, U
  *
  * \sa SDL_GetRenderDrawColorFloat
  * \sa SDL_SetRenderDrawColor
- */
-extern  bool  SDL_SetRenderDrawColorFloat(SDL_Renderer *renderer, float r, float g, float b, float a);
-
-/**
+  }
+function SDL_SetRenderDrawColorFloat(renderer:PSDL_Renderer; r:single; g:single; b:single; a:single):Tbool;cdecl;external;
+{*
  * Get the color used for drawing operations (Rect, Line and Clear).
  *
  * \param renderer the rendering context.
@@ -1772,10 +1787,9 @@ extern  bool  SDL_SetRenderDrawColorFloat(SDL_Renderer *renderer, float r, float
  *
  * \sa SDL_GetRenderDrawColorFloat
  * \sa SDL_SetRenderDrawColor
- */
-extern  bool  SDL_GetRenderDrawColor(SDL_Renderer *renderer, Uint8 *r, Uint8 *g, Uint8 *b, Uint8 *a);
-
-/**
+  }
+function SDL_GetRenderDrawColor(renderer:PSDL_Renderer; r:PUint8; g:PUint8; b:PUint8; a:PUint8):Tbool;cdecl;external;
+{*
  * Get the color used for drawing operations (Rect, Line and Clear).
  *
  * \param renderer the rendering context.
@@ -1796,10 +1810,9 @@ extern  bool  SDL_GetRenderDrawColor(SDL_Renderer *renderer, Uint8 *r, Uint8 *g,
  *
  * \sa SDL_SetRenderDrawColorFloat
  * \sa SDL_GetRenderDrawColor
- */
-extern  bool  SDL_GetRenderDrawColorFloat(SDL_Renderer *renderer, float *r, float *g, float *b, float *a);
-
-/**
+  }
+function SDL_GetRenderDrawColorFloat(renderer:PSDL_Renderer; r:Psingle; g:Psingle; b:Psingle; a:Psingle):Tbool;cdecl;external;
+{*
  * Set the color scale used for render operations.
  *
  * The color scale is an additional scale multiplied into the pixel color
@@ -1820,10 +1833,9 @@ extern  bool  SDL_GetRenderDrawColorFloat(SDL_Renderer *renderer, float *r, floa
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetRenderColorScale
- */
-extern  bool  SDL_SetRenderColorScale(SDL_Renderer *renderer, float scale);
-
-/**
+  }
+function SDL_SetRenderColorScale(renderer:PSDL_Renderer; scale:single):Tbool;cdecl;external;
+{*
  * Get the color scale used for render operations.
  *
  * \param renderer the rendering context.
@@ -1836,10 +1848,9 @@ extern  bool  SDL_SetRenderColorScale(SDL_Renderer *renderer, float scale);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetRenderColorScale
- */
-extern  bool  SDL_GetRenderColorScale(SDL_Renderer *renderer, float *scale);
-
-/**
+  }
+function SDL_GetRenderColorScale(renderer:PSDL_Renderer; scale:Psingle):Tbool;cdecl;external;
+{*
  * Set the blend mode used for drawing operations (Fill and Line).
  *
  * If the blend mode is not supported, the closest supported mode is chosen.
@@ -1854,10 +1865,9 @@ extern  bool  SDL_GetRenderColorScale(SDL_Renderer *renderer, float *scale);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetRenderDrawBlendMode
- */
-extern  bool  SDL_SetRenderDrawBlendMode(SDL_Renderer *renderer, SDL_BlendMode blendMode);
-
-/**
+  }
+function SDL_SetRenderDrawBlendMode(renderer:PSDL_Renderer; blendMode:TSDL_BlendMode):Tbool;cdecl;external;
+{*
  * Get the blend mode used for drawing operations.
  *
  * \param renderer the rendering context.
@@ -1870,10 +1880,9 @@ extern  bool  SDL_SetRenderDrawBlendMode(SDL_Renderer *renderer, SDL_BlendMode b
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetRenderDrawBlendMode
- */
-extern  bool  SDL_GetRenderDrawBlendMode(SDL_Renderer *renderer, SDL_BlendMode *blendMode);
-
-/**
+  }
+function SDL_GetRenderDrawBlendMode(renderer:PSDL_Renderer; blendMode:PSDL_BlendMode):Tbool;cdecl;external;
+{*
  * Clear the current rendering target with the drawing color.
  *
  * This function clears the entire rendering target, ignoring the viewport and
@@ -1890,10 +1899,9 @@ extern  bool  SDL_GetRenderDrawBlendMode(SDL_Renderer *renderer, SDL_BlendMode *
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetRenderDrawColor
- */
-extern  bool  SDL_RenderClear(SDL_Renderer *renderer);
-
-/**
+  }
+function SDL_RenderClear(renderer:PSDL_Renderer):Tbool;cdecl;external;
+{*
  * Draw a point on the current rendering target at subpixel precision.
  *
  * \param renderer the renderer which should draw a point.
@@ -1907,10 +1915,9 @@ extern  bool  SDL_RenderClear(SDL_Renderer *renderer);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderPoints
- */
-extern  bool  SDL_RenderPoint(SDL_Renderer *renderer, float x, float y);
-
-/**
+  }
+function SDL_RenderPoint(renderer:PSDL_Renderer; x:single; y:single):Tbool;cdecl;external;
+{*
  * Draw multiple points on the current rendering target at subpixel precision.
  *
  * \param renderer the renderer which should draw multiple points.
@@ -1924,10 +1931,10 @@ extern  bool  SDL_RenderPoint(SDL_Renderer *renderer, float x, float y);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderPoint
- */
-extern  bool  SDL_RenderPoints(SDL_Renderer *renderer, const SDL_FPoint *points, int count);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_RenderPoints(renderer:PSDL_Renderer; points:PSDL_FPoint; count:longint):Tbool;cdecl;external;
+{*
  * Draw a line on the current rendering target at subpixel precision.
  *
  * \param renderer the renderer which should draw a line.
@@ -1943,10 +1950,9 @@ extern  bool  SDL_RenderPoints(SDL_Renderer *renderer, const SDL_FPoint *points,
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderLines
- */
-extern  bool  SDL_RenderLine(SDL_Renderer *renderer, float x1, float y1, float x2, float y2);
-
-/**
+  }
+function SDL_RenderLine(renderer:PSDL_Renderer; x1:single; y1:single; x2:single; y2:single):Tbool;cdecl;external;
+{*
  * Draw a series of connected lines on the current rendering target at
  * subpixel precision.
  *
@@ -1961,10 +1967,10 @@ extern  bool  SDL_RenderLine(SDL_Renderer *renderer, float x1, float y1, float x
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderLine
- */
-extern  bool  SDL_RenderLines(SDL_Renderer *renderer, const SDL_FPoint *points, int count);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_RenderLines(renderer:PSDL_Renderer; points:PSDL_FPoint; count:longint):Tbool;cdecl;external;
+{*
  * Draw a rectangle on the current rendering target at subpixel precision.
  *
  * \param renderer the renderer which should draw a rectangle.
@@ -1978,10 +1984,10 @@ extern  bool  SDL_RenderLines(SDL_Renderer *renderer, const SDL_FPoint *points, 
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderRects
- */
-extern  bool  SDL_RenderRect(SDL_Renderer *renderer, const SDL_FRect *rect);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_RenderRect(renderer:PSDL_Renderer; rect:PSDL_FRect):Tbool;cdecl;external;
+{*
  * Draw some number of rectangles on the current rendering target at subpixel
  * precision.
  *
@@ -1996,10 +2002,10 @@ extern  bool  SDL_RenderRect(SDL_Renderer *renderer, const SDL_FRect *rect);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderRect
- */
-extern  bool  SDL_RenderRects(SDL_Renderer *renderer, const SDL_FRect *rects, int count);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_RenderRects(renderer:PSDL_Renderer; rects:PSDL_FRect; count:longint):Tbool;cdecl;external;
+{*
  * Fill a rectangle on the current rendering target with the drawing color at
  * subpixel precision.
  *
@@ -2014,10 +2020,10 @@ extern  bool  SDL_RenderRects(SDL_Renderer *renderer, const SDL_FRect *rects, in
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderFillRects
- */
-extern  bool  SDL_RenderFillRect(SDL_Renderer *renderer, const SDL_FRect *rect);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_RenderFillRect(renderer:PSDL_Renderer; rect:PSDL_FRect):Tbool;cdecl;external;
+{*
  * Fill some number of rectangles on the current rendering target with the
  * drawing color at subpixel precision.
  *
@@ -2032,10 +2038,10 @@ extern  bool  SDL_RenderFillRect(SDL_Renderer *renderer, const SDL_FRect *rect);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderFillRect
- */
-extern  bool  SDL_RenderFillRects(SDL_Renderer *renderer, const SDL_FRect *rects, int count);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_RenderFillRects(renderer:PSDL_Renderer; rects:PSDL_FRect; count:longint):Tbool;cdecl;external;
+{*
  * Copy a portion of the texture to the current rendering target at subpixel
  * precision.
  *
@@ -2054,10 +2060,11 @@ extern  bool  SDL_RenderFillRects(SDL_Renderer *renderer, const SDL_FRect *rects
  *
  * \sa SDL_RenderTextureRotated
  * \sa SDL_RenderTextureTiled
- */
-extern  bool  SDL_RenderTexture(SDL_Renderer *renderer, SDL_Texture *texture, const SDL_FRect *srcrect, const SDL_FRect *dstrect);
-
-/**
+  }
+(* Const before type ignored *)
+(* Const before type ignored *)
+function SDL_RenderTexture(renderer:PSDL_Renderer; texture:PSDL_Texture; srcrect:PSDL_FRect; dstrect:PSDL_FRect):Tbool;cdecl;external;
+{*
  * Copy a portion of the source texture to the current rendering target, with
  * rotation and flipping, at subpixel precision.
  *
@@ -2082,13 +2089,13 @@ extern  bool  SDL_RenderTexture(SDL_Renderer *renderer, SDL_Texture *texture, co
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderTexture
- */
-extern  bool  SDL_RenderTextureRotated(SDL_Renderer *renderer, SDL_Texture *texture,
-                                                     const SDL_FRect *srcrect, const SDL_FRect *dstrect,
-                                                     double angle, const SDL_FPoint *center,
-                                                     SDL_FlipMode flip);
-
-/**
+  }
+(* Const before type ignored *)
+(* Const before type ignored *)
+(* Const before type ignored *)
+function SDL_RenderTextureRotated(renderer:PSDL_Renderer; texture:PSDL_Texture; srcrect:PSDL_FRect; dstrect:PSDL_FRect; angle:Tdouble; 
+           center:PSDL_FPoint; flip:TSDL_FlipMode):Tbool;cdecl;external;
+{*
  * Copy a portion of the source texture to the current rendering target, with
  * affine transform, at subpixel precision.
  *
@@ -2113,12 +2120,14 @@ extern  bool  SDL_RenderTextureRotated(SDL_Renderer *renderer, SDL_Texture *text
  * \since This function is available since SDL 3.2.0.
  *
  * \sa SDL_RenderTexture
- */
-extern  bool  SDL_RenderTextureAffine(SDL_Renderer *renderer, SDL_Texture *texture,
-                                                     const SDL_FRect *srcrect, const SDL_FPoint *origin,
-                                                     const SDL_FPoint *right, const SDL_FPoint *down);
-
-/**
+  }
+(* Const before type ignored *)
+(* Const before type ignored *)
+(* Const before type ignored *)
+(* Const before type ignored *)
+function SDL_RenderTextureAffine(renderer:PSDL_Renderer; texture:PSDL_Texture; srcrect:PSDL_FRect; origin:PSDL_FPoint; right:PSDL_FPoint; 
+           down:PSDL_FPoint):Tbool;cdecl;external;
+{*
  * Tile a portion of the texture to the current rendering target at subpixel
  * precision.
  *
@@ -2142,10 +2151,11 @@ extern  bool  SDL_RenderTextureAffine(SDL_Renderer *renderer, SDL_Texture *textu
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderTexture
- */
-extern  bool  SDL_RenderTextureTiled(SDL_Renderer *renderer, SDL_Texture *texture, const SDL_FRect *srcrect, float scale, const SDL_FRect *dstrect);
-
-/**
+  }
+(* Const before type ignored *)
+(* Const before type ignored *)
+function SDL_RenderTextureTiled(renderer:PSDL_Renderer; texture:PSDL_Texture; srcrect:PSDL_FRect; scale:single; dstrect:PSDL_FRect):Tbool;cdecl;external;
+{*
  * Perform a scaled copy using the 9-grid algorithm to the current rendering
  * target at subpixel precision.
  *
@@ -2176,10 +2186,12 @@ extern  bool  SDL_RenderTextureTiled(SDL_Renderer *renderer, SDL_Texture *textur
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderTexture
- */
-extern  bool  SDL_RenderTexture9Grid(SDL_Renderer *renderer, SDL_Texture *texture, const SDL_FRect *srcrect, float left_width, float right_width, float top_height, float bottom_height, float scale, const SDL_FRect *dstrect);
-
-/**
+  }
+(* Const before type ignored *)
+(* Const before type ignored *)
+function SDL_RenderTexture9Grid(renderer:PSDL_Renderer; texture:PSDL_Texture; srcrect:PSDL_FRect; left_width:single; right_width:single; 
+           top_height:single; bottom_height:single; scale:single; dstrect:PSDL_FRect):Tbool;cdecl;external;
+{*
  * Render a list of triangles, optionally using a texture and indices into the
  * vertex array Color and alpha modulation is done per vertex
  * (SDL_SetTextureColorMod and SDL_SetTextureAlphaMod are ignored).
@@ -2200,13 +2212,12 @@ extern  bool  SDL_RenderTexture9Grid(SDL_Renderer *renderer, SDL_Texture *textur
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderGeometryRaw
- */
-extern  bool  SDL_RenderGeometry(SDL_Renderer *renderer,
-                                               SDL_Texture *texture,
-                                               const SDL_Vertex *vertices, int num_vertices,
-                                               const int *indices, int num_indices);
-
-/**
+  }
+(* Const before type ignored *)
+(* Const before type ignored *)
+function SDL_RenderGeometry(renderer:PSDL_Renderer; texture:PSDL_Texture; vertices:PSDL_Vertex; num_vertices:longint; indices:Plongint; 
+           num_indices:longint):Tbool;cdecl;external;
+{*
  * Render a list of triangles, optionally using a texture and indices into the
  * vertex arrays Color and alpha modulation is done per vertex
  * (SDL_SetTextureColorMod and SDL_SetTextureAlphaMod are ignored).
@@ -2232,16 +2243,15 @@ extern  bool  SDL_RenderGeometry(SDL_Renderer *renderer,
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_RenderGeometry
- */
-extern  bool  SDL_RenderGeometryRaw(SDL_Renderer *renderer,
-                                               SDL_Texture *texture,
-                                               const float *xy, int xy_stride,
-                                               const SDL_FColor *color, int color_stride,
-                                               const float *uv, int uv_stride,
-                                               int num_vertices,
-                                               const void *indices, int num_indices, int size_indices);
-
-/**
+  }
+(* Const before type ignored *)
+(* Const before type ignored *)
+(* Const before type ignored *)
+(* Const before type ignored *)
+function SDL_RenderGeometryRaw(renderer:PSDL_Renderer; texture:PSDL_Texture; xy:Psingle; xy_stride:longint; color:PSDL_FColor; 
+           color_stride:longint; uv:Psingle; uv_stride:longint; num_vertices:longint; indices:pointer; 
+           num_indices:longint; size_indices:longint):Tbool;cdecl;external;
+{*
  * Read pixels from the current rendering target.
  *
  * The returned surface should be freed with SDL_DestroySurface()
@@ -2259,10 +2269,10 @@ extern  bool  SDL_RenderGeometryRaw(SDL_Renderer *renderer,
  * \threadsafety This function should only be called on the main thread.
  *
  * \since This function is available since SDL 3.1.3.
- */
-extern  SDL_Surface *  SDL_RenderReadPixels(SDL_Renderer *renderer, const SDL_Rect *rect);
-
-/**
+  }
+(* Const before type ignored *)
+function SDL_RenderReadPixels(renderer:PSDL_Renderer; rect:PSDL_Rect):PSDL_Surface;cdecl;external;
+{*
  * Update the screen with any rendering performed since the previous call.
  *
  * SDL's rendering functions operate on a backbuffer; that is, calling a
@@ -2309,10 +2319,9 @@ extern  SDL_Surface *  SDL_RenderReadPixels(SDL_Renderer *renderer, const SDL_Re
  * \sa SDL_RenderRects
  * \sa SDL_SetRenderDrawBlendMode
  * \sa SDL_SetRenderDrawColor
- */
-extern  bool  SDL_RenderPresent(SDL_Renderer *renderer);
-
-/**
+  }
+function SDL_RenderPresent(renderer:PSDL_Renderer):Tbool;cdecl;external;
+{*
  * Destroy the specified texture.
  *
  * Passing NULL or an otherwise invalid texture will set the SDL error message
@@ -2326,10 +2335,9 @@ extern  bool  SDL_RenderPresent(SDL_Renderer *renderer);
  *
  * \sa SDL_CreateTexture
  * \sa SDL_CreateTextureFromSurface
- */
-extern  void  SDL_DestroyTexture(SDL_Texture *texture);
-
-/**
+  }
+procedure SDL_DestroyTexture(texture:PSDL_Texture);cdecl;external;
+{*
  * Destroy the rendering context for a window and free all associated
  * textures.
  *
@@ -2342,10 +2350,9 @@ extern  void  SDL_DestroyTexture(SDL_Texture *texture);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_CreateRenderer
- */
-extern  void  SDL_DestroyRenderer(SDL_Renderer *renderer);
-
-/**
+  }
+procedure SDL_DestroyRenderer(renderer:PSDL_Renderer);cdecl;external;
+{*
  * Force the rendering context to flush any pending commands and state.
  *
  * You do not need to (and in fact, shouldn't) call this function unless you
@@ -2375,10 +2382,9 @@ extern  void  SDL_DestroyRenderer(SDL_Renderer *renderer);
  * \threadsafety This function should only be called on the main thread.
  *
  * \since This function is available since SDL 3.1.3.
- */
-extern  bool  SDL_FlushRenderer(SDL_Renderer *renderer);
-
-/**
+  }
+function SDL_FlushRenderer(renderer:PSDL_Renderer):Tbool;cdecl;external;
+{*
  * Get the CAMetalLayer associated with the given Metal renderer.
  *
  * This function returns `void *`, so SDL doesn't have to include Metal's
@@ -2393,10 +2399,9 @@ extern  bool  SDL_FlushRenderer(SDL_Renderer *renderer);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetRenderMetalCommandEncoder
- */
-extern  void *  SDL_GetRenderMetalLayer(SDL_Renderer *renderer);
-
-/**
+  }
+function SDL_GetRenderMetalLayer(renderer:PSDL_Renderer):pointer;cdecl;external;
+{*
  * Get the Metal command encoder for the current frame.
  *
  * This function returns `void *`, so SDL doesn't have to include Metal's
@@ -2416,11 +2421,9 @@ extern  void *  SDL_GetRenderMetalLayer(SDL_Renderer *renderer);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetRenderMetalLayer
- */
-extern  void *  SDL_GetRenderMetalCommandEncoder(SDL_Renderer *renderer);
-
-
-/**
+  }
+function SDL_GetRenderMetalCommandEncoder(renderer:PSDL_Renderer):pointer;cdecl;external;
+{*
  * Add a set of synchronization semaphores for the current frame.
  *
  * The Vulkan renderer will wait for `wait_semaphore` before submitting
@@ -2447,10 +2450,9 @@ extern  void *  SDL_GetRenderMetalCommandEncoder(SDL_Renderer *renderer);
  *               once.
  *
  * \since This function is available since SDL 3.1.3.
- */
-extern  bool  SDL_AddVulkanRenderSemaphores(SDL_Renderer *renderer, Uint32 wait_stage_mask, Sint64 wait_semaphore, Sint64 signal_semaphore);
-
-/**
+  }
+function SDL_AddVulkanRenderSemaphores(renderer:PSDL_Renderer; wait_stage_mask:TUint32; wait_semaphore:TSint64; signal_semaphore:TSint64):Tbool;cdecl;external;
+{*
  * Toggle VSync of the given renderer.
  *
  * When a renderer is created, vsync defaults to SDL_RENDERER_VSYNC_DISABLED.
@@ -2472,13 +2474,12 @@ extern  bool  SDL_AddVulkanRenderSemaphores(SDL_Renderer *renderer, Uint32 wait_
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_GetRenderVSync
- */
-extern  bool  SDL_SetRenderVSync(SDL_Renderer *renderer, int vsync);
-
-#define SDL_RENDERER_VSYNC_DISABLED 0
-#define SDL_RENDERER_VSYNC_ADAPTIVE (-1)
-
-/**
+  }
+function SDL_SetRenderVSync(renderer:PSDL_Renderer; vsync:longint):Tbool;cdecl;external;
+const
+  SDL_RENDERER_VSYNC_DISABLED = 0;  
+  SDL_RENDERER_VSYNC_ADAPTIVE = -(1);  
+{*
  * Get VSync of the given renderer.
  *
  * \param renderer the renderer to toggle.
@@ -2492,10 +2493,10 @@ extern  bool  SDL_SetRenderVSync(SDL_Renderer *renderer, int vsync);
  * \since This function is available since SDL 3.1.3.
  *
  * \sa SDL_SetRenderVSync
- */
-extern  bool  SDL_GetRenderVSync(SDL_Renderer *renderer, int *vsync);
+  }
 
-/**
+function SDL_GetRenderVSync(renderer:PSDL_Renderer; vsync:Plongint):Tbool;cdecl;external;
+{*
  * The size, in pixels, of a single SDL_RenderDebugText() character.
  *
  * The font is monospaced and square, so this applies to all characters.
@@ -2503,10 +2504,10 @@ extern  bool  SDL_GetRenderVSync(SDL_Renderer *renderer, int *vsync);
  * \since This macro is available since SDL 3.2.0.
  *
  * \sa SDL_RenderDebugText
- */
-#define SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE 8
-
-/**
+  }
+const
+  SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE = 8;  
+{*
  * Draw debug text to an SDL_Renderer.
  *
  * This function will render a string of text to an SDL_Renderer. Note that
@@ -2544,10 +2545,11 @@ extern  bool  SDL_GetRenderVSync(SDL_Renderer *renderer, int *vsync);
  *
  * \sa SDL_RenderDebugTextFormat
  * \sa SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE
- */
-extern  bool  SDL_RenderDebugText(SDL_Renderer *renderer, float x, float y, const char *str);
+  }
+(* Const before type ignored *)
 
-/**
+function SDL_RenderDebugText(renderer:PSDL_Renderer; x:single; y:single; str:Pchar):Tbool;cdecl;external;
+{*
  * Draw debug text to an SDL_Renderer.
  *
  * This function will render a printf()-style format string to a renderer.
@@ -2572,13 +2574,17 @@ extern  bool  SDL_RenderDebugText(SDL_Renderer *renderer, float x, float y, cons
  *
  * \sa SDL_RenderDebugText
  * \sa SDL_DEBUG_TEXT_FONT_CHARACTER_SIZE
- */
-extern  bool  SDL_RenderDebugTextFormat(SDL_Renderer *renderer, float x, float y, SDL_PRINTF_FORMAT_STRING const char *fmt, ...) SDL_PRINTF_VARARG_FUNC(4);
+  }
+(* Const before type ignored *)
+function SDL_RenderDebugTextFormat(renderer:PSDL_Renderer; x:single; y:single; fmt:Pchar; args:array of const):Tbool;cdecl;external;
+function SDL_RenderDebugTextFormat(renderer:PSDL_Renderer; x:single; y:single; fmt:Pchar):Tbool;cdecl;external;
+{ Ends C function definitions when using C++  }
+{ C++ end of extern C conditionnal removed }
+{$include <SDL3/SDL_close_code.h>}
+{$endif}
+{ SDL_render_h_  }
 
-/* Ends C function definitions when using C++ */
-#ifdef __cplusplus
-}
-#endif
-#include <SDL3/SDL_close_code.h>
+implementation
 
-#endif /* SDL_render_h_ */
+
+end.

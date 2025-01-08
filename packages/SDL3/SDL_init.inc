@@ -1,5 +1,4 @@
-
-{$IFDEF read_interface}
+  {$IFDEF read_interface}
 
 type
   PSDL_InitFlags = ^TSDL_InitFlags;
@@ -35,6 +34,13 @@ function SDL_InitSubSystem(flags: TSDL_InitFlags): Tbool; cdecl; external libSDL
 procedure SDL_QuitSubSystem(flags: TSDL_InitFlags); cdecl; external libSDL3;
 function SDL_WasInit(flags: TSDL_InitFlags): TSDL_InitFlags; cdecl; external libSDL3;
 procedure SDL_Quit; cdecl; external libSDL3;
+function SDL_IsMainThread: Tbool; cdecl; external libSDL3;
+
+type
+  TSDL_MainThreadCallback = procedure(userdata: pointer); cdecl;
+
+function SDL_RunOnMainThread(callback: TSDL_MainThreadCallback; userdata: pointer; wait_complete: Tbool): Tbool; cdecl; external libSDL3;
+
 function SDL_SetAppMetadata(appname: pansichar; appversion: pansichar; appidentifier: pansichar): Tbool; cdecl; external libSDL3;
 function SDL_SetAppMetadataProperty(Name: pansichar; Value: pansichar): Tbool; cdecl; external libSDL3;
 

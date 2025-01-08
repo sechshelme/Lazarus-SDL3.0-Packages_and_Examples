@@ -2,6 +2,7 @@
 {$IFDEF read_interface}
 
 const
+  SDL_MAIN_HANDLED = 1;
   SDL_MAIN_USE_CALLBACKS = 1;
 
 function SDL_AppInit(appstate: Ppointer; argc: longint; argv: PPansichar): TSDL_AppResult; cdecl; external libSDL3;
