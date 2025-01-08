@@ -22,9 +22,15 @@ const
   SDL_AUDIO_S32BE = $9020;
   SDL_AUDIO_F32LE = $8120;
   SDL_AUDIO_F32BE = $9120;
+  {$ifdef endian_little}
+  SDL_AUDIO_S16 = SDL_AUDIO_S16LE;
+  SDL_AUDIO_S32 = SDL_AUDIO_S32LE;
+  SDL_AUDIO_F32 = SDL_AUDIO_F32LE;
+  {$else}
   SDL_AUDIO_S16 = SDL_AUDIO_S16BE;
   SDL_AUDIO_S32 = SDL_AUDIO_S32BE;
   SDL_AUDIO_F32 = SDL_AUDIO_F32BE;
+  {$endif}
 
 type
   TSDL_AudioDeviceID = TUint32;
@@ -52,6 +58,8 @@ function SDL_GetAudioDeviceName(devid: TSDL_AudioDeviceID): pansichar; cdecl; ex
 function SDL_GetAudioDeviceFormat(devid: TSDL_AudioDeviceID; spec: PSDL_AudioSpec; sample_frames: Plongint): Tbool; cdecl; external libSDL3;
 function SDL_GetAudioDeviceChannelMap(devid: TSDL_AudioDeviceID; Count: Plongint): Plongint; cdecl; external libSDL3;
 function SDL_OpenAudioDevice(devid: TSDL_AudioDeviceID; spec: PSDL_AudioSpec): TSDL_AudioDeviceID; cdecl; external libSDL3;
+function SDL_IsAudioDevicePhysical(devid:TSDL_AudioDeviceID):Tbool;cdecl;external libSDL3;
+function SDL_IsAudioDevicePlayback(devid:TSDL_AudioDeviceID):Tbool;cdecl;external libSDL3;
 function SDL_PauseAudioDevice(dev: TSDL_AudioDeviceID): Tbool; cdecl; external libSDL3;
 function SDL_ResumeAudioDevice(dev: TSDL_AudioDeviceID): Tbool; cdecl; external libSDL3;
 function SDL_AudioDevicePaused(dev: TSDL_AudioDeviceID): Tbool; cdecl; external libSDL3;
@@ -121,6 +129,7 @@ function SDL_AUDIO_ISINT(x: longint): boolean;
 function SDL_AUDIO_ISUNSIGNED(x: longint): boolean;
 function SDL_AUDIO_FRAMESIZE(x: TSDL_AudioSpec): longint;
 
+function SDL_DEFINE_AUDIO_FORMAT(signed, bigendian, flt, size: UInt16): UInt32;
 
 {$ENDIF read_interface}
 
@@ -171,6 +180,12 @@ function SDL_AUDIO_FRAMESIZE(x: TSDL_AudioSpec): longint;
 begin
   SDL_AUDIO_FRAMESIZE := (SDL_AUDIO_BYTESIZE(x.format)) * (x.channels);
 end;
+
+function SDL_DEFINE_AUDIO_FORMAT(signed, bigendian, flt, size: UInt16): UInt32;
+begin
+  Result := (signed shl 15) or (bigendian shl 12) or (flt shl 8) or (size and SDL_AUDIO_MASK_BITSIZE);
+end;
+
 
 
 {$ENDIF read_implementation}

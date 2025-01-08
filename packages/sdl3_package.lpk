@@ -10,15 +10,11 @@
         <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
+    <Version Major="3" Minor="1" Release="6"/>
     <Files>
       <Item>
         <Filename Value="sdl3.pas"/>
         <UnitName Value="SDL3"/>
-      </Item>
-      <Item>
-        <Filename Value="sdl3_main.pas"/>
-        <AddToUsesPkgSection Value="False"/>
-        <UnitName Value="SDL3_main"/>
       </Item>
       <Item>
         <Filename Value="sdl3_image.pas"/>

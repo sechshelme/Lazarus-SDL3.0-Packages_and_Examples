@@ -1,0 +1,2063 @@
+
+
+//     #if SDL_BYTEORDER == SDL_LIL_ENDIAN ?????????
+
+
+
+
+
+
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_begin_code.h SDL-preview-3.1.8/include/SDL3/SDL_begin_code.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25,27c25,33
+---
+34a41,293
+> 
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_DEPRECATED __attribute__((deprecated))
+> 
+> #define SDL_DECLSPEC __attribute__ ((visibility("default")))
+> 
+> #define SDLCALL __cdecl
+> 
+> #define SDL_INLINE __inline
+> 
+> #define SDL_FORCE_INLINE __forceinline
+> 
+> #define SDL_NORETURN __attribute__((noreturn))
+> 
+> #define SDL_ANALYZER_NORETURN __attribute__((analyzer_noreturn))
+> 
+> 
+> #define SDL_FALLTHROUGH [[fallthrough]]
+> 
+> #define SDL_NODISCARD [[nodiscard]]
+> 
+> #define SDL_MALLOC __declspec(allocator) __desclspec(restrict)
+> 
+> #define SDL_ALLOC_SIZE(p) __attribute__((alloc_size(p)))
+> 
+> #define SDL_RESTRICT __restrict__
+> 
+> #define SDL_HAS_BUILTIN(x) __has_builtin(x)
+> 
+> #endif
+> 
+> #ifndef SDL_HAS_BUILTIN
+> #ifdef __has_builtin
+> #define SDL_HAS_BUILTIN(x) __has_builtin(x)
+> #else
+> #define SDL_HAS_BUILTIN(x) 0
+> #endif
+> #endif
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_bits.h SDL-preview-3.1.8/include/SDL3/SDL_bits.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+38,41d37
+< 
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_blendmode.h SDL-preview-3.1.8/include/SDL3/SDL_blendmode.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+27c27
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_camera.h SDL-preview-3.1.8/include/SDL3/SDL_camera.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+30a31,65
+412c447
+---
+474d508
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_clipboard.h SDL-preview-3.1.8/include/SDL3/SDL_clipboard.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+28a29,73
+52c97
+---
+71c116
+---
+85c130
+---
+101c146
+---
+120c165
+---
+135c180
+---
+184,185c229,230
+---
+190c235
+---
+202c247
+---
+218c263
+---
+238c283
+---
+254c299
+---
+272c317
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_close_code.h SDL-preview-3.1.8/include/SDL3/SDL_close_code.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+24c24,27
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_copying.h SDL-preview-3.1.8/include/SDL3/SDL_copying.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_cpuinfo.h SDL-preview-3.1.8/include/SDL3/SDL_cpuinfo.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+31a32,37
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_dialog.h SDL-preview-3.1.8/include/SDL3/SDL_dialog.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25a26,34
+32a42
+> #include <SDL3/SDL_properties.h>
+57a68
+79,80c90,91
+---
+85a97,100
+95a111
+102,103d117
+121,133c135,137
+---
+138,140c142,145
+---
+146a152,155
+152a162
+160,161d169
+178,190c186,188
+---
+195,197c193,196
+---
+201a201,204
+207a211
+214,215d217
+233,241c235,237
+---
+250a247,250
+255a256
+257a259,333
+> 
+> typedef enum SDL_FileDialogType
+> {
+>     SDL_FILEDIALOG_OPENFILE,
+>     SDL_FILEDIALOG_SAVEFILE,
+>     SDL_FILEDIALOG_OPENFOLDER
+> } SDL_FileDialogType;
+> 
+> extern SDL_DECLSPEC void SDLCALL SDL_ShowFileDialogWithProperties(SDL_FileDialogType type, SDL_DialogFileCallback callback, void *userdata, SDL_PropertiesID props);
+> 
+> #define SDL_PROP_FILE_DIALOG_FILTERS_POINTER     "SDL.filedialog.filters"
+> #define SDL_PROP_FILE_DIALOG_NFILTERS_NUMBER     "SDL.filedialog.nfilters"
+> #define SDL_PROP_FILE_DIALOG_WINDOW_POINTER      "SDL.filedialog.window"
+> #define SDL_PROP_FILE_DIALOG_LOCATION_STRING     "SDL.filedialog.location"
+> #define SDL_PROP_FILE_DIALOG_MANY_BOOLEAN        "SDL.filedialog.many"
+> #define SDL_PROP_FILE_DIALOG_TITLE_STRING        "SDL.filedialog.title"
+> #define SDL_PROP_FILE_DIALOG_ACCEPT_STRING       "SDL.filedialog.accept"
+> #define SDL_PROP_FILE_DIALOG_CANCEL_STRING       "SDL.filedialog.cancel"
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_egl.h SDL-preview-3.1.8/include/SDL3/SDL_egl.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_endian.h SDL-preview-3.1.8/include/SDL3/SDL_endian.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25c25,38
+---
+53a67,85
+> 
+> 
+54a87,104
+> 
+55a106
+> 
+59c110,131
+< #ifdef SDL_PLATFORM_LINUX
+---
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_BYTEORDER   SDL_LIL_ENDIAN___or_maybe___SDL_BIG_ENDIAN
+> #elif defined(SDL_PLATFORM_LINUX)
+99a172,192
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_FLOATWORDORDER   SDL_LIL_ENDIAN___or_maybe___SDL_BIG_ENDIAN
+101c194
+< #if defined(__ORDER_LITTLE_ENDIAN__) && defined(__ORDER_BIG_ENDIAN__) && defined(__FLOAT_WORD_ORDER__)
+---
+> #elif defined(__ORDER_LITTLE_ENDIAN__) && defined(__ORDER_BIG_ENDIAN__) && defined(__FLOAT_WORD_ORDER__)
+128,131d220
+< 
+150a240
+> #ifndef SDL_WIKI_DOCUMENTATION_SECTION
+193a284
+> #endif
+195a287
+> #ifndef SDL_WIKI_DOCUMENTATION_SECTION
+241a334
+> #endif
+243a337
+> #ifndef SDL_WIKI_DOCUMENTATION_SECTION
+293c387
+< 
+---
+> #endif
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_error.h SDL-preview-3.1.8/include/SDL3/SDL_error.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+102c102
+---
+180a181,191
+> 
+181a193,215
+> 
+182a217
+> 
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_events.h SDL-preview-3.1.8/include/SDL3/SDL_events.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25a26,49
+190a215
+>     SDL_EVENT_FINGER_CANCELED,
+223c248
+<     SDL_EVENT_CAMERA_DEVICE_ADDED = 0x1400,  /**< A new camera device is SDL_EVENT_RENDER_TARGETS_RESETavailable */
+---
+>     SDL_EVENT_CAMERA_DEVICE_ADDED = 0x1400,  /**< A new camera device is available */
+337,338c362,363
+<     bool down;          /**< true if the key is pressed */
+<     bool repeat;        /**< true if this is a key repeat */
+---
+>     bool down;              /**< true if the key is pressed */
+>     bool repeat;            /**< true if this is a key repeat */
+425c450
+<     SDL_MouseID which;  /**< The mouse instance id or SDL_TOUCH_MOUSEID */
+---
+>     SDL_MouseID which;  /**< The mouse instance id in relative mode, SDL_TOUCH_MOUSEID for touch events, or 0 */
+444c469
+<     SDL_MouseID which;  /**< The mouse instance id, SDL_TOUCH_MOUSEID */
+---
+>     SDL_MouseID which;  /**< The mouse instance id in relative mode, SDL_TOUCH_MOUSEID for touch events, or 0 */
+446c471
+<     bool down;      /**< true if the button is pressed */
+---
+>     bool down;          /**< true if the button is pressed */
+464c489
+<     SDL_MouseID which;  /**< The mouse instance id, SDL_TOUCH_MOUSEID */
+---
+>     SDL_MouseID which;  /**< The mouse instance id in relative mode or 0 */
+706a732,746
+> 
+> typedef struct SDL_RenderEvent
+> {
+>     SDL_EventType type; /**< SDL_EVENT_RENDER_TARGETS_RESET, SDL_EVENT_RENDER_DEVICE_RESET, SDL_EVENT_RENDER_DEVICE_LOST */
+>     Uint32 reserved;
+>     Uint64 timestamp;   /**< In nanoseconds, populated using SDL_GetTicksNS() */
+>     SDL_WindowID windowID; /**< The window containing the renderer in question. */
+> } SDL_RenderEvent;
+> 
+> 
+728c768
+<     SDL_EventType type; /**< SDL_EVENT_FINGER_MOTION or SDL_EVENT_FINGER_DOWN or SDL_EVENT_FINGER_UP */
+---
+>     SDL_EventType type; /**< SDL_EVENT_FINGER_DOWN, SDL_EVENT_FINGER_UP, SDL_EVENT_FINGER_MOTION, or SDL_EVENT_FINGER_CANCELED */
+761c801
+<     SDL_WindowID windowID; /**< The window with mouse focus, if any */
+---
+>     SDL_WindowID windowID; /**< The window with pen focus, if any */
+781c821
+<     SDL_WindowID windowID; /**< The window with mouse focus, if any */
+---
+>     SDL_WindowID windowID; /**< The window with pen focus, if any */
+883,884c923,924
+<     bool owner;       /**< are we owning the clipboard (internal update) */
+<     Sint32 n_mime_types;     /**< number of mime types */
+---
+>     bool owner;         /**< are we owning the clipboard (internal update) */
+>     Sint32 num_mime_types;   /**< number of mime types */
+982a1023
+>     SDL_RenderEvent render;                 /**< Render event data */
+1021,1023c1062
+---
+1221,1223c1260
+---
+1247,1249c1284
+---
+1279,1281c1314
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_filesystem.h SDL-preview-3.1.8/include/SDL3/SDL_filesystem.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25c25,41
+---
+169d184
+< 
+171d185
+< 
+173d186
+< 
+175d187
+< 
+177d188
+< 
+179d189
+< 
+181d190
+< 
+183d191
+< 
+185d192
+< 
+187d193
+< 
+189d194
+< 
+191d195
+< 
+221a226,236
+229a245,252
+240c263
+---
+421c444
+---
+424c447
+---
+448a472,489
+> 
+> extern SDL_DECLSPEC char * SDLCALL SDL_GetCurrentDirectory(void);
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_gamepad.h SDL-preview-3.1.8/include/SDL3/SDL_gamepad.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+53a54,71
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_gpu.h SDL-preview-3.1.8/include/SDL3/SDL_gpu.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+28c28
+---
+59c59
+---
+99,100c99,100
+---
+132c132
+---
+150a151,301
+785,786c936,937
+< #define SDL_GPU_SHADERFORMAT_DXBC     (1u << 2) /**< DXBC SM5_0 shaders for D3D11. */
+< #define SDL_GPU_SHADERFORMAT_DXIL     (1u << 3) /**< DXIL shaders for D3D12. */
+---
+> #define SDL_GPU_SHADERFORMAT_DXBC     (1u << 2) /**< DXBC SM5_1 shaders for D3D12. */
+> #define SDL_GPU_SHADERFORMAT_DXIL     (1u << 3) /**< DXIL SM6_0 shaders for D3D12. */
+1060,1062c1211,1212
+---
+1069,1071c1219
+---
+1073,1074c1221
+---
+1077,1079c1224
+---
+1085c1230
+---
+1104,1107c1249,1252
+---
+1109,1111c1254,1257
+---
+1117c1263
+---
+1124c1270
+<     SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2048
+---
+>     SDL_GPU_SWAPCHAINCOMPOSITION_HDR10_ST2084
+1276,1277c1422,1425
+---
+1296,1297c1444,1447
+---
+1407a1558,1559
+1486a1639,1642
+1502,1508d1657
+< #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT       "SDL.gpu.createtexture.d3d12.clear.r"
+< #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT       "SDL.gpu.createtexture.d3d12.clear.g"
+< #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT       "SDL.gpu.createtexture.d3d12.clear.b"
+< #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT       "SDL.gpu.createtexture.d3d12.clear.a"
+< #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT   "SDL.gpu.createtexture.d3d12.clear.depth"
+< #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8 "SDL.gpu.createtexture.d3d12.clear.stencil"
+< 
+1517a1667
+1650a1801,1806
+1830c1986
+---
+1834c1990
+<     SDL_GPUBuffer *buffer;  /**< The buffer to bind. Must have been created with SDL_GPU_BUFFERUSAGE_VERTEX for SDL_BindGPUVertexBuffers, or SDL_GPU_BUFFERUSAGE_INDEX for SDL_BindGPUIndexBuffers. */
+---
+>     SDL_GPUBuffer *buffer;  /**< The buffer to bind. Must have been created with SDL_GPU_BUFFERUSAGE_VERTEX for SDL_BindGPUVertexBuffers, or SDL_GPU_BUFFERUSAGE_INDEX for SDL_BindGPUIndexBuffer. */
+2076c2232
+---
+2079,2087c2235
+---
+2091c2239
+---
+2097,2098c2245,2246
+---
+2100c2248
+---
+2149c2297
+---
+2175,2182c2323
+---
+2208c2349,2358
+---
+2236a2387,2411
+2258a2434,2441
+> #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT       "SDL.gpu.createtexture.d3d12.clear.r"
+> #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT       "SDL.gpu.createtexture.d3d12.clear.g"
+> #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT       "SDL.gpu.createtexture.d3d12.clear.b"
+> #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT       "SDL.gpu.createtexture.d3d12.clear.a"
+> #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT   "SDL.gpu.createtexture.d3d12.clear.depth"
+> #define SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8 "SDL.gpu.createtexture.d3d12.clear.stencil"
+> 
+> 
+2267a2451,2455
+2510a2699,2705
+2523,2541c2718
+---
+2597,2635d2773
+< 
+2894,2895c3032,3035
+---
+2922,2923c3062,3065
+---
+3247,3248d3388
+< 
+3295,3296d3434
+< 
+3448a3587,3589
+3451c3592
+---
+3503a3645,3673
+> extern SDL_DECLSPEC bool SDLCALL SDL_SetGPUAllowedFramesInFlight(
+>     SDL_GPUDevice *device,
+>     Uint32 allowed_frames_in_flight);
+> 
+3524,3526c3694,3703
+---
+3532,3537d3708
+3548a3720,3722
+3551d3724
+3556a3730,3732
+3565a3742,3807
+> extern SDL_DECLSPEC bool SDLCALL SDL_WaitForGPUSwapchain(
+>     SDL_GPUDevice *device,
+>     SDL_Window *window);
+> 
+> extern SDL_DECLSPEC bool SDLCALL SDL_WaitAndAcquireGPUSwapchainTexture(
+>     SDL_GPUCommandBuffer *command_buffer,
+>     SDL_Window *window,
+>     SDL_GPUTexture **swapchain_texture,
+>     Uint32 *swapchain_texture_width,
+>     Uint32 *swapchain_texture_height);
+> 
+3581a3824
+3606a3850
+3618a3863,3865
+3621,3623c3868
+---
+3629c3874
+---
+3630a3876
+3759c4005
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_guid.h SDL-preview-3.1.8/include/SDL3/SDL_guid.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+28a29,30
+diff -r SDL-preview-3.1.6/include/SDL3/SDL.h SDL-preview-3.1.8/include/SDL3/SDL.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+23c23
+---
+25c25,28
+---
+32a36
+> #include <SDL3/SDL_asyncio.h>
+79a84
+> #include <SDL3/SDL_tray.h>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_haptic.h SDL-preview-3.1.8/include/SDL3/SDL_haptic.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+302c302
+---
+306a307,312
+> 
+307a314,319
+> 
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_hidapi.h SDL-preview-3.1.8/include/SDL3/SDL_hidapi.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_hints.h SDL-preview-3.1.8/include/SDL3/SDL_hints.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+103a104,120
+> #define SDL_HINT_ANDROID_LOW_LATENCY_AUDIO "SDL_ANDROID_LOW_LATENCY_AUDIO"
+> 
+202,204c219,224
+---
+208a229,231
+212a236,271
+> #define SDL_HINT_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE "SDL_AUDIO_ALSA_DEFAULT_PLAYBACK_DEVICE"
+> 
+> #define SDL_HINT_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE "SDL_AUDIO_ALSA_DEFAULT_RECORDING_DEVICE"
+> 
+1020c1079
+---
+1208a1268,1292
+> #define SDL_HINT_JOYSTICK_ENHANCED_REPORTS "SDL_JOYSTICK_ENHANCED_REPORTS"
+> 
+1313c1397
+---
+1330c1414
+---
+1347c1431
+---
+1385c1469
+---
+1421c1505
+---
+1438c1522
+---
+1460c1544
+---
+1477c1561
+---
+1494c1578
+---
+1516,1541d1599
+< #define SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE "SDL_JOYSTICK_HIDAPI_PS4_RUMBLE"
+< 
+1552c1610
+---
+1572,1596d1629
+< #define SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE "SDL_JOYSTICK_HIDAPI_PS5_RUMBLE"
+< 
+1607c1640
+---
+1639c1672
+---
+1645a1679,1697
+> #define SDL_HINT_JOYSTICK_HIDAPI_STEAM_HOME_LED "SDL_JOYSTICK_HIDAPI_STEAM_HOME_LED"
+> 
+1656c1708
+---
+1684c1736
+---
+1752c1804
+---
+1785c1837
+---
+1802c1854
+---
+1834c1886
+---
+1851c1903
+---
+2023,2024c2075,2076
+---
+2316c2368,2376
+---
+2322c2382
+---
+2368a2429,2440
+> #define SDL_HINT_MOUSE_DEFAULT_SYSTEM_CURSOR "SDL_MOUSE_DEFAULT_SYSTEM_CURSOR"
+> 
+2446,2460d2517
+< #define SDL_HINT_MOUSE_RELATIVE_MODE_WARP "SDL_MOUSE_RELATIVE_MODE_WARP"
+< 
+2528,2544d2584
+< #define SDL_HINT_MOUSE_RELATIVE_CLIP_INTERVAL "SDL_MOUSE_RELATIVE_CLIP_INTERVAL"
+< 
+2598c2638,2639
+---
+2604a2646,2657
+> #define SDL_HINT_EGL_LIBRARY "SDL_EGL_LIBRARY"
+> 
+2719a2773,2776
+2816a2874
+3428a3487,3488
+3964a4025,4033
+> 
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_init.h SDL-preview-3.1.8/include/SDL3/SDL_init.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+81c81
+< #define SDL_INIT_VIDEO      0x00000020u /**< `SDL_INIT_VIDEO` implies `SDL_INIT_EVENTS` */
+---
+> #define SDL_INIT_VIDEO      0x00000020u /**< `SDL_INIT_VIDEO` implies `SDL_INIT_EVENTS`, should be initialized on the main thread */
+115a116,132
+116a134,147
+> 
+117a149,163
+> 
+118a165,177
+> 
+120a180
+> 
+142c202
+---
+242a303,359
+> extern SDL_DECLSPEC bool SDLCALL SDL_IsMainThread(void);
+> 
+> typedef void (SDLCALL *SDL_MainThreadCallback)(void *userdata);
+> 
+> extern SDL_DECLSPEC bool SDLCALL SDL_RunOnMainThread(SDL_MainThreadCallback callback, void *userdata, bool wait_complete);
+> 
+295c412
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_intrin.h SDL-preview-3.1.8/include/SDL3/SDL_intrin.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+22,23c22,46
+---
+> 
+30a54,216
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_LSX_INTRINSICS 1
+> 
+> #define SDL_LASX_INTRINSICS 1
+> 
+> #define SDL_NEON_INTRINSICS 1
+> 
+> #define SDL_ALTIVEC_INTRINSICS 1
+> 
+> #define SDL_MMX_INTRINSICS 1
+> 
+> #define SDL_SSE_INTRINSICS 1
+> 
+> #define SDL_SSE2_INTRINSICS 1
+> 
+> #define SDL_SSE3_INTRINSICS 1
+> 
+> #define SDL_SSE4_1_INTRINSICS 1
+> 
+> #define SDL_SSE4_2_INTRINSICS 1
+> 
+> #define SDL_AVX_INTRINSICS 1
+> 
+> #define SDL_AVX2_INTRINSICS 1
+> 
+> #define SDL_AVX512F_INTRINSICS 1
+> #endif
+> 
+84c270,284
+< #if defined(__clang__) && defined(__has_attribute)
+---
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> #define SDL_HAS_TARGET_ATTRIBS
+> 
+> #elif defined(__clang__) && defined(__has_attribute)
+94c294,342
+< #ifdef SDL_HAS_TARGET_ATTRIBS
+---
+> 
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_TARGETING(x) __attribute__((target(x)))
+> 
+> #elif defined(SDL_HAS_TARGET_ATTRIBS)
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_iostream.h SDL-preview-3.1.8/include/SDL3/SDL_iostream.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+28c28
+---
+544,547c544,549
+---
+666a669
+686a690
+690a695,730
+> extern SDL_DECLSPEC bool SDLCALL SDL_SaveFile_IO(SDL_IOStream *src, const void *data, size_t datasize, bool closeio);
+> 
+> extern SDL_DECLSPEC bool SDLCALL SDL_SaveFile(const char *file, const void *data, size_t datasize);
+> 
+699a740,744
+702,703c747,748
+---
+711a757,761
+727a778,782
+743a799,803
+759a820,824
+775a841,845
+791a862,866
+807a883,887
+823a904,908
+839a925,929
+855a946,950
+871a967,971
+887a988,992
+902a1008,1012
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_joystick.h SDL-preview-3.1.8/include/SDL3/SDL_joystick.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+28,29c28,29
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_keyboard.h SDL-preview-3.1.8/include/SDL3/SDL_keyboard.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25a26,30
+63a69,70
+83a91,92
+99a109,110
+110a122,123
+138a152,153
+150a166,167
+162a180,181
+182a202,203
+203a225,226
+222a246,247
+239a265,266
+261a289,290
+276a306,307
+289a321,322
+292a326,327
+307a343,344
+332a370,371
+369,372c408,410
+---
+426a465,466
+447a488,489
+463a506,507
+476a521,522
+497a544,545
+517a566,567
+529a580,581
+541a594,595
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_keycode.h SDL-preview-3.1.8/include/SDL3/SDL_keycode.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25a26,30
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_loadso.h SDL-preview-3.1.8/include/SDL3/SDL_loadso.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+48a49,53
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_locale.h SDL-preview-3.1.8/include/SDL3/SDL_locale.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25a26,31
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_log.h SDL-preview-3.1.8/include/SDL3/SDL_log.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+483c483
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_main.h SDL-preview-3.1.8/include/SDL3/SDL_main.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+31,33c31,33
+---
+37a38,44
+50a58,135
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_MAIN_HANDLED 1
+> 
+> #define SDL_MAIN_USE_CALLBACKS 1
+> 
+> #define SDL_MAIN_AVAILABLE
+> 
+> #define SDL_MAIN_NEEDED
+> 
+> #endif
+> 
+137,143d221
+<     #elif defined(SDL_PLATFORM_NGAGE)
+<         /*
+<         TODO: not sure if it should be SDL_MAIN_NEEDED, in SDL2 ngage had a
+<                 main implementation, but wasn't mentioned in SDL_main.h
+<          */
+<         #define SDL_MAIN_AVAILABLE
+< 
+147,154d224
+< #ifdef SDL_MAIN_EXPORTED
+<    like SDLActivity.java on Android */
+< #define SDLMAIN_DECLSPEC    SDL_DECLSPEC
+< #else
+< #define SDLMAIN_DECLSPEC
+< #endif /* SDL_MAIN_EXPORTED */
+159c229
+---
+161,165c231,233
+---
+167,169c235,236
+---
+171c238
+---
+173,176c240
+---
+178,179c242,251
+< #define SDL_MAIN_USE_CALLBACKS 1
+< #endif
+---
+> #define SDLMAIN_DECLSPEC
+> 
+> #elif defined(SDL_MAIN_EXPORTED)
+>    like SDLActivity.java on Android */
+> #define SDLMAIN_DECLSPEC    SDL_DECLSPEC
+> #else
+> #define SDLMAIN_DECLSPEC
+> #endif /* SDL_MAIN_EXPORTED */
+570,571d641
+< #ifdef SDL_PLATFORM_GDK
+< 
+574a645,647
+578,579d650
+< 
+< #endif /* SDL_PLATFORM_GDK */
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_main_impl.h SDL-preview-3.1.8/include/SDL3/SDL_main_impl.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+133,144d132
+< 
+<         #elif defined(SDL_PLATFORM_NGAGE)
+<             /* same typedef as in ngage SDKs e32def.h */
+<             typedef signed int TInt;
+<             /* TODO: if it turns out that this only works when built as C++,
+<                      move SDL_PLATFORM_NGAGE into the C++ section in SDL_main.h */
+<             TInt E32Main()
+<             {
+<                 return SDL_RunApp(0, NULL, SDL_main, NULL);
+<             }
+< 
+<             /* end of SDL_PLATFORM_NGAGE impl */
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_messagebox.h SDL-preview-3.1.8/include/SDL3/SDL_messagebox.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+42c42
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_metal.h SDL-preview-3.1.8/include/SDL3/SDL_metal.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25a26,29
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_misc.h SDL-preview-3.1.8/include/SDL3/SDL_misc.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_mouse.h SDL-preview-3.1.8/include/SDL3/SDL_mouse.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+141a142,143
+161a164,165
+177a182,183
+188a195,196
+194c202,223
+---
+196,206c225
+---
+216c235,236
+---
+218,236c238,261
+---
+241a267
+246c272,279
+---
+248,256c281,297
+---
+260a302
+278a321,322
+301a346,347
+322a369,370
+334a383,384
+380a431,432
+421a474,475
+452a507,508
+470a527,528
+488a547,548
+502a563,564
+517a580,581
+529a594,595
+543a610,611
+556a625,626
+568a639,640
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_mutex.h SDL-preview-3.1.8/include/SDL3/SDL_mutex.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+36,37c36,40
+---
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+41,42c44,48
+---
+44,45c50,52
+< #if defined(SDL_THREAD_SAFETY_ANALYSIS) && \
+<     defined(__clang__) && (!defined(SWIG))
+---
+> #define SDL_THREAD_ANNOTATION_ATTRIBUTE__(x)   __attribute__((x))
+> 
+> #elif defined(SDL_THREAD_SAFETY_ANALYSIS) && defined(__clang__) && (!defined(SWIG))
+50a58,64
+53a68,74
+56a78,84
+59a88,94
+62a98,104
+65a108,114
+68a118,124
+71a128,134
+74a138,144
+77a148,154
+80a158,164
+83a168,174
+86a178,184
+89a188,194
+92a198,204
+95a208,214
+98a218,224
+101a228,234
+104a238,244
+107a248,254
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_oldnames.h SDL-preview-3.1.8/include/SDL3/SDL_oldnames.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+309a310,311
+> #define SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE SDL_HINT_JOYSTICK_ENHANCED_REPORTS
+> #define SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE SDL_HINT_JOYSTICK_ENHANCED_REPORTS
+951a954,955
+> #define SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE SDL_HINT_JOYSTICK_HIDAPI_PS4_RUMBLE_renamed_SDL_HINT_JOYSTICK_ENHANCED_REPORTS
+> #define SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE SDL_HINT_JOYSTICK_HIDAPI_PS5_RUMBLE_renamed_SDL_HINT_JOYSTICK_ENHANCED_REPORTS
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_opengles2.h SDL-preview-3.1.8/include/SDL3/SDL_opengles2.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_opengles.h SDL-preview-3.1.8/include/SDL3/SDL_opengles.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_opengl.h SDL-preview-3.1.8/include/SDL3/SDL_opengl.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_pen.h SDL-preview-3.1.8/include/SDL3/SDL_pen.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_pixels.h SDL-preview-3.1.8/include/SDL3/SDL_pixels.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25c25,77
+---
+163a216,234
+165a237,258
+170,181c263,341
+< #define SDL_PIXELFLAG(X)    (((X) >> 28) & 0x0F)
+< #define SDL_PIXELTYPE(X)    (((X) >> 24) & 0x0F)
+< #define SDL_PIXELORDER(X)   (((X) >> 20) & 0x0F)
+< #define SDL_PIXELLAYOUT(X)  (((X) >> 16) & 0x0F)
+< #define SDL_BITSPERPIXEL(X) \
+<     (SDL_ISPIXELFORMAT_FOURCC(X) ? 0 : (((X) >> 8) & 0xFF))
+< #define SDL_BYTESPERPIXEL(X) \
+<     (SDL_ISPIXELFORMAT_FOURCC(X) ? \
+<         ((((X) == SDL_PIXELFORMAT_YUY2) || \
+<           ((X) == SDL_PIXELFORMAT_UYVY) || \
+<           ((X) == SDL_PIXELFORMAT_YVYU) || \
+<           ((X) == SDL_PIXELFORMAT_P010)) ? 2 : 1) : (((X) >> 0) & 0xFF))
+---
+> #define SDL_PIXELFLAG(format)    (((format) >> 28) & 0x0F)
+> 
+> #define SDL_PIXELTYPE(format)    (((format) >> 24) & 0x0F)
+> 
+> #define SDL_PIXELORDER(format)   (((format) >> 20) & 0x0F)
+> 
+> #define SDL_PIXELLAYOUT(format)  (((format) >> 16) & 0x0F)
+> 
+> #define SDL_BITSPERPIXEL(format) \
+>     (SDL_ISPIXELFORMAT_FOURCC(format) ? 0 : (((format) >> 8) & 0xFF))
+182a343,381
+> #define SDL_BYTESPERPIXEL(format) \
+>     (SDL_ISPIXELFORMAT_FOURCC(format) ? \
+>         ((((format) == SDL_PIXELFORMAT_YUY2) || \
+>           ((format) == SDL_PIXELFORMAT_UYVY) || \
+>           ((format) == SDL_PIXELFORMAT_YVYU) || \
+>           ((format) == SDL_PIXELFORMAT_P010)) ? 2 : 1) : (((format) >> 0) & 0xFF))
+> 
+> 
+189a389,401
+195a408,420
+204,210c429,441
+< #define SDL_ISPIXELFORMAT_ALPHA(format)   \
+<     ((SDL_ISPIXELFORMAT_PACKED(format) && \
+<      ((SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB) || \
+<       (SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA) || \
+<       (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ABGR) || \
+<       (SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA))))
+< 
+---
+215a447,459
+221,222c465,506
+< #define SDL_ISPIXELFORMAT_FOURCC(format)    \
+---
+> #define SDL_ISPIXELFORMAT_ALPHA(format)   \
+>     ((SDL_ISPIXELFORMAT_PACKED(format) && \
+>       ((SDL_PIXELORDER(format) == SDL_PACKEDORDER_ARGB) || \
+>        (SDL_PIXELORDER(format) == SDL_PACKEDORDER_RGBA) || \
+>        (SDL_PIXELORDER(format) == SDL_PACKEDORDER_ABGR) || \
+>        (SDL_PIXELORDER(format) == SDL_PACKEDORDER_BGRA))) || \
+>      (SDL_ISPIXELFORMAT_ARRAY(format) && \
+>       ((SDL_PIXELORDER(format) == SDL_ARRAYORDER_ARGB) || \
+>        (SDL_PIXELORDER(format) == SDL_ARRAYORDER_RGBA) || \
+>        (SDL_PIXELORDER(format) == SDL_ARRAYORDER_ABGR) || \
+>        (SDL_PIXELORDER(format) == SDL_ARRAYORDER_BGRA))))
+> 
+> 
+> #define SDL_ISPIXELFORMAT_FOURCC(format)  /* The flag is set to 1 because 0x1? is not in the printable ASCII range */ \
+418,441d701
+< 
+560a821,851
+> 
+565,576c856,991
+< #define SDL_COLORSPACETYPE(X)       (SDL_ColorType)(((X) >> 28) & 0x0F)
+< #define SDL_COLORSPACERANGE(X)      (SDL_ColorRange)(((X) >> 24) & 0x0F)
+< #define SDL_COLORSPACECHROMA(X)     (SDL_ChromaLocation)(((X) >> 20) & 0x0F)
+< #define SDL_COLORSPACEPRIMARIES(X)  (SDL_ColorPrimaries)(((X) >> 10) & 0x1F)
+< #define SDL_COLORSPACETRANSFER(X)   (SDL_TransferCharacteristics)(((X) >> 5) & 0x1F)
+< #define SDL_COLORSPACEMATRIX(X)     (SDL_MatrixCoefficients)((X) & 0x1F)
+< 
+< #define SDL_ISCOLORSPACE_MATRIX_BT601(X)        (SDL_COLORSPACEMATRIX(X) == SDL_MATRIX_COEFFICIENTS_BT601 || SDL_COLORSPACEMATRIX(X) == SDL_MATRIX_COEFFICIENTS_BT470BG)
+< #define SDL_ISCOLORSPACE_MATRIX_BT709(X)        (SDL_COLORSPACEMATRIX(X) == SDL_MATRIX_COEFFICIENTS_BT709)
+< #define SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(X)   (SDL_COLORSPACEMATRIX(X) == SDL_MATRIX_COEFFICIENTS_BT2020_NCL)
+< #define SDL_ISCOLORSPACE_LIMITED_RANGE(X)       (SDL_COLORSPACERANGE(X) != SDL_COLOR_RANGE_FULL)
+< #define SDL_ISCOLORSPACE_FULL_RANGE(X)          (SDL_COLORSPACERANGE(X) == SDL_COLOR_RANGE_FULL)
+---
+> #define SDL_COLORSPACETYPE(cspace)       (SDL_ColorType)(((cspace) >> 28) & 0x0F)
+> 
+> #define SDL_COLORSPACERANGE(cspace)      (SDL_ColorRange)(((cspace) >> 24) & 0x0F)
+> 
+> #define SDL_COLORSPACECHROMA(cspace)     (SDL_ChromaLocation)(((cspace) >> 20) & 0x0F)
+> 
+> #define SDL_COLORSPACEPRIMARIES(cspace)  (SDL_ColorPrimaries)(((cspace) >> 10) & 0x1F)
+> 
+> #define SDL_COLORSPACETRANSFER(cspace)   (SDL_TransferCharacteristics)(((cspace) >> 5) & 0x1F)
+> 
+> #define SDL_COLORSPACEMATRIX(cspace)     (SDL_MatrixCoefficients)((cspace) & 0x1F)
+> 
+> #define SDL_ISCOLORSPACE_MATRIX_BT601(cspace)        (SDL_COLORSPACEMATRIX(cspace) == SDL_MATRIX_COEFFICIENTS_BT601 || SDL_COLORSPACEMATRIX(cspace) == SDL_MATRIX_COEFFICIENTS_BT470BG)
+> 
+> #define SDL_ISCOLORSPACE_MATRIX_BT709(cspace)        (SDL_COLORSPACEMATRIX(cspace) == SDL_MATRIX_COEFFICIENTS_BT709)
+> 
+> #define SDL_ISCOLORSPACE_MATRIX_BT2020_NCL(cspace)   (SDL_COLORSPACEMATRIX(cspace) == SDL_MATRIX_COEFFICIENTS_BT2020_NCL)
+> 
+> #define SDL_ISCOLORSPACE_LIMITED_RANGE(cspace)       (SDL_COLORSPACERANGE(cspace) != SDL_COLOR_RANGE_FULL)
+> 
+> #define SDL_ISCOLORSPACE_FULL_RANGE(cspace)          (SDL_COLORSPACERANGE(cspace) == SDL_COLOR_RANGE_FULL)
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_platform_defines.h SDL-preview-3.1.8/include/SDL3/SDL_platform_defines.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+115,124d114
+< #ifdef __NGAGE__
+< 
+< #define SDL_PLATFORM_NGAGE 1
+< #endif
+< 
+370c360,369
+< #if HAVE_WINAPIFAMILY_H && HAVE_WINAPIFAMILY_H
+---
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_WINAPI_FAMILY_PHONE (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
+> 
+> #elif defined(HAVE_WINAPIFAMILY_H) && HAVE_WINAPIFAMILY_H
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_platform.h SDL-preview-3.1.8/include/SDL3/SDL_platform.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_power.h SDL-preview-3.1.8/include/SDL3/SDL_power.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_process.h SDL-preview-3.1.8/include/SDL3/SDL_process.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+56a57,63
+105,106c112,113
+---
+301c308
+---
+372a380,385
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_properties.h SDL-preview-3.1.8/include/SDL3/SDL_properties.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_rect.h SDL-preview-3.1.8/include/SDL3/SDL_rect.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_render.h SDL-preview-3.1.8/include/SDL3/SDL_render.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+204c204
+---
+232c232
+---
+256c256
+---
+286c286
+---
+323c323
+---
+389c389
+---
+395c395
+---
+399c399
+---
+403c403
+---
+443a444,448
+476a482
+> #define SDL_PROP_RENDERER_GPU_DEVICE_POINTER                        "SDL.renderer.gpu.device"
+490c496
+---
+512c518
+---
+530,532c536,537
+---
+534c539
+---
+564c569
+---
+579c584
+---
+670,672c675,676
+---
+674c678
+---
+716c720
+---
+756,763c760,761
+---
+795,799d792
+861c854
+---
+886c879
+---
+916c909
+---
+937c930
+---
+957c950
+---
+983c976
+---
+1009c1002
+---
+1027c1020
+---
+1045c1038
+---
+1066c1059
+---
+1082c1075
+---
+1102c1095
+---
+1118c1111
+---
+1149c1142
+---
+1183c1176
+---
+1215c1208
+---
+1250c1243
+---
+1288c1281
+---
+1310c1303
+---
+1332c1325
+---
+1349c1342
+---
+1388c1381
+---
+1411c1404
+---
+1433c1426
+---
+1459c1452
+---
+1488c1481
+---
+1507a1501,1503
+1511c1507,1512
+---
+1518c1519
+---
+1541c1542
+---
+1558c1559
+---
+1578c1579
+---
+1603c1604
+---
+1618c1619
+---
+1636c1637
+---
+1652c1653
+---
+1678c1679
+---
+1695c1696
+---
+1719c1720
+---
+1744c1745
+---
+1768c1769
+---
+1792c1793
+---
+1817c1818
+---
+1833c1834
+---
+1851c1852
+---
+1867c1868
+---
+1887c1888
+---
+1904c1905
+---
+1921c1922
+---
+1940c1941
+---
+1958c1959
+---
+1975c1976
+---
+1993c1994
+---
+2011c2012
+---
+2029c2030
+---
+2050c2051
+---
+2079c2080
+---
+2090a2092,2121
+> extern SDL_DECLSPEC bool SDLCALL SDL_RenderTextureAffine(SDL_Renderer *renderer, SDL_Texture *texture,
+>                                                      const SDL_FRect *srcrect, const SDL_FPoint *origin,
+>                                                      const SDL_FPoint *right, const SDL_FPoint *down);
+> 
+2109c2140
+---
+2143c2174
+---
+2167c2198
+---
+2199c2230
+---
+2228c2259
+---
+2265c2296
+---
+2292c2323
+---
+2309c2340
+---
+2344c2375
+---
+2360c2391
+---
+2383c2414
+---
+2439c2470
+---
+2459c2490
+---
+2510c2541
+---
+2512c2543
+---
+2513a2545
+2516a2549,2576
+> 
+> extern SDL_DECLSPEC bool SDLCALL SDL_RenderDebugTextFormat(SDL_Renderer *renderer, float x, float y, SDL_PRINTF_FORMAT_STRING const char *fmt, ...) SDL_PRINTF_VARARG_FUNC(4);
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_revision.h SDL-preview-3.1.8/include/SDL3/SDL_revision.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_scancode.h SDL-preview-3.1.8/include/SDL3/SDL_scancode.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25a26,30
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_sensor.h SDL-preview-3.1.8/include/SDL3/SDL_sensor.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+46a47,51
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_stdinc.h SDL-preview-3.1.8/include/SDL3/SDL_stdinc.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25,29c25,43
+---
+47a62,66
+> #if defined(__has_include) && !defined(SDL_INCLUDE_STDBOOL_H)
+> #if __has_include(<stdbool.h>)
+> #define SDL_INCLUDE_STDBOOL_H
+> #endif
+> #endif
+91c110,128
+< #ifdef SIZE_MAX
+---
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_SIZE_MAX SIZE_MAX
+> 
+> #elif defined(SIZE_MAX)
+98c135,169
+< #if defined(__cplusplus)
+---
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_COMPILE_TIME_ASSERT(name, x) FailToCompileIf_x_IsFalse(x)
+> #elif defined(__cplusplus)
+117,128c188,191
+< #ifdef __has_builtin
+< #define SDL_HAS_BUILTIN(x) __has_builtin(x)
+< #else
+< #define SDL_HAS_BUILTIN(x) 0
+< #endif
+< 
+---
+146a210,211
+436a502,678
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_PRIs64 "lld"
+> 
+> #define SDL_PRIu64 "llu"
+> 
+> #define SDL_PRIx64 "llx"
+> 
+> #define SDL_PRIX64 "llX"
+> 
+> #define SDL_PRIs32 "d"
+> 
+> #define SDL_PRIu32 "u"
+> 
+> #define SDL_PRIx32 "x"
+> 
+> #define SDL_PRIX32 "X"
+> 
+> #define SDL_PRILL_PREFIX "ll"
+> 
+> #define SDL_PRILLd SDL_PRILL_PREFIX "d"
+> 
+> #define SDL_PRILLu SDL_PRILL_PREFIX "u"
+> 
+> #define SDL_PRILLx SDL_PRILL_PREFIX "x"
+> 
+> #define SDL_PRILLX SDL_PRILL_PREFIX "X"
+> #endif /* SDL_WIKI_DOCUMENTATION_SECTION */
+> 
+443,444c685,686
+< #elif defined(PRIs64)
+< #define SDL_PRIs64 PRIs64
+---
+> #elif defined(PRId64)
+> #define SDL_PRIs64 PRId64
+533c775,1063
+< #ifdef SDL_DISABLE_ANALYZE_MACROS
+---
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_IN_BYTECAP(x) _In_bytecount_(x)
+> 
+> #define SDL_INOUT_Z_CAP(x) _Inout_z_cap_(x)
+> 
+> #define SDL_OUT_Z_CAP(x) _Out_z_cap_(x)
+> 
+> #define SDL_OUT_CAP(x) _Out_cap_(x)
+> 
+> #define SDL_OUT_BYTECAP(x) _Out_bytecap_(x)
+> 
+> #define SDL_OUT_Z_BYTECAP(x) _Out_z_bytecap_(x)
+> 
+> #define SDL_PRINTF_FORMAT_STRING _Printf_format_string_
+> 
+> #define SDL_SCANF_FORMAT_STRING _Scanf_format_string_impl_
+> 
+> #define SDL_PRINTF_VARARG_FUNC( fmtargnumber ) __attribute__ (( format( __printf__, fmtargnumber, fmtargnumber+1 )))
+> 
+> #define SDL_PRINTF_VARARG_FUNCV( fmtargnumber ) __attribute__(( format( __printf__, fmtargnumber, 0 )))
+> 
+> #define SDL_SCANF_VARARG_FUNC( fmtargnumber ) __attribute__ (( format( __scanf__, fmtargnumber, fmtargnumber+1 )))
+> 
+> #define SDL_SCANF_VARARG_FUNCV( fmtargnumber ) __attribute__(( format( __scanf__, fmtargnumber, 0 )))
+> 
+> #define SDL_WPRINTF_VARARG_FUNC( fmtargnumber ) /* __attribute__ (( format( __wprintf__, fmtargnumber, fmtargnumber+1 ))) */
+> 
+> #define SDL_WPRINTF_VARARG_FUNCV( fmtargnumber ) /* __attribute__ (( format( __wprintf__, fmtargnumber, 0 ))) */
+> 
+> #elif defined(SDL_DISABLE_ANALYZE_MACROS)
+682c1212,1256
+< #ifndef SDL_DISABLE_ALLOCA
+---
+> #ifdef SDL_WIKI_DOCUMENTATION_SECTION
+> 
+> #define SDL_stack_alloc(type, count)    (type*)alloca(sizeof(type)*(count))
+> 
+> #define SDL_stack_free(data)
+> #elif !defined(SDL_DISABLE_ALLOCA)
+990c1564,1565
+---
+1464a2040,2049
+1467c2052,2067
+---
+1468a2069,2085
+> 
+1469a2087,2109
+> 
+1707a2348,2366
+1708a2368,2387
+> 
+1709a2389,2413
+> 
+1739a2444,2468
+> 
+1745c2474
+---
+1770a2500,2517
+1771a2519,2537
+> 
+1781a2548,2564
+1782a2566,2583
+> 
+1783a2585,2602
+> 
+1785a2605,2619
+> 
+1787a2622,2646
+1788a2648,2677
+> 
+1807c2696
+---
+1836c2725
+---
+1846a2736,2751
+1847a2753,2771
+> 
+1848a2773,2796
+> 
+1990c2938
+---
+1999a2948,2965
+2000a2967,2989
+> 
+2020c3009
+---
+2050c3039
+---
+2077c3066
+---
+2087a3077,3092
+2088a3094,3117
+> 
+2089a3119,3138
+> 
+2133a3183,3200
+2134a3202,3219
+> 
+2135a3221,3239
+> 
+2136a3241,3262
+> 
+2137a3264,3290
+> 
+2139c3292,3347
+< extern SDL_DECLSPEC char * SDLCALL SDL_strtok_r(char *s1, const char *s2, char **saveptr);
+---
+> 
+> extern SDL_DECLSPEC char * SDLCALL SDL_strtok_r(char *str, const char *delim, char **saveptr);
+> 
+2140a3349,3380
+> 
+2142a3383,3408
+2143a3410,3436
+> 
+2144a3438,3464
+> 
+2145a3466,3492
+> 
+2146a3494,3520
+> 
+2147a3522,3548
+> 
+2157c3558
+---
+2180c3581
+---
+2212c3613
+---
+2246c3647
+---
+2279c3680
+---
+2312c3713
+---
+2339,2340c3740,3741
+---
+2343c3744
+---
+2581c3982
+---
+2614c4015,4029
+< 
+---
+2615a4031,4048
+> 
+2616a4050,4081
+> 
+2617a4083,4115
+> 
+2618a4117,4135
+> 
+2619a4137,4156
+> 
+2620a4158,4185
+> 
+2621a4187,4204
+> 
+2811d4393
+< 
+2812a4395,4402
+> 
+2814a4405
+> 
+2815a4407,4414
+> 
+4000c5599
+---
+4132,4137c5731,5737
+< #define SDL_ICONV_ERROR     (size_t)-1
+< #define SDL_ICONV_E2BIG     (size_t)-2
+< #define SDL_ICONV_EILSEQ    (size_t)-3
+< #define SDL_ICONV_EINVAL    (size_t)-4
+< 
+---
+4176c5776,5791
+---
+4185,4199c5800
+---
+4210a5812,5817
+> #define SDL_ICONV_ERROR     (size_t)-1  /**< Generic error. Check SDL_GetError()? */
+> #define SDL_ICONV_E2BIG     (size_t)-2  /**< Output buffer was too small. */
+> #define SDL_ICONV_EILSEQ    (size_t)-3  /**< Invalid input sequence was encountered. */
+> #define SDL_ICONV_EINVAL    (size_t)-4  /**< Incomplete input sequence was encountered. */
+> 
+> 
+4241c5848,5861
+---
+> 
+4242a5863,5875
+> 
+4243a5877,5889
+> 
+4244a5891,5903
+> 
+4246a5906
+> 
+4360c6020
+---
+4362c6022
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_storage.h SDL-preview-3.1.8/include/SDL3/SDL_storage.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25c25,224
+---
+43,44d241
+< 
+267a465,468
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_surface.h SDL-preview-3.1.8/include/SDL3/SDL_surface.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+34c34
+---
+117a118,122
+195d199
+240c244
+---
+355c359
+---
+859d862
+875c878
+---
+891c894
+---
+898c901
+---
+904c907
+---
+1021c1024,1025
+---
+1023d1026
+1025,1026c1028,1031
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_system.h SDL-preview-3.1.8/include/SDL3/SDL_system.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+25c25,31
+---
+131a138
+132a140,160
+> 
+382a411,417
+> 
+471c506,516
+< 
+---
+598c643
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_test_assert.h SDL-preview-3.1.8/include/SDL3/SDL_test_assert.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_test_common.h SDL-preview-3.1.8/include/SDL3/SDL_test_common.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+23,24d22
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_test_compare.h SDL-preview-3.1.8/include/SDL3/SDL_test_compare.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+23,24d22
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_test_crc32.h SDL-preview-3.1.8/include/SDL3/SDL_test_crc32.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_test_font.h SDL-preview-3.1.8/include/SDL3/SDL_test_font.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+23,24d22
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_test_fuzzer.h SDL-preview-3.1.8/include/SDL3/SDL_test_fuzzer.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_test.h SDL-preview-3.1.8/include/SDL3/SDL_test.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+23,24d22
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_test_harness.h SDL-preview-3.1.8/include/SDL3/SDL_test_harness.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+23,24d22
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_test_log.h SDL-preview-3.1.8/include/SDL3/SDL_test_log.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+23,24d22
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_test_md5.h SDL-preview-3.1.8/include/SDL3/SDL_test_md5.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+23,24d22
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_test_memory.h SDL-preview-3.1.8/include/SDL3/SDL_test_memory.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+23,24d22
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_thread.h SDL-preview-3.1.8/include/SDL3/SDL_thread.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+105a106,122
+> typedef enum SDL_ThreadState
+> {
+>     SDL_THREAD_UNKNOWN,     /**< The thread is not valid */
+>     SDL_THREAD_ALIVE,       /**< The thread is currently running */
+>     SDL_THREAD_DETACHED,    /**< The thread is detached and can't be waited on */
+>     SDL_THREAD_COMPLETE     /**< The thread has finished and should be cleaned up with SDL_WaitThread() */
+> } SDL_ThreadState;
+> 
+393,394c410,411
+---
+400,401c417,418
+---
+414,416c431,433
+---
+423a441,453
+> 
+> extern SDL_DECLSPEC SDL_ThreadState SDLCALL SDL_GetThreadState(SDL_Thread *thread);
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_time.h SDL-preview-3.1.8/include/SDL3/SDL_time.h
+3c3
+< Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+> Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_timer.h SDL-preview-3.1.8/include/SDL3/SDL_timer.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+40a41,48
+> 
+41a50,57
+> 
+42a59,66
+> 
+43a68,75
+> 
+44a77,84
+> 
+45a86,98
+> 
+46a100,113
+> 
+47a115,127
+> 
+48a129,142
+> 
+49a144,156
+> 
+50a158,171
+> 
+150c271
+---
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_touch.h SDL-preview-3.1.8/include/SDL3/SDL_touch.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+40a41,50
+41a52,64
+> 
+43a67,71
+47,49c75,77
+<     SDL_TOUCH_DEVICE_DIRECT,            /* touch screen with window-relative coordinates */
+<     SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE, /* trackpad with absolute device coordinates */
+<     SDL_TOUCH_DEVICE_INDIRECT_RELATIVE  /* trackpad with screen cursor-relative coordinates */
+---
+>     SDL_TOUCH_DEVICE_DIRECT,            /**< touch screen with window-relative coordinates */
+>     SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE, /**< trackpad with absolute device coordinates */
+>     SDL_TOUCH_DEVICE_INDIRECT_RELATIVE  /**< trackpad with screen cursor-relative coordinates */
+55c83
+---
+71c99,103
+---
+74c106,110
+---
+Nur in SDL-preview-3.1.8/include/SDL3/: SDL_tray.h.
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_version.h SDL-preview-3.1.8/include/SDL3/SDL_version.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+65c65
+< #define SDL_MICRO_VERSION   6
+---
+> #define SDL_MICRO_VERSION   8
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_video.h SDL-preview-3.1.8/include/SDL3/SDL_video.h
+3c3
+<   Copyright (C) 1997-2024 Sam Lantinga <slouken@libsdl.org>
+---
+>   Copyright (C) 1997-2025 Sam Lantinga <slouken@libsdl.org>
+115c115,123
+---
+209c217,220
+---
+213a225,235
+> 
+214a237,244
+> 
+216,217d245
+< #define SDL_WINDOWPOS_ISUNDEFINED(X)    \
+<             (((X)&0xFFFF0000) == SDL_WINDOWPOS_UNDEFINED_MASK)
+220c248,260
+---
+> #define SDL_WINDOWPOS_ISUNDEFINED(X)    (((X)&0xFFFF0000) == SDL_WINDOWPOS_UNDEFINED_MASK)
+> 
+224a265,275
+> 
+225a277,284
+> 
+226a286,293
+> 
+229a297
+> 
+252c320
+---
+256a325,330
+> 
+257a332,337
+> 
+258a339,344
+> 
+259a346,351
+> 
+421a514,515
+440a535,536
+456a553,554
+468a567,568
+481a582,583
+491a594,595
+519a624,625
+533a640,641
+549a658,659
+573a684,685
+587a700,701
+600a715,716
+618a735,736
+644a763,764
+668,669c788,789
+---
+672a793,794
+678c800
+< extern SDL_DECLSPEC bool SDLCALL SDL_GetClosestFullscreenDisplayMode(SDL_DisplayID displayID, int w, int h, float refresh_rate, bool include_high_density_modes, SDL_DisplayMode *mode);
+---
+> extern SDL_DECLSPEC bool SDLCALL SDL_GetClosestFullscreenDisplayMode(SDL_DisplayID displayID, int w, int h, float refresh_rate, bool include_high_density_modes, SDL_DisplayMode *closest);
+691a814,815
+710a835,836
+724a851,852
+739a868,869
+754a885,886
+772a905,906
+796a931,932
+825a962,963
+840a979,980
+856a997,998
+868a1011,1012
+882a1027,1028
+961a1108,1109
+1021a1170,1171
+1081c1231,1232
+---
+1084c1235,1236
+---
+1139a1292,1293
+1192a1347,1348
+1208a1365,1366
+1221a1380,1381
+1315a1476,1477
+1341a1504,1505
+1370a1535
+> #define SDL_PROP_WINDOW_WAYLAND_VIEWPORT_POINTER                    "SDL.window.wayland.viewport"
+1386a1552,1553
+1408a1576,1577
+1421a1591,1592
+1445a1617,1618
+1453,1455c1626,1627
+---
+1458,1459c1630,1631
+---
+1482a1655,1656
+1506a1681,1682
+1516,1518c1692,1693
+---
+1520,1521c1695,1696
+---
+1540a1716,1717
+1561a1739,1740
+1585a1765,1766
+1621a1803,1804
+1639a1823,1824
+1674a1860,1861
+1691a1879,1880
+1707a1897,1898
+1725a1917,1918
+1741a1935,1936
+1759a1955,1956
+1780a1978,1979
+1800a2000,2001
+1817a2019,2020
+1830a2034,2035
+1844a2050,2051
+1847a2055
+1864a2073,2074
+1892a2103,2104
+1903a2116,2118
+1916a2132,2133
+1928a2146,2148
+1941a2162,2163
+1970a2193,2194
+1975a2200
+1995a2221,2222
+2014a2242,2243
+2038a2268,2269
+2065a2297,2298
+2083a2317,2318
+2101a2337,2338
+2128a2366,2367
+2142a2382,2383
+2173a2415,2416
+2190a2434,2435
+2193c2438,2440
+---
+2203a2451,2452
+2215a2465,2466
+2217a2469,2471
+2226a2481,2482
+2245a2502,2503
+2248a2507
+2259a2519,2520
+2262a2524,2525
+2278a2542,2543
+2294a2560,2561
+2326a2594,2595
+2343a2613,2614
+2346a2618
+2357a2630,2631
+2381a2656,2657
+2388a2665,2666
+2458a2737,2738
+2484a2765,2766
+2496a2779,2780
+2506a2791,2794
+2508a2797,2798
+2526a2817,2818
+2539a2832,2833
+2558a2853,2854
+2586a2883,2884
+2638a2937,2938
+2657a2958,2959
+2666a2969,2970
+2689a2994,2995
+2696a3003,3004
+2717a3026,3027
+2733a3044,3045
+2755a3068,3069
+2772a3087,3088
+2784a3101,3102
+2794a3113,3114
+2806a3127,3128
+2816a3139,3140
+2827a3152,3153
+2847a3174,3175
+2876a3205,3206
+2895a3226,3227
+2915a3248,3249
+2925a3260,3261
+diff -r SDL-preview-3.1.6/include/SDL3/SDL_vulkan.h SDL-preview-3.1.8/include/SDL3/SDL_vulkan.h
+89a90,96
+118a126,127
+148a158,170
