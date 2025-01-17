@@ -98,6 +98,7 @@ type
     gl_accum_blue_size: longint;
     gl_accum_alpha_size: longint;
     gl_stereo: longint;
+    gl_release_behavior : longint;
     gl_multisamplebuffers: longint;
     gl_multisamplesamples: longint;
     gl_retained_backing: longint;

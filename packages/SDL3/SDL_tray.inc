@@ -44,6 +44,7 @@ function SDL_GetTrayEntryChecked(entry: PSDL_TrayEntry): Tbool; cdecl; external 
 procedure SDL_SetTrayEntryEnabled(entry: PSDL_TrayEntry; Enabled: Tbool); cdecl; external libSDL3;
 function SDL_GetTrayEntryEnabled(entry: PSDL_TrayEntry): Tbool; cdecl; external libSDL3;
 procedure SDL_SetTrayEntryCallback(entry: PSDL_TrayEntry; callback: TSDL_TrayCallback; userdata: pointer); cdecl; external libSDL3;
+procedure SDL_ClickTrayEntry(entry:PSDL_TrayEntry);cdecl;external libSDL3;
 procedure SDL_DestroyTray(tray: PSDL_Tray); cdecl; external libSDL3;
 function SDL_GetTrayEntryParent(entry: PSDL_TrayEntry): PSDL_TrayMenu; cdecl; external libSDL3;
 function SDL_GetTrayMenuParentEntry(menu: PSDL_TrayMenu): PSDL_TrayEntry; cdecl; external libSDL3;

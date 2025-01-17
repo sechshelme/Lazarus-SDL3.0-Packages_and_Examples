@@ -3,33 +3,33 @@
 
 
 type
-  PSDL_Point = ^TSDL_Point;
   TSDL_Point = record
     case byte of
       1: (x, y: longint);
       2: (items: array[0..1] of longint);
   end;
+  PSDL_Point = ^TSDL_Point;
 
-  PSDL_FPoint = ^TSDL_FPoint;
   TSDL_FPoint = record
     case byte of
       1: (x, y: single);
       2: (items: array[0..1] of single);
   end;
+  PSDL_FPoint = ^TSDL_FPoint;
 
-  PSDL_Rect = ^TSDL_Rect;
   TSDL_Rect = record
     case byte of
       1: (x, y, w, h: longint);
       2: (items: array[0..3] of longint);
   end;
+  PSDL_Rect = ^TSDL_Rect;
 
-  PSDL_FRect = ^TSDL_FRect;
   TSDL_FRect = record
     case byte of
       1: (x, y, w, h: single);
       2: (items: array[0..3] of single);
   end;
+  PSDL_FRect = ^TSDL_FRect;
 
 
 function SDL_HasRectIntersection(A: PSDL_Rect; B: PSDL_Rect): Tbool; cdecl; external libSDL3;

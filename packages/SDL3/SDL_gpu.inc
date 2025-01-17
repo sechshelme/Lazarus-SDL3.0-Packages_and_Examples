@@ -871,20 +871,45 @@ function SDL_GetGPUDriver(index: longint): pansichar; cdecl; external libSDL3;
 function SDL_GetGPUDeviceDriver(device: PSDL_GPUDevice): pansichar; cdecl; external libSDL3;
 function SDL_GetGPUShaderFormats(device: PSDL_GPUDevice): TSDL_GPUShaderFormat; cdecl; external libSDL3;
 function SDL_CreateGPUComputePipeline(device: PSDL_GPUDevice; createinfo: PSDL_GPUComputePipelineCreateInfo): PSDL_GPUComputePipeline; cdecl; external libSDL3;
-function SDL_CreateGPUGraphicsPipeline(device: PSDL_GPUDevice; createinfo: PSDL_GPUGraphicsPipelineCreateInfo): PSDL_GPUGraphicsPipeline; cdecl; external libSDL3;
-function SDL_CreateGPUSampler(device: PSDL_GPUDevice; createinfo: PSDL_GPUSamplerCreateInfo): PSDL_GPUSampler; cdecl; external libSDL3;
-function SDL_CreateGPUShader(device: PSDL_GPUDevice; createinfo: PSDL_GPUShaderCreateInfo): PSDL_GPUShader; cdecl; external libSDL3;
+
 const
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_R_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.r';
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_G_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.g';
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_B_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.b';
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_A_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.a';
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_DEPTH_FLOAT = 'SDL.gpu.createtexture.d3d12.clear.depth';
-  SDL_PROP_GPU_CREATETEXTURE_D3D12_CLEAR_STENCIL_UINT8 = 'SDL.gpu.createtexture.d3d12.clear.stencil';
+  SDL_PROP_GPU_COMPUTEPIPELINE_CREATE_NAME_STRING = 'SDL.gpu.computepipeline.create.name';
+
+function SDL_CreateGPUGraphicsPipeline(device: PSDL_GPUDevice; createinfo: PSDL_GPUGraphicsPipelineCreateInfo): PSDL_GPUGraphicsPipeline; cdecl; external libSDL3;
+
+const
+  SDL_PROP_GPU_GRAPHICSPIPELINE_CREATE_NAME_STRING = 'SDL.gpu.graphicspipeline.create.name';
+
+function SDL_CreateGPUSampler(device: PSDL_GPUDevice; createinfo: PSDL_GPUSamplerCreateInfo): PSDL_GPUSampler; cdecl; external libSDL3;
+
+const
+  SDL_PROP_GPU_SAMPLER_CREATE_NAME_STRING = 'SDL.gpu.sampler.create.name';
+
+function SDL_CreateGPUShader(device: PSDL_GPUDevice; createinfo: PSDL_GPUShaderCreateInfo): PSDL_GPUShader; cdecl; external libSDL3;
+
+const
+  SDL_PROP_GPU_SHADER_CREATE_NAME_STRING = 'SDL.gpu.shader.create.name';
 
 function SDL_CreateGPUTexture(device: PSDL_GPUDevice; createinfo: PSDL_GPUTextureCreateInfo): PSDL_GPUTexture; cdecl; external libSDL3;
+
+const
+  SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_R_FLOAT = 'SDL.gpu.texture.create.d3d12.clear.r';
+  SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_G_FLOAT = 'SDL.gpu.texture.create.d3d12.clear.g';
+  SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_B_FLOAT = 'SDL.gpu.texture.create.d3d12.clear.b';
+  SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_A_FLOAT = 'SDL.gpu.texture.create.d3d12.clear.a';
+  SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_DEPTH_FLOAT = 'SDL.gpu.texture.create.d3d12.clear.depth';
+  SDL_PROP_GPU_TEXTURE_CREATE_D3D12_CLEAR_STENCIL_UINT8 = 'SDL.gpu.texture.create.d3d12.clear.stencil';
+  SDL_PROP_GPU_TEXTURE_CREATE_NAME_STRING = 'SDL.gpu.texture.create.name';
+
 function SDL_CreateGPUBuffer(device: PSDL_GPUDevice; createinfo: PSDL_GPUBufferCreateInfo): PSDL_GPUBuffer; cdecl; external libSDL3;
+
+const
+  SDL_PROP_GPU_BUFFER_CREATE_NAME_STRING = 'SDL.gpu.buffer.create.name';
+
 function SDL_CreateGPUTransferBuffer(device: PSDL_GPUDevice; createinfo: PSDL_GPUTransferBufferCreateInfo): PSDL_GPUTransferBuffer; cdecl; external libSDL3;
+const
+  SDL_PROP_GPU_TRANSFERBUFFER_CREATE_NAME_STRING = 'SDL.gpu.transferbuffer.create.name';
+
 procedure SDL_SetGPUBufferName(device: PSDL_GPUDevice; buffer: PSDL_GPUBuffer; Text: pansichar); cdecl; external libSDL3;
 procedure SDL_SetGPUTextureName(device: PSDL_GPUDevice; texture: PSDL_GPUTexture; Text: pansichar); cdecl; external libSDL3;
 procedure SDL_InsertGPUDebugLabel(command_buffer: PSDL_GPUCommandBuffer; Text: pansichar); cdecl; external libSDL3;

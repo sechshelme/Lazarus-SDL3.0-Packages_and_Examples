@@ -68,13 +68,13 @@ type
   TSDL_bool = boolean32;
 
 const
+  SDL_NOLONGLONG = 1;
+
   SDL_SIZE_MAX = Tsize_t(-1);
   SDL_HAS_BUILTIN = 0;
 
-
-  // Entspricht Lenght() von Static Arrays
-  // function SDL_arraysize(array : longint) : longint;
   // #define SDL_arraysize(array) (sizeof(array)/sizeof(array[0]))
+  // Entspricht Lenght() von Static Arrays
 
 const
   SDL_MAX_SINT8 = int8(127);

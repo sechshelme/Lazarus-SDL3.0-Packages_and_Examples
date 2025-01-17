@@ -32,11 +32,11 @@ type
   PWindowState = ^TWindowState;
 
 var
+  gpu_device: PSDL_GPUDevice=nil;
   render_state: TRenderState;
-  window_states: PWindowState;
+  window_states: PWindowState=nil;
 
   window: PSDL_Window;
-  gpu_device: PSDL_GPUDevice;
 
 type
   TVertexData = record
@@ -544,7 +544,7 @@ var
     thn := SDL_GetTicks();
 
     while not quit do begin
-      loop();
+      loop;
       while SDL_PollEvent(@event) do begin
         case event._type of
           SDL_EVENT_KEY_DOWN: begin

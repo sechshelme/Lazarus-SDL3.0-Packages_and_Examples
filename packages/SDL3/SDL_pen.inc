@@ -5,6 +5,11 @@ type
   TSDL_PenID = TUint32;
   PSDL_PenID = ^TSDL_PenID;
 
+const
+  SDL_PEN_MOUSEID = TSDL_MouseID(-2);
+  SDL_PEN_TOUCHID = TSDL_TouchID(-2);
+
+type
   PSDL_PenInputFlags = ^TSDL_PenInputFlags;
   TSDL_PenInputFlags = TUint32;
 

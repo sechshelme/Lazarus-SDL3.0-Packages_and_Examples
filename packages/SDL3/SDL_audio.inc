@@ -91,6 +91,7 @@ function SDL_FlushAudioStream(stream: PSDL_AudioStream): Tbool; cdecl; external 
 function SDL_ClearAudioStream(stream: PSDL_AudioStream): Tbool; cdecl; external libSDL3;
 function SDL_PauseAudioStreamDevice(stream: PSDL_AudioStream): Tbool; cdecl; external libSDL3;
 function SDL_ResumeAudioStreamDevice(stream: PSDL_AudioStream): Tbool; cdecl; external libSDL3;
+function SDL_AudioStreamDevicePaused(stream:PSDL_AudioStream):Tbool;cdecl;external libSDL3;
 function SDL_LockAudioStream(stream: PSDL_AudioStream): Tbool; cdecl; external libSDL3;
 function SDL_UnlockAudioStream(stream: PSDL_AudioStream): Tbool; cdecl; external libSDL3;
 

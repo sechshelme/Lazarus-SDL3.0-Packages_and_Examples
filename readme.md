@@ -5,9 +5,10 @@
 | Datum      | Änderungen 
 | ---        | ---
 | 19.03.2024 | Eröfffnung des Repository
-| 22.10.2024 | Angepasst an 3.1.3
-| 03.11.2024 | Angepasst an 3.1.6
-| 08.01.2025 | Angepasst an 3.1.8
+| 22.10.2024 | Angepasst an SDL 3.1.3
+| 03.11.2024 | Angepasst an SDL 3.1.6
+| 08.12.2024 | Angepasst an SDL_image 3.1.0
+| 08.01.2025 | Angepasst an SDL 3.1.8
 
 # Installation
 - Passendes Paket runterladen [SDL 3.1.3](https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.3)

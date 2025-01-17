@@ -46,7 +46,7 @@
 {$include SDL3/SDL_camera.inc}        // SDL_properties, SDL_pixels, SDL_surface
 {$include SDL3/SDL_mouse.inc}         // SDL_video, SDL_surface
 {$include SDL3/SDL_touch.inc}         // SDL_mouse
-{$include SDL3/SDL_pen.inc}
+{$include SDL3/SDL_pen.inc}           // SDL_mouse, SDL_touch
 {$include SDL3/SDL_events.inc}        // SDL_video, SDL_keyboard, SDL_keycode, SDL_mouse, SDL_pen, SDL_sensor, SDL_touch, SDL_scancode, SDL_joystick, SDL_power, SDL_audio, SDL_camera
 {$include SDL3/SDL_init.inc}          // SDL_events
 {$include SDL3/SDL_render.inc}        // SDL_rect, SDL_pixels, SDL_video, SDL_properties, SDL_surface, SDL_blendmode, SDL_events

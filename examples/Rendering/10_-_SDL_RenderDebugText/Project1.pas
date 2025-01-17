@@ -69,11 +69,6 @@ var
         end;
       end;
 
-      if rDest.h < 1 then begin
-        rDest.h := 1;
-      end;
-
-
       while SDL_PollEvent(@e) do begin
         case e._type of
           SDL_EVENT_KEY_DOWN: begin
