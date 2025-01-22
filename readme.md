@@ -10,6 +10,7 @@
 | 08.12.2024 | Angepasst an SDL_image-preview-3.1.0
 | 08.01.2025 | Angepasst an SDL-preview-3.1.8
 | 17.01.2025 | Angepasst an SDL-prerelease-3.1.10
+| 22.01.2025 | Angepasst an SDL-release-3.2.0
 
 # Installation
 - Passendes Paket runterladen [SDL 3.1.3](https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.3)

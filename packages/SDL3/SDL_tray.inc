@@ -49,6 +49,8 @@ procedure SDL_DestroyTray(tray: PSDL_Tray); cdecl; external libSDL3;
 function SDL_GetTrayEntryParent(entry: PSDL_TrayEntry): PSDL_TrayMenu; cdecl; external libSDL3;
 function SDL_GetTrayMenuParentEntry(menu: PSDL_TrayMenu): PSDL_TrayEntry; cdecl; external libSDL3;
 function SDL_GetTrayMenuParentTray(menu: PSDL_TrayMenu): PSDL_Tray; cdecl; external libSDL3;
+procedure SDL_UpdateTrays;cdecl;external libSDL3;
+
 
 {$ENDIF read_interface}
 

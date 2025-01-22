@@ -2,6 +2,7 @@
 
 
 {$include SDL3/SDL_stdinc.inc}
+{$include SDL3/SDL_version.inc}
 {$include SDL3/SDL_intrin.inc}
 {$include SDL3/SDL_guid.inc}
 {$include SDL3/SDL_properties.inc}
@@ -14,7 +15,6 @@
 {$include SDL3/SDL_cpuinfo.inc}
 {$include SDL3/SDL_error.inc}
 {$include SDL3/SDL_loadso.inc}
-{$include SDL3/SDL_version.inc}
 {$include SDL3/SDL_clipboard.inc}
 {$include SDL3/SDL_power.inc}
 {$include SDL3/SDL_filesystem.inc}
