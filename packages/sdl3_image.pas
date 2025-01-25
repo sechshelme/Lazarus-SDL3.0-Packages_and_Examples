@@ -25,7 +25,7 @@ const
 const
   SDL_IMAGE_MAJOR_VERSION = 3;
   SDL_IMAGE_MINOR_VERSION = 1;
-  SDL_IMAGE_MICRO_VERSION = 0;
+  SDL_IMAGE_MICRO_VERSION = 1;
 
 function IMG_Version: longint; cdecl; external libSDL3_image;
 function IMG_LoadTyped_IO(src: PSDL_IOStream; closeio: Tbool; _type: pchar): PSDL_Surface; cdecl; external libSDL3_image;
