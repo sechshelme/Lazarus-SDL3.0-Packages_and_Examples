@@ -75,16 +75,18 @@ type
       end;
 
       if app^.texture <> nil then begin
-        SDL_UpdateTexture(app^.texture,nil,frame^.pixels,frame^.pitch);
+        SDL_UpdateTexture(app^.texture, nil, frame^.pixels, frame^.pitch);
       end;
 
-      SDL_ReleaseCameraFrame(app^.camera,frame);
+      SDL_ReleaseCameraFrame(app^.camera, frame);
     end;
 
-    SDL_SetRenderDrawColor(app^.renderer, $99,$99,$99,$FF);
+    SDL_SetRenderDrawColor(app^.renderer, $99, $99, $99, $FF);
     SDL_RenderClear(app^.renderer);
 
-    if app^.texture<>nil then SDL_RenderTexture(app^.renderer,app^.texture,nil,nil);
+    if app^.texture <> nil then begin
+      SDL_RenderTexture(app^.renderer, app^.texture, nil, nil);
+    end;
 
     SDL_RenderPresent(app^.renderer);
     Result := SDL_APP_CONTINUE;
