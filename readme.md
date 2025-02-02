@@ -4,6 +4,9 @@
 # Neuerungen:
 | Datum      | Änderungen 
 | ---        | ---
+| 02.02.2025 | Angepasst an SDL-ttf-preview-3.1.0
+| 02.02.2025 | Angepasst an SDL-release-3.2.2
+| 02.02.2025 | Angepasst an SDL_image-release-3.2.0
 | 24.01.2025 | Angepasst an SDL_image-prerelease-3.1.1
 | 22.01.2025 | Angepasst an SDL-release-3.2.0
 | 17.01.2025 | Angepasst an SDL-prerelease-3.1.10
@@ -14,13 +17,15 @@
 | 19.03.2024 | Eröfffnung des Repository
 
 # Installation
-- Passendes Paket runterladen [SDL 3.1.3](https://github.com/libsdl-org/SDL/releases/tag/preview-3.1.3)
+- Passendes Paket runterladen [SDL 3.x.x](https://github.com/libsdl-org/SDL/releases)
+- Passendes Paket runterladen [SDL_image 3.x.x](https://github.com/libsdl-org/SDL_image/releases)
+- Passendes Paket runterladen [SDL_ttf 3.x.x](https://github.com/libsdl-org/SDL_ttf/releases)
 
 ## Linux
 - Folgende Anleitung beachten: [Readme](https://github.com/libsdl-org/SDL/blob/main/docs/README-cmake.md)
 
 ## Windows
-- Die DLLs sind hier enthalten [SDL3](https://github.com/libsdl-org/SDL/releases/download/release-2.30.8/SDL2-2.30.8-win32-x64.zip) und muss nach `C:\windows\system32` kopiert werden.
+- Die DLLs sind bei den Release-Links dabei. Sie müssen nach `C:\windows\system32` kopiert werden.
 
 ## Manuelle installation
 SDL3 lib installieren:
