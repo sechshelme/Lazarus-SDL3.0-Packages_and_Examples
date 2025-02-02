@@ -4,7 +4,7 @@
 const
   SDL_MAJOR_VERSION = 3;
   SDL_MINOR_VERSION = 2;
-  SDL_MICRO_VERSION = 0;
+  SDL_MICRO_VERSION = 2;
 
 function SDL_VERSIONNUM(major, minor, patch: longint): longint;
 function SDL_VERSIONNUM_MAJOR(version: longint): longint;

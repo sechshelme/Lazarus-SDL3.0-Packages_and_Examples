@@ -60,9 +60,9 @@ function SDL_GetAudioDeviceChannelMap(devid: TSDL_AudioDeviceID; Count: Plongint
 function SDL_OpenAudioDevice(devid: TSDL_AudioDeviceID; spec: PSDL_AudioSpec): TSDL_AudioDeviceID; cdecl; external libSDL3;
 function SDL_IsAudioDevicePhysical(devid:TSDL_AudioDeviceID):Tbool;cdecl;external libSDL3;
 function SDL_IsAudioDevicePlayback(devid:TSDL_AudioDeviceID):Tbool;cdecl;external libSDL3;
-function SDL_PauseAudioDevice(dev: TSDL_AudioDeviceID): Tbool; cdecl; external libSDL3;
-function SDL_ResumeAudioDevice(dev: TSDL_AudioDeviceID): Tbool; cdecl; external libSDL3;
-function SDL_AudioDevicePaused(dev: TSDL_AudioDeviceID): Tbool; cdecl; external libSDL3;
+function SDL_PauseAudioDevice(devid: TSDL_AudioDeviceID): Tbool; cdecl; external libSDL3;
+function SDL_ResumeAudioDevice(devid: TSDL_AudioDeviceID): Tbool; cdecl; external libSDL3;
+function SDL_AudioDevicePaused(devid: TSDL_AudioDeviceID): Tbool; cdecl; external libSDL3;
 function SDL_GetAudioDeviceGain(devid: TSDL_AudioDeviceID): single; cdecl; external libSDL3;
 function SDL_SetAudioDeviceGain(devid: TSDL_AudioDeviceID; gain: single): Tbool; cdecl; external libSDL3;
 procedure SDL_CloseAudioDevice(devid: TSDL_AudioDeviceID); cdecl; external libSDL3;

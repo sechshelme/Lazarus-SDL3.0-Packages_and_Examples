@@ -45,6 +45,7 @@ const
   Sources: TSources = (
   (libs: ''; units: 'ctypes, SDL3'),
   (libs: 'libSDL3_image'; units: 'ctypes, SDL3'),
+  (libs: 'libSDL3_ttf'; units: 'ctypes, SDL3'),
   (libs: 'libSDL3'; units: 'ctypes, SDL_stdinc'),
 
     (libs: ''; units: ''));

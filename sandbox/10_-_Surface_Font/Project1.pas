@@ -7,10 +7,10 @@ uses
   SDL3_ttf;
 
 const
-  fileName = '/usr/share/fonts/truetype/freefont/FreeMono.ttf';
+//  fileName = '/usr/share/fonts/truetype/freefont/FreeMono.ttf';
   //  fileName = '/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf';
-  //  fileName = '/usr/share/fonts/truetype/ubuntu/Ubuntu-MI.ttf';
-  //    fileName = '/usr/share/wine/fonts/courier.ttf';
+    fileName = '/usr/share/fonts/truetype/ubuntu/Ubuntu-MI.ttf';
+//      fileName = '/usr/share/wine/fonts/courier.ttf';
 
   function Createsurface: PSDL_Surface;
   begin
@@ -20,29 +20,29 @@ const
     end;
   end;
 
-  function LoafFont: PSDL_Surface;
-  const
-    hello = 'Hello World !';
-  var
-    font: PTTF_Font;
-    fg, bg: TSDL_Color;
-    w, h: longint;
-
-  begin
-    font := TTF_OpenFont(fileName, 20);
-    if font = nil then begin
-      SDL_Log('Konnte Font nicht laden!:  %s', SDL_GetError);
-    end;
-    fg.items := [$FF, $00, $00, $FF];
-    bg.items := [$00, $FF, $00, $FF];
-    //    Result := TTF_RenderText(font, hello, fg, bg);
-    Result := TTF_RenderText_Solid_Wrapped(font, hello, fg, 200);
-    //    Result := TTF_RenderUTF8(font, 'Hello World !'#10'Hallo Welt !', fg, bg);
-    TTF_SizeText(font, hello, @w, @h);
-    SDL_Log('Text size: %i x %i', w, h);
-
-    TTF_CloseFont(font);
-  end;
+//  function LoafFont: PSDL_Surface;
+//  const
+//    hello = 'Hello World !';
+//  var
+//    font: PTTF_Font;
+//    fg, bg: TSDL_Color;
+//    w, h: longint;
+//
+//  begin
+//    font := TTF_OpenFont(fileName, 20);
+//    if font = nil then begin
+//      SDL_Log('Konnte Font nicht laden!:  %s', SDL_GetError);
+//    end;
+//    fg.items := [$FF, $00, $00, $FF];
+//    bg.items := [$00, $FF, $00, $FF];
+//        Result := TTF_RenderText(font, hello, fg, bg);
+////    Result := TTF_RenderText_Solid_Wrapped(font, hello, fg, 200);
+//    //    Result := TTF_RenderUTF8(font, 'Hello World !'#10'Hallo Welt !', fg, bg);
+//    TTF_SizeText(font, hello, @w, @h);
+//    SDL_Log('Text size: %i x %i', w, h);
+//
+//    TTF_CloseFont(font);
+//  end;
 
   function LoadGlyph: PSDL_Surface;
   var
@@ -80,14 +80,15 @@ const
       SDL_Log('Konnte kein Surface erzeugen!:  %s', SDL_GetError);
     end;
 
-    if TTF_Init < 0 then begin
-      SDL_Log('Konnte TTF nicht inizialisieren !:  %s', TTF_GetError);
+    if not TTF_Init then begin
+      SDL_Log('Konnte TTF nicht inizialisieren !:  %s', SDL_GetError);
     end;
 
     imageSurface := Createsurface;
 
     GlyphSurface := LoadGlyph;
-    FontSurface := LoafFont;
+//    FontSurface := LoafFont;
+FontSurface:=nil;
 
     while not quit do begin
       while SDL_PollEvent(@event) do begin

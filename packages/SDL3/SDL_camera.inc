@@ -33,7 +33,7 @@ function SDL_GetNumCameraDrivers: longint; cdecl; external libSDL3;
 function SDL_GetCameraDriver(index: longint): pansichar; cdecl; external libSDL3;
 function SDL_GetCurrentCameraDriver: pansichar; cdecl; external libSDL3;
 function SDL_GetCameras(Count: Plongint): PSDL_CameraID; cdecl; external libSDL3;
-function SDL_GetCameraSupportedFormats(devid: TSDL_CameraID; Count: Plongint): PPSDL_CameraSpec; cdecl; external libSDL3;
+function SDL_GetCameraSupportedFormats(instanceid: TSDL_CameraID; Count: Plongint): PPSDL_CameraSpec; cdecl; external libSDL3;
 function SDL_GetCameraName(instance_id: TSDL_CameraID): pansichar; cdecl; external libSDL3;
 function SDL_GetCameraPosition(instance_id: TSDL_CameraID): TSDL_CameraPosition; cdecl; external libSDL3;
 function SDL_OpenCamera(instance_id: TSDL_CameraID; spec: PSDL_CameraSpec): PSDL_Camera; cdecl; external libSDL3;
