@@ -67,6 +67,7 @@ WriteLn(  Mix_OpenAudio(0, nil));
     WriteLn('error music2', Mix_GetError);
   end;
 
+//  chunk1 := Mix_LoadWAV('/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-2/Altes_SDL-1.2/lazyfoo.net/11_-_Playing_Sounds/doom.mid');
   chunk1 := Mix_LoadWAV('/n4800/Multimedia/Music/Disco/Various/Dance Classics/CD 1/11 - I''m on fire - 5000 volts.flac');
   if chunk1 = nil then begin
     WriteLn('error music1', Mix_GetError);

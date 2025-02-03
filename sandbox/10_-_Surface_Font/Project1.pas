@@ -20,7 +20,7 @@ const
     end;
   end;
 
-  function LoadFont: PSDL_Surface;
+  function LoadFontSurface: PSDL_Surface;
   const
     hello = 'Hello World !';
   var
@@ -81,7 +81,7 @@ const
     imageSurface := Createsurface;
 
     GlyphSurface := LoadGlyph;
-    FontSurface := LoadFont;
+    FontSurface := LoadFontSurface;
 
     while not quit do begin
       while SDL_PollEvent(@event) do begin
