@@ -4,6 +4,7 @@
 # Neuerungen:
 | Datum      | Änderungen 
 | ---        | ---
+| 07.02.2025 | Angepasst an SDL-release-3.2.4
 | 02.02.2025 | Angepasst an SDL-ttf-preview-3.1.0
 | 02.02.2025 | Angepasst an SDL-release-3.2.2
 | 02.02.2025 | Angepasst an SDL_image-release-3.2.0

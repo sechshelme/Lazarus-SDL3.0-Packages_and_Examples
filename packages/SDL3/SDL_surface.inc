@@ -100,6 +100,7 @@ function SDL_BlitSurface(src: PSDL_Surface; srcrect: PSDL_Rect; dst: PSDL_Surfac
 function SDL_BlitSurfaceUnchecked(src: PSDL_Surface; srcrect: PSDL_Rect; dst: PSDL_Surface; dstrect: PSDL_Rect): Tbool; cdecl; external libSDL3;
 function SDL_BlitSurfaceScaled(src: PSDL_Surface; srcrect: PSDL_Rect; dst: PSDL_Surface; dstrect: PSDL_Rect; scaleMode: TSDL_ScaleMode): Tbool; cdecl; external libSDL3;
 function SDL_BlitSurfaceUncheckedScaled(src: PSDL_Surface; srcrect: PSDL_Rect; dst: PSDL_Surface; dstrect: PSDL_Rect; scaleMode: TSDL_ScaleMode): Tbool; cdecl; external libSDL3;
+function SDL_StretchSurface(src:PSDL_Surface; srcrect:PSDL_Rect; dst:PSDL_Surface; dstrect:PSDL_Rect; scaleMode:TSDL_ScaleMode):Tbool;cdecl;external libSDL3;
 function SDL_BlitSurfaceTiled(src: PSDL_Surface; srcrect: PSDL_Rect; dst: PSDL_Surface; dstrect: PSDL_Rect): Tbool; cdecl; external libSDL3;
 function SDL_BlitSurfaceTiledWithScale(src: PSDL_Surface; srcrect: PSDL_Rect; scale: single; scaleMode: TSDL_ScaleMode; dst: PSDL_Surface;
   dstrect: PSDL_Rect): Tbool; cdecl; external libSDL3;

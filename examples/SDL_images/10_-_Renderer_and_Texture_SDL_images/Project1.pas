@@ -17,7 +17,7 @@ var
   var
     r: TSDL_Rect;
   begin
-    Result := IMG_Load('image.png');
+    Result := IMG_Load('mauer.bmp');
     if Result = nil then begin
       SDL_Log('Kann keine Textur erzeugen !');
     end;
