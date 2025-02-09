@@ -16,7 +16,6 @@ uses
       WriteLn('Could not create window: ', SDL_GetError);
       Halt(1);
     end;
-
     SDL_Delay(3000);
     SDL_DestroyWindow(win);
     SDL_Quit;

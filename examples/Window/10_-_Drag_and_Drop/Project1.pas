@@ -13,7 +13,11 @@ uses
     e: TSDL_Event;
   begin
     SDL_init(SDL_INIT_VIDEO);
-    win := SDL_CreateWindow('SDL3 Window', 640, 480, SDL_WINDOW_RESIZABLE);
+    win := SDL_CreateWindow('SDL3 Window', 640, 480, SDL_WINDOW_RESIZABLE or SDL_WINDOW_HIDDEN);
+    SDL_SetWindowPosition(win, 500, 500);
+    SDL_Delay(1000);
+    SDL_ShowWindow(win);
+    SDL_Log('Version: %s', SDL_GetRevision);
     if win = nil then begin
       WriteLn('Could not create window: ', SDL_GetError);
       Halt(1);
@@ -57,7 +61,7 @@ uses
         end;
       end;
 
-      SDL_SetRenderDrawColor(renderer, 20, 20, 20, 255);
+      SDL_SetRenderDrawColor(renderer, 50, 00, 20, 255);
       SDL_RenderClear(renderer);
 
       SDL_RenderPresent(renderer);

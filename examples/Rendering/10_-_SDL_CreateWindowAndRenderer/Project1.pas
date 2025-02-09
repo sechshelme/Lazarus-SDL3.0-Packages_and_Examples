@@ -115,6 +115,7 @@ var
       red := (SDL_sinf(time) + 1) / 2.0;
       green := (SDL_sinf(time / 2) + 1) / 2.0;
       blue := (SDL_sinf(time / 3) + 1) / 2.0;
+      SDL_SetRenderScale(renderer, 0.5,0.5);
 
       SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE);
       SDL_RenderClear(renderer);

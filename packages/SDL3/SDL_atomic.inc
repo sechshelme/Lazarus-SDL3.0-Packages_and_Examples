@@ -57,7 +57,7 @@ end;
 
 function SDL_AtomicDecRef(a: PSDL_AtomicInt): Boolean;
 begin
-  SDL_AtomicDecRef := (SDL_AddAtomicInt(a, -(1))) = 1;
+  SDL_AtomicDecRef := SDL_AddAtomicInt(a, -1) = 1;
 end;
 
 

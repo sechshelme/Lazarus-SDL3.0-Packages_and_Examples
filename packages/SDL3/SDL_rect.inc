@@ -44,15 +44,15 @@ function SDL_GetRectUnionFloat(A: PSDL_FRect; B: PSDL_FRect; Result: PSDL_FRect)
 function SDL_GetRectEnclosingPointsFloat(points: PSDL_FPoint; Count: longint; clip: PSDL_FRect; Result: PSDL_FRect): Tbool; cdecl; external libSDL3;
 function SDL_GetRectAndLineIntersectionFloat(rect: PSDL_FRect; X1: Psingle; Y1: Psingle; X2: Psingle; Y2: Psingle): Tbool; cdecl; external libSDL3;
 
-procedure SDL_RectToFRect(const rect: PSDL_Rect; frect: PSDL_FRect);
-function SDL_PointInRect(p: PSDL_Point; r: PSDL_Rect): boolean;
-function SDL_RectEmpty(r: PSDL_Rect): TSDL_bool;
-function SDL_RectsEqual(a: PSDL_Rect; b: PSDL_Rect): boolean;
+procedure SDL_RectToFRect(const rect: PSDL_Rect; frect: PSDL_FRect); inline;
+function SDL_PointInRect(p: PSDL_Point; r: PSDL_Rect): boolean; inline;
+function SDL_RectEmpty(r: PSDL_Rect): Boolean; inline;
+function SDL_RectsEqual(a: PSDL_Rect; b: PSDL_Rect): boolean; inline;
 
-function SDL_PointInRectFloat(p: PSDL_FPoint; r: PSDL_FRect): boolean;
-function SDL_RectEmptyFloat(r: PSDL_FRect): boolean;
-function SDL_RectsEqualEpsilon(const RectA: PSDL_FRect; const RectB: PSDL_FRect; const Epsilon: single): boolean;
-function SDL_RectsEqualFloat(const RectA: PSDL_FRect; const RectB: PSDL_FRect): boolean;
+function SDL_PointInRectFloat(p: PSDL_FPoint; r: PSDL_FRect): boolean; inline;
+function SDL_RectEmptyFloat(r: PSDL_FRect): boolean; inline;
+function SDL_RectsEqualEpsilon(const a: PSDL_FRect; const b: PSDL_FRect; const Epsilon: single): boolean; inline;
+function SDL_RectsEqualFloat(const a: PSDL_FRect; const b: PSDL_FRect): boolean; inline;
 
 {$ENDIF read_interface}
 
@@ -74,7 +74,7 @@ begin
     (p^.y >= r^.y) and (p^.y < (r^.y + r^.h));
 end;
 
-function SDL_RectEmpty(r: PSDL_Rect): TSDL_bool;
+function SDL_RectEmpty(r: PSDL_Rect): Boolean;
 begin
   if (r = nil) or (r^.w <= 0) or (r^.h <= 0) then begin
     Result := SDL_TRUE;
@@ -104,19 +104,18 @@ begin
   Result := (r = nil) or (r^.w < 0.0) or (r^.h < 0.0);
 end;
 
-function SDL_RectsEqualEpsilon(const RectA: PSDL_FRect; const RectB: PSDL_FRect; const Epsilon: single): boolean;
+function SDL_RectsEqualEpsilon(const a: PSDL_FRect; const b: PSDL_FRect; const Epsilon: single): boolean;
 begin
-  Result := (RectA <> nil) and (RectB <> nil) and
-    ((RectA = RectB) or
-    ((SDL_fabsf(RectA^.x - RectB^.x) <= Epsilon) and
-    (SDL_fabsf(RectA^.y - RectB^.y) <= Epsilon) and
-    (SDL_fabsf(RectA^.w - RectB^.w) <= Epsilon) and
-    (SDL_fabsf(RectA^.h - RectB^.h) <= Epsilon)));
+  Result := (a <> nil) and (b <> nil) and ((a = b) or
+    ((SDL_fabsf(a^.x - b^.x) <= Epsilon) and
+    (SDL_fabsf(a^.y - b^.y) <= Epsilon) and
+    (SDL_fabsf(a^.w - b^.w) <= Epsilon) and
+    (SDL_fabsf(a^.h - b^.h) <= Epsilon)));
 end;
 
-function SDL_RectsEqualFloat(const RectA: PSDL_FRect; const RectB: PSDL_FRect): boolean;
+function SDL_RectsEqualFloat(const a: PSDL_FRect; const b: PSDL_FRect): boolean;
 begin
-  Result := SDL_RectsEqualEpsilon(RectA, RectB, SDL_FLT_EPSILON);
+  Result := SDL_RectsEqualEpsilon(a, b, SDL_FLT_EPSILON);
 end;
 
 {$ENDIF read_implementation}

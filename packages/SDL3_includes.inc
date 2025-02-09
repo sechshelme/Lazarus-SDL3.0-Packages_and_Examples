@@ -25,7 +25,7 @@
 {$include SDL3/SDL_thread.inc}        // SDL_atomic, SDL_properties
 {$include SDL3/SDL_mutex.inc}         // SDL_atomic, SDL_thread
 {$include SDL3/SDL_blendmode.inc}
-{$include SDL3/SDL_rect.inc}          // inline !!!!!!!!!!!!!!!!
+{$include SDL3/SDL_rect.inc}
 {$include SDL3/SDL_pixels.inc}
 {$include SDL3/SDL_iostream.inc}      // SDL_properties
 {$include SDL3/SDL_process.inc}       // SDL_properties, SDL_iostream

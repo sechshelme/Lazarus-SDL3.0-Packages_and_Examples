@@ -33,7 +33,8 @@ implementation
 
 procedure TForm1.Button1Click(Sender: TObject);
 const
-  path='/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/Package_Tools/include_C/sdl.diff';
+//  path='/n4800/DATEN/Programmierung/mit_GIT/Lazarus/Tutorial/SDL-3/Package_Tools/include_C/sdl.diff';
+  path='/home/tux/Schreibtisch/von_Git/GTK4_stable/test.diff';
 var
   slHeader: TStringList;
   i, j: integer;
